@@ -1,5 +1,11 @@
 # Interactive Event Poster Template
 
+![Project Banner](.github/assets/eventPoster.png)
+
+### [🎥 View the Live Demo](https://ryanmarch.github.io/springEventPoster/)
+
+![Poster Demo](.github/assets/eventPoster.mp4)
+
 An animated, browser-based event poster designed for large-format displays and presentation screens. Built for event fundraisers and managed as a live kiosk display.
 
 ---
@@ -128,7 +134,7 @@ To fully reset to factory defaults, hold the `\` key until the progress bar comp
 
 | Version | Notes |
 |---------|-------|
-| v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option,high-res display optimizations, responsive font scaling, and small-screen handler. |
+| v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
 | v4 | Adds live host management, factory reset, auto-fullscreen, and responsive layouts. |
 | v1–v3 | Earlier iterations with static host lists and limited controls. |
 
