@@ -7,12 +7,8 @@
   </a>
 
   <br>
-  
-  <video src="https://github.com/user-attachments/assets/c0866c1c-48b0-4096-ab3f-a80580f2488c" 
-         poster=".github/assets/eventPoster.png" 
-         width="100%" controls muted autoplay loop disablepictureinpicture>
-    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview">
-  </video>
+
+  <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
 </div>
 
 ## Overview
