@@ -117,10 +117,10 @@ To fully reset to factory defaults, hold the `\` key until the progress bar comp
 
 ---
 
-## Event Details (Template)
+## Event Details
 
-| Field | Value |
-|-------|-------|
+| Field |
+|-------|
 | Event Title |
 | Date |
 | Organization Name or Logo |
