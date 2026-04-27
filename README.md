@@ -2,9 +2,9 @@
 
 ![Project Banner](.github/assets/eventPoster.png)
 
-### [🎥 View the Live Demo](https://ryanmarch.github.io/springEventPoster/)
+### [View the Live Demo](https://ryanmarch.github.io/springEventPoster/)
 
-![Poster Demo](.github/assets/eventPoster.mp4)
+<video src=".github/assets/eventPoster.mp4" width="100%" controls muted autoplay loop></video>
 
 An animated, browser-based event poster designed for large-format displays and presentation screens. Built for event fundraisers and managed as a live kiosk display.
 
@@ -29,7 +29,7 @@ The poster features:
 ## File Structure
 
 ```
-soireeHosts_v4/
+springEventPoster/
 ├── index.html          # App structure and sample markup
 ├── script.js           # All app logic (EventPoster class)
 ├── styles.css          # All styles, animations, and layout
@@ -53,9 +53,11 @@ soireeHosts_v4/
 |-----|--------|
 | `F` | Toggle fullscreen |
 | `Q` | Toggle the Options panel |
+| `E` | Edit Poster Text |
 | `C` | Toggle the Customize Appearance section (panel must be open) |
 | `A` | Toggle the Add/Remove Hosts section (panel must be open) |
 | `R` | Reset appearance to defaults (Customize section must be open) |
+| `?` | Show Help Menu |
 | `Esc` | Close panel or dismiss the Add Host form |
 | Hold `\` | Factory reset (clears all localStorage and reloads) |
 
@@ -117,16 +119,18 @@ To fully reset to factory defaults, hold the `\` key until the progress bar comp
 
 ---
 
-## Event Details (Template)
+## Event Details (Customizable)
 
-| Field | Value |
-|-------|-------|
-| Event Title |
-| Date |
-| Organization Name or Logo |
-| Event Subtitle |
-| Left QR Code |
-| Right QR Code |
+The following fields can be updated in real-time via the **[E]dit Poster Text** panel:
+
+- **Event Title** (e.g., "Spring Soiree")
+- **Event Subtitle** (e.g., "fundraiser")
+- **Event Date**
+- **Organization Name**
+- **Organization Logo**
+- **Left QR Code** (Registration)
+- **Right QR Code** (Membership)
+- **Host Committee Names**
 
 ---
 
