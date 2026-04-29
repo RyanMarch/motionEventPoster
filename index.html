@@ -229,20 +229,41 @@
                 <div class="panel-sub-section">
                     <div class="panel-sub-section-title">Visual Theme</div>
                     <div class="control">
-                        <div class="radio-tab-group" id="radio-group-theme">
-                            <label class="radio-tab">
-                                <input type="radio" name="activeTheme" value="spring" checked>
-                                <span>Spring Blossom</span>
-                            </label>
-                            <label class="radio-tab">
-                                <input type="radio" name="activeTheme" value="digital-grid">
-                                <span>Digital Grid</span>
-                            </label>
-                            <label class="radio-tab">
-                                <input type="radio" name="activeTheme" value="alpine-winter">
-                                <span>Alpine Winter</span>
+                        <div class="custom-select" id="theme-custom-select">
+                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                                <div class="trigger-content">
+                                    <span class="custom-select-icon" id="theme-select-icon">🌸</span>
+                                    <span class="custom-select-label" id="theme-select-label">Spring Blossom</span>
+                                </div>
+                                <div class="trigger-arrow"></div>
+                            </div>
+                            <div class="custom-select-options" id="theme-select-options">
+                                <div class="custom-select-option" data-value="spring" data-icon="🌸" tabindex="0">
+                                    <span class="option-icon">🌸</span> Spring Blossom
+                                </div>
+                                <div class="custom-select-option" data-value="digital-grid" data-icon="⚡" tabindex="0">
+                                    <span class="option-icon">⚡</span> Digital Grid
+                                </div>
+                                <div class="custom-select-option" data-value="alpine-winter" data-icon="❄️" tabindex="0">
+                                    <span class="option-icon">❄️</span> Alpine Winter
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control">
+                        <label>Background <span id="val-bg-color">#032858</span></label>
+                        <div class="swatch-grid" id="bg-swatch-grid">
+                            <!-- Swatches injected by JS -->
+                            <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color" title="Custom Color">
+                                +
+                                <input type="color" id="picker-bg-color" value="#032858">
                             </label>
                         </div>
+                    </div>
+                    <div class="control">
+                        <label>Text Backdrop Strength <span id="val-backdrop-opacity">100%</span></label>
+                        <input type="range" id="slider-backdrop-opacity" min="0" max="100" step="1">
                     </div>
                 </div>
 
@@ -328,22 +349,6 @@
                         </div>
                     </div>
 
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Background <span id="val-bg-color">#032858</span></label>
-                            <div class="swatch-grid" id="bg-swatch-grid">
-                                <!-- Swatches injected by JS -->
-                                <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color" title="Custom Color">
-                                    +
-                                    <input type="color" id="picker-bg-color" value="#032858">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <label>Opacity <span id="val-backdrop-opacity">100%</span></label>
-                            <input type="range" id="slider-backdrop-opacity" min="0" max="100" step="1">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="panel-section panel-section--tight">
