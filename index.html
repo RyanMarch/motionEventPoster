@@ -15,7 +15,7 @@
 
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Local fonts -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="ui-components.css" />
     <link rel="stylesheet" href="theme-spring.css" />
     <link rel="stylesheet" href="theme-digital-grid.css">
+    <link rel="stylesheet" href="theme-alpine-winter.css">
     <style>
         /* Prevent Flash of Unstyled Content (FOUC) for hidden overlays */
         .is-loading #controls-panel,
@@ -95,6 +96,10 @@
         </div>
 
         <div class="theme-frame">
+            <div class="frame-rail rail-top"></div>
+            <div class="frame-rail rail-bottom"></div>
+            <div class="frame-rail rail-left"></div>
+            <div class="frame-rail rail-right"></div>
             <div class="theme-texture"></div>
             <div class="theme-frame-inner"></div>
         </div>
@@ -232,6 +237,10 @@
                             <label class="radio-tab">
                                 <input type="radio" name="activeTheme" value="digital-grid">
                                 <span>Digital Grid</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="activeTheme" value="alpine-winter">
+                                <span>Alpine Winter</span>
                             </label>
                         </div>
                     </div>

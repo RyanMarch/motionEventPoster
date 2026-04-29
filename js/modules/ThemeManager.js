@@ -15,7 +15,24 @@ window.ThemeManager = class ThemeManager {
         if (this.state.isApplyingTheme) return;
         this.state.isApplyingTheme = true;
 
+        const prevTheme = this.poster.theme;
         const theme = THEMES[themeId] || THEMES.spring;
+        
+        // Handle contextual default labels
+        if (prevTheme && prevTheme.defaults && theme.defaults) {
+            const pt = this.state.posterText;
+            if (pt.eventTitle === prevTheme.defaults.eventTitle) pt.eventTitle = theme.defaults.eventTitle;
+            if (pt.eventSubtitle === prevTheme.defaults.eventSubtitle) pt.eventSubtitle = theme.defaults.eventSubtitle;
+            if (pt.eventTopLabel === prevTheme.defaults.eventTopLabel) pt.eventTopLabel = theme.defaults.eventTopLabel;
+            // Handle current defaults and the legacy global default
+            if (pt.hostsTitle === prevTheme.defaults.hostsTitle || pt.hostsTitle === 'Thanks To Our Hosts') {
+                pt.hostsTitle = theme.defaults.hostsTitle;
+            }
+            this.poster.applyPosterText();
+            this.poster.savePosterText();
+            this.poster.ui.syncPosterTextInputs();
+        }
+
         this.poster.theme = theme;
         this.poster.petalTypes = theme.particles;
         this.state.activeTheme = themeId;
@@ -66,6 +83,7 @@ window.ThemeManager = class ThemeManager {
         const accentRgbStr = `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}`;
         
         this.root.style.setProperty('--color-primary', color);
+        this.root.style.setProperty('--color-primary-rgb', rgbStr);
         this.root.style.setProperty('--color-brand', color);
         this.root.style.setProperty('--color-accent', accentColor);
         this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
@@ -85,21 +103,31 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--font-display', theme.fonts.display);
         this.root.style.setProperty('--font-heading', theme.fonts.heading);
 
-        const isFlower = theme.id === 'spring';
-        const pLabel = isFlower ? 'Flowers' : 'Particles';
-        const spLabel = isFlower ? 'Petal' : 'Particle';
+        const uiLabels = theme.uiLabels || {
+            particlesPlural: 'Particles',
+            particlesSingular: 'Particle',
+            borderToggle: 'Hide background motif',
+            gustStrength: 'Frame Intensity'
+        };
+
+        const pLabel = uiLabels.particlesPlural;
+        const spLabel = uiLabels.particlesSingular;
         
         document.querySelectorAll('.panel-sub-section-title').forEach(el => {
-            if (el.textContent === 'Flowers' || el.textContent === 'Particles') el.textContent = pLabel;
+            const txt = el.textContent;
+            if (txt === 'Flowers' || txt === 'Particles' || txt === 'Snowflakes') {
+                el.textContent = pLabel;
+            }
         });
+
         const cntLabel = document.querySelector('label[for="slider-max-petals"]') || document.querySelector('#slider-max-petals')?.parentElement.querySelector('label');
         if (cntLabel) cntLabel.firstChild.textContent = `${spLabel} Count `;
 
         const bLabel = document.getElementById('check-hide-border')?.parentElement;
-        if (bLabel) bLabel.lastChild.textContent = isFlower ? ' Hide flower border' : ' Hide background motif';
+        if (bLabel) bLabel.lastChild.textContent = ` ${uiLabels.borderToggle}`;
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
-        if (wLabel) wLabel.firstChild.textContent = isFlower ? 'Wave Strength ' : 'Frame Intensity ';
+        if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
 
         const luminance = (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) / 255;
         this.body.classList.toggle('is-light-bg', luminance > 0.5);
