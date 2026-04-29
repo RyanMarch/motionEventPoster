@@ -3,6 +3,12 @@
  */
 window.PosterUtils = {
     hexToRgb(hex) {
+        // Handle 8-digit hexes (RGBA) by stripping the alpha channel
+        if (hex && hex.length > 7 && hex.startsWith('#')) {
+            hex = hex.substring(0, 7);
+        } else if (hex && hex.length > 6 && !hex.startsWith('#')) {
+            hex = '#' + hex.substring(0, 6);
+        }
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {
             r: parseInt(result[1], 16),

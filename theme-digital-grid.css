@@ -23,6 +23,13 @@ body.theme-digital-grid .theme-texture {
     pointer-events: none;
 }
 
+/* Hide Frame Logic */
+body.border-hidden.theme-digital-grid .theme-frame,
+body.border-hidden.theme-digital-grid .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
 /* Glassy Shine Sweep */
 body.theme-digital-grid .theme-texture::after {
     content: '';

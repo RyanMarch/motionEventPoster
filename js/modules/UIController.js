@@ -106,7 +106,6 @@ window.UIController = class UIController {
             if (lowerKey === 'f' && !event.repeat) { if (!document.fullscreenElement) this.elements.fullscreenToggle.click(); return; }
             if (event.code === 'KeyS' && event.altKey) { event.preventDefault(); this.poster.reloadStyles(); return; }
             if (!this.poster.isControlsPanelVisible() || event.repeat) return;
-            if (lowerKey === 'h') { this.poster.toggleHelpShortcut(); event.preventDefault(); }
             if (lowerKey === 'a') { this.poster.toggleAddHostShortcut(); event.preventDefault(); }
             if (lowerKey === 'c') { this.poster.toggleCustomizeShortcut(); event.preventDefault(); }
             if (lowerKey === 'r') { if (this.poster.isCustomizeOpen()) { event.preventDefault(); this.poster.resetDefaults(); } }
@@ -260,6 +259,21 @@ window.UIController = class UIController {
         this.elements.btnClearQrRight?.addEventListener('click', () => {
             this.state.posterText.qrRightData = null; this.state.qrMembership = false; this.controls.qrMembership.checked = false; this.elements.qrMembership.classList.add('qr-hidden');
             this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
+        });
+    }
+
+    syncPosterTextInputs() {
+        const pt = this.state.posterText;
+        if (this.elements.inputLogoText) this.elements.inputLogoText.value = pt.logoText;
+        if (this.elements.inputHostsTitle) this.elements.inputHostsTitle.value = pt.hostsTitle;
+        if (this.elements.inputEventTopLabel) this.elements.inputEventTopLabel.value = pt.eventTopLabel;
+        if (this.elements.inputEventTitle) this.elements.inputEventTitle.value = pt.eventTitle;
+        if (this.elements.inputEventSubtitle) this.elements.inputEventSubtitle.value = pt.eventSubtitle;
+        if (this.elements.inputEventDate) this.elements.inputEventDate.value = pt.eventDate;
+        
+        // Handle auto-grow for textareas
+        [this.elements.inputLogoText].forEach(el => {
+            if (el && el.tagName === 'TEXTAREA') this.poster.autoGrowTextarea(el);
         });
     }
 
