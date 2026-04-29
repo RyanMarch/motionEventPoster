@@ -70,7 +70,9 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+    height: -webkit-fill-available;
     overflow: hidden;
+    background-color: #032858; /* Fallback for initial load */
     background-color: var(--color-primary);
     font-family: var(--font-primary);
     color: var(--color-text);
@@ -79,14 +81,40 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-backface-visibility: hidden; /* Safari edge rendering fix */
+}
+
+body {
+    /* Bleed the background color out to cover sub-pixel rounding gaps */
+    box-shadow: 0 0 0 100vmax var(--color-primary);
+}
+
+/* Fullscreen & Backdrop Normalization */
+:fullscreen, 
+::backdrop,
+:-webkit-full-screen {
+    background-color: var(--color-primary) !important;
 }
 
 @media (min-width: 1900px) {
-
-    html,
     body {
         zoom: 109%;
     }
+}
+
+/* Global Oversized Backdrop Reinforcement 
+   This ensures that any sub-pixel gaps (common with zoom and Safari fullscreen) 
+   show the theme color instead of the white browser canvas. */
+html::before {
+    content: '';
+    position: fixed;
+    top: -5vh; 
+    left: -5vw;
+    width: 110vw; 
+    height: 110vh;
+    background-color: var(--color-primary);
+    z-index: -10000;
+    pointer-events: none;
 }
 
 /* Typography Utilities */
@@ -123,6 +151,7 @@ PARTICLE SYSTEMS
     contain: layout style;
     opacity: 0;
     transition: opacity 2s ease-in-out;
+    overflow: hidden; /* Prevent 1px leaks at the viewport edges */
 }
 
 body:not(.is-loading) .particle-layer {

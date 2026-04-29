@@ -169,6 +169,7 @@ window.EventPoster = class EventPoster {
         this.ui.setupEventListeners();
         this.applyStateToUI();
         this.applyPosterText();
+        this.ui.syncPosterTextInputs();
         this.particleEngine.adjustAmbientPetals();
         this.particleEngine.startAnimationLoop();
         this.checkWakeLockSupport();
@@ -205,6 +206,7 @@ window.EventPoster = class EventPoster {
         this.state.windDirection = 1;
         this.state.targetWindDirection = 1;
         this.state.frameCount = 0;
+        this.state.hintTimer = null;
     }
 
     // Layout Logic
@@ -317,14 +319,16 @@ window.EventPoster = class EventPoster {
     syncPauseStates() {
         const btn = this.elements.pausePetalsButton;
         if (btn) {
+            const label = this.theme?.uiLabels?.particlesPlural || 'Particles';
             btn.classList.toggle('active', this.state.isPetalsPaused);
-            btn.textContent = this.state.isPetalsPaused ? 'Resume Particles' : 'Pause Particles';
+            btn.textContent = this.state.isPetalsPaused ? `Resume ${label}` : `Pause ${label}`;
         }
         Object.values(this.layers).forEach(l => l.classList.toggle('paused', this.state.isPetalsPaused));
         const bgBtn = this.elements.pauseBgButton;
         if (bgBtn) {
+            const label = this.theme?.uiLabels?.frameName || 'Frame';
             bgBtn.classList.toggle('active', this.state.isBgPaused);
-            bgBtn.textContent = this.state.isBgPaused ? 'Resume Frame' : 'Pause Frame';
+            bgBtn.textContent = this.state.isBgPaused ? `Resume ${label}` : `Pause ${label}`;
         }
         document.querySelectorAll('.sway-layer, .floral-bg, .theme-frame').forEach(el => el.classList.toggle('paused', this.state.isBgPaused));
     }
@@ -523,16 +527,20 @@ window.EventPoster = class EventPoster {
         this.saveSettings();
     }
 
-    showKeyboardHint() {
+    showKeyboardHint(force = false) {
         if (!this.elements.keyboardHint) return;
-        // Show hint if it's the first time or after a reset
-        const hasSeenHint = localStorage.getItem('poster-hint-seen');
-        if (!hasSeenHint) {
-            this.elements.keyboardHint.classList.add('is-visible');
-            localStorage.setItem('poster-hint-seen', 'true');
-            // Auto-hide after 10 seconds
-            setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 10000);
-        }
+        
+        // If already visible and not forced, don't restart timer
+        if (this.elements.keyboardHint.classList.contains('is-visible') && !force) return;
+
+        this.elements.keyboardHint.classList.add('is-visible');
+        
+        if (this.state.hintTimer) clearTimeout(this.state.hintTimer);
+        // Auto-hide after 5 seconds
+        this.state.hintTimer = setTimeout(() => {
+            this.elements.keyboardHint.classList.remove('is-visible');
+            this.state.hintTimer = null;
+        }, 5000);
     }
 
     deriveAccentColor(h) { return window.PosterUtils.deriveAccentColor(h); }

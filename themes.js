@@ -48,8 +48,24 @@ const THEMES = {
         overrides: {
             insetV: 60,
             insetH: 80,
+            fallSpeed: 0.6,
+            maxPetals: 20,
+            windiness: 20,
             hostTextSize: 1.0,
             bgColor: '#032858'
+        },
+        defaults: {
+            hostsTitle: "Thanks to our hosts",
+            eventTitle: "Spring Soiree",
+            eventSubtitle: "fundraiser",
+            eventTopLabel: "Annual"
+        },
+        uiLabels: {
+            particlesPlural: 'Flowers',
+            particlesSingular: 'Petal',
+            borderToggle: 'Hide flower border',
+            gustStrength: 'Wave Strength',
+            frameName: 'Floral Sway'
         }
     },
     'digital-grid': {
@@ -93,9 +109,87 @@ const THEMES = {
         overrides: {
             insetV: 40,
             insetH: 40,
+            fallSpeed: 0.6,
+            maxPetals: 20,
+            windiness: 20,
             hostTextSize: 0.9,
             gustStrength: 25, // Default intensity for the HUD frame
             bgColor: '#001D39'
+        },
+        defaults: {
+            hostsTitle: "Featured Speakers",
+            eventTitle: "Global Summit",
+            eventSubtitle: "Tech Conference",
+            eventTopLabel: "Worldwide"
+        },
+        uiLabels: {
+            particlesPlural: 'Particles',
+            particlesSingular: 'Particle',
+            borderToggle: 'Hide background frame',
+            gustStrength: 'Frame Intensity',
+            frameName: 'Frame'
+        }
+    },
+    'alpine-winter': {
+        id: 'alpine-winter',
+        name: 'Alpine Winter',
+        colors: {
+            primary: '#1B3B57', // Richer, more vibrant icy blue
+            accent: '#AADDFF', // Glowing ice accent
+            text: '#FFFFFF',
+            darkText: '#0A1520'
+        },
+        swatches: [
+            { hex: '#1B3B57', name: 'Glacier Deep', accent: '#AADDFF' },
+            { hex: '#505B67', name: 'Frozen Granite', accent: '#E0E1DD' }, // Silvery gray replacement
+            { hex: '#101820', name: 'Midnight Peak', accent: '#778DA9' },
+            { hex: '#4682B4', name: 'Steel Ice', accent: '#F0F4F8' },
+            { hex: '#5C4B40', name: 'Alpine Cedar', accent: '#E6BE8A' }, // Muted, less red/pink
+            { hex: '#0D3B33', name: 'Evergreen Mist', accent: '#A2D9CE' },
+            { hex: '#dce3e6', name: 'Snowdrift', accent: '#1B3B57' }
+        ],
+        fonts: {
+            primary: "'Alegreya Sans', sans-serif",
+            display: "Georgia, serif",
+            heading: "'Alegreya Sans', sans-serif"
+        },
+        assets: {
+            border: "none",
+            sway1: "none",
+            sway2: "none",
+            sway3: "none",
+            sway4: "none",
+            swaySide: "none"
+        },
+        particles: [
+            { color: '#FFFFFF', gradient: '#E0F7FA', type: 'star', weight: 40, shape: '50%', isWhite: true },
+            { color: '#BDEFFF', gradient: '#88CCFF', type: 'star', weight: 30, shape: '50%', isWhite: true },
+            { color: '#FFFFFF', gradient: '#F0F8FF', type: 'dust', weight: 20, shape: '50%', isWhite: true },
+            { color: '#AADDFF', gradient: '#77BBEE', type: 'dust', weight: 10, shape: '50%', isWhite: true }
+        ],
+        frameClass: 'theme-frame--alpine-winter',
+        overrides: {
+            insetV: 50,
+            insetH: 60,
+            hostTextSize: 1.0,
+            gustStrength: 15,
+            fallSpeed: 0.4,
+            maxPetals: 100,
+            windiness: 5,
+            bgColor: '#1B3B57'
+        },
+        defaults: {
+            hostsTitle: "Our Host Committee",
+            eventTitle: "Winter Gala",
+            eventSubtitle: "Seasonal Celebration",
+            eventTopLabel: "Annual"
+        },
+        uiLabels: {
+            particlesPlural: 'Snowflakes',
+            particlesSingular: 'Snowflake',
+            borderToggle: 'Hide window frame',
+            gustStrength: 'Frost Intensity',
+            frameName: 'Frost'
         }
     }
 };
