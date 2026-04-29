@@ -22,7 +22,7 @@ $RECYCLE.BIN/
 *.sublime-project
 *.sublime-workspace
 *.code-workspace
-# theme_ideas.md
+theme_ideas.md
 
 # Logs
 *.log
