@@ -1,0 +1,216 @@
+/**
+ * DIGITAL GRID THEME STYLES
+ */
+
+/* Main Theme Frame (HUD) */
+body.theme-digital-grid .theme-frame {
+    opacity: 1;
+    border: calc(1px + 3px * var(--frame-intensity)) solid rgba(var(--color-accent-rgb), calc(0.05 + 0.6 * var(--frame-intensity)));
+    box-shadow: 0 0 calc(60px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.1 * var(--frame-intensity))), 
+                inset 0 0 calc(60px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.1 * var(--frame-intensity)));
+    border-radius: 15px;
+    overflow: visible;
+}
+
+/* Texture Layer: Digital Grid */
+body.theme-digital-grid .theme-texture {
+    background-image: 
+    linear-gradient(rgba(var(--color-accent-rgb), 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--color-accent-rgb), 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: calc(0.2 + 0.8 * var(--frame-intensity));
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Glassy Shine Sweep */
+body.theme-digital-grid .theme-texture::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(var(--color-accent-rgb), 0.1) 50%,
+        transparent 65%,
+        transparent 100%
+    );
+    background-size: 300% 300%;
+    animation: glass-sweep calc(40s - 30s * var(--frame-intensity)) ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+    opacity: calc(0.3 + 0.7 * var(--frame-intensity));
+}
+
+@keyframes glass-sweep {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* Corner Accents (HUD Style) */
+body.theme-digital-grid .theme-frame::before,
+body.theme-digital-grid .theme-frame::after,
+body.theme-digital-grid .theme-frame-inner::before,
+body.theme-digital-grid .theme-frame-inner::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-color: var(--color-accent);
+    border-style: solid;
+    filter: drop-shadow(0 0 calc(8px * var(--frame-intensity)) var(--color-accent))
+            drop-shadow(0 0 calc(15px * var(--frame-intensity)) var(--color-accent));
+    opacity: calc(0.3 + 0.7 * var(--frame-intensity));
+    animation: hub-pulse 8s ease-in-out infinite, 
+               neon-flicker 12s linear infinite;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Top-Left and Bottom-Right Corners */
+body.theme-digital-grid .theme-frame::before {
+    top: -8px;
+    left: -8px;
+    border-width: calc(4px + 2px * var(--frame-intensity)) 0 0 calc(4px + 2px * var(--frame-intensity));
+    border-top-left-radius: 20px;
+}
+
+/* Top-Right and Bottom-Left Corners */
+body.theme-digital-grid .theme-frame-inner::before {
+    top: -8px;
+    right: -8px;
+    border-width: calc(4px + 2px * var(--frame-intensity)) calc(4px + 2px * var(--frame-intensity)) 0 0;
+    border-top-right-radius: 20px;
+}
+
+body.theme-digital-grid .theme-frame-inner::after {
+    bottom: -8px;
+    left: -8px;
+    border-width: 0 0 calc(4px + 2px * var(--frame-intensity)) calc(4px + 2px * var(--frame-intensity));
+    border-bottom-left-radius: 20px;
+}
+
+body.theme-digital-grid .theme-frame::after {
+    bottom: -8px;
+    right: -8px;
+    border-width: 0 calc(4px + 2px * var(--frame-intensity)) calc(4px + 2px * var(--frame-intensity)) 0;
+    border-bottom-right-radius: 20px;
+}
+
+@keyframes hub-pulse {
+    0%, 100% { 
+        opacity: calc(0.2 + 0.2 * var(--frame-intensity)); 
+        filter: blur(1px) drop-shadow(0 0 5px var(--color-accent)); 
+    }
+    50% { 
+        opacity: calc(0.6 + 0.4 * var(--frame-intensity)); 
+        filter: blur(0px) drop-shadow(0 0 25px var(--color-accent)); 
+    }
+}
+
+@keyframes neon-flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+    20% { opacity: 0.5; }
+    24% { opacity: 0.8; }
+    55% { opacity: 0.3; }
+}
+
+/* User Customizations & Layout Overrides */
+body.theme-digital-grid .hosts-list span {
+    font-size: calc(1.8rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+}
+
+body.theme-digital-grid:not(.is-fullscreen) .hosts-list span {
+    font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+}
+
+body.theme-digital-grid .event-title {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+body.theme-digital-grid:not(.is-fullscreen) .main-content {
+    top: -2rem;
+}
+
+body.theme-digital-grid:not(.is-fullscreen) .event-footer {
+    top: -2rem;
+}
+
+body.theme-digital-grid .hosts-container {
+    margin-top: 1rem;
+}
+
+/* Tech-style Logo Banner Styling */
+body.theme-digital-grid .logo-banner {
+    background: var(--color-accent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: none;
+    border-radius: 15px;
+    padding: 16px 42px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Inner background for the banner */
+body.theme-digital-grid .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: rgba(5, 5, 20, 0.85);
+    border-radius: 13px;
+    z-index: 0;
+}
+
+body.theme-digital-grid .logo-banner > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-digital-grid .logo-text-custom {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 3px var(--color-accent) !important;
+}
+
+/* Light Mode Overrides for Digital Grid Banner */
+body.theme-digital-grid.is-light-bg .logo-banner {
+    background: #fff; /* Force a light border in dark HUD banner */
+}
+
+body.theme-digital-grid.is-light-bg .logo-text-custom {
+    color: #fff !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Premium Countdown Overlay for Digital Grid */
+body.theme-digital-grid .fullscreen-countdown .countdown-content {
+    background: rgba(0, 20, 40, 0.95) !important;
+    border: 1px solid rgba(var(--color-accent-rgb), 0.4) !important;
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(var(--color-accent-rgb), 0.2),
+        inset 0 0 10px rgba(var(--color-accent-rgb), 0.1) !important;
+}
+
+body.theme-digital-grid .fullscreen-countdown .countdown-text {
+    font-family: var(--font-display) !important;
+    color: var(--color-text) !important;
+    text-transform: uppercase;
+    font-size: 0.85rem !important;
+    letter-spacing: 2px !important;
+}
+
+body.theme-digital-grid .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 10px var(--color-accent) !important;
+}

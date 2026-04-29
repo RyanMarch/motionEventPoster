@@ -1,0 +1,234 @@
+/**
+ * SPRING BLOSSOM THEME STYLES
+ */
+
+/* 
+========================================
+BACKGROUND & SWAY LAYERS
+========================================
+*/
+.floral-bg {
+    position: absolute;
+    top: -3%;
+    left: -3%;
+    right: -3%;
+    bottom: -3%;
+    background: var(--img-border) center top / cover no-repeat;
+    opacity: 0;
+    z-index: var(--z-bg);
+    transition: opacity 0.4s ease-in-out;
+}
+
+body:not(.is-loading) .floral-bg {
+    opacity: 0.95;
+}
+
+.sway-layer {
+    position: absolute;
+    z-index: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body:not(.is-loading) .sway-layer {
+    opacity: 0.85;
+}
+
+.border-hidden .floral-bg,
+.border-hidden .sway-layer {
+    opacity: 0 !important;
+    animation-play-state: paused !important;
+}
+
+/* Specific Sway Positions */
+.sway-top-left {
+    top: -3%;
+    left: 0%;
+    width: 18vw;
+    height: 18vh;
+    min-width: 130px;
+    min-height: 130px;
+    background-image: var(--img-sway-1);
+    --static-transform: scaleY(-1) rotate(270deg);
+    transform-origin: left top;
+    animation: sway-1 calc(12s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-top-right {
+    top: -2%;
+    right: -2%;
+    width: 15vw;
+    height: 15vh;
+    min-width: 120px;
+    min-height: 120px;
+    background-image: var(--img-sway-2);
+    --static-transform: rotate(0deg);
+    transform-origin: right top;
+    animation: sway-2 calc(10s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-bottom-left {
+    bottom: -1%;
+    left: -5%;
+    width: 20vw;
+    height: 20vh;
+    min-width: 150px;
+    min-height: 150px;
+    transform-origin: left bottom;
+    animation: sway-3 calc(14s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-bottom-left::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: var(--img-sway-3);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(166deg);
+    transform-origin: center;
+}
+
+.sway-bottom-right {
+    bottom: -2%;
+    right: -5%;
+    width: 22vw;
+    height: 22vh;
+    min-width: 160px;
+    min-height: 160px;
+    background-image: var(--img-sway-4);
+    --static-transform: rotate(0deg);
+    transform-origin: right bottom;
+    animation: sway-4 calc(15s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-top-1,
+.sway-top-2,
+.sway-top-3 {
+    top: -2%;
+    width: 20vw;
+    height: 20vh;
+    min-width: 160px;
+    min-height: 160px;
+    background-image: var(--img-sway-2);
+    transform-origin: top center;
+    --static-transform: rotate(0deg);
+}
+
+.sway-top-1 {
+    left: 25%;
+    animation: sway-top calc(11s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-top-2 {
+    left: 50%;
+    transform: translateX(-50%);
+    animation: sway-top calc(13s / var(--gust-speed)) ease-in-out infinite alternate-reverse;
+}
+
+.sway-top-3 {
+    left: 75%;
+    animation: sway-top calc(12s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-left-side {
+    top: 65%;
+    left: -6%;
+    transform: translateY(-50%);
+    width: 15vw;
+    height: 15vh;
+    min-width: 153px;
+    min-height: 153px;
+    background-image: var(--img-sway-side);
+    transform-origin: left center;
+    --static-transform: rotate(0deg);
+    animation: sway-side calc(14s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+.sway-right-side {
+    top: 57%;
+    right: -5%;
+    transform: translateY(-50%);
+    width: 15vw;
+    height: 15vh;
+    min-width: 120px;
+    min-height: 120px;
+    background-image: var(--img-sway-3);
+    transform-origin: right center;
+    animation: sway-side calc(12s / var(--gust-speed)) ease-in-out infinite alternate-reverse;
+}
+
+/* Sway Animations */
+@keyframes sway-side {
+    0% { transform: translateY(-50%) var(--static-transform) rotate(-3deg); }
+    100% { transform: translateY(-50%) var(--static-transform) rotate(3deg); }
+}
+
+@keyframes sway-top {
+    0% { transform: var(--static-transform) rotate(-2deg); }
+    100% { transform: var(--static-transform) rotate(2deg); }
+}
+
+@keyframes sway-1 {
+    0% { transform: var(--static-transform) rotate(-2deg); }
+    100% { transform: var(--static-transform) rotate(4deg); }
+}
+
+@keyframes sway-2 {
+    0% { transform: var(--static-transform) rotate(2deg); }
+    100% { transform: var(--static-transform) rotate(-3deg); }
+}
+
+@keyframes sway-3 {
+    0% { transform: var(--static-transform) rotate(-4deg); }
+    100% { transform: var(--static-transform) rotate(1deg); }
+}
+
+@keyframes sway-4 {
+    0% { transform: var(--static-transform) rotate(3deg); }
+    100% { transform: var(--static-transform) rotate(-2deg); }
+}
+
+/* Banner Styling for Spring Theme */
+body.theme-spring .logo-banner {
+    background: var(--color-text);
+    padding: 10px 45px;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    margin-bottom: 20px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 30px) 50%, 100% 100%, 0 100%, 30px 50%);
+}
+
+/* Contrast-sensitive text color for the banner */
+body.theme-spring.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text);
+}
+
+@media (max-width: 768px) {
+    body.theme-spring .logo-banner {
+        padding: 10px 35px;
+        clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 50%, 100% 100%, 0 100%, 20px 50%);
+    }
+}
+
+@media (max-width: 480px) {
+    body.theme-spring .logo-banner {
+        padding: 8px 25px;
+        clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 50%, 100% 100%, 0 100%, 15px 50%);
+    }
+}
+
+/* Layout customizations */
+body.theme-spring:not(.is-fullscreen) .event-footer {
+    top: -2.5rem;
+}
+body.theme-spring .event-footer {
+    top: 0.5rem;
+}

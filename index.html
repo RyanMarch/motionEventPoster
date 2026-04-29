@@ -10,13 +10,19 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicons/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="assets/favicons/site.webmanifest" />
 
 
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Local fonts -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ui-components.css" />
+    <link rel="stylesheet" href="theme-spring.css" />
+    <link rel="stylesheet" href="theme-digital-grid.css">
     <style>
         /* Prevent Flash of Unstyled Content (FOUC) for hidden overlays */
         .is-loading #controls-panel,
@@ -31,15 +37,15 @@
 <body class="is-loading">
     <!-- Mobile Experience Blocker -->
     <div id="mobile-blocker" class="mobile-blocker">
-        <div class="mobile-blocker-content">
+        <div class="blocker-content">
             <div class="mobile-blocker-logo">
-                <span class="logo-text-custom ff-cin-dec">More Space Needed!</span>
+                <span class="logo-text-custom">More Space Needed!</span>
             </div>
-            <h1 class="ff-cin-dec">Larger Display Recommended</h1>
-            <p class="ff-mont">This motion poster is designed for large-scale displays and presentations.</p>
-            <p class="ff-mont">View on a larger screen for the full experience.</p>
-            <p id="mobile-screen-size-info" class="mobile-screen-size-info ff-mont"></p>
-            <button id="btn-proceed-anyway" class="btn-proceed-anyway ff-mont">Proceed anyway</button>
+            <h1>Larger Display Recommended</h1>
+            <p>This motion poster is designed for large-scale displays and presentations.</p>
+            <p>View on a larger screen for the full experience.</p>
+            <p id="mobile-screen-size-info" class="status-note"></p>
+            <button id="btn-bypass-blocker" class="btn-bypass-blocker">Proceed anyway</button>
         </div>
     </div>
 
@@ -80,16 +86,28 @@
 
     <!-- UI Overlay Content -->
     <div class="content-wrapper">
+        <!-- Fullscreen Countdown Overlay -->
+        <div id="fullscreen-countdown" class="fullscreen-countdown is-countdown-hidden">
+            <div class="countdown-content">
+                <div class="countdown-text">Auto-fullscreen in <span id="countdown-number">3</span>...</div>
+                <button id="btn-cancel-fullscreen" class="button button--secondary">Cancel</button>
+            </div>
+        </div>
+
+        <div class="theme-frame">
+            <div class="theme-texture"></div>
+            <div class="theme-frame-inner"></div>
+        </div>
         <div class="main-content">
             <div class="logo-banner" id="logo-banner">
                 <img id="logo-img" src="" alt="Logo" class="is-hidden">
-                <span id="logo-text" class="logo-text-custom ff-cin-dec">Your Organization</span>
+                <span id="logo-text" class="logo-text-custom">Your Organization</span>
             </div>
 
             <div class="hosts-container">
-                <h2 class="hosts-title ff-cin" id="hosts-title">Our Host Committee</h2>
+                <h2 class="hosts-title" id="hosts-title">Our Host Committee</h2>
 
-                <div class="hosts-list ff-mont">
+                <div class="hosts-list">
                     <span>The Honorable Alex Rivera</span>
                     <span>Jordan &amp; Casey Beaumont</span>
                     <span>Dr. Morgan Ellis</span>
@@ -118,10 +136,10 @@
         </div>
 
         <footer class="event-footer">
-            <div class="event-top-label ff-cin-dec" id="event-top-label">Annual</div>
-            <h1 class="event-title ff-cin-dec" id="event-title">Spring Soiree</h1>
-            <div class="event-subtitle ff-cin" id="event-subtitle">fundraiser</div>
-            <time class="event-date ff-cin" id="event-date">Wednesday, April 1, 2050</time>
+            <div class="event-top-label" id="event-top-label">Annual</div>
+            <h1 class="event-title" id="event-title">Spring Soiree</h1>
+            <div class="event-subtitle" id="event-subtitle">fundraiser</div>
+            <time class="event-date" id="event-date">Wednesday, April 1, 2050</time>
         </footer>
 
         <!-- QR Codes -->
@@ -133,14 +151,6 @@
         </div>
     </div>
 
-
-    <!-- Fullscreen Countdown Overlay -->
-    <div id="fullscreen-countdown" class="fullscreen-countdown is-hidden">
-        <div class="countdown-content">
-            <div class="countdown-text">Auto-fullscreen in <span id="countdown-number">3</span>...</div>
-            <button id="btn-cancel-fullscreen" class="button button--secondary">Cancel</button>
-        </div>
-    </div>
 
     <!-- Factory Reset Overlay (Holding State) -->
     <div id="factory-reset-overlay" class="factory-reset-overlay is-hidden">
@@ -157,8 +167,8 @@
         <div class="modal-backdrop"></div>
         <div class="modal-content-wrapper">
             <div class="reset-modal-box">
-                <h2 class="ff-cin">Factory Reset</h2>
-                <p class="ff-mont">All entered data will be deleted and the page will be refreshed.</p>
+                <h2>Factory Reset</h2>
+                <p>All entered data will be deleted and the page will be refreshed.</p>
                 <div class="modal-buttons">
                     <button id="btn-reset-cancel" class="button button--secondary">Go Back</button>
                     <button id="btn-reset-confirm" class="button button--danger">Factory Reset</button>
@@ -171,7 +181,7 @@
         <button id="btn-close-panel" class="btn-close-panel" aria-label="Close Panel" title="Close Panel">×</button>
         <div class="controls-panel-scroll">
             <div class="controls-panel-header">
-                <h3>[Q]uick controls</h3>
+                <h3>[Q]uick Controls</h3>
                 <label class="toggle-control toggle-control--compact" id="toggle-fullscreen-wrap">
                     <span class="toggle-switch">
                         <input type="checkbox" id="check-fullscreen">
@@ -212,10 +222,26 @@
                 <summary>[C]ustomize Appearance</summary>
 
                 <div class="panel-sub-section">
+                    <div class="panel-sub-section-title">Visual Theme</div>
+                    <div class="control">
+                        <div class="radio-tab-group" id="radio-group-theme">
+                            <label class="radio-tab">
+                                <input type="radio" name="activeTheme" value="spring" checked>
+                                <span>Spring Blossom</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="activeTheme" value="digital-grid">
+                                <span>Digital Grid</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-sub-section">
                     <div class="panel-sub-section-title">Flowers</div>
                     <div class="control-row">
                         <div class="control">
-                            <label>Petal Count <span id="val-max-petals">32</span></label>
+                            <label>Particle Count <span id="val-max-petals">32</span></label>
                             <input type="range" id="slider-max-petals" min="0" max="1000">
                         </div>
 
@@ -238,13 +264,13 @@
                     </div>
 
                     <div class="control">
-                        <label>Wave Strength <span id="val-gust-strength">10vw</span></label>
+                        <label>Wave Strength <span id="val-gust-strength">10</span></label>
                         <input type="range" id="slider-gust-strength" min="0" max="100" step="1">
                     </div>
 
                     <div class="btn-group">
-                        <button id="btn-pause-petals">Pause Petals</button>
-                        <button id="btn-pause-bg">Pause Waves</button>
+                        <button id="btn-pause-petals">Pause Particles</button>
+                        <button id="btn-pause-bg">Pause Frame</button>
                     </div>
                 </div>
 
@@ -372,10 +398,7 @@
                                 <input type="radio" name="logoMode" value="text" checked>
                                 <span>Text</span>
                             </label>
-                            <!-- <label class="radio-tab">
-                                <input type="radio" name="logoMode" value="hidden">
-                                <span>Hidden</span>
-                            </label> -->
+
                         </div>
 
                         <!-- Image mode -->
@@ -415,7 +438,7 @@
                     <div class="panel-sub-section-title">Event Details</div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-top-label">Top Label <span class="field-hint">(e.g. "Annual")</span></label>
+                        <label class="form-label" for="input-event-top-label">Top Label</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-top-label" class="text-input" placeholder="Annual" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-top-label" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -423,7 +446,7 @@
                     </div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-title">Event Title <span class="field-hint">(large)</span></label>
+                        <label class="form-label" for="input-event-title">Event Title</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-title" class="text-input" placeholder="Spring Soiree" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-title" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -431,7 +454,7 @@
                     </div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-subtitle">Subtitle <span class="field-hint">(e.g. "fundraiser")</span></label>
+                        <label class="form-label" for="input-event-subtitle">Subtitle</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-subtitle" class="text-input" placeholder="fundraiser" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-subtitle" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -546,18 +569,22 @@
                             <kbd>?</kbd>
                             <span class="shortcut-desc">Show this Help Menu</span>
                         </div>
-                        <div class="shortcut-item">
+                        <!-- <div class="shortcut-item">
+                            <kbd>Opt</kbd> / <kbd>Alt</kbd> + <kbd>S</kbd>
+                            <span class="shortcut-desc">Hot Reload CSS (No Refresh)</span>
+                        </div> -->
+                        <div class="shortcut-item shortcut-item-escape">
                             <kbd>Esc</kbd>
                             <span class="shortcut-desc">Close Panel / Forms / Exit Fullscreen</span>
                         </div>
                     </div>
                 </div>
                 <div class="panel-sub-section">
-                    <div class="help-section-title ff-cin">Asset Guidelines</div>
-                    <ul class="help-guidelines ff-mont">
-                        <li><strong>Logos</strong>: PNG or SVG with transparent backgrounds work best. Horizontal logos fit the banner more naturally.</li>
-                        <li><strong>QR Codes</strong>: Square, high-contrast images ensure reliable scanning from a distance.</li>
-                        <li><strong>File Size</strong>: Keep images under 2MB to ensure smooth performance and reliable saving.</li>
+                    <div class="help-section-title">Asset Guidelines</div>
+                    <ul class="help-guidelines">
+                        <li><strong>Logos</strong>: PNG or SVG with transparent backgrounds work best. Horizontal logos fit the banner more&nbsp;naturally.</li>
+                        <li><strong>QR Codes</strong>: Square, high-contrast images ensure reliable scanning from a&nbsp;distance.</li>
+                        <li><strong>File Size</strong>: Keep images under 2MB to ensure smooth performance and reliable&nbsp;saving.</li>
                     </ul>
                 </div>
             </details>
@@ -567,7 +594,15 @@
 
     <!-- Wake Lock Fallback Video -->
     <video id="wake-lock-video" class="wake-lock-video" loop muted playsinline></video>
-    <script src="script.js" defer></script>
+    <!-- Engine Scripts -->
+    <script src="themes.js"></script>
+    <script src="js/modules/Constants.js"></script>
+    <script src="js/modules/Utils.js"></script>
+    <script src="js/modules/ParticleEngine.js"></script>
+    <script src="js/modules/ThemeManager.js"></script>
+    <script src="js/modules/UIController.js"></script>
+    <script src="js/EventPoster.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
