@@ -138,7 +138,11 @@ window.EventPoster = class EventPoster {
             qrSoiree: document.getElementById('check-qr-soiree'),
             qrMembership: document.getElementById('check-qr-membership'),
             disableAutoFullscreen: document.getElementById('check-disable-auto-fullscreen'),
-            themeRadios: document.querySelectorAll('input[name="activeTheme"]')
+            themeSelectContainer: document.getElementById('theme-custom-select'),
+            themeSelectTrigger: document.getElementById('theme-select-trigger'),
+            themeSelectLabel: document.getElementById('theme-select-label'),
+            themeSelectIcon: document.getElementById('theme-select-icon'),
+            themeSelectOptions: document.querySelectorAll('.custom-select-option')
         };
 
         this.containers = {
@@ -295,7 +299,16 @@ window.EventPoster = class EventPoster {
         this.body.classList.toggle('title-hidden', this.state.hideTitle);
         this.body.classList.toggle('host-hidden', this.state.hideHost);
         this.body.classList.toggle('border-hidden', this.state.hideBorder);
-        this.controls.themeRadios?.forEach(r => r.checked = (r.value === this.state.activeTheme));
+        if (this.controls.themeSelectContainer) {
+            this.controls.themeSelectOptions.forEach(opt => {
+                const isSelected = opt.dataset.value === this.state.activeTheme;
+                opt.classList.toggle('selected', isSelected);
+                if (isSelected) {
+                    this.controls.themeSelectLabel.textContent = opt.textContent.replace(opt.dataset.icon, '').trim();
+                    this.controls.themeSelectIcon.textContent = opt.dataset.icon;
+                }
+            });
+        }
         this.themeManager.applyTheme(this.state.activeTheme, true);
         this.elements.qrSoiree.classList.toggle('qr-hidden', !this.state.qrSoiree);
         this.elements.qrMembership.classList.toggle('qr-hidden', !this.state.qrMembership);
@@ -493,7 +506,25 @@ window.EventPoster = class EventPoster {
     
     async requestWakeLock() { if ('wakeLock' in navigator) { try { this.state.wakeLock = await navigator.wakeLock.request('screen'); this.updateSleepStatus('api'); } catch { this.updateSleepStatus('error'); } } }
     releaseWakeLock() { this.state.wakeLock?.release(); this.state.wakeLock = null; this.updateSleepStatus('off'); }
-    updateSleepStatus(s) { const el = this.elements.sleepStatus; if (el) { el.textContent = s; el.className = `status-${s}`; } }
+    updateSleepStatus(s) {
+        const el = this.elements.sleepStatus;
+        if (!el) return;
+        
+        let label = 'Off';
+        let statusClass = '';
+        
+        if (s === 'api') {
+            label = 'Awake';
+            statusClass = 'sleep-good';
+        } else if (s === 'error') {
+            label = 'Error';
+            statusClass = 'sleep-bad';
+        }
+        
+        el.textContent = label;
+        // Keep the base class and add the status class
+        el.className = 'stat-value ' + statusClass;
+    }
     checkWakeLockSupport() {
         if (!this.elements.wakeLockStatus) return;
         if (!window.isSecureContext) {

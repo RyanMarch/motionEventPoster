@@ -311,8 +311,38 @@ window.UIController = class UIController {
     }
 
     bindThemeSelector() {
-        this.controls.themeRadios?.forEach(radio => {
-            radio.addEventListener('change', (e) => { if (e.target.checked) this.poster.themeManager?.applyTheme(e.target.value); });
+        if (!this.controls.themeSelectContainer) return;
+
+        this.controls.themeSelectTrigger?.addEventListener('click', () => {
+            this.controls.themeSelectContainer.classList.toggle('is-open');
+        });
+
+        this.controls.themeSelectTrigger?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.controls.themeSelectContainer.classList.toggle('is-open');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!this.controls.themeSelectContainer.contains(e.target)) {
+                this.controls.themeSelectContainer.classList.remove('is-open');
+            }
+        });
+
+        this.controls.themeSelectOptions?.forEach(opt => {
+            const selectOpt = () => {
+                this.poster.themeManager?.applyTheme(opt.dataset.value);
+                this.controls.themeSelectContainer.classList.remove('is-open');
+                this.controls.themeSelectTrigger?.focus();
+            };
+            opt.addEventListener('click', selectOpt);
+            opt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectOpt();
+                }
+            });
         });
     }
 
