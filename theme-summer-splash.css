@@ -1,0 +1,697 @@
+/**
+ * SUMMER SPLASH THEME — Pool Party
+ *
+ * Visual philosophy: You're AT the pool, looking across the bright
+ * turquoise water. Tropical Monstera leaves frame the edges.
+ * Inflatable rings and sunglasses float around the scene.
+ * Bright, saturated, sun-drenched. High Energy. Fun.
+ */
+
+
+/* ============================================
+   1. BODY & BACKGROUND — Sunny Pool Deck
+   ============================================ */
+
+body.theme-summer-splash {
+    background-color: #00b4d8;
+}
+
+/* Bright pool-blue gradient background — looking AT the water, not into it */
+body.theme-summer-splash .theme-frame {
+    opacity: 1;
+    border: none;
+    background: none;
+    box-shadow: none;
+    z-index: 0;
+    /* Pool tile grid — classic 1m² aqua tiles */
+    background-image:
+        linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px),
+        linear-gradient(170deg,
+            #48cae4 0%,
+            #00b4d8 25%,
+            #0096c7 50%,
+            #0077b6 75%,
+            #023e8a 100%
+        );
+    background-size: 100px 100px, 100px 100px, 100% 100%;
+    border-radius: 0;
+}
+
+/* Animated water shimmer — dappled sunlight on pool surface */
+body.theme-summer-splash .theme-texture {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Two animated caustic shimmer layers using radial gradients */
+body.theme-summer-splash .theme-texture::before,
+body.theme-summer-splash .theme-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(ellipse 80px 50px at 20% 30%, rgba(255,255,255,0.22) 0%, transparent 100%),
+        radial-gradient(ellipse 50px 80px at 70% 20%, rgba(255,255,255,0.18) 0%, transparent 100%),
+        radial-gradient(ellipse 120px 60px at 50% 70%, rgba(255,255,255,0.15) 0%, transparent 100%),
+        radial-gradient(ellipse 60px 90px at 85% 60%, rgba(255,255,255,0.20) 0%, transparent 100%),
+        radial-gradient(ellipse 90px 40px at 10% 80%, rgba(255,255,255,0.12) 0%, transparent 100%);
+    background-size: 100% 100%;
+    pointer-events: none;
+}
+
+body.theme-summer-splash .theme-texture::before {
+    opacity: 0.7;
+    animation: poolShimmer1 6s ease-in-out infinite alternate;
+}
+
+body.theme-summer-splash .theme-texture::after {
+    background-image:
+        radial-gradient(ellipse 70px 110px at 35% 15%, rgba(255,255,255,0.18) 0%, transparent 100%),
+        radial-gradient(ellipse 100px 50px at 80% 45%, rgba(255,255,255,0.14) 0%, transparent 100%),
+        radial-gradient(ellipse 55px 70px at 15% 55%, rgba(255,255,255,0.20) 0%, transparent 100%),
+        radial-gradient(ellipse 80px 45px at 60% 85%, rgba(255,255,255,0.16) 0%, transparent 100%);
+    opacity: 0.5;
+    animation: poolShimmer2 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes poolShimmer1 {
+    0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    25%  { transform: translate(3%, 2%) scale(1.03); opacity: 0.8; }
+    50%  { transform: translate(-2%, 4%) scale(0.97); opacity: 0.6; }
+    75%  { transform: translate(4%, -2%) scale(1.02); opacity: 0.9; }
+    100% { transform: translate(-1%, 3%) scale(1.01); opacity: 0.7; }
+}
+
+@keyframes poolShimmer2 {
+    0%   { transform: translate(0, 0) scale(1); opacity: 0.4; }
+    33%  { transform: translate(-3%, -2%) scale(1.04); opacity: 0.7; }
+    66%  { transform: translate(2%, 5%) scale(0.96); opacity: 0.5; }
+    100% { transform: translate(3%, -3%) scale(1.02); opacity: 0.6; }
+}
+
+/* Strong sunny glow from above */
+body.theme-summer-splash .theme-frame-inner {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    border: none;
+    background:
+        radial-gradient(
+            ellipse 60% 25% at 50% -5%,
+            rgba(255, 240, 180, 0.35) 0%,
+            rgba(255, 200, 80, 0.12) 50%,
+            transparent 100%
+        );
+    animation: sunGlow 7s ease-in-out infinite alternate;
+}
+
+@keyframes sunGlow {
+    0%   { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Hide frame toggle */
+body.border-hidden.theme-summer-splash .theme-frame,
+body.border-hidden.theme-summer-splash .theme-texture,
+body.border-hidden.theme-summer-splash .theme-frame-inner,
+body.border-hidden.theme-summer-splash .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+
+/* ============================================
+   2. SWAY LAYERS — Tropical Pool Party Props
+   ============================================ */
+
+/* Override sway layer opacity for this theme */
+body.theme-summer-splash .sway-layer {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+body.theme-summer-splash:not(.is-loading) .sway-layer {
+    opacity: 1;
+}
+
+/* TOP LEFT — Large Monstera leaf */
+body.theme-summer-splash .sway-top-left {
+    top: -4%;
+    left: -3%;
+    width: 22vw;
+    height: 22vw;
+    min-width: 200px;
+    min-height: 200px;
+    background-image: url('assets/images/monstera-leaf.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left;
+    --static-transform: rotate(-20deg) scaleX(-1);
+    transform-origin: top left;
+    filter: drop-shadow(3px 6px 12px rgba(0,50,0,0.4));
+    z-index: 5;
+    animation: sway-1 calc(10s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+/* TOP RIGHT — Monstera leaf (mirrored) */
+body.theme-summer-splash .sway-top-right {
+    top: -4%;
+    right: -3%;
+    width: 20vw;
+    height: 20vw;
+    min-width: 180px;
+    min-height: 180px;
+    background-image: url('assets/images/monstera-leaf.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top right;
+    --static-transform: rotate(15deg);
+    transform-origin: top right;
+    filter: drop-shadow(-3px 6px 12px rgba(0,50,0,0.4));
+    z-index: 5;
+    animation: sway-2 calc(12s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+/* BOTTOM LEFT — Inflatable pool ring */
+body.theme-summer-splash .sway-bottom-left {
+    bottom: 2%;
+    left: -2%;
+    width: 16vw;
+    height: 16vw;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: url('assets/images/pool-ring.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    --static-transform: rotate(-10deg);
+    transform-origin: center bottom;
+    filter: drop-shadow(2px 8px 10px rgba(0,0,0,0.3));
+    z-index: 5;
+    animation: floatBob 8s ease-in-out infinite alternate;
+}
+
+/* Override the ::before trick used by sway-bottom-left in spring theme */
+body.theme-summer-splash .sway-bottom-left::before {
+    display: none;
+}
+
+/* BOTTOM RIGHT — Sunglasses */
+body.theme-summer-splash .sway-bottom-right {
+    bottom: 3%;
+    right: -1%;
+    width: 18vw;
+    height: 10vw;
+    min-width: 160px;
+    min-height: 90px;
+    background-image: url('assets/images/summer-sunglasses.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    --static-transform: rotate(8deg);
+    transform-origin: right bottom;
+    filter: drop-shadow(-2px 6px 10px rgba(0,0,0,0.3));
+    z-index: 5;
+    animation: floatBob 10s ease-in-out infinite alternate-reverse;
+}
+
+/* LEFT SIDE — Extra monstera leaf, small */
+body.theme-summer-splash .sway-left-side {
+    top: 55%;
+    left: -4%;
+    width: 14vw;
+    height: 14vw;
+    min-width: 120px;
+    min-height: 120px;
+    background-image: url('assets/images/monstera-leaf.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center left;
+    --static-transform: rotate(-30deg) scaleX(-1);
+    transform-origin: left center;
+    filter: drop-shadow(3px 4px 8px rgba(0,50,0,0.35));
+    opacity: 0.85;
+    z-index: 5;
+    animation: sway-side calc(14s / var(--gust-speed)) ease-in-out infinite alternate;
+}
+
+/* RIGHT SIDE — Pool ring, smaller */
+body.theme-summer-splash .sway-right-side {
+    top: 52%;
+    right: -2%;
+    width: 13vw;
+    height: 13vw;
+    min-width: 110px;
+    min-height: 110px;
+    background-image: url('assets/images/pool-ring.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center right;
+    --static-transform: rotate(15deg);
+    transform-origin: right center;
+    filter: drop-shadow(-2px 4px 8px rgba(0,0,0,0.25));
+    z-index: 5;
+    animation: floatBob 11s ease-in-out infinite alternate;
+}
+
+/* Hide top-1/2/3 for this theme — they'd duplicate monstera */
+body.theme-summer-splash .sway-top-1,
+body.theme-summer-splash .sway-top-2,
+body.theme-summer-splash .sway-top-3 {
+    display: none;
+}
+
+/* Pool party float animation — gentle bobbing */
+@keyframes floatBob {
+    0%   { transform: var(--static-transform, rotate(0deg)) translateY(0px); }
+    50%  { transform: var(--static-transform, rotate(0deg)) translateY(-8px); }
+    100% { transform: var(--static-transform, rotate(0deg)) translateY(4px); }
+}
+
+
+/* ============================================
+   3. LOGO BANNER — Vibrant Coral / Orange
+   ============================================ */
+
+body.theme-summer-splash .logo-banner {
+    background: linear-gradient(135deg,
+        #FF6B35 0%,
+        #FF8C42 40%,
+        #FFB347 100%
+    );
+    border-radius: 100px;
+    padding: 14px 55px;
+    box-shadow:
+        0 6px 25px rgba(255, 107, 53, 0.5),
+        0 0 0 3px rgba(255, 255, 255, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -2px 0 rgba(180, 60, 0, 0.2);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    animation: bannerFloat 5s ease-in-out infinite alternate;
+}
+
+/* Shine sweep across the banner */
+body.theme-summer-splash .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -80%;
+    width: 50%;
+    height: calc(100% + 10px);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.45) 50%,
+        transparent 100%
+    );
+    border-radius: 100px;
+    animation: bannerShine 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes bannerFloat {
+    0%   { transform: translateY(0px) rotate(-0.2deg); }
+    100% { transform: translateY(-4px) rotate(0.2deg); }
+}
+
+@keyframes bannerShine {
+    0%   { left: -80%; opacity: 0; }
+    15%  { opacity: 1; }
+    55%  { left: 130%; opacity: 1; }
+    56%  { opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+}
+
+
+/* ============================================
+   4. EVENT FOOTER — Bright Pool Sign
+   ============================================ */
+
+body.theme-summer-splash .event-footer {
+    background: linear-gradient(180deg,
+        rgba(0, 40, 100, 0.88) 0%,
+        rgba(0, 20, 70, 0.92) 100%
+    );
+    border: 2px solid rgba(100, 220, 255, 0.5);
+    border-radius: 20px;
+    padding: 14px 50px;
+    box-shadow:
+        0 -4px 20px rgba(0, 180, 220, 0.4),
+        0 12px 35px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(100, 220, 255, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Animated glint on the footer top border */
+body.theme-summer-splash .event-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(100,220,255,0.9) 25%,
+        rgba(255,255,255,1) 50%,
+        rgba(100,220,255,0.9) 75%,
+        transparent 100%
+    );
+    animation: shimmerLine 3.5s ease-in-out infinite;
+}
+
+@keyframes shimmerLine {
+    0%, 100% { opacity: 0.4; transform: scaleX(0.85); }
+    50%       { opacity: 1; transform: scaleX(1.05); }
+}
+
+/* No extra ::after needed */
+body.theme-summer-splash .event-footer::after {
+    display: none;
+}
+
+
+/* ============================================
+   5. TYPOGRAPHY
+   ============================================ */
+
+/* Hosts title */
+body.theme-summer-splash .hosts-title {
+    font-family: var(--font-display);
+    color: #ffffff;
+    font-size: calc(2.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 20px rgba(255, 200, 0, 0.5),
+        0 3px 10px rgba(0, 30, 80, 0.7);
+}
+
+/* Host names */
+body.theme-summer-splash .hosts-list span {
+    font-family: var(--font-primary);
+    color: #ffffff;
+    font-size: calc(1.8rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    font-weight: 600;
+    text-shadow:
+        0 2px 8px rgba(0, 20, 80, 0.8),
+        0 0 15px rgba(0, 150, 200, 0.3);
+    letter-spacing: 0.3px;
+}
+
+/* Event title — bold, sunny yellow, bouncy */
+body.theme-summer-splash .event-title {
+    font-family: var(--font-display);
+    color: #FFE566;
+    font-weight: 800;
+    font-size: 3.8rem;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 20px rgba(255, 200, 0, 0.8),
+        0 3px 0 rgba(200, 120, 0, 0.6),
+        0 5px 15px rgba(0, 0, 0, 0.4);
+    animation: titlePulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes titlePulse {
+    0%   { text-shadow: 0 0 15px rgba(255,200,0,0.6), 0 3px 0 rgba(200,120,0,0.6), 0 5px 15px rgba(0,0,0,0.4); }
+    100% { text-shadow: 0 0 35px rgba(255,230,0,1),   0 3px 0 rgba(200,120,0,0.6), 0 5px 20px rgba(0,0,0,0.5); }
+}
+
+body.theme-summer-splash .event-top-label,
+body.theme-summer-splash .event-subtitle {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: #A8EDFF;
+    font-size: 1.4rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0, 30, 80, 0.8);
+}
+
+body.theme-summer-splash .event-date {
+    font-family: var(--font-primary);
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0, 20, 60, 0.7);
+    background: none;
+    border: none;
+    padding: 6px 20px;
+    display: inline-block;
+}
+
+/* Banner text */
+body.theme-summer-splash .logo-text-custom {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(150, 50, 0, 0.4);
+    letter-spacing: 1px;
+    font-size: 2.2rem;
+}
+
+
+/* ============================================
+   6. HOSTS CONTAINER — Water-surface backdrop
+   ============================================ */
+
+body.theme-summer-splash .hosts-container::before {
+    content: '';
+    position: absolute;
+    inset: 0.5rem 1rem;
+    background: radial-gradient(ellipse at center,
+        rgba(0, 30, 100, 0.80) 0%,
+        rgba(0, 30, 100, 0.55) 65%,
+        transparent 100%
+    );
+    opacity: var(--backdrop-opacity, 1);
+    border-radius: 24px;
+    z-index: 30;
+    pointer-events: none;
+    filter: blur(20px);
+    transition: opacity 0.3s ease;
+}
+
+body.is-sliding.theme-summer-splash .hosts-container::before {
+    filter: none;
+    transition: none;
+}
+
+
+/* ============================================
+   7. PARTICLE STYLES — Bubbles
+   ============================================ */
+
+body.theme-summer-splash .petal {
+    border-radius: 50% !important;
+    opacity: 0.55;
+    mix-blend-mode: screen;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    background: radial-gradient(
+        circle at 28% 28%,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(168, 237, 255, 0.4) 35%,
+        rgba(0, 180, 220, 0.1) 100%
+    ) !important;
+    box-shadow:
+        inset 0 0 5px rgba(255, 255, 255, 0.5),
+        0 0 6px rgba(0, 180, 220, 0.25);
+}
+
+body.theme-summer-splash .petal.is-white {
+    mix-blend-mode: screen;
+    opacity: 0.7;
+}
+
+
+/* ============================================
+   8. LAYOUT
+   ============================================ */
+
+body.theme-summer-splash .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--inset-v) var(--inset-h);
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: none;
+}
+
+body.theme-summer-splash .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    position: relative;
+    top: -0.5rem;
+    margin: 0;
+    padding-top: 0;
+}
+
+/* Flex spacers: pin banner top, hosts center */
+body.theme-summer-splash .main-content::before {
+    content: '';
+    flex: 1;
+    order: 2;
+}
+
+body.theme-summer-splash .main-content::after {
+    content: '';
+    flex: 1.2;
+    order: 4;
+}
+
+/* Banner */
+body.theme-summer-splash .logo-banner {
+    order: 1;
+    position: relative;
+    z-index: 100;
+    max-width: 80vw;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Hosts */
+body.theme-summer-splash .hosts-container {
+    position: relative;
+    order: 3;
+    transform: none;
+    z-index: auto;
+    will-change: auto;
+    width: fit-content;
+    max-width: var(--host-max-width, 850px);
+    padding: 1.5rem 3rem;
+}
+
+body.theme-summer-splash .hosts-title,
+body.theme-summer-splash .hosts-list {
+    position: relative;
+    z-index: 60;
+    will-change: auto;
+}
+
+body.theme-summer-splash .hosts-list {
+    margin: 10px 0 0 0;
+}
+
+/* Footer */
+body.theme-summer-splash .event-footer {
+    position: relative;
+    z-index: 60;
+    text-align: center;
+    box-sizing: border-box;
+    min-height: 120px;
+}
+
+
+/* ============================================
+   9. LIGHT MODE SUPPORT
+   ============================================ */
+
+body.theme-summer-splash.is-light-bg .hosts-title,
+body.theme-summer-splash.is-light-bg .hosts-list span {
+    text-shadow: 0 2px 4px rgba(0, 80, 150, 0.4);
+    color: #012a72;
+}
+
+body.theme-summer-splash.is-light-bg .event-title {
+    color: #ff6b35;
+    text-shadow:
+        0 0 15px rgba(255,120,0,0.5),
+        0 3px 0 rgba(180,60,0,0.5);
+}
+
+body.theme-summer-splash.is-light-bg .event-top-label,
+body.theme-summer-splash.is-light-bg .event-subtitle {
+    color: #0077b6;
+}
+
+body.theme-summer-splash.is-light-bg .event-date {
+    color: #023e8a;
+}
+
+body.theme-summer-splash.is-light-bg .logo-text-custom {
+    color: #ffffff;
+}
+
+
+/* ============================================
+   10. HIDDEN STATE NEUTRALIZER
+   ============================================ */
+
+body.theme-summer-splash.logo-hidden .logo-banner,
+body.theme-summer-splash.date-hidden .event-date,
+body.theme-summer-splash.title-hidden .event-top-label,
+body.theme-summer-splash.title-hidden .event-title,
+body.theme-summer-splash.title-hidden .event-subtitle,
+body.theme-summer-splash.host-hidden .hosts-container {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    transition: opacity 0.4s ease !important;
+}
+
+body.theme-summer-splash:is(.logo-hidden, .date-hidden, .title-hidden, .host-hidden) :is(.hosts-container, .hosts-title, .hosts-list, .event-footer, .main-content) {
+    transform: none !important;
+}
+
+body.theme-summer-splash:is(.logo-hidden, .date-hidden, .title-hidden, .host-hidden) .main-content {
+    padding-top: 0 !important;
+}
+
+body.theme-summer-splash:is(.logo-hidden, .date-hidden, .title-hidden, .host-hidden) .main-content::before {
+    flex: 1 !important;
+}
+
+body.theme-summer-splash:is(.logo-hidden, .date-hidden, .title-hidden, .host-hidden) .main-content::after {
+    flex: 1.2 !important;
+}
+
+
+/* ============================================
+   11. RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1600px) {
+    body.theme-summer-splash .event-title {
+        font-size: 3rem;
+    }
+    body.theme-summer-splash .hosts-title {
+        font-size: calc(2.2rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-summer-splash .hosts-list span {
+        font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-summer-splash .sway-top-left,
+    body.theme-summer-splash .sway-top-right {
+        width: 18vw;
+        height: 18vw;
+    }
+}
+
+@media (min-width: 2500px) {
+    body.theme-summer-splash .main-content {
+        top: 0;
+    }
+}

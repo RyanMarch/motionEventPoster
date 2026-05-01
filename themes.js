@@ -255,5 +255,68 @@ const THEMES = {
             gustStrength: 'Tuning Intensity',
             frameName: 'Signal'
         }
+    },
+    'summer-splash': {
+        id: 'summer-splash',
+        name: 'Summer Splash',
+        colors: {
+            primary: '#0077b6',    // Deep pool blue
+            accent: '#FFE566',     // Sunny yellow
+            text: '#ffffff',
+            darkText: '#023e8a'
+        },
+        swatches: [
+            { hex: '#0077b6', name: 'Pool Blue',      accent: '#FFE566' },
+            { hex: '#023e8a', name: 'Deep End',        accent: '#A8EDFF' },
+            { hex: '#00b4d8', name: 'Aqua Splash',    accent: '#FFE566' },
+            { hex: '#0d6e6e', name: 'Tidal Teal',     accent: '#FFD166' },
+            { hex: '#ff6b35', name: 'Sunset Coral',   accent: '#ffffff' },
+            { hex: '#3a86ff', name: 'Sky Blue',       accent: '#FFE566' },
+            { hex: '#ffd6e0', name: 'Flamingo',       accent: '#0077b6' }
+        ],
+        fonts: {
+            primary: "'Quicksand', 'Nunito', sans-serif",
+            display: "'Fredoka One', 'Nunito', sans-serif",
+            heading: "'Quicksand', sans-serif"
+        },
+        assets: {
+            border: "none",
+            sway1: "url('assets/images/monstera-leaf.png')",
+            sway2: "url('assets/images/monstera-leaf.png')",
+            sway3: "url('assets/images/pool-ring.png')",
+            sway4: "url('assets/images/summer-sunglasses.png')",
+            swaySide: "url('assets/images/pool-ring.png')"
+        },
+        particles: [
+            { color: '#A8EDFF', gradient: '#5ee7ff', type: 'star', weight: 40, shape: '50%', isWhite: true },
+            { color: '#ffffff', gradient: '#d0f5ff', type: 'star', weight: 30, shape: '50%', isWhite: true },
+            { color: '#90e0ef', gradient: '#48cae4', type: 'dust', weight: 20, shape: '50%', isWhite: true },
+            { color: '#caf0f8', gradient: '#ade8f4', type: 'star', weight: 10, shape: '50%', isWhite: true }
+        ],
+        frameClass: 'theme-frame--summer-splash',
+        overrides: {
+            insetV: 55,
+            insetH: 70,
+            hostTextSize: 1.0,
+            gustStrength: 20,
+            fallSpeed: 0.35,
+            maxPetals: 60,
+            windiness: 15,
+            backdropOpacity: 70,
+            bgColor: '#0077b6'
+        },
+        defaults: {
+            hostsTitle: "Thanks to our hosts",
+            eventTitle: "Summer Splash",
+            eventSubtitle: "Pool Party",
+            eventTopLabel: "Annual"
+        },
+        uiLabels: {
+            particlesPlural: 'Bubbles',
+            particlesSingular: 'Bubble',
+            borderToggle: 'Hide water effects',
+            gustStrength: 'Wave Intensity',
+            frameName: 'Waves'
+        }
     }
 };
