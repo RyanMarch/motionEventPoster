@@ -75,6 +75,7 @@ These concepts aim to expand the visual repertoire of the engine, leveraging its
 - **Particles**:
     - **Bubbles**: Transparent circles that rise from the bottom to the top.
     - **Beach Balls**: Occasional colorful spheres that bounce off the edges.
+- **Vibe**: Sunny, fun,Refreshing, Bold, High Energy
 - **Assets (Sway Layers)**:
     - Tropical Monstera leaves.
     - Inflatable rings or sunglasses.
