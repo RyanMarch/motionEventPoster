@@ -113,7 +113,8 @@ const THEMES = {
             maxPetals: 20,
             windiness: 20,
             hostTextSize: 0.9,
-            gustStrength: 25, // Default intensity for the HUD frame
+            opacity: 0.25,
+            gustStrength: 25,
             bgColor: '#001D39'
         },
         defaults: {
@@ -190,6 +191,69 @@ const THEMES = {
             borderToggle: 'Hide window frame',
             gustStrength: 'Frost Intensity',
             frameName: 'Frost'
+        }
+    },
+    'vintage-radio': {
+        id: 'vintage-radio',
+        name: 'Vintage Radio',
+        colors: {
+            primary: '#ffcc66', // Warm Amber Glow
+            accent: '#ff0000',  // Tuning Needle Red
+            text: '#EADBB5',    // Aged paper beige
+            darkText: '#332200'
+        },
+        swatches: [
+            { hex: '#ffcc66', name: 'Amber Glow', accent: '#ff0000' },
+            { hex: '#ff9500', name: 'Radio Orange', accent: '#ff0000' },
+            { hex: '#f44336', name: 'Signal Red', accent: '#ffffff' },
+            { hex: '#9e9e9e', name: 'Steel Chassis', accent: '#ff0000' },
+            { hex: '#e2e2e2', name: 'Lunar White', accent: '#ff0000' },
+            { hex: '#7b1b1b', name: 'Bakelite', accent: '#ffcc66' },
+            { hex: '#4db6ac', name: 'Tuning Teal', accent: '#ff3d00' }
+        ],
+        fonts: {
+            primary: "'Courier New', Courier, monospace",
+            display: "Impact, 'Anton', 'Oswald', sans-serif",
+            heading: "'Bebas Neue', sans-serif"
+        },
+        assets: {
+            border: "none",
+            sway1: "none",
+            sway2: "none",
+            sway3: "none",
+            sway4: "none",
+            swaySide: "none"
+        },
+        particles: [
+            { color: '#ffcc66', gradient: '#ffaa00', type: 'dust', weight: 40, shape: '50%', isWhite: true },
+            { color: '#ffaa00', gradient: '#cc7700', type: 'dust', weight: 30, shape: '50%', isWhite: true },
+            { color: '#ffffff', gradient: '#ffcc66', type: 'dust', weight: 20, shape: '50%', isWhite: true },
+            { color: '#cc7700', gradient: '#aa4400', type: 'dust', weight: 10, shape: '50%', isWhite: true }
+        ],
+        frameClass: 'theme-frame--vintage-radio',
+        overrides: {
+            insetV: 50,
+            insetH: 50,
+            hostTextSize: 0.95,
+            gustStrength: 30,
+            fallSpeed: 0.3,
+            maxPetals: 10,
+            windiness: 5,
+            backdropOpacity: 25,
+            bgColor: '#ffcc66'
+        },
+        defaults: {
+            hostsTitle: "OUR SPONSORS",
+            eventTitle: "RADIOTHON",
+            eventSubtitle: "24 HOURS OF LIVE BROADCASTING",
+            eventTopLabel: "PRESENTS"
+        },
+        uiLabels: {
+            particlesPlural: 'Dust Motes',
+            particlesSingular: 'Mote',
+            borderToggle: 'Hide wood cabinet',
+            gustStrength: 'Tuning Intensity',
+            frameName: 'Signal'
         }
     }
 };

@@ -209,6 +209,16 @@ window.UIController = class UIController {
     }
 
     bindEditPoster() {
+        this.elements.logoModeRadios?.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    this.state.posterText.logoMode = e.target.value;
+                    this.poster.savePosterText();
+                    this.poster.applyPosterText();
+                }
+            });
+        });
+
         const bindTF = (input, clear, key) => {
             input?.addEventListener('input', (e) => {
                 if (input.tagName === 'TEXTAREA') this.poster.autoGrowTextarea(input);
