@@ -41,7 +41,7 @@ window.POSTER_TEXT_DEFAULTS = {
     logoMode: 'text',
     logoImageData: null,
     logoText: 'Organization Name or Logo Goes Here',
-    hostsTitle: 'Our Host Committee',
+    hostsTitle: 'Thanks to our hosts',
     eventTopLabel: 'Annual',
     eventTitle: 'Spring Soiree',
     eventSubtitle: 'fundraiser',

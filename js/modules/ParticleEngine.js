@@ -41,7 +41,7 @@ window.ParticleEngine = class ParticleEngine {
         let color = type.color;
         let gradient = type.gradient;
 
-        // Dynamic adaptation for Digital Grid theme particles
+        // Dynamic adaptation for theme particles
         if (this.poster.theme.id === 'digital-grid') {
             const accent = this.state.accentColor || this.poster.theme.colors.accent;
             if (type.isWhite) {
@@ -64,6 +64,9 @@ window.ParticleEngine = class ParticleEngine {
 
         element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
         element.style.borderRadius = type.shape || '50%';
+        if (type.isWhite) {
+            element.classList.add('is-white');
+        }
         if (Math.random() > 0.7) {
             element.classList.add('is-blurred');
             element.style.opacity = '0.6';

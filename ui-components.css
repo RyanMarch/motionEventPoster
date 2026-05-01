@@ -151,7 +151,7 @@ advanced controls overlay.
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     z-index: 10;
-    max-height: 135px;
+    max-height: 140px;
     overflow-y: auto;
     opacity: 0;
     visibility: hidden;

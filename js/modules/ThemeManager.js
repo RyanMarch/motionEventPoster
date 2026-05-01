@@ -25,7 +25,10 @@ window.ThemeManager = class ThemeManager {
             if (pt.eventSubtitle === prevTheme.defaults.eventSubtitle) pt.eventSubtitle = theme.defaults.eventSubtitle;
             if (pt.eventTopLabel === prevTheme.defaults.eventTopLabel) pt.eventTopLabel = theme.defaults.eventTopLabel;
             // Handle current defaults and the legacy global default
-            if (pt.hostsTitle === prevTheme.defaults.hostsTitle || pt.hostsTitle === 'Thanks To Our Hosts') {
+            if (pt.hostsTitle === prevTheme.defaults.hostsTitle || 
+                pt.hostsTitle === 'Thanks To Our Hosts' || 
+                pt.hostsTitle === 'Thanks to our hosts' || 
+                pt.hostsTitle === 'Our Host Committee') {
                 pt.hostsTitle = theme.defaults.hostsTitle;
             }
             this.poster.applyPosterText();
@@ -65,44 +68,35 @@ window.ThemeManager = class ThemeManager {
         Object.values(this.poster.layers).forEach(layer => layer.innerHTML = '');
         this.state.petals = [];
         this.poster.particleEngine?.adjustAmbientPetals();
-        this.syncBackdrop();
+        
+        this.syncUI(); // Handle expensive label/font updates once
+        this.syncBackdrop(); // Handle color/opacity sync
+        
         this.initSwatches();
         this.poster.saveSettings();
         this.state.isApplyingTheme = false;
     }
 
-    syncBackdrop() {
-        const opacity = this.state.backdropOpacity / 100;
-        const color = this.state.bgColor || this.poster.theme.colors.primary;
+    /**
+     * Expensive UI updates that only need to happen when the THEME changes.
+     */
+    syncUI() {
         const theme = this.poster.theme;
 
-        const rgb = window.PosterUtils.hexToRgb(color);
-        const rgbStr = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
-        const accentColor = this.state.accentColor || theme.colors.accent;
-        const accentRgb = window.PosterUtils.hexToRgb(accentColor);
-        const accentRgbStr = `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}`;
-        
-        this.root.style.setProperty('--color-primary', color);
-        this.root.style.setProperty('--color-primary-rgb', rgbStr);
-        this.root.style.setProperty('--color-brand', color);
-        this.root.style.setProperty('--color-accent', accentColor);
-        this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
-        this.root.style.setProperty('--color-panel-accent', theme.colors.accent);
-        this.root.style.setProperty('--color-panel-brand', theme.colors.primary);
-        this.root.style.setProperty('--color-text', theme.colors.text);
-        this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
-        
+        // Update Fonts
+        this.root.style.setProperty('--font-primary', theme.fonts.primary);
+        this.root.style.setProperty('--font-display', theme.fonts.display);
+        this.root.style.setProperty('--font-heading', theme.fonts.heading);
+
+        // Update Assets
         this.root.style.setProperty('--img-border', theme.assets.border);
         this.root.style.setProperty('--img-sway-1', theme.assets.sway1);
         this.root.style.setProperty('--img-sway-2', theme.assets.sway2);
         this.root.style.setProperty('--img-sway-3', theme.assets.sway3);
         this.root.style.setProperty('--img-sway-4', theme.assets.sway4);
         this.root.style.setProperty('--img-sway-side', theme.assets.swaySide);
-        
-        this.root.style.setProperty('--font-primary', theme.fonts.primary);
-        this.root.style.setProperty('--font-display', theme.fonts.display);
-        this.root.style.setProperty('--font-heading', theme.fonts.heading);
 
+        // Update Labels
         const uiLabels = theme.uiLabels || {
             particlesPlural: 'Particles',
             particlesSingular: 'Particle',
@@ -128,11 +122,45 @@ window.ThemeManager = class ThemeManager {
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
         if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
+    }
 
+    /**
+     * High-frequency synchronization for color and opacity sliders.
+     */
+    syncBackdrop() {
+        const opacity = this.state.backdropOpacity / 100;
+        const color = this.state.bgColor || this.poster.theme.colors.primary;
+        const theme = this.poster.theme;
+
+        const rgb = window.PosterUtils.hexToRgb(color);
+        if (!rgb) return;
+        
+        const rgbStr = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
+        const accentColor = this.state.accentColor || theme.colors.accent;
+        const accentRgb = window.PosterUtils.hexToRgb(accentColor);
+        const accentRgbStr = accentRgb ? `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}` : rgbStr;
+        
+        // Update Core Colors
+        this.root.style.setProperty('--color-primary', color);
+        this.root.style.setProperty('--color-primary-rgb', rgbStr);
+        this.root.style.setProperty('--color-brand', color);
+        this.root.style.setProperty('--color-accent', accentColor);
+        this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
+        this.root.style.setProperty('--color-panel-accent', theme.colors.accent);
+        this.root.style.setProperty('--color-panel-brand', theme.colors.primary);
+        this.root.style.setProperty('--color-text', theme.colors.text);
+        this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
+        
+        // Luminance check for text contrast class (only toggle if state changes)
         const luminance = (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) / 255;
-        this.body.classList.toggle('is-light-bg', luminance > 0.5);
+        const isLight = luminance > 0.5;
+        if (this.body.classList.contains('is-light-bg') !== isLight) {
+            this.body.classList.toggle('is-light-bg', isLight);
+        }
 
+        // Backdrop Overlays
         const target = this.poster.containers.wrapper || this.root;
+        target.style.setProperty('--backdrop-opacity', opacity.toString());
         target.style.setProperty('--overlay-dark', `rgba(${rgbStr}, ${0.95 * opacity})`);
         target.style.setProperty('--overlay-mid', `rgba(${rgbStr}, ${0.7 * opacity})`);
         target.style.setProperty('--overlay-clear', `rgba(${rgbStr}, 0)`);

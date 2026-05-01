@@ -87,5 +87,21 @@ window.PosterUtils = {
             img.src = dataUrl;
         };
         reader.readAsDataURL(file);
+    },
+
+    shrinkTextToFit(el, maxWidth) {
+        if (!el) return;
+        el.style.fontSize = ''; // Reset
+        let currentFontSize = parseFloat(window.getComputedStyle(el).fontSize);
+        const minFontSize = 10;
+        const step = 1;
+
+        // Ensure we check against scrollWidth while keeping white-space: nowrap
+        let iterations = 0;
+        while (el.scrollWidth > maxWidth && currentFontSize > minFontSize && iterations < 100) {
+            currentFontSize -= step;
+            el.style.fontSize = `${currentFontSize}px`;
+            iterations++;
+        }
     }
 };

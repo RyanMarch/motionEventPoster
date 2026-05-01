@@ -247,6 +247,20 @@ window.EventPoster = class EventPoster {
             spans.forEach(span => span.style.fontSize = `calc(${bestScale}rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale))`);
         }
         this.enforceVerticalFit();
+        this.syncLogoTextScale();
+    }
+
+    syncLogoTextScale() {
+        const logo = this.elements.logoTextEl;
+        const banner = this.elements.logoBanner;
+        if (!logo || !banner || logo.classList.contains('is-hidden')) return;
+
+        if (this.state.activeTheme === 'vintage-radio') {
+            const maxWidth = banner.clientWidth;
+            window.PosterUtils.shrinkTextToFit(logo, maxWidth);
+        } else {
+            logo.style.fontSize = '';
+        }
     }
 
     enforceVerticalFit() {
@@ -288,6 +302,7 @@ window.EventPoster = class EventPoster {
         if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.state.bgColor.toUpperCase();
 
         this.controls.hostLayoutRadios?.forEach(r => r.checked = (r.value === this.state.hostLayout));
+        this.elements.logoModeRadios?.forEach(r => r.checked = (r.value === (this.state.posterText.logoMode || 'text')));
         this.applyHostLayout(this.state.hostLayout);
         this.themeManager.syncWind();
         this.syncLayout();
@@ -463,6 +478,11 @@ window.EventPoster = class EventPoster {
     savePosterText() { localStorage.setItem(window.STORAGE_KEYS.posterText, JSON.stringify(this.state.posterText)); }
     applyPosterText() {
         const pt = this.state.posterText; const mode = pt.logoMode || 'text';
+
+        // Toggle control panel sub-groups
+        if (this.elements.logoImageControls) this.elements.logoImageControls.classList.toggle('is-hidden', mode !== 'image');
+        if (this.elements.logoTextControls) this.elements.logoTextControls.classList.toggle('is-hidden', mode !== 'text');
+
         if (mode === 'image' && pt.logoImageData) { this.elements.logoImg.src = pt.logoImageData; this.elements.logoImg.classList.remove('is-hidden'); this.elements.logoTextEl.classList.add('is-hidden'); }
         else if (mode === 'text') { this.elements.logoImg.classList.add('is-hidden'); this.elements.logoTextEl.textContent = pt.logoText; this.elements.logoTextEl.classList.remove('is-hidden'); }
         else { this.elements.logoImg.classList.add('is-hidden'); this.elements.logoTextEl.classList.add('is-hidden'); }
