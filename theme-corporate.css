@@ -1,0 +1,445 @@
+/* ============================================================
+   THEME FRAME & BASE
+   ============================================================ */
+
+/* Sweep animation moved to transform-based for performance */
+
+body.theme-corporate .theme-frame {
+    opacity: 1;
+    border: none;
+    background: transparent;
+    z-index: 0 !important; /* Move the frame and its animated texture behind the content */
+}
+
+body.theme-corporate .rail-top,
+body.theme-corporate .rail-bottom,
+body.theme-corporate .rail-left,
+body.theme-corporate .rail-right,
+body.theme-corporate .floral-bg {
+    display: none !important; /* Force hide any straight borders */
+}
+
+/* 
+   BACKGROUND COLOR 
+   Update this value to change the main background (default is White/Powdery Blue)
+*/
+body.theme-corporate {
+    background-color: var(--color-accent) !important;
+    --z-particles-back: 201;
+    --z-particles-mid: 202;
+    --z-content: 200;
+    --z-particles-front: 250;
+}
+
+/* Disable the global radial vignette overlay for a cleaner corporate look */
+body.theme-corporate .content-wrapper {
+    background: none !important;
+}
+
+/* ============================================================
+   CORPORATE SWOOSHES — Fluid SVG Layers
+   ============================================================ */
+
+/* Hide all background layers by default in this theme */
+body.theme-corporate .sway-layer {
+    display: none !important;
+    position: fixed;
+    top: -10vh; left: -10vw;
+    width: 120vw;
+    height: 120vh;
+    pointer-events: none;
+    z-index: 50 !important;
+    opacity: 0.9;
+    visibility: visible !important;
+    transition: opacity 0.5s ease;
+    background-size: 100% 100%;
+    will-change: transform, opacity;
+    --motion-scale: calc(0.1 + 0.9 * var(--frame-intensity, 0.5));
+}
+
+/* Sweep glint logic for ribbons */
+body.theme-corporate .sway-layer::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    transform: translate3d(-150%, 0, 0);
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    will-change: transform;
+}
+
+/* Base depth layer */
+body.theme-corporate .theme-texture {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4) 0%, transparent 70%),
+        linear-gradient(113deg, 
+            rgba(255, 255, 255, 0.4), 
+            rgba(var(--color-primary-rgb), 0) 27.73%, 
+            rgba(var(--color-primary-rgb), 0.12) 61.76%, 
+            rgba(var(--color-primary-rgb), 0.15) 74.37%, 
+            rgba(var(--color-primary-rgb), 0) 82.35%, 
+            transparent
+        );
+    z-index: 0;
+    animation: corporate-texture-pulse 12s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes corporate-texture-pulse {
+    0%, 100% { opacity: calc(0.1 + 0.3 * var(--frame-intensity, 0.5)); }
+    50% { opacity: calc(0.2 + 0.6 * var(--frame-intensity, 0.5)); }
+}
+
+/* 1. Dominant Lower Right (Primary Theme Color) */
+body.theme-corporate .sway-bottom-right {
+    display: block !important;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M-500,2000 C300,900 600,600 1500,200 L1500,2000 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M-500,2000 C300,900 600,600 1500,200 L1500,2000 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    background: linear-gradient(135deg, var(--color-primary), rgba(var(--color-primary-rgb), 0.8));
+    z-index: 2 !important;
+    animation: corporate-wander-large calc(47s / var(--gust-speed, 1)) infinite ease-in-out;
+}
+
+/* 2. Overlapping White (Front of dominant) */
+body.theme-corporate .sway-bottom-left {
+    display: block !important;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M-500,2000 C300,1000 600,800 1500,700 L1500,2000 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M-500,2000 C300,1000 600,800 1500,700 L1500,2000 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    background-color: #ffffff; 
+    z-index: 2 !important;
+    animation: corporate-wander-sub calc(31s / var(--gust-speed, 1)) infinite ease-in-out reverse;
+}
+
+/* 3. Accent Swoosh (Left side) */
+body.theme-corporate .sway-left-side {
+    display: block !important;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M333,50 C400,200 400,800 333,950 L-500,950 L-500,50 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M333,50 C400,200 400,800 333,950 L-500,950 L-500,50 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    background: linear-gradient(to bottom, rgba(var(--color-primary-rgb), 0.4), rgba(var(--color-primary-rgb), 0.2));
+    z-index: 2 !important;
+    animation: corporate-wander-left calc(53s / var(--gust-speed, 1)) infinite ease-in-out;
+}
+
+/* 4. Top Curve (Subtle Theme Color) */
+body.theme-corporate .sway-top-right {
+    display: block !important;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M1500,-200 C700,350 300,500 -500,-200 Z' fill='black'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M1500,-200 C700,350 300,500 -500,-200 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    background-color: var(--color-primary);
+    opacity: 0.15;
+    z-index: 2 !important;
+    animation: corporate-wander-top calc(41s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+}
+
+/* 7. Vertical Swoosh removed per user request */
+
+
+
+
+
+
+/* Animations — Shift from "Oscillation" to "Wandering" */
+@keyframes corporate-wander-large {
+    0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25%  { transform: translate(calc(5% * var(--motion-scale)), calc(-2% * var(--motion-scale))) rotate(calc(1deg * var(--motion-scale))) scale(calc(1 + 0.02 * var(--motion-scale))); }
+    50%  { transform: translate(calc(-2% * var(--motion-scale)), calc(5% * var(--motion-scale))) rotate(calc(-1deg * var(--motion-scale))) scale(calc(1 + 0.05 * var(--motion-scale))); }
+    75%  { transform: translate(calc(-5% * var(--motion-scale)), calc(-5% * var(--motion-scale))) rotate(calc(2deg * var(--motion-scale))) scale(calc(1 + 0.02 * var(--motion-scale))); }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+@keyframes corporate-wander-sub {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(calc(-4% * var(--motion-scale)), calc(3% * var(--motion-scale))) scale(calc(1 + 0.1 * var(--motion-scale))); }
+    66%  { transform: translate(calc(3% * var(--motion-scale)), calc(-4% * var(--motion-scale))) scale(calc(1 - 0.05 * var(--motion-scale))); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+
+
+@keyframes corporate-swoosh-flow {
+    0%   { transform: translate(0, 0) skew(0deg) scale(1) rotate(0deg); }
+    25%  { transform: translate(calc(-15% * var(--motion-scale)), calc(5% * var(--motion-scale))) skew(calc(-20deg * var(--motion-scale))) scale(1.2) rotate(calc(-5deg * var(--motion-scale))); }
+    50%  { transform: translate(calc(10% * var(--motion-scale)), calc(-8% * var(--motion-scale))) skew(calc(15deg * var(--motion-scale))) scale(0.8) rotate(calc(3deg * var(--motion-scale))); }
+    75%  { transform: translate(calc(-8% * var(--motion-scale)), calc(12% * var(--motion-scale))) skew(calc(-10deg * var(--motion-scale))) scale(1.1) rotate(calc(-2deg * var(--motion-scale))); }
+    100% { transform: translate(0, 0) skew(0deg) scale(1) rotate(0deg); }
+}
+
+@keyframes corporate-ribbon-flow {
+    0%   { transform: translate(0, 0) scaleX(1) rotate(0deg); }
+    25%  { transform: translate(calc(-8% * var(--motion-scale)), calc(4% * var(--motion-scale))) scaleX(1.15) rotate(calc(-3deg * var(--motion-scale))); }
+    50%  { transform: translate(calc(5% * var(--motion-scale)), calc(-5% * var(--motion-scale))) scaleX(0.85) rotate(calc(2deg * var(--motion-scale))); }
+    75%  { transform: translate(calc(-3% * var(--motion-scale)), calc(7% * var(--motion-scale))) scaleX(1.1) rotate(calc(-1deg * var(--motion-scale))); }
+    100% { transform: translate(0, 0) scaleX(1) rotate(0deg); }
+}
+
+@keyframes corporate-swing-vertical {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    33%  { transform: translate(calc(-2% * var(--motion-scale)), calc(5% * var(--motion-scale))) rotate(calc(-8deg * var(--motion-scale))); }
+    66%  { transform: translate(calc(2% * var(--motion-scale)), calc(-3% * var(--motion-scale))) rotate(calc(7deg * var(--motion-scale))); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes corporate-opacity-pulse {
+    0%, 100% { opacity: calc(var(--frame-intensity, 0.5) * 0 * var(--motion-scale)); }
+    50%      { opacity: calc(var(--frame-intensity, 0.9) * 1 * var(--motion-scale)); }
+}
+
+@keyframes corporate-wander-left {
+    0%   { transform: translateX(0) skewY(0deg); }
+    25%  { transform: translateX(calc(5% * var(--motion-scale))) skewY(calc(2deg * var(--motion-scale))); }
+    50%  { transform: translateX(calc(-3% * var(--motion-scale))) skewY(calc(-1deg * var(--motion-scale))); }
+    75%  { transform: translateX(calc(8% * var(--motion-scale))) skewY(calc(1deg * var(--motion-scale))); }
+    100% { transform: translateX(0) skewY(0deg); }
+}
+
+@keyframes corporate-wander-top {
+    0%   { transform: translateY(0) rotate(0deg); }
+    33%  { transform: translateY(calc(8% * var(--motion-scale))) rotate(calc(2deg * var(--motion-scale))); }
+    66%  { transform: translateY(calc(-4% * var(--motion-scale))) rotate(calc(-1deg * var(--motion-scale))); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes corporate-sway-ribbon-rotated {
+    0%   { transform: translateX(calc(-8vw * var(--motion-scale))) translateY(0) rotate(calc(-5deg * var(--motion-scale))); }
+    50%  { transform: translateX(calc(12vw * var(--motion-scale))) translateY(calc(7vh * var(--motion-scale))) rotate(calc(5deg * var(--motion-scale))); }
+    100% { transform: translateX(calc(-8vw * var(--motion-scale))) translateY(0) rotate(calc(-5deg * var(--motion-scale))); }
+}
+
+
+
+@keyframes corporate-travel-ribbon {
+    0% { transform: translate(calc(-25% * var(--motion-scale)), calc(-15% * var(--motion-scale))) rotate(calc(-5deg * var(--motion-scale))); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(calc(25% * var(--motion-scale)), calc(15% * var(--motion-scale))) rotate(calc(5deg * var(--motion-scale))); opacity: 0; }
+}
+
+
+
+/* ============================================================
+   UI COMPONENTS — Absolute Pill Shapes (No Corners)
+   ============================================================ */
+
+body.theme-corporate .logo-banner {
+    /* Level and symmetrical background */
+    background: linear-gradient(to right, 
+        rgba(255, 255, 255, 0.15) 0%, 
+        rgba(255, 255, 255, 0.8) 15%, 
+        rgba(255, 255, 255, 0.8) 85%, 
+        rgba(255, 255, 255, 0.15) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: none !important;
+    border-radius: 100px !important; 
+    padding: 22px 120px; /* Wider padding for a "long" feel */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 100;
+    margin-bottom: -3.5rem;  
+    transform: none; /* Remove rotation */
+}
+
+/* Horizontal Speed Line — Replaces the vertical bar for a "swoosh" motion */
+body.theme-corporate .logo-banner::before {
+    content: '';
+    position: absolute;
+    bottom: 15px; left: 15%;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+    border-radius: 100px;
+    opacity: 0.8; 
+    z-index: 1;
+}
+
+body.theme-corporate .logo-text-custom {
+    font-weight: 700;
+    letter-spacing: 0.15em; /* Elegant spacing */
+    text-transform: uppercase;
+    color: #102A43 !important; /* Force dark text on light pill */
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+}
+
+/* Hosts Section */
+body.theme-corporate .hosts-container {
+    position: relative;
+    padding: 20px 40px;
+    z-index: 100; /* Raise above background swooshes */
+}
+
+/* Equalizing Scrim — Centered behind names to neutralize asymmetrical background swooshes */
+body.theme-corporate .hosts-container::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 120%; height: 120%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, 
+        rgba(var(--color-accent-rgb), var(--backdrop-opacity)) 33%, 
+        transparent 66%);
+    opacity: var(--backdrop-opacity, 1);
+    z-index: -1; /* Back behind the host names, but container is at 100 */
+    pointer-events: none;
+    filter: blur(15px);
+}
+
+body.theme-corporate .hosts-title {
+    font-family: var(--font-primary);
+    font-weight: 900;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--color-dark-text);
+    opacity: 1;
+    margin-bottom: 30px;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-corporate:not(.is-light-bg) .hosts-title {
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-corporate .hosts-list span {
+    position: relative;
+    z-index: 2; /* Ensure text stays above the scrim */
+    font-weight: 500;
+    color: var(--color-dark-text);
+    margin: 6px 12px;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-corporate:not(.is-light-bg) .hosts-list span {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Footer Section */
+body.theme-corporate .event-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    z-index: 100; /* Raise above background swooshes */
+    margin-top:-1.8rem;
+}
+
+body.theme-corporate .event-top-label {
+    font-weight: 500;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    opacity: 0.8;
+}
+
+body.theme-corporate:not(.is-light-bg) .event-top-label {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+body.theme-corporate .event-title {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--color-text);
+    margin: 0 0 1rem 0;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.theme-corporate:not(.is-light-bg) .event-title {
+    color: #ffffff;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-corporate .event-subtitle {
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-bottom: 0;
+}
+
+body.theme-corporate:not(.is-light-bg) .event-subtitle {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+body.theme-corporate .event-date {
+        background: linear-gradient(to right, 
+        rgba(255, 255, 255, 0.15) 0%, 
+        rgba(255, 255, 255, 0.65) 15%, 
+        rgba(255, 255, 255, 0.65) 85%, 
+        rgba(255, 255, 255, 0.15) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #102A43 !important; /* Force dark text on light pill */
+    padding: 10px 60px;
+    border-radius: 100px !important;
+    border: none !important;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    transform: none; /* Remove rotation */
+}
+
+/* Particle adjustments */
+body.theme-corporate .petal {
+    border-radius: 50% !important; /* Forces circles */
+    filter: blur(1px);
+    opacity: 0.6;
+}
+
+
+
+/* ============================================================
+   CORPORATE PANEL UI — Fixed Legibility Overrides
+   Prevents swatch color changes from making panel chrome unreadable.
+   The keyboard hint and theme picker always sit on dark backgrounds,
+   so we pin their colors to white regardless of active swatch.
+   ============================================================ */
+
+/* Keyboard hint: border, key labels, button borders always white */
+body.theme-corporate .keyboard-hint {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+body.theme-corporate .hint-btn {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+body.theme-corporate .hint-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
+}
+
+body.theme-corporate kbd {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Theme picker selected option: always readable white on the dark dropdown */
+body.theme-corporate .custom-select-option.selected {
+    color: #ffffff;
+}
+
+/* ============================================================
+   CUSTOM OPTION LAYOUT — Backdrop & Ribbons
+   ============================================================ */
+

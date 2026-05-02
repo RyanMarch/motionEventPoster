@@ -90,7 +90,7 @@ These concepts aim to expand the visual repertoire of the engine, leveraging its
 - **Background**: Subtle corporate gradients. Clean and unopinionated.
 - **Particles**:
     - **Data Points**: Small, connected dots (node-link style) moving slowly.
-    - **Focus Rings**: Subtle circles that expand and fade around text elements.
+    - **Focus Rings**: Subtle circles that expand, flow, and fade around text elements.
 - **Assets (Sway Layers)**:
     - Clean architectural lines or modern "Wayfinding" icons.
 - **Typography**:

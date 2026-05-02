@@ -8,6 +8,7 @@ window.ThemeManager = class ThemeManager {
 
     get state() { return this.poster.state; }
     get elements() { return this.poster.elements; }
+    get controls() { return this.poster.controls; }
     get root() { return document.documentElement; }
     get body() { return document.body; }
 
@@ -74,6 +75,7 @@ window.ThemeManager = class ThemeManager {
         
         this.initSwatches();
         this.poster.saveSettings();
+        this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
     }
 
@@ -122,6 +124,13 @@ window.ThemeManager = class ThemeManager {
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
         if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
+        
+        // Update Theme Selector Trigger
+        if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
+        if (this.controls.themeSelectLabel) this.controls.themeSelectLabel.textContent = theme.name;
+        
+        // Sync pause buttons in case labels changed
+        if (this.poster.syncPauseStates) this.poster.syncPauseStates();
     }
 
     /**
@@ -151,22 +160,46 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
         
+        // Stable theme-defined colors (non-swapped reference)
+        const themePrimaryRgb = window.PosterUtils.hexToRgb(theme.colors.primary);
+        const themeAccentRgb = window.PosterUtils.hexToRgb(theme.colors.accent);
+        if (themePrimaryRgb) {
+            this.root.style.setProperty('--color-theme-primary', theme.colors.primary);
+            this.root.style.setProperty('--color-theme-primary-rgb', `${themePrimaryRgb.r}, ${themePrimaryRgb.g}, ${themePrimaryRgb.b}`);
+        }
+        if (themeAccentRgb) {
+            this.root.style.setProperty('--color-theme-accent', theme.colors.accent);
+            this.root.style.setProperty('--color-theme-accent-rgb', `${themeAccentRgb.r}, ${themeAccentRgb.g}, ${themeAccentRgb.b}`);
+        }
+
         // Luminance check for text contrast class (only toggle if state changes)
-        const luminance = (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) / 255;
+        const checkRgb = (theme.id === 'corporate') ? (accentRgb || rgb) : rgb;
+        const luminance = (0.2126 * checkRgb.r + 0.7152 * checkRgb.g + 0.0722 * checkRgb.b) / 255;
         const isLight = luminance > 0.5;
         if (this.body.classList.contains('is-light-bg') !== isLight) {
             this.body.classList.toggle('is-light-bg', isLight);
         }
 
         // Backdrop Overlays
-        const target = this.poster.containers.wrapper || this.root;
+        const target = this.root;
         target.style.setProperty('--backdrop-opacity', opacity.toString());
-        target.style.setProperty('--overlay-dark', `rgba(${rgbStr}, ${0.95 * opacity})`);
-        target.style.setProperty('--overlay-mid', `rgba(${rgbStr}, ${0.7 * opacity})`);
-        target.style.setProperty('--overlay-clear', `rgba(${rgbStr}, 0)`);
+        
+        // Corporate theme uses accent for background, others use primary
+        const overlayColorStr = (theme.id === 'corporate') ? accentRgbStr : rgbStr;
+        
+        if (theme.id !== 'corporate') {
+            target.style.setProperty('--overlay-dark', `rgba(${overlayColorStr}, ${0.95 * opacity})`);
+            target.style.setProperty('--overlay-mid', `rgba(${overlayColorStr}, ${0.7 * opacity})`);
+            target.style.setProperty('--overlay-clear', `rgba(${overlayColorStr}, 0)`);
+        } else {
+            // Overlay variables removed for Corporate theme per user request
+            target.style.removeProperty('--overlay-dark');
+            target.style.removeProperty('--overlay-mid');
+            target.style.removeProperty('--overlay-clear');
+        }
 
-        // Sync particle colors if using a dynamic theme like Digital Grid
-        if (this.poster.theme.id === 'digital-grid') {
+        // Sync particle colors if using a dynamic theme like Digital Grid or Corporate
+        if (this.poster.theme.id === 'digital-grid' || this.poster.theme.id === 'corporate') {
             this.poster.particleEngine?.updateParticleColors();
         }
     }
@@ -191,6 +224,60 @@ window.ThemeManager = class ThemeManager {
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
         });
         this.updateSwatchActiveState();
+    }
+
+    /**
+     * Dynamically builds the theme selection dropdown based on THEMES configuration.
+     */
+    initThemeSelector() {
+        const container = document.getElementById('theme-select-options');
+        if (!container) return;
+
+        container.innerHTML = '';
+        Object.values(THEMES).forEach(theme => {
+            const opt = document.createElement('div');
+            opt.className = 'custom-select-option';
+            opt.dataset.value = theme.id;
+            opt.dataset.icon = theme.icon || '✨';
+            opt.tabIndex = 0;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'option-icon';
+            iconSpan.textContent = opt.dataset.icon;
+            
+            opt.appendChild(iconSpan);
+            opt.appendChild(document.createTextNode(` ${theme.name}`));
+            
+            const selectTheme = () => {
+                this.applyTheme(theme.id);
+                this.poster.controls.themeSelectContainer.classList.remove('is-open');
+                this.poster.controls.themeSelectTrigger?.focus();
+            };
+
+            opt.addEventListener('click', selectTheme);
+            opt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectTheme();
+                }
+            });
+
+            container.appendChild(opt);
+        });
+
+        // Re-cache options in EventPoster if needed
+        this.poster.controls.themeSelectOptions = container.querySelectorAll('.custom-select-option');
+        this.updateThemeSelectorActiveState();
+    }
+
+    /**
+     * Highlights the currently active theme in the dropdown.
+     */
+    updateThemeSelectorActiveState() {
+        if (!this.poster.controls.themeSelectOptions) return;
+        this.poster.controls.themeSelectOptions.forEach(opt => {
+            opt.classList.toggle('selected', opt.dataset.value === this.state.activeTheme);
+        });
     }
 
     updateSwatchActiveState() {
@@ -221,9 +308,19 @@ window.ThemeManager = class ThemeManager {
     }
 
     syncWind() {
-        const impact = this.state.gustStrength / 10;
+        const strength = this.state.gustStrength; // 0-100
+        const impact = strength / 10;
+        
+        // Lower the floor for speed. 
+        // We want it very calm at low numbers (0-10) and faster at high numbers.
+        // Quadratic curve: at 0 -> 0.12, at 10 -> 0.17, at 50 -> 0.77, at 100 -> 2.62
+        // This gives a much wider range of "calmness" at the low end.
+        const speed = 0.12 + (strength * strength / 4000);
+        
         this.root.style.setProperty('--gust-impact', impact);
-        this.root.style.setProperty('--gust-speed', 0.5 + impact * 0.5);
-        this.root.style.setProperty('--frame-intensity', this.state.gustStrength / 100);
+        this.root.style.setProperty('--gust-speed', speed.toFixed(3));
+        this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
+        
+        
     }
 };

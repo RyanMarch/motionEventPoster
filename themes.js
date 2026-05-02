@@ -5,10 +5,11 @@
  * Add a new entry here to create a new theme.
  */
 
-const THEMES = {
+window.THEMES = {
     spring: {
         id: 'spring',
         name: 'Spring Blossom',
+        icon: '🌸',
         colors: {
             primary: '#032858',
             accent: '#f9d783',
@@ -71,6 +72,7 @@ const THEMES = {
     'digital-grid': {
         id: 'digital-grid',
         name: 'Digital Grid',
+        icon: '⚡',
         colors: {
             primary: '#001D39',
             accent: '#7ff9ff',
@@ -134,6 +136,7 @@ const THEMES = {
     'alpine-winter': {
         id: 'alpine-winter',
         name: 'Alpine Winter',
+        icon: '❄️',
         colors: {
             primary: '#1B3B57', // Richer, more vibrant icy blue
             accent: '#AADDFF', // Glowing ice accent
@@ -196,6 +199,7 @@ const THEMES = {
     'vintage-radio': {
         id: 'vintage-radio',
         name: 'Vintage Radio',
+        icon: '📻',
         colors: {
             primary: '#ffcc66', // Warm Amber Glow
             accent: '#ff0000',  // Tuning Needle Red
@@ -255,5 +259,82 @@ const THEMES = {
             gustStrength: 'Tuning Intensity',
             frameName: 'Signal'
         }
+    },
+    'corporate': {
+        id: 'corporate',
+        name: 'Corporate Pro',
+        icon: '🏢',
+        colors: {
+            primary: '#005FB8',   // Primary Swoosh Color
+            accent: '#F0F4F8',    // Background Color
+            text: '#102A43',
+            darkText: '#05021e'
+        },
+        swatches: [
+            { hex: '#005FB8', name: 'Business Blue', accent: '#F0F4F8' },
+            { hex: '#56CCF2', name: 'Sky Blue',      accent: '#e3f0fdff' },
+            { hex: '#192b57ff', name: 'Onyx & Lime', accent: '#BCE29E' },
+            { hex: '#111827', name: 'Tech Teal',     accent: '#41baacff' },
+            { hex: '#171717', name: 'Carbon Cyan',   accent: '#A5F3FC' },
+            { hex: '#064E3B', name: 'Deep Forest',   accent: '#D9F99D' },
+            { hex: '#18181B', name: 'Onyx Gold',     accent: '#FDE68A' },
+            { hex: '#1E1B4B', name: 'Midnight Rose', accent: '#FFE4E6' },
+            { hex: '#451A03', name: 'Warm Espresso', accent: '#FFEDD5' },
+            // Reversed row (Dark/Inverted modes)
+            { hex: '#F0F4F8', name: 'Business Blue Rev', accent: '#005FB8' },
+            { hex: '#e3f0fdff', name: 'Sky Blue Rev',      accent: '#56CCF2' },
+            { hex: '#BCE29E', name: 'Onyx & Lime Rev', accent: '#192b57ff' },
+            { hex: '#41baacff', name: 'Tech Teal Rev',   accent: '#111827' },
+            { hex: '#A5F3FC', name: 'Carbon Cyan Rev',   accent: '#171717' },
+            { hex: '#D9F99D', name: 'Deep Forest Rev',   accent: '#064E3B' },
+            { hex: '#FDE68A', name: 'Onyx Gold Rev',     accent: '#18181B' },
+            // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
+            { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
+        ],
+        fonts: {
+            primary: "'Inter', sans-serif",
+            display: "'Inter', sans-serif",
+            heading: "'Inter', sans-serif"
+        },
+        assets: {
+            border: "none",
+            sway1: "none",
+            sway2: "none",
+            sway3: "none",
+            sway4: "none",
+            swaySide: "none"
+        },
+        particles: [
+            { useThemePrimary: true, type: 'dust', weight: 60, shape: '50%', isWhite: false },
+            { useThemeAccent: true, type: 'dust', weight: 40, shape: '50%', isWhite: false }
+        ],
+        frameClass: 'theme-frame--corporate',
+        overrides: {
+            insetV: 60,
+            insetH: 80,
+            hostTextSize: 1.0,
+            gustStrength: 70,
+            fallSpeed: 0.3,
+            maxPetals: 60,
+            windiness: 20,
+            backdropOpacity: 85,
+            bgColor: '#005FB8',    // Set default swatch to Blue
+            accentColor: '#F0F4F8' // Set background to White
+        },
+        defaults: {
+            hostsTitle: "PARTNERS",
+            eventTitle: "Corporate Event",
+            eventSubtitle: "Strategy Session",
+            eventTopLabel: "Annual"
+        },
+        uiLabels: {
+            particlesPlural: 'Particles',
+            particlesSingular: 'Particle',
+            borderToggle: 'Hide Background Swooshes',
+            gustStrength: 'Swoosh Intensity',
+            frameName: 'Swooshes'
+        }
     }
+
+
 };
