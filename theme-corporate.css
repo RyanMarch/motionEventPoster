@@ -368,3 +368,12 @@ body.theme-corporate kbd {
 body.theme-corporate .custom-select-option.selected {
     color: #ffffff;
 }
+
+    body.theme-alpine-winter.host-hidden .event-footer {
+        margin-bottom: unset !important;
+        transform: translateY(-4rem) scale(1.8);
+    }
+
+    body.theme-alpine-winter.host-hidden .logo-banner {
+        transform: translateY(-0.5rem) scale(2);
+    }

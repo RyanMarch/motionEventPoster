@@ -19,6 +19,9 @@
 body.theme-vintage-radio {
     background-color: #050202;
     background-image: radial-gradient(circle at center, rgba(var(--color-primary-rgb), 0.45) 0%, #050202 100%);
+    --z-particles-back: 25;
+    --z-particles-mid: 35;
+    --z-particles-front: 55;
 }
 
 /* Main Frame: Wood Cabinet */
@@ -33,9 +36,9 @@ body.theme-vintage-radio .theme-frame {
     border-radius: 40px;
     box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.9), 0 20px 40px rgba(0, 0, 0, 0.6);
     overflow: hidden;
-    /* Remove stacking context so .theme-frame-inner can layer
-       independently in the parent context (content-wrapper) */
-    z-index: auto;
+    /* Create a low-level stacking context for cabinet parts (z:10) 
+       so particles (z:25+) can reliably stay in front of the whole unit. */
+    z-index: 10;
 }
 
 /* Noise Texture Overlay */
@@ -61,8 +64,8 @@ body.theme-vintage-radio .theme-frame-inner {
     box-shadow: inset 0 0 40px rgba(0,0,0,0.9), inset 0 5px 15px rgba(0,0,0,0.7), 0 2px 2px rgba(255,255,255,0.1);
     border: 8px solid #2a150c;
     border-radius: 12px;
-    /* Above the backdrop (z:15) but below text (z:60+) */
-    z-index: 25;
+    /* Sits on top of the wood cabinet background (z:10) */
+    z-index: 20;
 }
 
 /* Radio Knobs — Shared Base */
@@ -324,7 +327,8 @@ body.theme-vintage-radio .hosts-container::before {
     );
     opacity: var(--backdrop-opacity, 1);
     border-radius: 20px;
-    z-index: 30;
+    /* Sits in front of back/mid particles (z:25, 35) but behind host text */
+    z-index: 40;
     pointer-events: none;
     filter: blur(12px);
     transition: filter 0.3s ease, opacity 0.3s ease;

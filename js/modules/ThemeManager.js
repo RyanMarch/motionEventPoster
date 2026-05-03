@@ -112,12 +112,8 @@ window.ThemeManager = class ThemeManager {
         const pLabel = uiLabels.particlesPlural;
         const spLabel = uiLabels.particlesSingular;
         
-        document.querySelectorAll('.panel-sub-section-title').forEach(el => {
-            const txt = el.textContent;
-            if (txt === 'Flowers' || txt === 'Particles' || txt === 'Snowflakes') {
-                el.textContent = pLabel;
-            }
-        });
+        const pTitle = document.getElementById('particles-section-title');
+        if (pTitle) pTitle.textContent = pLabel;
 
         const cntLabel = document.querySelector('label[for="slider-max-petals"]') || document.querySelector('#slider-max-petals')?.parentElement.querySelector('label');
         if (cntLabel) cntLabel.firstChild.textContent = `${spLabel} Count `;
