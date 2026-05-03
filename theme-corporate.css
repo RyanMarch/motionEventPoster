@@ -35,7 +35,7 @@ body.theme-corporate .content-wrapper {
 }
 
 /* ============================================================
-   CORPORATE SWOOSHES — Fluid SVG Layers
+   CORPORATE SHAPES — Fluid SVG Layers
    ============================================================ */
 
 /* Hide all background layers by default in this theme */
@@ -98,7 +98,7 @@ body.theme-corporate .sway-bottom-left {
     animation: corporate-wander-sub calc(31s / var(--gust-speed, 1)) infinite ease-in-out reverse;
 }
 
-/* 3. Accent Swoosh (Left side) */
+/* 3. Accent Shape (Left side) */
 body.theme-corporate .sway-left-side {
     display: block !important;
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M333,50 C400,200 400,800 333,950 L-500,950 L-500,50 Z' fill='black'/%3E%3C/svg%3E");
@@ -205,6 +205,24 @@ body.theme-corporate .logo-text-custom {
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
+/* Expand horizontal space for names */
+body.theme-corporate .main-content {
+    max-width: 1800px;
+}
+
+body.theme-corporate .hosts-list {
+    max-width: calc(var(--host-max-width) * var(--host-width-base)) !important;
+}
+
+/* Relax the narrowing multipliers for Corporate */
+body.theme-corporate .hosts-list.layout-justify {
+    max-width: calc(var(--host-max-width) * 0.9 * var(--host-width-base)) !important;
+}
+
+body.theme-corporate .hosts-list.layout-columns {
+    max-width: calc(var(--host-max-width) * 0.85 * var(--host-width-base)) !important;
+}
+
 /* Hosts Section */
 body.theme-corporate .hosts-container {
     position: relative;
@@ -212,7 +230,7 @@ body.theme-corporate .hosts-container {
     z-index: 100;
 }
 
-/* Equalizing Scrim — Centered behind names to neutralize asymmetrical background swooshes */
+/* Equalizing Scrim — Centered behind names to neutralize asymmetrical background shape */
 body.theme-corporate .hosts-container::before {
     content: '';
     position: absolute;

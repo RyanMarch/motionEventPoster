@@ -286,7 +286,7 @@ window.UIController = class UIController {
             
             if (isAccentBg) {
                 this.state.accentColor = color;
-                // If they are picking a custom background, we keep the current primary (swoosh) color
+                // If they are picking a custom background, we keep the current primary color
             } else {
                 this.state.bgColor = color;
                 this.state.accentColor = this.poster.deriveAccentColor(color);

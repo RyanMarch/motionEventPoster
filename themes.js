@@ -343,7 +343,8 @@
                 fallSpeed: 0.3,
                 maxPetals: 18,
                 windiness: 10,
-                backdropOpacity: 85
+                backdropOpacity: 85,
+                hostMaxWidth: 110
             },
             defaults: {
                 hostsTitle: "PARTNERS",
@@ -354,9 +355,9 @@
             uiLabels: {
                 particlesPlural: 'Particles',
                 particlesSingular: 'Particle',
-                borderToggle: 'Hide Background Swooshes',
-                gustStrength: 'Swoosh Intensity',
-                frameName: 'Swooshes'
+                borderToggle: 'Hide Background Shapes',
+                gustStrength: 'Shape Movement Intensity',
+                frameName: 'BackgroundShapes'
             }
         })
     };

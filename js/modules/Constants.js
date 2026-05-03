@@ -32,7 +32,7 @@ window.DEFAULTS = {
     isBgPaused: false,
     disableAutoFullscreen: false,
     isAppRunning: false,
-    bgColor: '#032858',
+    bgColor: null,
     accentColor: null,
     activeTheme: 'spring'
 };
@@ -96,7 +96,7 @@ window.SLIDER_CONFIGS = [
     { id: 'tumble-speed', label: 'Tumble Speed', min: 0, max: 10, step: 0.5, stateKey: 'tumbleSpeed', suffix: 'x', sectionId: 'appearance-particles', isHalf: true },
     { id: 'gust-strength', label: 'Intensity', min: 0, max: 100, step: 1, stateKey: 'gustStrength', sectionId: 'appearance-intensity' },
     { id: 'host-text-size', label: 'Size', min: 0.5, max: 2, step: 0.05, stateKey: 'hostTextSize', suffix: 'x', sectionId: 'appearance-text-sliders', isHalf: true },
-    { id: 'host-max-width', label: 'Max Width', min: 20, max: 100, step: 1, stateKey: 'hostMaxWidth', suffix: '%', sectionId: 'appearance-text-sliders', isHalf: true },
+    { id: 'host-max-width', label: 'Max Width', min: 20, max: 200, step: 1, stateKey: 'hostMaxWidth', suffix: '%', sectionId: 'appearance-text-sliders', isHalf: true },
     { id: 'inset-v', label: 'Vertical Spacing', min: 0, max: 200, step: 1, stateKey: 'insetV', suffix: 'px', sectionId: 'appearance-text-sliders', isHalf: true },
     { id: 'inset-h', label: 'Horizontal Spacing', min: 0, max: 200, step: 1, stateKey: 'insetH', suffix: 'px', sectionId: 'appearance-text-sliders', isHalf: true }
 ];
