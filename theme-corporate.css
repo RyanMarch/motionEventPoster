@@ -369,11 +369,48 @@ body.theme-corporate .custom-select-option.selected {
     color: #ffffff;
 }
 
-    body.theme-alpine-winter.host-hidden .event-footer {
-        margin-bottom: unset !important;
-        transform: translateY(-4rem) scale(1.8);
+@media (max-width:1800px) {
+    body.theme-corporate .event-footer {
+        margin-bottom: 3vh;
+    }
+    body.theme-corporate .logo-banner{
+        margin-top: -2rem;
+    }
+    body.theme-corporate .hosts-container {
+        margin: 6vh 0 -2vh 0;
+    }
+    body.theme-corporate .hosts-list span {
+        font-size: calc(1.4rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+}
+
+@media (min-width: 1801px) {
+body.theme-corporate .hosts-container{
+    margin-top: 2vh;
+    margin-bottom: -3vh;
+}
+    body.theme-corporate .hosts-list span {
+        font-size: calc(1em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
 
-    body.theme-alpine-winter.host-hidden .logo-banner {
-        transform: translateY(-0.5rem) scale(2);
+    body.theme-corporate .hosts-list {
+        max-width: 85vw !important;
+        margin-left: auto;
+        margin-right: auto;
+
     }
+
+
+body.theme-corporate.host-hidden .event-footer {
+    margin-bottom: unset !important;
+    transform: translateY(-4rem) scale(1.8);
+}
+
+body.theme-corporate.host-hidden .logo-banner {
+    transform: translateY(-0.5rem) scale(2);
+}
+
+body.theme-corporate .hosts-list span {
+    font-size: calc(1.7em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+}
+}
