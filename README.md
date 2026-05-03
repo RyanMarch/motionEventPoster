@@ -1,14 +1,16 @@
 <div align="center">
-  <h1> Interactive Event Poster</h1>
+  <h1>Interactive Event Poster</h1>
   <p><i>A professional, browser-based display for gala fundraisers and high-end venues.</i></p>
 
-  <a href="https://ryanmarch.github.io/springEventPoster/">
-    <img src="https://img.shields.io/badge/VIEW_LIVE_DEMO-87A96B?style=for-the-badge&logoColor=white" alt="Live Demo" height="45" />
+  <a href="https://ryanmarch.github.io/motionEventPoster/">
+    <img src="https://img.shields.io/badge/VIEW_LIVE_DEMO-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />
   </a>
 
   <br>
 
-  <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
+  <a href="https://ryanmarch.github.io/motionEventPoster/">
+    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
+  </a>
 </div>
 
 ## Overview
