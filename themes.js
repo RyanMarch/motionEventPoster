@@ -141,9 +141,10 @@
                 fallSpeed: 0.6,
                 maxPetals: 20,
                 windiness: 20,
-                hostTextSize: 0.9,
+                hostTextSize: 1.2,
                 opacity: 0.25,
-                gustStrength: 25
+                gustStrength: 25,
+                hostMaxWidth: 120
             },
             defaults: {
                 hostsTitle: "Featured Speakers",
@@ -205,7 +206,8 @@
                 gustStrength: 15,
                 fallSpeed: 0.4,
                 maxPetals: 100,
-                windiness: 5
+                windiness: 5,
+                hostMaxWidth: 100
             },
             defaults: {
                 hostsTitle: "Our Host Committee",
@@ -357,7 +359,7 @@
                 particlesSingular: 'Particle',
                 borderToggle: 'Hide Background Shapes',
                 gustStrength: 'Shape Movement Intensity',
-                frameName: 'BackgroundShapes'
+                frameName: 'Shapes'
             }
         })
     };

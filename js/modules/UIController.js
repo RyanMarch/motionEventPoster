@@ -30,15 +30,34 @@ window.UIController = class UIController {
         this.bindHoldHotspot();
         this.bindHostListClicks();
 
+        let resizeTimer;
         window.addEventListener('resize', () => {
-            requestAnimationFrame(() => {
-                if (this.state.isAppRunning) {
-                    this.poster.optimizeLayouts();
-                    this.poster.updateScreenSize();
-                } else {
-                    this.poster.updateMobileScreenSizeInfo();
-                }
-            });
+            this.state.isResizing = true;
+            this.body.classList.add('is-resizing');
+
+            // Only update the DOM for the stat box if it's actually visible to the user
+            if (this.poster.isControlsPanelVisible()) {
+                this.poster.updateScreenSize();
+            }
+
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this.state.isResizing = false;
+                this.body.classList.remove('is-resizing');
+
+                requestAnimationFrame(() => {
+                    if (this.state.isAppRunning) {
+                        // We always optimize layouts so the POSTER looks good, 
+                        // but we only update the STAT BOX if it's visible.
+                        this.poster.optimizeLayouts();
+                        if (this.poster.isControlsPanelVisible()) {
+                            this.poster.updateScreenSize();
+                        }
+                    } else {
+                        this.poster.updateMobileScreenSizeInfo();
+                    }
+                });
+            }, 200); 
         });
 
         document.addEventListener('visibilitychange', async () => {
@@ -70,6 +89,7 @@ window.UIController = class UIController {
         }
         const isVisible = panel.classList.toggle('is-visible');
         if (isVisible) {
+            this.poster.updateScreenSize();
             this.resetInactivityTimer();
             this.elements.keyboardHint?.classList.remove('is-visible');
             this.updateFocusableElements();
@@ -418,9 +438,29 @@ window.UIController = class UIController {
         document.addEventListener('fullscreenchange', () => {
             const isFS = !!document.fullscreenElement;
             this.body.classList.toggle('is-fullscreen', isFS);
-            if (isFS) { this.state.fullscreenStartTime = Date.now(); this.state.totalFullscreenSeconds = 0; if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = 'Fullscreen'; this.poster.cancelFullscreenCountdown(false); }
-            else { if (this.state.fullscreenStartTime) { this.state.totalFullscreenSeconds = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); this.state.fullscreenStartTime = null; }
-                this.elements.fullscreenToggle.checked = false; if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = '[F]ullscreen'; this.poster.releaseWakeLock(); localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); }
+            
+            // Ensure screen size stats update immediately after layout stabilizes
+            requestAnimationFrame(() => {
+                if (this.poster.isControlsPanelVisible()) {
+                    this.poster.updateScreenSize();
+                }
+            });
+
+            if (isFS) { 
+                this.state.fullscreenStartTime = Date.now(); 
+                this.state.totalFullscreenSeconds = 0; 
+                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = 'Fullscreen'; 
+                this.poster.cancelFullscreenCountdown(false); 
+            } else { 
+                if (this.state.fullscreenStartTime) { 
+                    this.state.totalFullscreenSeconds = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); 
+                    this.state.fullscreenStartTime = null; 
+                }
+                this.elements.fullscreenToggle.checked = false; 
+                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = '[F]ullscreen'; 
+                this.poster.releaseWakeLock(); 
+                localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); 
+            }
         });
     }
 

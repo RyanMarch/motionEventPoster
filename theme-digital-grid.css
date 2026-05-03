@@ -3,6 +3,7 @@
  */
 
 /* Main Theme Frame (HUD) */
+
 body.theme-digital-grid .theme-frame {
     opacity: 1;
     border: calc(1px + 3px * var(--frame-intensity)) solid rgba(var(--color-accent-rgb), calc(0.05 + 0.6 * var(--frame-intensity)));
@@ -128,12 +129,34 @@ body.theme-digital-grid .theme-frame::after {
 }
 
 /* User Customizations & Layout Overrides */
-body.theme-digital-grid .hosts-list span {
-    font-size: calc(1.8rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+@media (max-width: 1800px) {
+    body.theme-digital-grid .hosts-list span {
+        font-size: calc(1.3rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-digital-grid .hosts-list {
+        max-width: 80vw;
+    }
+    body.theme-digital-grid .logo-banner {
+        /* margin: 0rem 0 2rem 0; */
+    }
+    body.theme-digital-grid .main-content {
+        top: -2rem;
+    }
+    body.theme-digital-grid .event-footer {
+        top: -2rem;
+    }
 }
-
-body.theme-digital-grid:not(.is-fullscreen) .hosts-list span {
-    font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+@media (min-width: 1801px) {
+    body.theme-digital-grid .logo-banner {
+        margin: 3rem 0 -3rem 0;
+        scale:1.2;
+    }
+    body.theme-digital-grid .hosts-list span {
+        font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-digital-grid .event-footer {
+        margin-bottom: 2vh;
+    }
 }
 
 body.theme-digital-grid .event-title {
@@ -141,16 +164,8 @@ body.theme-digital-grid .event-title {
     margin-bottom: 20px;
 }
 
-body.theme-digital-grid:not(.is-fullscreen) .main-content {
-    top: -2rem;
-}
-
-body.theme-digital-grid:not(.is-fullscreen) .event-footer {
-    top: -2rem;
-}
-
 body.theme-digital-grid .hosts-container {
-    margin-top: 1rem;
+    margin-top: 4vh;
 }
 
 /* Tech-style Logo Banner Styling */
@@ -162,8 +177,8 @@ body.theme-digital-grid .logo-banner {
     border-radius: 15px;
     padding: 16px 42px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-    margin-bottom: 20px;
     overflow: hidden;
+    /* margin: 3rem 0 -1rem 0; */
 }
 
 /* Inner background for the banner */
@@ -220,4 +235,8 @@ body.theme-digital-grid .fullscreen-countdown .countdown-text {
 body.theme-digital-grid .fullscreen-countdown #countdown-number {
     color: var(--color-accent) !important;
     text-shadow: 0 0 10px var(--color-accent) !important;
+}
+/* Expand horizontal space for names */
+body.theme-digital-grid .main-content {
+    max-width: 1800px;
 }

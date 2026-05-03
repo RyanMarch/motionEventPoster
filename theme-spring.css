@@ -202,7 +202,7 @@ body.theme-spring .logo-banner {
     background: var(--color-text);
     padding: 10px 45px;
     filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     clip-path: polygon(0 0, 100% 0, calc(100% - 30px) 50%, 100% 100%, 0 100%, 30px 50%);
 }
 
@@ -211,6 +211,53 @@ body.theme-spring.is-light-bg .logo-text-custom {
     color: var(--color-dark-text);
 }
 
+/* 
+========================================
+LAYOUT CUSTOMIZATIONS & RESPONSIVITY
+========================================
+*/
+
+/* Expand horizontal space for names */
+body.theme-digital-grid .main-content {
+    max-width: 1800px;
+}
+
+/* 1. Large Screen (1920x1080) Fullscreen Styles */
+@media (min-width: 1801px) {
+    body.theme-spring .hosts-list {
+        max-width: 77vw;
+        padding: 0;
+    }
+    body.theme-spring .event-footer {
+        /* top: 0.5rem; */
+        /* margin-bottom: 2vh; */
+        scale:1.2;
+    }
+
+    body.theme-spring .logo-banner {
+        /* margin-bottom: 30px; */
+        margin: 4rem 0 -1rem 0;
+        scale:1.1;
+    }
+    body.theme-spring .hosts-list span {
+        font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+}
+
+/* 2. Smaller Screen & Windowed Styles ("The Smaller Pot") */
+@media (max-width: 1800px) {
+    body.theme-spring:not(.is-fullscreen) .event-footer {
+        top: -1rem;
+    }
+    body.theme-spring.is-fullscreen .event-footer {
+        top: 2rem;
+    }
+    body.theme-spring .hosts-container {
+        margin: 1.5rem 0 -1rem 0;
+    }
+}
+
+/* 3. Mobile & Tablet Refinements */
 @media (max-width: 768px) {
     body.theme-spring .logo-banner {
         padding: 10px 35px;
@@ -223,12 +270,4 @@ body.theme-spring.is-light-bg .logo-text-custom {
         padding: 8px 25px;
         clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 50%, 100% 100%, 0 100%, 15px 50%);
     }
-}
-
-/* Layout customizations */
-body.theme-spring:not(.is-fullscreen) .event-footer {
-    top: -2.5rem;
-}
-body.theme-spring .event-footer {
-    top: 0.5rem;
 }

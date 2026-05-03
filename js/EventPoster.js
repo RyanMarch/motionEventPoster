@@ -219,10 +219,13 @@ window.EventPoster = class EventPoster {
         this.state.totalFullscreenSeconds = null;
         this.state.fullscreenStartTime = null;
         this.state.isKeyboardUser = false;
+        this.state.isResizing = false;
         this.state.factoryResetStartTime = null;
     }
 
     init() {
+        // setupEventListeners moved to startApp so dynamic sliders are ready before binding
+
         if (this.elements.btnBypassBlocker) {
             this.elements.btnBypassBlocker.addEventListener('click', () => {
                 this.body.classList.add('is-mobile-dismissed');
@@ -250,7 +253,7 @@ window.EventPoster = class EventPoster {
         this.ui.initSlidersUI();
         this.ui.initShortcutsUI();
         this.ui.setupEventListeners();
-        
+                
         this.themeManager.applyTheme(this.state.activeTheme, true);
         this.applyStateToUI();
         this.applyPosterText();
@@ -301,7 +304,12 @@ window.EventPoster = class EventPoster {
         this.syncLayout();
         this.themeManager.syncBackdrop();
 
+        this.controls.qrSoiree.checked = this.state.qrSoiree;
         this.controls.qrMembership.checked = this.state.qrMembership;
+        this.controls.hideLogo.checked = this.state.hideLogo;
+        this.controls.hideDate.checked = this.state.hideDate;
+        this.controls.hideTitle.checked = this.state.hideTitle;
+        this.controls.hideHost.checked = this.state.hideHost;
         this.controls.hideBorder.checked = this.state.hideBorder;
         this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
 
@@ -500,6 +508,7 @@ window.EventPoster = class EventPoster {
             ...this.state,
             ...window.DEFAULTS, 
             isAppRunning: this.state.isAppRunning,
+            activeTheme: this.state.activeTheme, // Preserve the current theme
             addedHosts: this.state.addedHosts, 
             removedHosts: this.state.removedHosts, 
             posterText: this.state.posterText 
@@ -560,7 +569,13 @@ window.EventPoster = class EventPoster {
         else { localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); }
     }
 
-    updateScreenSize() { if (this.elements.screenSize) this.elements.screenSize.textContent = `${window.innerWidth} × ${window.innerHeight}`; }
+    updateScreenSize() { 
+        if (this.elements.screenSize) {
+            const w = window.innerWidth || document.documentElement.clientWidth;
+            const h = window.innerHeight || document.documentElement.clientHeight;
+            this.elements.screenSize.textContent = `${w} × ${h}`; 
+        }
+    }
     updateTimerDisplay() { if (this.state.fullscreenStartTime && this.elements.timer) { const sec = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); const m = Math.floor(sec / 60), s = sec % 60; this.elements.timer.textContent = `${m}:${s < 10 ? '0' : ''}${s}`; } }
     
     showKeyboardHint() {
