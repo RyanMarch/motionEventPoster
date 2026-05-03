@@ -29,10 +29,10 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 ## Features
 
 ### Atmospheric Elegance
-*   **Dynamic Flower Petal System:** See cherry blossoms, autumn leaves, or celebratory gold petals subtly drift by to match your event's season and theme.
+*   **Multi-Atmosphere Particle Engine:** Experience more than just cherry blossoms. Depending on your theme, see snowflakes, dust motes, or celebratory geometric particles subtly drift through the display.
 *   **Adjustable Physics:** Fine-tune wind frequency, fall speed, and tumble rotation to create a natural environment that fits your needs.
-*   **Swaying Floral Elements:** Border decorations and stems respond to a virtual "breeze," adding depth and motion to the display.
-*   **Animated SVG Border:** An elegant, animated floral frame that ties the entire visual experience together.
+*   **Theme-Specific Frames:** From elegant floral borders to rustic wood cabinets and frosted glass, each theme provides a unique window into your event.
+*   **Dynamic Visual Identity:** Instantly swap between professional, seasonal, or high-energy themes to match the tone of your gathering.
 
 ### Live Content Studio
 *   **Custom-To-You Branding:** Add your organization name and upload custom logos directly in the browser.
@@ -102,19 +102,18 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 - **Performance stats** — live FPS counter, screen resolution, fullscreen session timer, and Wake Lock status
 
 ### Customize Appearance
-- **Petal Count** — number of falling petals on screen at once
-- **Windiness** — frequency of wind gusts
-- **Fall Speed / Tumble Speed** — petal physics
-- **Wave Strength** — how dramatically the corner flowers sway
-- **Pause Petals / Pause Waves** — freeze animations independently
-- **Host Layout** — Justify, Centered, or Columns
-- **Host Text Size / Max Width** — scale and constrain the host list
-- **Vertical / Horizontal Inset** — adjust content margins from the border
-- **Background Colors** — change background colors using the built-in designer colors or choose your own with the color picker
-- **Backdrop Opacity** — fade the overlay behind the host list
-- **QR code overlays** — Individually show or hide left and right QR code areas
-- **Show/Hide** toggles for: logo, event title, date, host list, flower border
-- **Disable auto-fullscreen** — prevent the fullscreen restoration after refresh
+- **Theme Switcher** — Choose from curated visual identities like Corporate Pro, Alpine Winter, Vintage Radio, or Spring Blossom.
+- **Particle Dynamics** — Adjust the count, speed, and windiness of atmospheric effects (petals, snow, etc.).
+- **Intensity Controls** — Scale the movement of background frames and swaying elements.
+- **Theme-Specific Controls** — UI labels automatically update to match your theme (e.g., "Petal Count" vs "Snowflake Count").
+- **Host Layout** — Justify, Centered, or Columns.
+- **Host Text Size / Max Width** — Scale and constrain the host list.
+- **Vertical / Horizontal Inset** — Adjust content margins from the border.
+- **Color Palettes** — Change background and accent colors using theme-specific swatches or a custom color picker.
+- **Backdrop Opacity** — Fade the overlay behind the host list for better legibility.
+- **QR Code Overlays** — Independently toggle left and right QR code areas.
+- **Show/Hide Toggles** — Logo, event title, date, host list, and theme frames.
+- **Disable auto-fullscreen** — Prevent the fullscreen restoration after refresh.
 
 ### Add and Remove Hosts
 - Add host names one at a time via a form (supports Enter key, detects duplicates)
@@ -134,9 +133,16 @@ This project is built as a lightweight, zero-dependency "Vanilla" web applicatio
 
 ### File Structure
 *   `index.html`: The core structure and entry point.
-*   `script.js`: Contains the `EventPoster` class, handling all physics, state management, and persistence logic.
-*   `styles.css`: Advanced CSS animations, layout systems, and responsive design tokens.
-*   `/assets`: Local font files (Cinzel, Montserrat) and optimized SVG/PNG visual assets.
+*   `js/main.js`: Initializes the application and handles loading states.
+*   `js/EventPoster.js`: The central orchestrator managing state, persistence, and layout.
+*   `js/modules/`:
+    *   `ThemeManager.js`: Handles visual themes, color derivations, and CSS variables.
+    *   `ParticleEngine.js`: Manages the high-performance atmospheric animation system.
+    *   `UIController.js`: Manages all user interactions, keyboard shortcuts, and form logic.
+    *   `Constants.js`: Centralized configuration for defaults and storage keys.
+*   `styles.css`: Core layout engine and base utility classes.
+*   `ui-components.css`: Modern, modular UI styles for the management panel.
+*   `theme-[name].css`: Specific styling and animation overrides for each theme.
 
 ### Persistence Strategy
 The application uses the browser's `localStorage` API to store all user configurations. This ensures that:
@@ -165,6 +171,7 @@ This architecture allows the project to remain entirely client-side, requiring n
 
 | Version | Notes |
 |---------|-------|
+| v6 | **The "Themes" Update:** Introduced Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
 | v4 | Adds live host management, factory reset, auto-fullscreen, and responsive layouts. |
 | v1–v3 | Earlier iterations with static host lists and limited controls. |
