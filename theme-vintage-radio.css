@@ -243,6 +243,8 @@ body.theme-vintage-radio .main-content {
     top: -1rem;
     margin: 0;
     padding-top: 0;
+    /* Elevate above speaker grill (z:25) and theme frame */
+    z-index: 60;
 }
 
 body.theme-vintage-radio.is-fullscreen .main-content {

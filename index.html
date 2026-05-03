@@ -15,7 +15,7 @@
 
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Local fonts -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="theme-digital-grid.css">
     <link rel="stylesheet" href="theme-alpine-winter.css">
     <link rel="stylesheet" href="theme-vintage-radio.css">
+    <link rel="stylesheet" href="theme-corporate.css">
     <style>
         /* Prevent Flash of Unstyled Content (FOUC) for hidden overlays */
         .is-loading #controls-panel,
@@ -51,16 +52,7 @@
         </div>
     </div>
 
-    <!-- Background Swaying Flowers -->
-    <div class="sway-layer sway-top-right"></div>
-    <div class="sway-layer sway-top-left"></div>
-    <div class="sway-layer sway-bottom-left"></div>
-    <div class="sway-layer sway-bottom-right"></div>
-    <div class="sway-layer sway-top-1"></div>
-    <div class="sway-layer sway-top-2"></div>
-    <div class="sway-layer sway-top-3"></div>
-    <div class="sway-layer sway-left-side"></div>
-    <div class="sway-layer sway-right-side"></div>
+    <!-- Background Swaying Flowers (Populated dynamically) -->
 
     <!-- Keyboard Hint Overlay -->
     <div id="keyboard-hint" class="keyboard-hint">
@@ -81,13 +73,12 @@
     <!-- Main Decorative Border -->
     <div class="floral-bg"></div>
 
-    <!-- Particle Layers -->
-    <div id="particles-back" class="particle-layer"></div>
-    <div id="particles-front" class="particle-layer"></div>
-    <div id="particles-mid" class="particle-layer"></div>
-
-    <!-- UI Overlay Content -->
     <div class="content-wrapper">
+        <!-- Background elements moved inside for stacking context -->
+        <div id="vignette-overlay"></div>
+        <div id="particles-back" class="particle-layer"></div>
+        <div id="particles-mid" class="particle-layer"></div>
+        <div id="particles-front" class="particle-layer"></div>
         <!-- Fullscreen Countdown Overlay -->
         <div id="fullscreen-countdown" class="fullscreen-countdown is-countdown-hidden">
             <div class="countdown-content">
@@ -114,26 +105,7 @@
                 <h2 class="hosts-title" id="hosts-title">Thanks to our hosts</h2>
 
                 <div class="hosts-list">
-                    <span>The Honorable Alex Rivera</span>
-                    <span>Jordan &amp; Casey Beaumont</span>
-                    <span>Dr. Morgan Ellis</span>
-                    <span>Sam &amp; Taylor Hendricks</span>
-                    <span>The Honorable Priya Nair</span>
-                    <span>The Meridian Council</span>
-                    <span>Chris &amp; Robin Aldridge</span>
-                    <span>The Honorable Simone Okafor</span>
-                    <span>Jamie &amp; Peyton Walsh</span>
-                    <span>The Honorable Reese Caldwell</span>
-                    <span>Dr. Avery Sinclair</span>
-                    <span>Ted Waltham</span>
-                    <span>William S Grant</span>
-                    <span>Central State Foundation</span>
-                    <span>Blair &amp; Quinn Harmon</span>
-                    <span>The Ashford Family</span>
-                    <span>Finley &amp; Harper Tran</span>
-                    <span>The Honorable Charlie Monroe</span>
-                    <span>Drew &amp; Riley Sutton</span>
-                    <span>The Honorable Sage Whitmore</span>
+                    <!-- Populated dynamically from DEFAULT_HOSTS or localStorage -->
                 </div>
                 <div id="hosts-empty-hint" class="hosts-empty-hint ff-mont is-hidden">
                     Names will appear here when added
@@ -227,7 +199,7 @@
             <details class="advanced-controls" id="appearance-details">
                 <summary>[C]ustomize Appearance</summary>
 
-                <div class="panel-sub-section">
+                <div class="panel-sub-section" id="appearance-general">
                     <div class="panel-sub-section-title">Visual Theme</div>
                     <div class="control">
                         <div class="custom-select" id="theme-custom-select">
@@ -239,18 +211,7 @@
                                 <div class="trigger-arrow"></div>
                             </div>
                             <div class="custom-select-options" id="theme-select-options">
-                                <div class="custom-select-option" data-value="spring" data-icon="🌸" tabindex="0">
-                                    <span class="option-icon">🌸</span> Spring Blossom
-                                </div>
-                                <div class="custom-select-option" data-value="digital-grid" data-icon="⚡" tabindex="0">
-                                    <span class="option-icon">⚡</span> Digital Grid
-                                </div>
-                                <div class="custom-select-option" data-value="alpine-winter" data-icon="❄️" tabindex="0">
-                                    <span class="option-icon">❄️</span> Alpine Winter
-                                </div>
-                                <div class="custom-select-option" data-value="vintage-radio" data-icon="📻" tabindex="0">
-                                    <span class="option-icon">📻</span> Vintage Radio
-                                </div>
+                                <!-- Dynamically populated from themes.js -->
                             </div>
                         </div>
                     </div>
@@ -265,42 +226,20 @@
                             </label>
                         </div>
                     </div>
-                    <div class="control">
-                        <label>Text Backdrop Strength <span id="val-backdrop-opacity">100%</span></label>
-                        <input type="range" id="slider-backdrop-opacity" min="0" max="100" step="1">
+                    <!-- Sliders injected here -->
+                    <div id="backdrop-ribbon-row">
+                        <!-- Backdrop slider will be injected here via Constants.js config -->
                     </div>
                 </div>
 
-                <div class="panel-sub-section">
+                <div class="panel-sub-section" id="appearance-particles">
                     <div class="panel-sub-section-title">Flowers</div>
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Particle Count <span id="val-max-petals">32</span></label>
-                            <input type="range" id="slider-max-petals" min="0" max="1000">
-                        </div>
+                    <!-- Sliders injected here -->
+                </div>
 
-                        <div class="control">
-                            <label>Windiness <span id="val-gust-freq">50</span></label>
-                            <input type="range" id="slider-gust-freq" min="0" max="1000" step="1">
-                        </div>
-                    </div>
-
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Fall Speed <span id="val-fall-speed">0.6x</span></label>
-                            <input type="range" id="slider-fall-speed" min="0" max="5" step="0.1">
-                        </div>
-
-                        <div class="control">
-                            <label>Tumble Speed <span id="val-tumble-speed">1x</span></label>
-                            <input type="range" id="slider-tumble-speed" min="0" max="10" step="0.5">
-                        </div>
-                    </div>
-
-                    <div class="control">
-                        <label>Wave Strength <span id="val-gust-strength">10</span></label>
-                        <input type="range" id="slider-gust-strength" min="0" max="100" step="1">
-                    </div>
+                <div class="panel-sub-section" id="appearance-intensity">
+                    <div class="panel-sub-section-title">Motion</div>
+                    <!-- Sliders injected here -->
 
                     <div class="btn-group">
                         <button id="btn-pause-petals">Pause Particles</button>
@@ -309,7 +248,7 @@
                 </div>
 
                 <div class="panel-sub-section">
-                    <div class="panel-sub-section-title">Text</div>
+                    <div class="panel-sub-section-title">Text & Layout</div>
 
                     <div class="control" style="margin-bottom: 12px;">
                         <label>Host Layout</label>
@@ -329,30 +268,9 @@
                         </div>
                     </div>
 
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Vertical Inset <span id="val-inset-v">60px</span></label>
-                            <input type="range" id="slider-inset-v" min="0" max="200">
-                        </div>
-
-                        <div class="control">
-                            <label>Horizontal Inset <span id="val-inset-h">80px</span></label>
-                            <input type="range" id="slider-inset-h" min="0" max="400">
-                        </div>
+                    <div id="appearance-text-sliders">
+                         <!-- Sliders injected here -->
                     </div>
-
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Host Text Size <span id="val-host-text-size">1x</span></label>
-                            <input type="range" id="slider-host-text-size" min="0.1" max="2" step="0.05">
-                        </div>
-
-                        <div class="control">
-                            <label>Max Width <span id="val-host-max-width">100%</span></label>
-                            <input type="range" id="slider-host-max-width" min="10" max="200" step="1">
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="panel-section panel-section--tight">
@@ -394,8 +312,6 @@
                 <div class="btn-group btn-group--spaced">
                     <button id="btn-reset-defaults" class="button button--warning">[R]eset to Defaults</button>
                 </div>
-
-                <div id="wakelock-status" class="status-note">Checking...</div>
             </details>
 
                         <!-- Edit Poster Text Section -->
@@ -554,47 +470,8 @@
             <details class="advanced-controls" id="help-details">
                 <summary>[?] Help & Shortcuts</summary>
                 <div class="panel-sub-section">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <kbd>Q</kbd>
-                            <span class="shortcut-desc">Toggle Quick Controls</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>F</kbd>
-                            <span class="shortcut-desc">Enter Fullscreen</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>E</kbd>
-                            <span class="shortcut-desc">Edit Poster Text</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>C</kbd>
-                            <span class="shortcut-desc">Customize Appearance</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>R</kbd>
-                            <span class="shortcut-desc">Reset to Defaults (when [C] open)</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>A</kbd>
-                            <span class="shortcut-desc">Add/Remove Hosts</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>\</kbd>
-                            <span class="shortcut-desc">Hold to Factory Reset</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>?</kbd>
-                            <span class="shortcut-desc">Show this Help Menu</span>
-                        </div>
-                        <!-- <div class="shortcut-item">
-                            <kbd>Opt</kbd> / <kbd>Alt</kbd> + <kbd>S</kbd>
-                            <span class="shortcut-desc">Hot Reload CSS (No Refresh)</span>
-                        </div> -->
-                        <div class="shortcut-item shortcut-item-escape">
-                            <kbd>Esc</kbd>
-                            <span class="shortcut-desc">Close Panel / Forms / Exit Fullscreen</span>
-                        </div>
+                    <div class="shortcut-list" id="shortcut-list">
+                        <!-- Dynamically populated from window.SHORTCUT_CONFIGS -->
                     </div>
                 </div>
                 <div class="panel-sub-section">

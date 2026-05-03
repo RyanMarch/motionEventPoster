@@ -42,7 +42,17 @@ window.ParticleEngine = class ParticleEngine {
         let gradient = type.gradient;
 
         // Dynamic adaptation for theme particles
-        if (this.poster.theme.id === 'digital-grid') {
+        if (type.useThemePrimary) {
+            color = this.state.bgColor || this.poster.theme.colors.primary;
+            const rgb = window.PosterUtils.hexToRgb(color);
+            const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+            gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+        } else if (type.useThemeAccent) {
+            color = this.state.accentColor || this.poster.theme.colors.accent;
+            const rgb = window.PosterUtils.hexToRgb(color);
+            const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+            gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+        } else if (this.poster.theme.id === 'digital-grid') {
             const accent = this.state.accentColor || this.poster.theme.colors.accent;
             if (type.isWhite) {
                 // Keep whites/grays as neutral accents
@@ -75,6 +85,8 @@ window.ParticleEngine = class ParticleEngine {
         return {
             element,
             accentShift: type.accentShift,
+            useThemePrimary: type.useThemePrimary,
+            useThemeAccent: type.useThemeAccent,
             isWhite: type.isWhite,
             x: Math.random() * 120 - 10,
             y: Math.random() * 140 - 20,
@@ -142,26 +154,44 @@ window.ParticleEngine = class ParticleEngine {
     }
 
     updateParticleColors() {
-        if (this.poster.theme.id !== 'digital-grid') return;
-        const accent = this.state.accentColor || this.poster.theme.colors.accent;
-        const rgb = window.PosterUtils.hexToRgb(accent);
-        const { h: baseH, s: baseS, l: baseL } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+        const theme = this.poster.theme;
+        const primary = this.state.bgColor || theme.colors.primary;
+        const accent = this.state.accentColor || theme.colors.accent;
+        
+        const pRgb = window.PosterUtils.hexToRgb(primary);
+        const { h: pH, s: pS, l: pL } = window.PosterUtils.rgbToHsl(pRgb.r, pRgb.g, pRgb.b);
+        
+        const aRgb = window.PosterUtils.hexToRgb(accent);
+        const { h: aH, s: aS, l: aL } = window.PosterUtils.rgbToHsl(aRgb.r, aRgb.g, aRgb.b);
 
         this.state.petals.forEach(p => {
             if (p.isWhite) return;
-            if (p.accentShift !== undefined) {
-                const h = (baseH + p.accentShift) % 360;
-                const s = Math.max(baseS, 0.8);
-                const l = Math.max(baseL, 0.6);
-                const color = window.PosterUtils.hslToHex(h, s, l);
-                const gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
-                p.element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
+            
+            let color, gradient;
+            
+            if (p.useThemePrimary) {
+                color = primary;
+                gradient = window.PosterUtils.hslToHex(pH, pS, pL * 0.7);
+            } else if (p.useThemeAccent) {
+                color = accent;
+                gradient = window.PosterUtils.hslToHex(aH, aS, aL * 0.7);
+            } else if (theme.id === 'digital-grid' && p.accentShift !== undefined) {
+                const h = (aH + p.accentShift) % 360;
+                const s = Math.max(aS, 0.8);
+                const l = Math.max(aL, 0.6);
+                color = window.PosterUtils.hslToHex(h, s, l);
+                gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+            } else {
+                return;
             }
+            
+            p.element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
         });
     }
 
     startAnimationLoop() {
         const loop = (now) => {
+            if (!this.state.lastPhysicsTime) this.state.lastPhysicsTime = now;
             const dt = Math.min((now - this.state.lastPhysicsTime) / 1000, 0.1);
             this.state.lastPhysicsTime = now;
             this.state.frameCount += 1;

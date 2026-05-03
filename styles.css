@@ -159,15 +159,15 @@ body:not(.is-loading) .particle-layer {
 }
 
 #particles-back {
-    z-index: var(--z-particles-back);
+    z-index: 2;
 }
 
 #particles-front {
-    z-index: var(--z-particles-front);
+    z-index: 4;
 }
 
 #particles-mid {
-    z-index: var(--z-particles-mid);
+    z-index: 3;
 }
 
 .petal {
@@ -201,10 +201,29 @@ CONTENT WRAPPER & COMPONENTS
     padding: var(--inset-v) var(--inset-h);
     /* Controlled by JS sliders */
     box-sizing: border-box;
-    background: radial-gradient(ellipse at center, var(--overlay-dark), var(--overlay-mid) 39.92%, var(--overlay-clear) 77.73%);
+    background: transparent;
     opacity: 0;
     transition: opacity 1s ease-in-out;
     overflow: hidden;
+}
+
+body:not(.is-loading) .content-wrapper {
+    opacity: 1;
+}
+
+/* Global Vignette Overlay — Moved inside content-wrapper */
+#vignette-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, var(--overlay-dark), var(--overlay-mid) 39.92%, var(--overlay-clear) 77.73%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+body:not(.is-loading) #vignette-overlay {
+    opacity: 1;
 }
 
 /* Theme Frame - HUD / Border Logic */
@@ -218,6 +237,14 @@ CONTENT WRAPPER & COMPONENTS
     z-index: 50; /* Bring it in front of the background */
     transition: all 1s ease-in-out;
     opacity: 0;
+}
+
+body:not(.is-loading) .theme-frame {
+    opacity: 1;
+}
+
+body:not(.is-loading) .theme-frame {
+    opacity: 1;
 }
 
 .theme-frame-inner,
@@ -255,6 +282,7 @@ body.is-sliding .content-wrapper * {
     width: 100%;
     max-width: 1400px;
     top: 0;
+    z-index: 10;
 }
 
 body:not(.is-sliding) .main-content {
@@ -292,7 +320,7 @@ body:not(.is-sliding) .main-content::after {
 /* Banner Styling (Layout Only) */
 .logo-banner {
     position: relative;
-    z-index: var(--z-logo);
+    z-index: 10;
     width: 100%;
     max-width: 420px;
     min-height: 100px;
@@ -457,7 +485,7 @@ body:not(.is-sliding) .main-content::after {
 /* Footer Info */
 .event-footer {
     position: relative;
-    z-index: var(--z-footer);
+    z-index: 10;
     text-align: center;
     width: 100%;
     flex-shrink: 0;

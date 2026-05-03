@@ -1,30 +1,28 @@
 /**
- * EventPoster is the primary coordinator for the application.
+ * EventPoster is the main orchestrator for the motion poster application.
+ * It manages state, coordinate modules, and handles core lifecycle events.
  */
 window.EventPoster = class EventPoster {
     constructor() {
-        this.cacheElements();
-        this.baseHosts = this.getInitialHosts();
-        this.settings = this.loadSettings();
-        this.state = { ...window.DEFAULTS };
-        
-        // Sub-systems
-        this.particleEngine = new window.ParticleEngine(this);
+        // Initialize Modules
         this.themeManager = new window.ThemeManager(this);
+        this.particleEngine = new window.ParticleEngine(this);
         this.ui = new window.UIController(this);
 
-        this.theme = THEMES.spring;
-        this.petalTypes = this.theme.particles;
-        this.inactivityTimer = null;
-        this.dismissTimer = null;
-        this.fullscreenCountdownTimer = null;
-
+        this.cacheElements();
+        this.createSwayLayers();
+        
+        this.state = { ...window.DEFAULTS };
+        this.settings = this.loadSettings();
+        this.baseHosts = window.DEFAULT_HOSTS || [];
+        
         this.init();
     }
 
     cacheElements() {
         this.root = document.documentElement;
         this.body = document.body;
+        
         this.layers = {
             back: document.getElementById('particles-back'),
             front: document.getElementById('particles-front'),
@@ -32,9 +30,9 @@ window.EventPoster = class EventPoster {
         };
 
         this.elements = {
+            floralBg: document.querySelector('.floral-bg'),
             controlsPanel: document.getElementById('controls-panel'),
             hostsList: document.querySelector('.hosts-list'),
-            wakeLockStatus: document.getElementById('wakelock-status'),
             fullscreenToggle: document.getElementById('check-fullscreen'),
             fps: document.getElementById('stat-fps'),
             timer: document.getElementById('stat-timer'),
@@ -77,6 +75,7 @@ window.EventPoster = class EventPoster {
             factoryResetModal: document.getElementById('factory-reset-modal'),
             btnResetCancel: document.getElementById('btn-reset-cancel'),
             btnResetConfirm: document.getElementById('btn-reset-confirm'),
+            // poster text elements
             hostsTitleEl: document.getElementById('hosts-title'),
             eventTopLabelEl: document.getElementById('event-top-label'),
             eventTitleEl: document.getElementById('event-title'),
@@ -84,10 +83,9 @@ window.EventPoster = class EventPoster {
             eventDateEl: document.getElementById('event-date'),
             qrSoireeImg: document.getElementById('qr-soiree-img'),
             qrMembershipImg: document.getElementById('qr-membership-img'),
+            // Edit panel controls
             editPosterDetails: document.getElementById('edit-poster-details'),
-            editPosterSummary: document.querySelector('#edit-poster-details summary'),
             helpDetails: document.getElementById('help-details'),
-            helpSummary: document.querySelector('#help-details summary'),
             logoModeRadios: document.querySelectorAll('input[name="logoMode"]'),
             logoImageControls: document.getElementById('logo-image-controls'),
             logoTextControls: document.getElementById('logo-text-controls'),
@@ -122,9 +120,9 @@ window.EventPoster = class EventPoster {
             bgColorVal: document.getElementById('val-bg-color'),
             swatchGrid: document.getElementById('bg-swatch-grid'),
             btnCustomColor: document.getElementById('btn-custom-color'),
-            proceedAnywayBtn: document.getElementById('btn-bypass-blocker'),
             mobileScreenSizeInfo: document.getElementById('mobile-screen-size-info'),
-            themeFrame: document.querySelector('.theme-frame'),
+            btnBypassBlocker: document.getElementById('btn-bypass-blocker'),
+            themeFrame: document.querySelector('.theme-frame')
         };
 
         this.controls = {
@@ -140,9 +138,18 @@ window.EventPoster = class EventPoster {
             disableAutoFullscreen: document.getElementById('check-disable-auto-fullscreen'),
             themeSelectContainer: document.getElementById('theme-custom-select'),
             themeSelectTrigger: document.getElementById('theme-select-trigger'),
-            themeSelectLabel: document.getElementById('theme-select-label'),
             themeSelectIcon: document.getElementById('theme-select-icon'),
-            themeSelectOptions: document.querySelectorAll('.custom-select-option')
+            themeSelectLabel: document.getElementById('theme-select-label'),
+            fullscreenToggle: document.getElementById('check-fullscreen')
+        };
+
+        this.controlLabels = {
+            hideLogo: document.getElementById('label-hide-logo'),
+            hideDate: document.getElementById('label-hide-date'),
+            hideTitle: document.getElementById('label-hide-title'),
+            hideHost: document.getElementById('label-hide-host'),
+            qrSoiree: document.getElementById('label-qr-soiree'),
+            qrMembership: document.getElementById('label-qr-membership')
         };
 
         this.containers = {
@@ -151,69 +158,166 @@ window.EventPoster = class EventPoster {
         };
     }
 
+    createSwayLayers() {
+        const layers = [
+            'sway-top-right', 'sway-top-left', 'sway-bottom-left', 'sway-bottom-right',
+            'sway-left-side', 'sway-right-side', 'sway-top-1', 'sway-top-2', 'sway-top-3'
+        ];
+        layers.forEach(cls => {
+            const div = document.createElement('div');
+            div.className = `sway-layer ${cls}`;
+            this.body.appendChild(div);
+        });
+    }
+
+    hydrate() {
+        const s = this.settings;
+        
+        // Determine active theme early to apply its overrides during hydration
+        this.state.activeTheme = s.activeTheme || window.DEFAULTS.activeTheme;
+        this.theme = window.THEMES[this.state.activeTheme] || window.THEMES.spring;
+        this.petalTypes = this.theme.particles;
+
+        Object.keys(window.DEFAULTS).forEach((key) => {
+            let defaultValue = window.DEFAULTS[key];
+            
+            // If the active theme has an override for this key, use it as the new baseline
+            if (this.theme.overrides && this.theme.overrides[key] !== undefined) {
+                defaultValue = this.theme.overrides[key];
+            }
+            
+            const savedValue = s[key];
+            if (savedValue === undefined || savedValue === null) {
+                this.state[key] = defaultValue;
+                return;
+            }
+            if (typeof defaultValue === 'boolean') {
+                this.state[key] = savedValue === true || savedValue === 'true';
+            } else if (typeof defaultValue === 'number') {
+                const n = Number(savedValue);
+                this.state[key] = Number.isNaN(n) ? defaultValue : n;
+            } else {
+                this.state[key] = savedValue;
+            }
+        });
+
+        this.state.petals = [];
+        this.state.currentWind = 0;
+        this.state.windDirection = 1;
+        this.state.targetWindDirection = 1;
+        this.state.gustForce = 0;
+        this.state.downtimeTimer = 0;
+        
+        this.state.addedHosts = this.readStoredHosts();
+        this.state.removedHosts = this.readStoredRemovedHosts();
+        this.state.posterText = this.loadPosterText();
+        this.state.wakeLock = null;
+        this.state.wakeLockActive = false;
+        this.state.lastFrameTime = performance.now();
+        this.state.lastPhysicsTime = performance.now();
+        this.state.frameCount = 0;
+        this.state.totalFullscreenSeconds = null;
+        this.state.fullscreenStartTime = null;
+        this.state.isKeyboardUser = false;
+        this.state.factoryResetStartTime = null;
+    }
+
     init() {
-        if (this.elements.proceedAnywayBtn) {
-            this.elements.proceedAnywayBtn.addEventListener('click', () => {
+        if (this.elements.btnBypassBlocker) {
+            this.elements.btnBypassBlocker.addEventListener('click', () => {
                 this.body.classList.add('is-mobile-dismissed');
                 if (!this.state.isAppRunning) this.startApp();
             });
         }
+
         if (window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
             this.updateMobileScreenSizeInfo();
             return;
         }
+
         this.startApp();
     }
 
     startApp() {
         if (this.state.isAppRunning) return;
         this.state.isAppRunning = true;
+
         this.hydrate();
+        
+        // Modules startup
+        this.themeManager.initThemeSelector();
         this.themeManager.initSwatches();
+        this.ui.initSlidersUI();
+        this.ui.initShortcutsUI();
         this.ui.setupEventListeners();
+        
+        this.themeManager.applyTheme(this.state.activeTheme, true);
         this.applyStateToUI();
         this.applyPosterText();
-        this.ui.syncPosterTextInputs();
         this.particleEngine.adjustAmbientPetals();
         this.particleEngine.startAnimationLoop();
+        
         this.checkWakeLockSupport();
+        this.checkPersistentFullscreen();
         this.renderHosts();
         this.updateSleepStatus('off');
         this.updateScreenSize();
         this.startWakeLockHeartbeat();
         this.showKeyboardHint();
-        this.setupAutoFullscreenTrigger();
-        requestAnimationFrame(() => this.body.classList.remove('is-loading'));
+
+        requestAnimationFrame(() => {
+            this.body.classList.remove('is-loading');
+        });
+
         setTimeout(() => this.syncLayout(), 500);
     }
 
-    hydrate() {
-        const s = this.settings;
-        Object.keys(window.DEFAULTS).forEach((key) => {
-            const defaultValue = window.DEFAULTS[key];
-            const savedValue = s[key];
-            if (savedValue === undefined || savedValue === null) {
-                this.state[key] = defaultValue; return;
-            }
-            this.state[key] = savedValue;
+    applyStateToUI() {
+        // Sync Sliders from registry
+        window.SLIDER_CONFIGS.forEach(config => {
+            const slider = document.getElementById(`slider-${config.id}`);
+            const display = document.getElementById(`val-${config.id}`);
+            const value = this.state[config.stateKey];
+            if (slider) slider.value = value;
+            if (display) display.textContent = `${value}${config.suffix || ''}`;
         });
-        this.state.petals = [];
-        this.theme = THEMES[this.state.activeTheme] || THEMES.spring;
-        this.petalTypes = this.theme.particles;
-        this.state.addedHosts = this.readStoredHosts();
-        this.state.removedHosts = this.readStoredRemovedHosts();
-        this.state.posterText = this.loadPosterText();
-        this.state.lastFrameTime = performance.now();
-        this.state.lastPhysicsTime = performance.now();
-        this.state.currentWind = 0;
-        this.state.gustForce = 0;
-        this.state.windDirection = 1;
-        this.state.targetWindDirection = 1;
-        this.state.frameCount = 0;
-        this.state.hintTimer = null;
+
+        const isAccentBg = this.theme.flags?.useAccentAsBackground;
+        const currentBg = this.state.bgColor || this.theme.colors.primary;
+        const currentAccent = this.state.accentColor || this.theme.colors.accent;
+        const displayColor = isAccentBg ? currentAccent : currentBg;
+
+        if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
+        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
+
+        this.themeManager.updateSwatchActiveState();
+
+        if (this.controls.hostLayoutRadios) {
+            this.controls.hostLayoutRadios.forEach(radio => { radio.checked = (radio.value === this.state.hostLayout); });
+        }
+        this.applyHostLayout(this.state.hostLayout);
+
+        this.themeManager.syncWind();
+        this.syncLayout();
+        this.themeManager.syncBackdrop();
+
+        this.controls.qrMembership.checked = this.state.qrMembership;
+        this.controls.hideBorder.checked = this.state.hideBorder;
+        this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
+
+        this.applyHideUiState(this.state.hideUi);
+        this.body.classList.toggle('logo-hidden', this.state.hideLogo);
+        this.body.classList.toggle('date-hidden', this.state.hideDate);
+        this.body.classList.toggle('title-hidden', this.state.hideTitle);
+        this.body.classList.toggle('host-hidden', this.state.hideHost);
+        this.body.classList.toggle('border-hidden', this.state.hideBorder);
+
+        this.elements.qrSoiree.classList.toggle('qr-hidden', !this.state.qrSoiree);
+        this.elements.qrMembership.classList.toggle('qr-hidden', !this.state.qrMembership);
+
+        this.syncPauseStates();
     }
 
-    // Layout Logic
     syncLayout() {
         const wrapper = this.containers.wrapper;
         if (wrapper) {
@@ -222,10 +326,29 @@ window.EventPoster = class EventPoster {
         }
         const hosts = this.containers.hosts;
         if (hosts) {
-            hosts.style.setProperty('--host-text-size', this.state.hostTextSize * 1.1);
+            hosts.style.setProperty('--host-text-size', (this.state.hostTextSize * 1.1).toString());
             const maxWidthPx = (this.state.hostMaxWidth / 100) * 1110 * 1.16;
             hosts.style.setProperty('--host-max-width', `${maxWidthPx}px`);
         }
+        requestAnimationFrame(() => this.optimizeLayouts());
+    }
+
+    syncPauseStates() {
+        const pLabel = this.theme?.uiLabels?.particlesPlural || 'Particles';
+        this.elements.pausePetalsButton.classList.toggle('active', this.state.isPetalsPaused);
+        this.elements.pausePetalsButton.textContent = this.state.isPetalsPaused ? `Resume ${pLabel}` : `Pause ${pLabel}`;
+        Object.values(this.layers).forEach(layer => layer.classList.toggle('paused', this.state.isPetalsPaused));
+
+        const frameName = this.theme?.uiLabels?.frameName || 'Frame';
+        this.elements.pauseBgButton.classList.toggle('active', this.state.isBgPaused);
+        this.elements.pauseBgButton.textContent = this.state.isBgPaused ? `Resume ${frameName}` : `Pause ${frameName}`;
+        document.querySelectorAll('.sway-layer, .floral-bg').forEach(el => el.classList.toggle('paused', this.state.isBgPaused));
+    }
+
+    applyHostLayout(layout) {
+        if (!this.elements.hostsList) return;
+        this.elements.hostsList.classList.remove('layout-justify', 'layout-centered', 'layout-columns');
+        this.elements.hostsList.classList.add(`layout-${layout}`);
         requestAnimationFrame(() => this.optimizeLayouts());
     }
 
@@ -237,440 +360,235 @@ window.EventPoster = class EventPoster {
         if (layout === 'justify') {
             let bestScale = 1.6;
             for (let scale = 1.6; scale >= 0.8; scale -= 0.05) {
-                spans.forEach(span => span.style.fontSize = `calc(${scale}rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale))`);
-                let lastTop = -1; let count = 0;
+                spans.forEach(span => { span.style.fontSize = `calc(${scale}rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale))`; });
+                let lastTop = -1, itemsOnLastLine = 0;
                 for (let i = 0; i < spans.length; i++) {
-                    if (spans[i].offsetTop > lastTop + 10) { lastTop = spans[i].offsetTop; count = 1; } else count++;
+                    const top = spans[i].offsetTop;
+                    if (top > lastTop + 10) { lastTop = top; itemsOnLastLine = 1; } else { itemsOnLastLine++; }
                 }
-                if (count > 1 || count === spans.length) { bestScale = scale; break; }
+                if (itemsOnLastLine > 1 || itemsOnLastLine === spans.length) { bestScale = scale; break; }
             }
-            spans.forEach(span => span.style.fontSize = `calc(${bestScale}rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale))`);
+            spans.forEach(span => { span.style.fontSize = `calc(${bestScale}rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale))`; });
         }
         this.enforceVerticalFit();
-        this.syncLogoTextScale();
-    }
-
-    syncLogoTextScale() {
-        const logo = this.elements.logoTextEl;
-        const banner = this.elements.logoBanner;
-        if (!logo || !banner || logo.classList.contains('is-hidden')) return;
-
-        if (this.state.activeTheme === 'vintage-radio') {
-            const maxWidth = banner.clientWidth;
-            window.PosterUtils.shrinkTextToFit(logo, maxWidth);
-        } else {
-            logo.style.fontSize = '';
-        }
     }
 
     enforceVerticalFit() {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
         const MIN_SCALE = 0.35; const GAPS = 60;
-        this.containers.hosts.style.setProperty('--host-text-size', '1.1');
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
-        const titleH = this.containers.hosts.querySelector('.hosts-title')?.offsetHeight || 0;
-        const totalH = this.elements.logoBanner.offsetHeight + this.elements.eventFooter.offsetHeight + titleH + this.elements.hostsList.offsetHeight + GAPS;
+        const logoH = this.elements.logoBanner.offsetHeight;
+        const footerH = this.elements.eventFooter.offsetHeight;
+        const titleH = this.containers.hosts.querySelector('.hosts-title').offsetHeight;
+        const listH = this.elements.hostsList.offsetHeight;
+        const totalH = logoH + footerH + titleH + listH + GAPS;
         const availH = window.innerHeight;
-        let scale = totalH > availH ? (availH - (this.elements.logoBanner.offsetHeight + this.elements.eventFooter.offsetHeight + GAPS)) / (titleH + this.elements.hostsList.offsetHeight) : 1;
+        let scale = 1;
+        if (totalH > availH) {
+            const hAreaH = titleH + listH;
+            const nonHAreaH = logoH + footerH + GAPS;
+            const targetH = availH - nonHAreaH;
+            scale = targetH > 0 && hAreaH > 0 ? targetH / hAreaH : MIN_SCALE;
+        }
         scale = Math.max(MIN_SCALE, Math.min(1.0, scale));
         this.containers.hosts.style.setProperty('--dynamic-scale', scale.toFixed(3));
-        this.containers.hosts.style.setProperty('--host-text-size', (this.state.hostTextSize * 1.1).toString());
     }
 
-    updateTimerDisplay() {
-        if (this.elements.timer) {
-            this.elements.timer.textContent = window.PosterUtils.formatFullscreenTimer(this.state.totalFullscreenSeconds, this.state.fullscreenStartTime);
+    applyPosterText() {
+        const pt = this.state.posterText;
+        if (this.elements.logoTextEl) this.elements.logoTextEl.textContent = pt.logoText;
+        if (this.elements.hostsTitleEl) this.elements.hostsTitleEl.textContent = pt.hostsTitle;
+        if (this.elements.eventTopLabelEl) this.elements.eventTopLabelEl.textContent = pt.eventTopLabel;
+        if (this.elements.eventTitleEl) this.elements.eventTitleEl.textContent = pt.eventTitle;
+        if (this.elements.eventSubtitleEl) this.elements.eventSubtitleEl.textContent = pt.eventSubtitle;
+        if (this.elements.eventDateEl) this.elements.eventDateEl.textContent = pt.eventDate;
+
+        if (this.elements.logoImg) {
+            this.elements.logoImg.src = pt.logoImageData || '';
+            this.elements.logoImg.classList.toggle('is-hidden', pt.logoMode !== 'image' || !pt.logoImageData);
         }
-    }
-
-    applyStateToUI() {
-        const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-        const setLabel = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
-        
-        setVal('slider-max-petals', this.state.maxPetals); setLabel('val-max-petals', this.state.maxPetals);
-        setVal('slider-gust-freq', this.state.windiness); setLabel('val-gust-freq', this.state.windiness);
-        setVal('slider-fall-speed', this.state.fallSpeed); setLabel('val-fall-speed', `${this.state.fallSpeed}x`);
-        setVal('slider-tumble-speed', this.state.tumbleSpeed); setLabel('val-tumble-speed', `${this.state.tumbleSpeed}x`);
-        setVal('slider-gust-strength', this.state.gustStrength); setLabel('val-gust-strength', this.state.gustStrength);
-        setVal('slider-host-text-size', this.state.hostTextSize); setLabel('val-host-text-size', `${this.state.hostTextSize}x`);
-        setVal('slider-host-max-width', this.state.hostMaxWidth); setLabel('val-host-max-width', `${this.state.hostMaxWidth}%`);
-        setVal('slider-backdrop-opacity', this.state.backdropOpacity); setLabel('val-backdrop-opacity', `${this.state.backdropOpacity}%`);
-        setVal('slider-inset-v', this.state.insetV); setLabel('val-inset-v', `${this.state.insetV}px`);
-        setVal('slider-inset-h', this.state.insetH); setLabel('val-inset-h', `${this.state.insetH}px`);
-
-        if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = this.state.bgColor;
-        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.state.bgColor.toUpperCase();
-
-        this.controls.hostLayoutRadios?.forEach(r => r.checked = (r.value === this.state.hostLayout));
-        this.elements.logoModeRadios?.forEach(r => r.checked = (r.value === (this.state.posterText.logoMode || 'text')));
-        this.applyHostLayout(this.state.hostLayout);
-        this.themeManager.syncWind();
-        this.syncLayout();
-        this.themeManager.syncBackdrop();
-        this.controls.hideUi.checked = this.state.hideUi;
-        this.applyHideUiState(this.state.hideUi);
-        this.body.classList.toggle('logo-hidden', this.state.hideLogo);
-        this.body.classList.toggle('date-hidden', this.state.hideDate);
-        this.body.classList.toggle('title-hidden', this.state.hideTitle);
-        this.body.classList.toggle('host-hidden', this.state.hideHost);
-        this.body.classList.toggle('border-hidden', this.state.hideBorder);
-        if (this.controls.themeSelectContainer) {
-            this.controls.themeSelectOptions.forEach(opt => {
-                const isSelected = opt.dataset.value === this.state.activeTheme;
-                opt.classList.toggle('selected', isSelected);
-                if (isSelected) {
-                    this.controls.themeSelectLabel.textContent = opt.textContent.replace(opt.dataset.icon, '').trim();
-                    this.controls.themeSelectIcon.textContent = opt.dataset.icon;
-                }
-            });
+        if (this.elements.logoTextEl) {
+            this.elements.logoTextEl.classList.toggle('is-hidden', pt.logoMode !== 'text');
         }
-        this.themeManager.applyTheme(this.state.activeTheme, true);
-        this.elements.qrSoiree.classList.toggle('qr-hidden', !this.state.qrSoiree);
-        this.elements.qrMembership.classList.toggle('qr-hidden', !this.state.qrMembership);
-        this.syncPauseStates();
-    }
-
-    applyHideUiState(isHidden) {
-        this.body.classList.toggle('ui-hidden', isHidden);
-        [this.controls.hideLogo, this.controls.hideDate, this.controls.hideTitle, this.controls.hideHost].forEach(c => {
-            if (c) c.disabled = isHidden;
-            c?.parentElement?.classList.toggle('disabled', isHidden);
-        });
-    }
-
-    applyHostLayout(layout) {
-        this.elements.hostsList?.classList.remove('layout-justify', 'layout-centered', 'layout-columns');
-        this.elements.hostsList?.classList.add(`layout-${layout}`);
-        requestAnimationFrame(() => this.optimizeLayouts());
-    }
-
-    syncPauseStates() {
-        const btn = this.elements.pausePetalsButton;
-        if (btn) {
-            const label = this.theme?.uiLabels?.particlesPlural || 'Particles';
-            btn.classList.toggle('active', this.state.isPetalsPaused);
-            btn.textContent = this.state.isPetalsPaused ? `Resume ${label}` : `Pause ${label}`;
-        }
-        Object.values(this.layers).forEach(l => l.classList.toggle('paused', this.state.isPetalsPaused));
-        const bgBtn = this.elements.pauseBgButton;
-        if (bgBtn) {
-            const label = this.theme?.uiLabels?.frameName || 'Frame';
-            bgBtn.classList.toggle('active', this.state.isBgPaused);
-            bgBtn.textContent = this.state.isBgPaused ? `Resume ${label}` : `Pause ${label}`;
-        }
-        document.querySelectorAll('.sway-layer, .floral-bg, .theme-frame').forEach(el => el.classList.toggle('paused', this.state.isBgPaused));
+        if (this.elements.qrSoireeImg) this.elements.qrSoireeImg.src = pt.qrLeftData || '';
+        if (this.elements.qrMembershipImg) this.elements.qrMembershipImg.src = pt.qrRightData || '';
     }
 
     renderHosts() {
         if (!this.elements.hostsList) return;
-        const all = this.hasEverAddedHost() ? [...this.state.addedHosts] : [...this.baseHosts, ...this.state.addedHosts].filter(h => !this.state.removedHosts.includes(h));
-        all.sort((a,b) => this.getHostSortKey(a).localeCompare(this.getHostSortKey(b)));
         this.elements.hostsList.innerHTML = '';
-        all.forEach(name => {
+        const allHosts = [...this.baseHosts, ...this.state.addedHosts].filter(h => !this.state.removedHosts.includes(h));
+        
+        allHosts.sort((a, b) => {
+            const getSortKey = (name) => {
+                const words = name.toLowerCase().split(/\s+/).filter(w => !window.TITLE_FILTER_WORDS.has(w));
+                return words.length > 0 ? words[words.length - 1] : name.toLowerCase();
+            };
+            return getSortKey(a).localeCompare(getSortKey(b));
+        });
+
+        allHosts.forEach(name => {
             const span = document.createElement('span');
             span.textContent = name;
-            this.bindHostHold(span, name);
             this.elements.hostsList.appendChild(span);
         });
-        this.renderAddedHosts();
-        this.renderRemovedHosts();
-        this.updateEmptyHint(all.length === 0);
+        this.elements.hostsEmptyHint?.classList.toggle('is-hidden', allHosts.length > 0);
         requestAnimationFrame(() => this.optimizeLayouts());
+        this.ui.renderAddedHosts();
+        this.ui.renderRemovedHosts();
     }
 
-    getHostSortKey(name) {
-        const parts = name.trim().split(/\s+/).filter(p => !window.TITLE_FILTER_WORDS.has(p.toLowerCase()));
-        return parts.length ? parts.at(-1).toLowerCase() : name.toLowerCase();
-    }
-
-    renderAddedHosts() {
-        const list = this.elements.addedHostsList;
-        const items = this.elements.addedHostsItems;
-        if (!items) return;
-        if (this.state.addedHosts.length === 0) { list?.classList.add('is-hidden'); items.innerHTML = ''; return; }
-        items.innerHTML = '';
-        this.state.addedHosts.forEach((name, idx) => {
-            const div = document.createElement('div'); div.className = 'added-host-row';
-            div.innerHTML = `<span class="added-host-name">${name}</span><button class="btn-remove-host" data-index="${idx}">Remove</button>`;
-            div.querySelector('button').addEventListener('click', () => {
-                if (this.hasEverAddedHost() && !this.state.removedHosts.includes(name)) { this.state.removedHosts.push(name); this.persistRemovedHosts(); }
-                this.state.addedHosts.splice(idx, 1); this.persistAddedHosts(); this.renderHosts();
-            });
-            items.appendChild(div);
-        });
-        list?.classList.remove('is-hidden');
-    }
-
-    renderRemovedHosts() {
-        const list = this.elements.removedHostsList;
-        const items = this.elements.removedHostsItems;
-        if (!items) return;
-        const displayed = this.hasEverAddedHost() ? this.state.removedHosts.filter(n => !this.baseHosts.includes(n)) : this.state.removedHosts;
-        if (displayed.length === 0) { list?.classList.add('is-hidden'); items.innerHTML = ''; return; }
-        items.innerHTML = '';
-        displayed.forEach(name => {
-            const div = document.createElement('div'); div.className = 'added-host-row';
-            div.innerHTML = `<span class="added-host-name">${name}</span><button class="btn-put-back-host" data-name="${name}">Put Back</button>`;
-            div.querySelector('button').addEventListener('click', () => {
-                this.state.removedHosts = this.state.removedHosts.filter(h => h !== name); this.persistRemovedHosts();
-                if (this.hasEverAddedHost() && !this.baseHosts.includes(name) && !this.state.addedHosts.includes(name)) { this.state.addedHosts.push(name); this.persistAddedHosts(); }
-                this.renderHosts();
-            });
-            items.appendChild(div);
-        });
-        list?.classList.remove('is-hidden');
-    }
-
-    bindHostHold(el, name) {
-        let timer = null;
-        const start = (e) => {
-            if (e.button !== undefined && e.button !== 0) return;
-            el.style.transition = 'transform 2s ease-out'; el.style.transform = 'scale(1.08)';
-            timer = setTimeout(() => {
-                el.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; el.style.opacity = '0'; el.style.transform = 'scale(0.8)';
-                setTimeout(() => this.removeHost(name), 300);
-            }, 2000);
-        };
-        const cancel = () => { if (timer) { clearTimeout(timer); timer = null; el.style.transition = 'transform 0.3s ease'; el.style.transform = ''; } };
-        el.addEventListener('pointerdown', start); ['pointerup', 'pointercancel', 'pointerleave'].forEach(e => el.addEventListener(e, cancel));
-        el.addEventListener('contextmenu', e => e.preventDefault());
-    }
-
-    removeHost(name) {
-        if (this.baseHosts.includes(name)) { if (!this.hasEverAddedHost() && !this.state.removedHosts.includes(name)) { this.state.removedHosts.push(name); this.persistRemovedHosts(); } }
-        else { if (this.hasEverAddedHost() && !this.state.removedHosts.includes(name)) { this.state.removedHosts.push(name); this.persistRemovedHosts(); }
-            this.state.addedHosts = this.state.addedHosts.filter(h => h !== name); this.persistAddedHosts(); }
-        this.renderHosts();
-    }
-
-    updateEmptyHint(isEmpty) {
-        const el = this.elements.hostsEmptyHint; if (!el) return;
-        if (this.state.emptyHintTimer) clearTimeout(this.state.emptyHintTimer);
-        if (isEmpty && this.hasEverAddedHost()) this.state.emptyHintTimer = setTimeout(() => el.classList.remove('is-hidden'), 3000);
-        else el.classList.add('is-hidden');
-    }
-
-    submitAddHost() {
-        const val = this.elements.addHostInput.value.trim(); if (!val) return;
-        if (this.state.addedHosts.includes(val) || (this.baseHosts.includes(val) && !this.state.removedHosts.includes(val))) { this.showAddHostError('Host already exists'); return; }
-        if (!this.hasEverAddedHost()) localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
-        this.state.addedHosts.push(val); this.persistAddedHosts(); this.renderHosts();
-        this.elements.addHostInput.value = ''; this.elements.addHostInput.focus();
-    }
-
-    showAddHostError(msg) {
-        const el = this.elements.addHostError; if (el) { el.textContent = msg; el.classList.remove('is-hidden'); }
-        this.elements.addHostInput?.classList.add('text-input--error');
-        setTimeout(() => this.elements.addHostInput?.classList.remove('text-input--error'), 400);
-    }
-
-    clearAddHostError() { this.elements.addHostError?.classList.add('is-hidden'); this.elements.addHostInput?.classList.remove('text-input--error'); }
-
-    saveSettings() { localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(this.state)); }
+    // Storage & Settings helpers
     loadSettings() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.settings) || '{}'); } catch { return {}; } }
+    saveSettings() { localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(this.state)); }
+    loadPosterText() { try { return { ...window.POSTER_TEXT_DEFAULTS, ...JSON.parse(localStorage.getItem(window.STORAGE_KEYS.posterText) || '{}') }; } catch { return window.POSTER_TEXT_DEFAULTS; } }
+    savePosterText() { localStorage.setItem(window.STORAGE_KEYS.posterText, JSON.stringify(this.state.posterText)); }
     readStoredHosts() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.addedHosts) || '[]'); } catch { return []; } }
     persistAddedHosts() { localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts)); }
     readStoredRemovedHosts() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.removedHosts) || '[]'); } catch { return []; } }
     persistRemovedHosts() { localStorage.setItem(window.STORAGE_KEYS.removedHosts, JSON.stringify(this.state.removedHosts)); }
-    hasEverAddedHost() { return localStorage.getItem(window.STORAGE_KEYS.hasEverAddedHost) === 'true'; }
 
-    loadPosterText() { try { return { ...window.POSTER_TEXT_DEFAULTS, ...JSON.parse(localStorage.getItem(window.STORAGE_KEYS.posterText) || '{}') }; } catch { return window.POSTER_TEXT_DEFAULTS; } }
-    savePosterText() { localStorage.setItem(window.STORAGE_KEYS.posterText, JSON.stringify(this.state.posterText)); }
-    applyPosterText() {
-        const pt = this.state.posterText; const mode = pt.logoMode || 'text';
-
-        // Toggle control panel sub-groups
-        if (this.elements.logoImageControls) this.elements.logoImageControls.classList.toggle('is-hidden', mode !== 'image');
-        if (this.elements.logoTextControls) this.elements.logoTextControls.classList.toggle('is-hidden', mode !== 'text');
-
-        if (mode === 'image' && pt.logoImageData) { this.elements.logoImg.src = pt.logoImageData; this.elements.logoImg.classList.remove('is-hidden'); this.elements.logoTextEl.classList.add('is-hidden'); }
-        else if (mode === 'text') { this.elements.logoImg.classList.add('is-hidden'); this.elements.logoTextEl.textContent = pt.logoText; this.elements.logoTextEl.classList.remove('is-hidden'); }
-        else { this.elements.logoImg.classList.add('is-hidden'); this.elements.logoTextEl.classList.add('is-hidden'); }
-        this.elements.hostsTitleEl.textContent = pt.hostsTitle; this.elements.eventTopLabelEl.textContent = pt.eventTopLabel;
-        this.elements.eventTitleEl.textContent = pt.eventTitle; this.elements.eventSubtitleEl.textContent = pt.eventSubtitle;
-        this.elements.eventDateEl.textContent = pt.eventDate; this.syncLayout();
-    }
-
-    openAddHostForm() { this.elements.addHostForm.classList.remove('is-hidden'); this.elements.addHostButton.classList.add('is-hidden'); this.elements.addHostInput.focus(); this.ui.updateFocusableElements(); }
-    closeAddHostForm() { this.elements.addHostForm.classList.add('is-hidden'); this.elements.addHostButton.classList.remove('is-hidden'); this.elements.addHostInput.value = ''; this.clearAddHostError(); }
-    isAddHostFormOpen() { return !this.elements.addHostForm.classList.contains('is-hidden'); }
-    isControlsPanelVisible() { return this.elements.controlsPanel.classList.contains('is-visible'); }
+    // Logic Helpers
+    deriveAccentColor(hex) { return window.PosterUtils.deriveAccentColor(hex); }
     
-    toggleEditPosterShortcut() { const det = this.elements.editPosterDetails; if (det.open) det.open = false; else { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); det.open = true; } this.ui.updateFocusableElements(); }
-    toggleHelpShortcut() { const det = this.elements.helpDetails; if (det.open) det.open = false; else { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); det.open = true; } this.ui.updateFocusableElements(); }
-    toggleAddHostShortcut() { const det = this.elements.hostManagementDetails; if (det.open) det.open = false; else { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); det.open = true; this.openAddHostForm(); } this.ui.updateFocusableElements(); }
-    toggleCustomizeShortcut() { const det = this.elements.appearanceDetails; if (det.open) det.open = false; else { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); det.open = true; } this.ui.updateFocusableElements(); }
+    // UI visibility helpers
+    isControlsPanelVisible() { return this.elements.controlsPanel?.classList.contains('is-visible'); }
+    isAddHostFormOpen() { return !this.elements.addHostForm?.classList.contains('is-hidden'); }
     isCustomizeOpen() { return this.elements.appearanceDetails?.open; }
+    
+    // Shortcut toggles
+    toggleEditPosterShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.editPosterDetails.open = true; this.elements.editPosterDetails.scrollIntoView({ behavior: 'smooth' }); }
+    toggleCustomizeShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.appearanceDetails.open = true; this.elements.appearanceDetails.scrollIntoView({ behavior: 'smooth' }); }
+    toggleAddHostShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.hostManagementDetails.open = true; this.openAddHostForm(); this.elements.hostManagementDetails.scrollIntoView({ behavior: 'smooth' }); }
+    toggleHelpShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.helpDetails.open = true; this.elements.helpDetails.scrollIntoView({ behavior: 'smooth' }); }
 
-    handleFactoryResetKeyDown(e) {
-        if (e.repeat) {
-            if (this.state.factoryResetStartTime) {
-                const progress = Math.min(((Date.now() - this.state.factoryResetStartTime) / 2000) * 100, 100);
-                if (this.elements.factoryResetProgress) this.elements.factoryResetProgress.style.width = `${progress}%`;
-                if (progress >= 100) this.showFactoryResetConfirmation();
-            } return;
-        }
-        if (!this.elements.factoryResetModal.classList.contains('is-hidden')) return;
-        this.state.factoryResetStartTime = Date.now(); this.elements.factoryResetOverlay?.classList.remove('is-hidden');
+    // Add Host Logic
+    openAddHostForm() { this.elements.addHostForm?.classList.remove('is-hidden'); this.elements.addHostInput?.focus(); }
+    closeAddHostForm() { this.elements.addHostForm?.classList.add('is-hidden'); this.elements.addHostInput.value = ''; this.clearAddHostError(); }
+    clearAddHostError() { this.elements.addHostError?.classList.add('is-hidden'); this.elements.addHostError.textContent = ''; }
+    submitAddHost() {
+        const val = this.elements.addHostInput.value.trim();
+        if (!val) return;
+        if (this.state.addedHosts.includes(val) || this.baseHosts.includes(val)) { this.elements.addHostError.textContent = 'Name already in list'; this.elements.addHostError.classList.remove('is-hidden'); return; }
+        this.state.addedHosts.push(val);
+        localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
+        this.renderHosts(); this.closeAddHostForm();
     }
-    handleFactoryResetKeyUp() { this.state.factoryResetStartTime = null; this.elements.factoryResetOverlay?.classList.add('is-hidden'); }
-    showFactoryResetConfirmation() { this.state.factoryResetStartTime = null; this.elements.factoryResetOverlay?.classList.add('is-hidden'); this.elements.factoryResetModal?.classList.remove('is-hidden'); }
-    hideFactoryResetConfirmation() { this.elements.factoryResetModal?.classList.add('is-hidden'); }
+
+    // Factory Reset Logic
+    handleFactoryResetKeyDown(e) {
+        if (e.repeat) return;
+        this.state.factoryResetStartTime = Date.now();
+        this.elements.factoryResetOverlay.classList.remove('is-hidden');
+        const update = () => {
+            if (!this.state.factoryResetStartTime) return;
+            const elapsed = Date.now() - this.state.factoryResetStartTime;
+            const progress = Math.min(elapsed / 1500, 1);
+            this.elements.factoryResetProgress.style.width = `${progress * 100}%`;
+            if (progress < 1) requestAnimationFrame(update);
+            else { this.showFactoryResetConfirmation(); this.handleFactoryResetKeyUp(); }
+        };
+        requestAnimationFrame(update);
+    }
+    handleFactoryResetKeyUp() { this.state.factoryResetStartTime = null; this.elements.factoryResetOverlay.classList.add('is-hidden'); this.elements.factoryResetProgress.style.width = '0%'; }
+    showFactoryResetConfirmation() { this.elements.factoryResetModal.classList.remove('is-hidden'); }
+    hideFactoryResetConfirmation() { this.elements.factoryResetModal.classList.add('is-hidden'); }
     performFactoryReset() { localStorage.clear(); window.location.reload(); }
 
-    getInitialHosts() { return Array.from(this.elements.hostsList.querySelectorAll('span'), el => el.textContent.trim()); }
-    updateScreenSize() { if (this.elements.screenSize) this.elements.screenSize.textContent = `${window.innerWidth} × ${window.innerHeight}`; }
-    updateMobileScreenSizeInfo() { if (this.elements.mobileScreenSizeInfo) this.elements.mobileScreenSizeInfo.textContent = `Detected: ${window.innerWidth}×${window.innerHeight} | Recommended: >1280×800`; }
-    autoGrowTextarea(el) { el.style.height = '40px'; el.style.height = Math.min(el.scrollHeight, 64) + 'px'; }
-    reloadStyles() { window.location.reload(); }
-    
-    async requestWakeLock() { if ('wakeLock' in navigator) { try { this.state.wakeLock = await navigator.wakeLock.request('screen'); this.updateSleepStatus('api'); } catch { this.updateSleepStatus('error'); } } }
-    releaseWakeLock() { this.state.wakeLock?.release(); this.state.wakeLock = null; this.updateSleepStatus('off'); }
-    updateSleepStatus(s) {
-        const el = this.elements.sleepStatus;
-        if (!el) return;
-        
-        let label = 'Off';
-        let statusClass = '';
-        
-        if (s === 'api') {
-            label = 'Awake';
-            statusClass = 'sleep-good';
-        } else if (s === 'error') {
-            label = 'Error';
-            statusClass = 'sleep-bad';
-        }
-        
-        el.textContent = label;
-        // Keep the base class and add the status class
-        el.className = 'stat-value ' + statusClass;
-    }
-    checkWakeLockSupport() {
-        if (!this.elements.wakeLockStatus) return;
-        if (!window.isSecureContext) {
-            this.elements.wakeLockStatus.textContent = 'Insecure context';
-        } else if (!('wakeLock' in navigator)) {
-            this.elements.wakeLockStatus.textContent = 'Not supported';
-        } else {
-            // It's supported and in a secure context
-            this.elements.wakeLockStatus.classList.add('is-hidden');
-        }
-    }
-    startWakeLockHeartbeat() { setInterval(() => { if (document.fullscreenElement && !this.state.wakeLock) this.requestWakeLock(); }, 30000); }
     resetDefaults() {
-        const theme = this.theme;
-        Object.keys(window.DEFAULTS).forEach(key => {
-            // Reset most settings but preserve identity/data keys
-            const identityKeys = ['activeTheme', 'addedHosts', 'removedHosts', 'posterText', 'isAppRunning'];
-            if (!identityKeys.includes(key)) {
-                this.state[key] = window.DEFAULTS[key];
-            }
-        });
-        
-        // Re-apply theme specific overrides
-        if (theme.overrides) {
-            Object.keys(theme.overrides).forEach(key => {
-                if (key in this.state) this.state[key] = theme.overrides[key];
+        this.state = { 
+            ...this.state,
+            ...window.DEFAULTS, 
+            isAppRunning: this.state.isAppRunning,
+            addedHosts: this.state.addedHosts, 
+            removedHosts: this.state.removedHosts, 
+            posterText: this.state.posterText 
+        };
+
+        // Re-apply the current theme's overrides on top of the global defaults
+        if (this.theme && this.theme.overrides) {
+            Object.keys(this.theme.overrides).forEach(key => {
+                if (key in this.state) this.state[key] = this.theme.overrides[key];
             });
         }
 
+        this.saveSettings(); 
         this.applyStateToUI();
-        this.saveSettings();
+        
+        // Trigger necessary side-effects so the engine actually reflects the reset state
+        this.syncLayout();
+        this.themeManager?.syncWind();
+        this.themeManager?.syncBackdrop();
+        this.particleEngine?.adjustAmbientPetals();
     }
 
-    showKeyboardHint(force = false) {
+    // Wake Lock & Fullscreen helpers
+    async checkWakeLockSupport() { if ('wakeLock' in navigator) this.state.wakeLockMode = 'native'; else if (this.elements.wakeLockVideo) this.state.wakeLockMode = 'video'; }
+    async requestWakeLock() {
+        if (this.state.wakeLockMode === 'native') { try { this.state.wakeLock = await navigator.wakeLock.request('screen'); this.updateSleepStatus('on'); } catch { this.updateSleepStatus('error'); } }
+        else if (this.state.wakeLockMode === 'video') { this.elements.wakeLockVideo.play(); this.updateSleepStatus('on'); }
+    }
+    releaseWakeLock() {
+        if (this.state.wakeLock) { this.state.wakeLock.release().then(() => { this.state.wakeLock = null; this.updateSleepStatus('off'); }); }
+        else if (this.state.wakeLockMode === 'video') { this.elements.wakeLockVideo.pause(); this.updateSleepStatus('off'); }
+    }
+    updateSleepStatus(status) {
+        if (this.elements.sleepStatus) {
+            this.elements.sleepStatus.className = `stat-value status-${status}`;
+            this.elements.sleepStatus.textContent = status === 'on' ? 'Active' : status === 'error' ? 'Error' : 'Off';
+        }
+    }
+    startWakeLockHeartbeat() { setInterval(() => { if (this.state.wakeLockActive && !this.state.wakeLock && this.state.wakeLockMode === 'native') this.requestWakeLock(); }, 15000); }
+    
+    requestFullscreenMode() { if (!document.fullscreenElement) this.root.requestFullscreen().catch(() => { this.elements.fullscreenToggle.checked = false; }); }
+    exitFullscreenMode() { if (document.fullscreenElement) document.exitFullscreen(); }
+    checkPersistentFullscreen() { if (localStorage.getItem(window.STORAGE_KEYS.fullscreenIntent) === 'true') { setTimeout(() => this.showFullscreenCountdown(), 2000); } }
+    
+    showFullscreenCountdown() {
+        if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
+        this.elements.fullscreenCountdown.classList.remove('is-countdown-hidden');
+        let count = 3; this.elements.countdownNumber.textContent = count;
+        this.state.countdownTimer = setInterval(() => {
+            count--; this.elements.countdownNumber.textContent = count;
+            if (count <= 0) { clearInterval(this.state.countdownTimer); this.cancelFullscreenCountdown(true); }
+        }, 1000);
+    }
+    cancelFullscreenCountdown(proceed = false) {
+        clearInterval(this.state.countdownTimer);
+        this.elements.fullscreenCountdown.classList.add('is-countdown-hidden');
+        if (proceed) { this.elements.fullscreenToggle.click(); }
+        else { localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); }
+    }
+
+    updateScreenSize() { if (this.elements.screenSize) this.elements.screenSize.textContent = `${window.innerWidth} × ${window.innerHeight}`; }
+    updateTimerDisplay() { if (this.state.fullscreenStartTime && this.elements.timer) { const sec = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); const m = Math.floor(sec / 60), s = sec % 60; this.elements.timer.textContent = `${m}:${s < 10 ? '0' : ''}${s}`; } }
+    
+    showKeyboardHint() {
         if (!this.elements.keyboardHint) return;
-        
-        // If already visible and not forced, don't restart timer
-        if (this.elements.keyboardHint.classList.contains('is-visible') && !force) return;
-
-        this.elements.keyboardHint.classList.add('is-visible');
-        
-        if (this.state.hintTimer) clearTimeout(this.state.hintTimer);
-        // Auto-hide after 5 seconds
-        this.state.hintTimer = setTimeout(() => {
-            this.elements.keyboardHint.classList.remove('is-visible');
-            this.state.hintTimer = null;
-        }, 5000);
+        setTimeout(() => { if (!this.isControlsPanelVisible() && !document.fullscreenElement) { this.elements.keyboardHint.classList.add('is-visible'); setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000); } }, 1500);
     }
 
-    deriveAccentColor(h) { return window.PosterUtils.deriveAccentColor(h); }
+    updateMobileScreenSizeInfo() {
+        if (this.elements.mobileScreenSizeInfo) {
+            this.elements.mobileScreenSizeInfo.textContent = `Detected: ${window.innerWidth}×${window.innerHeight}  |  Recommended: >1280×800`;
+        }
+    }
 
-    // Auto-Fullscreen Logic
-    setupAutoFullscreenTrigger() {
-        // Only start if the user previously had a fullscreen intent
-        if (localStorage.getItem(window.STORAGE_KEYS.fullscreenIntent) !== 'true') return;
-        
-        const trigger = () => {
-            if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
-            this.startFullscreenCountdown();
-        };
-        // Use a one-time listener for the first interaction
-        ['mousedown', 'keydown', 'touchstart'].forEach(type => {
-            document.addEventListener(type, trigger, { once: true, capture: true });
+    autoGrowTextarea(el) { el.style.height = 'auto'; el.style.height = (el.scrollHeight) + 'px'; }
+    
+    applyHideUiState(hidden) {
+        this.body.classList.toggle('ui-hidden', hidden);
+        // If we hide UI, we also hide the sub-toggles to keep panel clean
+        const subToggles = [this.controlLabels.hideLogo, this.controlLabels.hideDate, this.controlLabels.hideTitle, this.controlLabels.hideHost, this.controlLabels.qrSoiree, this.controlLabels.qrMembership];
+        subToggles.forEach(el => el?.classList.toggle('is-hidden', hidden));
+    }
+
+    reloadStyles() {
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+            const url = new URL(link.href, window.location.href);
+            url.searchParams.set('v', Date.now());
+            link.href = url.toString();
         });
     }
-
-    startFullscreenCountdown() {
-        if (this.elements.fullscreenCountdown) {
-            this.elements.fullscreenCountdown.classList.remove('is-countdown-hidden');
-            let count = 3;
-            if (this.elements.countdownNumber) this.elements.countdownNumber.textContent = count;
-            
-            this.fullscreenCountdownTimer = setInterval(() => {
-                count--;
-                if (count <= 0) {
-                    clearInterval(this.fullscreenCountdownTimer);
-                    this.fullscreenCountdownTimer = null;
-                    this.cancelFullscreenCountdown(false);
-                    
-                    // Trigger fullscreen directly
-                    if (this.elements.fullscreenToggle) {
-                        this.elements.fullscreenToggle.checked = true;
-                        // Fire the click logic manually to ensure wake lock and storage are handled
-                        this.requestFullscreenMode();
-                        localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'true');
-                        this.requestWakeLock();
-                    }
-                } else {
-                    if (this.elements.countdownNumber) this.elements.countdownNumber.textContent = count;
-                }
-            }, 1000);
-        }
-    }
-
-    cancelFullscreenCountdown(showHint = true) {
-        if (this.fullscreenCountdownTimer) {
-            clearInterval(this.fullscreenCountdownTimer);
-            this.fullscreenCountdownTimer = null;
-        }
-        if (this.elements.fullscreenCountdown) {
-            this.elements.fullscreenCountdown.classList.add('is-countdown-hidden');
-        }
-    }
-
-    async requestFullscreenMode() {
-        try {
-            if (document.documentElement.requestFullscreen) {
-                await document.documentElement.requestFullscreen();
-                // State update handled by fullscreenchange listener in UIController
-            }
-        } catch (err) {
-            console.warn("Auto-fullscreen failed:", err);
-            // Fallback: If it failed, make sure the toggle is unchecked
-            if (this.elements.fullscreenToggle) this.elements.fullscreenToggle.checked = false;
-        }
-    }
-
-    async exitFullscreenMode() {
-        if (document.fullscreenElement) {
-            try {
-                await document.exitFullscreen();
-            } catch (err) {
-                console.warn("Exit fullscreen failed:", err);
-            }
-        }
-    }
-
-    deriveAccentColor(h) { return window.PosterUtils.deriveAccentColor(h); }
-}
+};

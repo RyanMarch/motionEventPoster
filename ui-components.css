@@ -1035,7 +1035,7 @@ details[open].advanced-controls summary::after {
     padding: 16px;
     border-radius: 16px;
     z-index: var(--z-debug);
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); */
     border: 2px solid var(--color-accent);
     opacity: 0;
     visibility: hidden;

@@ -28,6 +28,7 @@ window.UIController = class UIController {
         this.bindPanelInactivity();
         this.bindOutsideClickDismiss();
         this.bindHoldHotspot();
+        this.bindHostListClicks();
 
         window.addEventListener('resize', () => {
             requestAnimationFrame(() => {
@@ -81,36 +82,77 @@ window.UIController = class UIController {
     bindGlobalShortcuts() {
         document.addEventListener('keydown', (event) => {
             const key = event.key;
+            const lowerKey = key.toLowerCase();
+            
+            // Handle Factory Reset specifically (hold behavior)
             if (key === '\\' && !this.isTextInput(event.target)) {
                 this.poster.handleFactoryResetKeyDown(event);
                 return;
             }
+
+            // Global Escape handling
             if (key === 'Escape') {
-                let handled = false;
                 if (this.poster.isAddHostFormOpen()) {
                     this.poster.closeAddHostForm();
-                    handled = true;
+                    event.preventDefault(); return;
                 } else if (this.poster.isControlsPanelVisible()) {
                     this.toggleControlsPanel();
-                    handled = true;
-                }
-                if (handled) {
-                    event.preventDefault(); event.stopPropagation(); return;
+                    event.preventDefault(); return;
                 }
             }
+
             if (this.isTextInput(event.target)) return;
-            const lowerKey = key.toLowerCase();
-            if (lowerKey === 'q' && !event.repeat) { this.toggleControlsPanel(); return; }
-            if (lowerKey === 'e' && !event.repeat) { this.poster.toggleEditPosterShortcut(); event.preventDefault(); return; }
-            if ((key === '?' || key === '/') && !event.repeat) { this.poster.toggleHelpShortcut(); event.preventDefault(); return; }
-            if (lowerKey === 'f' && !event.repeat) { if (!document.fullscreenElement) this.elements.fullscreenToggle.click(); return; }
-            if (event.code === 'KeyS' && event.altKey) { event.preventDefault(); this.poster.reloadStyles(); return; }
-            if (!this.poster.isControlsPanelVisible() || event.repeat) return;
-            if (lowerKey === 'a') { this.poster.toggleAddHostShortcut(); event.preventDefault(); }
-            if (lowerKey === 'c') { this.poster.toggleCustomizeShortcut(); event.preventDefault(); }
-            if (lowerKey === 'r') { if (this.poster.isCustomizeOpen()) { event.preventDefault(); this.poster.resetDefaults(); } }
+
+            // Find matching shortcut config
+            const config = window.SHORTCUT_CONFIGS.find(c => c.key === lowerKey || c.key === key);
+            if (!config || event.repeat) return;
+
+            // Check condition if present
+            if (config.condition && !this.poster[config.condition]()) return;
+
+            // Execute action
+            switch (config.action) {
+                case 'toggleControls': this.toggleControlsPanel(); break;
+                case 'toggleFullscreen': if (!document.fullscreenElement) this.elements.fullscreenToggle.click(); break;
+                case 'toggleEdit': this.poster.toggleEditPosterShortcut(); event.preventDefault(); break;
+                case 'toggleCustomize': this.poster.toggleCustomizeShortcut(); event.preventDefault(); break;
+                case 'toggleHosts': this.poster.toggleAddHostShortcut(); event.preventDefault(); break;
+                case 'toggleHelp': this.poster.toggleHelpShortcut(); event.preventDefault(); break;
+                case 'resetDefaults': this.poster.resetDefaults(); event.preventDefault(); break;
+            }
+            
+            // Special Case: Alt+S for reload (Developer shortcut, not in config)
+            if (event.code === 'KeyS' && event.altKey) { event.preventDefault(); this.poster.reloadStyles(); }
         });
         document.addEventListener('keyup', (event) => { if (event.key === '\\') this.poster.handleFactoryResetKeyUp(); });
+    }
+
+    initShortcutsUI() {
+        const container = document.getElementById('shortcut-list');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        // Use a Set to avoid duplicate entries for same action (like ? and /)
+        const seenActions = new Set();
+        
+        window.SHORTCUT_CONFIGS.forEach(config => {
+            if (seenActions.has(config.action) || config.action === 'closeAll' || config.action === 'factoryReset') return;
+            seenActions.add(config.action);
+
+            const item = document.createElement('div');
+            item.className = 'shortcut-item';
+            
+            const kbd = document.createElement('kbd');
+            kbd.textContent = config.label;
+            
+            const desc = document.createElement('span');
+            desc.className = 'shortcut-desc';
+            desc.textContent = config.desc;
+            
+            item.appendChild(kbd);
+            item.appendChild(desc);
+            container.appendChild(item);
+        });
     }
 
     isTextInput(target) {
@@ -120,37 +162,102 @@ window.UIController = class UIController {
     }
 
     bindSliders() {
-        const bind = (id, valId, callback) => {
-            const slider = document.getElementById(id);
-            const display = document.getElementById(valId);
+        const sliderConfigs = window.SLIDER_CONFIGS || [];
+        
+        sliderConfigs.forEach(config => {
+            const slider = document.getElementById(`slider-${config.id}`);
+            const display = document.getElementById(`val-${config.id}`);
             if (!slider) return;
+
             let rafId = null;
             const startSlide = () => this.body.classList.add('is-sliding');
-            const endSlide = () => { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } this.body.classList.remove('is-sliding'); this.poster.saveSettings(); };
+            const endSlide = () => { 
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; } 
+                this.body.classList.remove('is-sliding'); 
+                this.poster.saveSettings(); 
+            };
+
             slider.addEventListener('pointerdown', startSlide);
             slider.addEventListener('input', (e) => {
                 const v = e.target.value;
+                const numVal = config.step >= 1 ? parseInt(v, 10) : parseFloat(v);
+                
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
-                    const label = callback(v);
-                    if (display) display.textContent = label ?? v;
+                    // Update state
+                    this.state[config.stateKey] = numVal;
+                    
+                    // Update display label
+                    if (display) display.textContent = `${v}${config.suffix || ''}`;
+                    
+                    // Execute specific side effects
+                    if (config.id === 'max-petals') this.poster.particleEngine?.adjustAmbientPetals();
+                    if (config.id === 'gust-strength') this.poster.themeManager?.syncWind();
+                    if (['host-text-size', 'host-max-width', 'inset-v', 'inset-h'].includes(config.id)) this.poster.syncLayout();
+                    if (config.id === 'backdrop-opacity') this.poster.themeManager?.syncBackdrop();
+                    
                     rafId = null;
                 });
             });
             slider.addEventListener('change', endSlide);
             slider.addEventListener('pointerup', endSlide);
             slider.addEventListener('pointercancel', endSlide);
-        };
-        bind('slider-max-petals', 'val-max-petals', (v) => { this.state.maxPetals = parseInt(v, 10); this.poster.particleEngine?.adjustAmbientPetals(); });
-        bind('slider-gust-freq', 'val-gust-freq', (v) => { this.state.windiness = parseFloat(v); });
-        bind('slider-fall-speed', 'val-fall-speed', (v) => { this.state.fallSpeed = parseFloat(v); return `${v}x`; });
-        bind('slider-tumble-speed', 'val-tumble-speed', (v) => { this.state.tumbleSpeed = parseFloat(v); return `${v}x`; });
-        bind('slider-gust-strength', 'val-gust-strength', (v) => { this.state.gustStrength = parseFloat(v); this.poster.themeManager?.syncWind(); return v; });
-        bind('slider-host-text-size', 'val-host-text-size', (v) => { this.state.hostTextSize = parseFloat(v); this.poster.syncLayout(); return `${v}x`; });
-        bind('slider-host-max-width', 'val-host-max-width', (v) => { this.state.hostMaxWidth = parseFloat(v); this.poster.syncLayout(); return `${v}%`; });
-        bind('slider-backdrop-opacity', 'val-backdrop-opacity', (v) => { this.state.backdropOpacity = parseFloat(v); this.poster.themeManager?.syncBackdrop(); return `${v}%`; });
-        bind('slider-inset-v', 'val-inset-v', (v) => { this.state.insetV = parseFloat(v); this.poster.syncLayout(); return `${v}px`; });
-        bind('slider-inset-h', 'val-inset-h', (v) => { this.state.insetH = parseInt(v, 10); this.poster.syncLayout(); return `${v}px`; });
+        });
+    }
+
+    initSlidersUI() {
+        const sliderConfigs = window.SLIDER_CONFIGS || [];
+        
+        sliderConfigs.forEach(config => {
+            const section = document.getElementById(config.sectionId);
+            if (!section) return;
+
+            // Handle grouping for "isHalf" sliders
+            let container = section;
+            if (config.isHalf) {
+                // Look for or create a control-row at the end of the section
+                let lastRow = section.lastElementChild;
+                if (!lastRow || !lastRow.classList.contains('control-row') || lastRow.children.length >= 2) {
+                    lastRow = document.createElement('div');
+                    lastRow.className = 'control-row';
+                    section.appendChild(lastRow);
+                }
+                container = lastRow;
+            }
+
+            const control = document.createElement('div');
+            control.className = 'control';
+            
+            // Special case for extra-ribbons control position (if needed)
+            if (config.id === 'backdrop-opacity') control.style.marginBottom = '12px';
+
+            const label = document.createElement('label');
+            label.htmlFor = `slider-${config.id}`;
+            label.textContent = `${config.label} `;
+            
+            const span = document.createElement('span');
+            span.id = `val-${config.id}`;
+            span.textContent = '—';
+            
+            label.appendChild(span);
+            
+            const input = document.createElement('input');
+            input.type = 'range';
+            input.id = `slider-${config.id}`;
+            input.min = config.min;
+            input.max = config.max;
+            input.step = config.step || 1;
+            
+            control.appendChild(label);
+            control.appendChild(input);
+            
+            // Prepend backdrop-opacity to be on the left of extra-ribbons
+            if (config.id === 'backdrop-opacity') {
+                container.prepend(control);
+            } else {
+                container.appendChild(control);
+            }
+        });
     }
 
     bindToggles() {
@@ -169,13 +276,22 @@ window.UIController = class UIController {
         bindToggle(this.controls.qrSoiree, 'qrSoiree', (v) => this.elements.qrSoiree.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.qrMembership, 'qrMembership', (v) => this.elements.qrMembership.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.disableAutoFullscreen, 'disableAutoFullscreen');
+
     }
 
     bindColorPicker() {
         this.elements.bgColorPicker?.addEventListener('input', (e) => {
             const color = e.target.value;
-            this.state.bgColor = color;
-            this.state.accentColor = this.poster.deriveAccentColor(color);
+            const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
+            
+            if (isAccentBg) {
+                this.state.accentColor = color;
+                // If they are picking a custom background, we keep the current primary color
+            } else {
+                this.state.bgColor = color;
+                this.state.accentColor = this.poster.deriveAccentColor(color);
+            }
+            
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = color.toUpperCase();
             this.poster.themeManager?.syncBackdrop();
             this.poster.themeManager?.updateSwatchActiveState();
@@ -339,21 +455,6 @@ window.UIController = class UIController {
                 this.controls.themeSelectContainer.classList.remove('is-open');
             }
         });
-
-        this.controls.themeSelectOptions?.forEach(opt => {
-            const selectOpt = () => {
-                this.poster.themeManager?.applyTheme(opt.dataset.value);
-                this.controls.themeSelectContainer.classList.remove('is-open');
-                this.controls.themeSelectTrigger?.focus();
-            };
-            opt.addEventListener('click', selectOpt);
-            opt.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    selectOpt();
-                }
-            });
-        });
     }
 
     bindPanelInactivity() {
@@ -369,6 +470,87 @@ window.UIController = class UIController {
             if (panel.classList.contains('is-dismissed')) { panel.classList.remove('is-visible', 'is-dimmed', 'is-dismissed'); this.clearInactivityTimers(); }
             else this.toggleControlsPanel();
         });
+    }
+
+    bindHostListClicks() {
+        this.elements.addedHostsItems?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-remove-host');
+            if (!btn) return;
+            const index = parseInt(btn.dataset.index, 10);
+            const name = this.state.addedHosts[index];
+            this.state.addedHosts.splice(index, 1);
+            this.poster.persistAddedHosts();
+            this.poster.renderHosts();
+        });
+
+        this.elements.removedHostsItems?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-restore-host');
+            if (!btn) return;
+            const name = btn.dataset.name;
+            this.state.removedHosts = this.state.removedHosts.filter(h => h !== name);
+            this.poster.persistRemovedHosts();
+            this.poster.renderHosts();
+        });
+    }
+
+    renderAddedHosts() {
+        if (!this.elements.addedHostsItems) return;
+        if (this.state.addedHosts.length === 0) {
+            this.elements.addedHostsList.classList.add('is-hidden');
+            this.elements.addedHostsItems.innerHTML = '';
+            this.updateFocusableElements();
+            return;
+        }
+
+        const rows = this.state.addedHosts.map((name, index) => {
+            const row = document.createElement('div');
+            row.className = 'added-host-row';
+            const label = document.createElement('span');
+            label.className = 'added-host-name';
+            label.textContent = name;
+            const button = document.createElement('button');
+            button.className = 'btn-remove-host';
+            button.dataset.index = String(index);
+            button.type = 'button';
+            button.textContent = 'Remove';
+            row.append(label, button);
+            return row;
+        });
+
+        this.elements.addedHostsItems.replaceChildren(...rows);
+        this.elements.addedHostsList.classList.remove('is-hidden');
+        this.updateFocusableElements();
+    }
+
+    renderRemovedHosts() {
+        if (!this.elements.removedHostsItems) return;
+        const displayedRemoved = this.state.removedHosts; // Simple version
+
+        if (displayedRemoved.length === 0) {
+            this.elements.removedHostsList.classList.add('is-hidden');
+            this.elements.removedHostsItems.innerHTML = '';
+            this.updateFocusableElements();
+            return;
+        }
+
+        const rows = displayedRemoved.map((name) => {
+            const row = document.createElement('div');
+            row.className = 'added-host-row';
+            const label = document.createElement('span');
+            label.className = 'added-host-name';
+            label.textContent = name;
+            const button = document.createElement('button');
+            button.className = 'btn-restore-host';
+            button.dataset.name = name;
+            button.type = 'button';
+            button.textContent = 'Restore';
+            row.append(label, button);
+            return row;
+        });
+
+        this.elements.removedHostsItems.replaceChildren(...rows);
+        this.elements.removedHostsList.classList.remove('is-hidden');
+        this.updateFocusableElements();
     }
 
     bindHoldHotspot() {

@@ -370,10 +370,11 @@ class EventPoster {
         setSlider('slider-inset-h', this.state.insetH);
 
         if (this.elements.bgColorPicker) {
-            this.elements.bgColorPicker.value = this.state.bgColor;
+            this.elements.bgColorPicker.value = this.state.bgColor || '#032858';
         }
         if (this.elements.bgColorVal) {
-            this.elements.bgColorVal.textContent = this.state.bgColor.toUpperCase();
+            const displayColor = this.state.bgColor || '#032858';
+            this.elements.bgColorVal.textContent = displayColor.toUpperCase();
         }
 
         this.updateSwatchActiveState();
