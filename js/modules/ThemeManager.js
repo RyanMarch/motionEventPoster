@@ -40,7 +40,10 @@ window.ThemeManager = class ThemeManager {
         this.poster.theme = theme;
         this.poster.petalTypes = theme.particles;
         this.state.activeTheme = themeId;
-        if (!skipOverrides) this.state.accentColor = null;
+        if (!skipOverrides) {
+            this.state.accentColor = null;
+            this.state.bgColor = null;
+        }
         
         if (theme.overrides && !skipOverrides) {
             Object.keys(theme.overrides).forEach(key => {
@@ -173,7 +176,7 @@ window.ThemeManager = class ThemeManager {
         }
 
         // Luminance check for text contrast class (only toggle if state changes)
-        const checkRgb = (theme.id === 'corporate') ? (accentRgb || rgb) : rgb;
+        const checkRgb = theme.flags?.useAccentAsBackground ? (accentRgb || rgb) : rgb;
         const luminance = (0.2126 * checkRgb.r + 0.7152 * checkRgb.g + 0.0722 * checkRgb.b) / 255;
         const isLight = luminance > 0.5;
         if (this.body.classList.contains('is-light-bg') !== isLight) {
@@ -184,22 +187,20 @@ window.ThemeManager = class ThemeManager {
         const target = this.root;
         target.style.setProperty('--backdrop-opacity', opacity.toString());
         
-        // Corporate theme uses accent for background, others use primary
-        const overlayColorStr = (theme.id === 'corporate') ? accentRgbStr : rgbStr;
+        const overlayColorStr = theme.flags?.useAccentAsBackground ? accentRgbStr : rgbStr;
         
-        if (theme.id !== 'corporate') {
+        if (!theme.flags?.useAccentAsBackground) {
             target.style.setProperty('--overlay-dark', `rgba(${overlayColorStr}, ${0.95 * opacity})`);
             target.style.setProperty('--overlay-mid', `rgba(${overlayColorStr}, ${0.7 * opacity})`);
             target.style.setProperty('--overlay-clear', `rgba(${overlayColorStr}, 0)`);
         } else {
-            // Overlay variables removed for Corporate theme per user request
             target.style.removeProperty('--overlay-dark');
             target.style.removeProperty('--overlay-mid');
             target.style.removeProperty('--overlay-clear');
         }
 
-        // Sync particle colors if using a dynamic theme like Digital Grid or Corporate
-        if (this.poster.theme.id === 'digital-grid' || this.poster.theme.id === 'corporate') {
+        // Sync particle colors for themes that derive particle colors from swatches
+        if (theme.flags?.syncParticleColors) {
             this.poster.particleEngine?.updateParticleColors();
         }
     }
@@ -217,8 +218,13 @@ window.ThemeManager = class ThemeManager {
             btn.addEventListener('click', () => {
                 this.state.bgColor = colorObj.hex;
                 this.state.accentColor = colorObj.accent || null;
-                if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = colorObj.hex;
-                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = colorObj.hex.toUpperCase();
+                
+                const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
+                const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
+                
+                if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
+                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
+                
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
@@ -286,8 +292,15 @@ window.ThemeManager = class ThemeManager {
         let found = false;
         swatches.forEach(s => {
             const swatchColor = (s.dataset.color || '').trim().toLowerCase();
-            const currentColor = (this.state.bgColor || '').trim().toLowerCase();
-            const isActive = swatchColor === currentColor && swatchColor !== '';
+            const currentColor = (this.state.bgColor || this.poster.theme.colors.primary).trim().toLowerCase();
+            
+            // For themes that swap roles, we also need to verify the accent color matches 
+            // to distinguish between 'Normal' and 'Reversed' swatches.
+            const currentAccent = (this.state.accentColor || this.poster.theme.colors.accent).trim().toLowerCase();
+            const swatchAccent = (s.title && this.poster.theme.swatches.find(sw => sw.name === s.title)?.accent || '').trim().toLowerCase();
+            
+            const isActive = swatchColor === currentColor && (swatchAccent === '' || swatchAccent === currentAccent);
+            
             s.classList.toggle('active', isActive);
             if (isActive) found = true;
         });

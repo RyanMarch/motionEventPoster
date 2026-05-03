@@ -282,8 +282,13 @@ window.EventPoster = class EventPoster {
             if (display) display.textContent = `${value}${config.suffix || ''}`;
         });
 
-        if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = this.state.bgColor;
-        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.state.bgColor.toUpperCase();
+        const isAccentBg = this.theme.flags?.useAccentAsBackground;
+        const currentBg = this.state.bgColor || this.theme.colors.primary;
+        const currentAccent = this.state.accentColor || this.theme.colors.accent;
+        const displayColor = isAccentBg ? currentAccent : currentBg;
+
+        if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
+        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
 
         this.themeManager.updateSwatchActiveState();
 

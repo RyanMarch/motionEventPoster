@@ -282,8 +282,16 @@ window.UIController = class UIController {
     bindColorPicker() {
         this.elements.bgColorPicker?.addEventListener('input', (e) => {
             const color = e.target.value;
-            this.state.bgColor = color;
-            this.state.accentColor = this.poster.deriveAccentColor(color);
+            const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
+            
+            if (isAccentBg) {
+                this.state.accentColor = color;
+                // If they are picking a custom background, we keep the current primary (swoosh) color
+            } else {
+                this.state.bgColor = color;
+                this.state.accentColor = this.poster.deriveAccentColor(color);
+            }
+            
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = color.toUpperCase();
             this.poster.themeManager?.syncBackdrop();
             this.poster.themeManager?.updateSwatchActiveState();
