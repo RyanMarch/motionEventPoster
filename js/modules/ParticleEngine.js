@@ -191,18 +191,39 @@ window.ParticleEngine = class ParticleEngine {
 
     startAnimationLoop() {
         const loop = (now) => {
+            requestAnimationFrame(loop);
+            
             if (!this.state.lastPhysicsTime) this.state.lastPhysicsTime = now;
+            
+            // FPS Capping Logic
+            const targetFPS = this.state.fpsCap || 0;
+            if (targetFPS > 0) {
+                const interval = 1000 / targetFPS;
+                if (!this.state.lastFrameExecutionTime) this.state.lastFrameExecutionTime = now;
+                
+                const elapsed = now - this.state.lastFrameExecutionTime;
+                
+                // If not enough time has passed, skip this frame
+                // We use interval - 0.1 to account for slight browser timing jitter
+                if (elapsed < interval - 0.1) return;
+                
+                // Adjust lastFrameExecutionTime to maintain steady rhythm
+                this.state.lastFrameExecutionTime = now - (elapsed % interval);
+            }
+
             const dt = Math.min((now - this.state.lastPhysicsTime) / 1000, 0.1);
             this.state.lastPhysicsTime = now;
             this.state.frameCount += 1;
+
             if (now > this.state.lastFrameTime + 1000) {
-                this.updateFPS(Math.round((this.state.frameCount * 1000) / (now - this.state.lastFrameTime)));
+                const actualFPS = Math.round((this.state.frameCount * 1000) / (now - this.state.lastFrameTime));
+                this.updateFPS(actualFPS);
                 this.state.lastFrameTime = now;
                 this.state.frameCount = 0;
                 if (this.poster.updateTimerDisplay) this.poster.updateTimerDisplay();
             }
+
             if (!this.state.isPetalsPaused) this.updatePhysics(dt);
-            requestAnimationFrame(loop);
         };
         requestAnimationFrame(loop);
     }

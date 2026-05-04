@@ -335,40 +335,6 @@ body.theme-corporate .petal {
     opacity: 0.6;
 }
 
-/* ============================================================
-   CORPORATE PANEL UI — Fixed Legibility Overrides
-   Prevents swatch color changes from making panel chrome unreadable.
-   The keyboard hint and theme picker always sit on dark backgrounds,
-   so we pin their colors to white regardless of active swatch.
-   ============================================================ */
-
-body.theme-corporate .keyboard-hint {
-    border-color: rgba(255, 255, 255, 0.5);
-    color: #ffffff;
-}
-
-body.theme-corporate .hint-btn {
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-}
-
-body.theme-corporate .hint-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
-}
-
-body.theme-corporate kbd {
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-/* Theme picker selected option: always readable white on the dark dropdown */
-body.theme-corporate .custom-select-option.selected {
-    color: #ffffff;
-}
-
 @media (max-width:1800px) {
     body.theme-corporate .event-footer {
         margin-bottom: 3vh;
@@ -380,7 +346,7 @@ body.theme-corporate .custom-select-option.selected {
         margin: 6vh 0 -2vh 0;
     }
     body.theme-corporate .hosts-list span {
-        font-size: calc(1.4rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+        font-size: calc(1.1rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
 }
 
@@ -394,7 +360,6 @@ body.theme-corporate .hosts-container{
     }
 
     body.theme-corporate .hosts-list {
-        max-width: 85vw !important;
         margin-left: auto;
         margin-right: auto;
 

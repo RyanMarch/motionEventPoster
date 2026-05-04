@@ -76,6 +76,13 @@ window.UIController = class UIController {
                 requestAnimationFrame(() => this.poster.optimizeLayouts());
             });
         }
+
+        const globalReset = () => this.resetGlobalInactivityTimer();
+        window.addEventListener('mousemove', globalReset, { passive: true });
+        window.addEventListener('mousedown', globalReset, { passive: true });
+        window.addEventListener('keydown', globalReset, { passive: true });
+        window.addEventListener('touchstart', globalReset, { passive: true });
+        this.resetGlobalInactivityTimer();
     }
 
     toggleControlsPanel() {
@@ -115,6 +122,9 @@ window.UIController = class UIController {
                 if (this.poster.isAddHostFormOpen()) {
                     this.poster.closeAddHostForm();
                     event.preventDefault(); return;
+                } else if (this.poster.isFactoryResetModalVisible()) {
+                    this.poster.hideFactoryResetConfirmation();
+                    event.preventDefault(); return;
                 } else if (this.poster.isControlsPanelVisible()) {
                     this.toggleControlsPanel();
                     event.preventDefault(); return;
@@ -122,6 +132,13 @@ window.UIController = class UIController {
             }
 
             if (this.isTextInput(event.target)) return;
+
+            // Special Case: Alt+S for reload (Developer shortcut, not in config)
+            if (event.code === 'KeyS' && event.altKey) { 
+                event.preventDefault(); 
+                this.poster.reloadStyles(); 
+                return;
+            }
 
             // Find matching shortcut config
             const config = window.SHORTCUT_CONFIGS.find(c => c.key === lowerKey || c.key === key);
@@ -133,16 +150,13 @@ window.UIController = class UIController {
             // Execute action
             switch (config.action) {
                 case 'toggleControls': this.toggleControlsPanel(); break;
-                case 'toggleFullscreen': if (!document.fullscreenElement) this.elements.fullscreenToggle.click(); break;
+                case 'toggleFullscreen': if (!this.elements.fullscreenToggle.checked) this.elements.fullscreenToggle.click(); break;
                 case 'toggleEdit': this.poster.toggleEditPosterShortcut(); event.preventDefault(); break;
                 case 'toggleCustomize': this.poster.toggleCustomizeShortcut(); event.preventDefault(); break;
                 case 'toggleHosts': this.poster.toggleAddHostShortcut(); event.preventDefault(); break;
                 case 'toggleHelp': this.poster.toggleHelpShortcut(); event.preventDefault(); break;
                 case 'resetDefaults': this.poster.resetDefaults(); event.preventDefault(); break;
             }
-            
-            // Special Case: Alt+S for reload (Developer shortcut, not in config)
-            if (event.code === 'KeyS' && event.altKey) { event.preventDefault(); this.poster.reloadStyles(); }
         });
         document.addEventListener('keyup', (event) => { if (event.key === '\\') this.poster.handleFactoryResetKeyUp(); });
     }
@@ -284,6 +298,18 @@ window.UIController = class UIController {
         this.controls.hostLayoutRadios?.forEach(radio => {
             radio.addEventListener('change', (e) => { if (e.target.checked) { this.state.hostLayout = e.target.value; this.poster.applyHostLayout(this.state.hostLayout); this.poster.saveSettings(); } });
         });
+        
+        this.controls.fpsCapRadios?.forEach(radio => {
+            radio.addEventListener('change', (e) => { 
+                if (e.target.checked) { 
+                    this.state.fpsCap = Number(e.target.value); 
+                    // Reset timing to prevent sudden jumps or logic drifts
+                    this.state.lastFrameExecutionTime = 0;
+                    this.state.lastPhysicsTime = 0;
+                    this.poster.saveSettings(); 
+                } 
+            });
+        });
         const bindToggle = (ctrl, key, callback) => {
             ctrl?.addEventListener('change', (e) => { this.state[key] = e.target.checked; callback?.(e.target.checked); this.poster.saveSettings(); });
         };
@@ -296,7 +322,8 @@ window.UIController = class UIController {
         bindToggle(this.controls.qrSoiree, 'qrSoiree', (v) => this.elements.qrSoiree.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.qrMembership, 'qrMembership', (v) => this.elements.qrMembership.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.disableAutoFullscreen, 'disableAutoFullscreen');
-
+        bindToggle(this.controls.autoHideMenu, 'autoHideMenu', (v) => { if (!v) this.poster.root.classList.remove('inactivity-hide'); });
+        bindToggle(this.controls.smoothTransitions, 'smoothTransitions', (v) => this.poster.root.classList.toggle('no-transitions', !v));
     }
 
     bindColorPicker() {
@@ -329,7 +356,7 @@ window.UIController = class UIController {
         this.elements.hintFullscreenBtn?.addEventListener('click', () => { this.elements.fullscreenToggle.click(); this.elements.keyboardHint.classList.remove('is-visible'); });
         this.elements.hintOptionsBtn?.addEventListener('click', () => { this.toggleControlsPanel(); this.elements.keyboardHint.classList.remove('is-visible'); });
         this.elements.hintHelpBtn?.addEventListener('click', () => { if (!this.poster.isControlsPanelVisible()) this.toggleControlsPanel(); this.poster.toggleHelpShortcut(); this.elements.keyboardHint.classList.remove('is-visible'); });
-        this.elements.cancelFullscreenBtn?.addEventListener('click', () => this.poster.cancelFullscreenCountdown());
+        this.elements.cancelFullscreenBtn?.addEventListener('click', () => this.poster.cancelFullscreenCountdown(false, true));
     }
 
     bindHostManagement() {
@@ -450,16 +477,23 @@ window.UIController = class UIController {
                 this.state.fullscreenStartTime = Date.now(); 
                 this.state.totalFullscreenSeconds = 0; 
                 if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = 'Fullscreen'; 
-                this.poster.cancelFullscreenCountdown(false); 
+                this.poster.cancelFullscreenCountdown(false, false); 
             } else { 
                 if (this.state.fullscreenStartTime) { 
                     this.state.totalFullscreenSeconds = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); 
                     this.state.fullscreenStartTime = null; 
+                    this.poster.updateTimerDisplay();
                 }
                 this.elements.fullscreenToggle.checked = false; 
                 if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = '[F]ullscreen'; 
                 this.poster.releaseWakeLock(); 
-                localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); 
+                
+                // Only clear the intent if the page is still active/visible.
+                // If it's hidden or unloading, we assume it's a refresh/re-layout 
+                // and preserve the intent for auto-recovery.
+                if (document.visibilityState === 'visible') {
+                    localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false');
+                }
             }
         });
     }
@@ -505,10 +539,22 @@ window.UIController = class UIController {
     bindOutsideClickDismiss() {
         document.addEventListener('pointerdown', (e) => {
             if (!this.poster.isControlsPanelVisible()) return;
+            
+            // If auto-hide is OFF, we do NOT dismiss by clicking outside
+            if (!this.state.autoHideMenu || this.state.autoHideMenu === 'false') return;
+
             const panel = this.elements.controlsPanel;
             if (panel.contains(e.target)) return;
-            if (panel.classList.contains('is-dismissed')) { panel.classList.remove('is-visible', 'is-dimmed', 'is-dismissed'); this.clearInactivityTimers(); }
-            else this.toggleControlsPanel();
+            
+            // Clicking the close button is handled by its own listener
+            if (e.target.closest('#btn-close-panel')) return;
+
+            if (panel.classList.contains('is-dismissed')) { 
+                panel.classList.remove('is-visible', 'is-dimmed', 'is-dismissed'); 
+                this.clearInactivityTimers(); 
+            } else {
+                this.toggleControlsPanel();
+            }
         });
     }
 
@@ -518,18 +564,14 @@ window.UIController = class UIController {
             if (!btn) return;
             const index = parseInt(btn.dataset.index, 10);
             const name = this.state.addedHosts[index];
-            this.state.addedHosts.splice(index, 1);
-            this.poster.persistAddedHosts();
-            this.poster.renderHosts();
+            this.poster.removeHostByName(name);
         });
 
         this.elements.removedHostsItems?.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-restore-host');
             if (!btn) return;
             const name = btn.dataset.name;
-            this.state.removedHosts = this.state.removedHosts.filter(h => h !== name);
-            this.poster.persistRemovedHosts();
-            this.poster.renderHosts();
+            this.poster.restoreHostByName(name);
         });
     }
 
@@ -564,7 +606,8 @@ window.UIController = class UIController {
 
     renderRemovedHosts() {
         if (!this.elements.removedHostsItems) return;
-        const displayedRemoved = this.state.removedHosts; // Simple version
+        // Only show hosts that are NOT in the base hosts list (i.e. only user-added hosts)
+        const displayedRemoved = this.state.removedHosts.filter(name => !this.poster.baseHosts.includes(name));
 
         if (displayedRemoved.length === 0) {
             this.elements.removedHostsList.classList.add('is-hidden');
@@ -604,9 +647,59 @@ window.UIController = class UIController {
         document.addEventListener('pointerdown', () => { this.state.isKeyboardUser = false; }, { capture: true });
     }
 
+    bindHostHold(element, name) {
+        let holdTimer = null;
+
+        const startHold = (e) => {
+            if (e.button !== undefined && e.button !== 0) return; // Only left click
+
+            element.style.transition = 'transform 2s ease-out';
+            element.style.transform = 'scale(1.08)';
+
+            holdTimer = setTimeout(() => {
+                element.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                element.style.opacity = '0';
+                element.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    this.poster.removeHostByName(name);
+                }, 300);
+            }, 2000);
+        };
+
+        const cancelHold = () => {
+            if (holdTimer) {
+                clearTimeout(holdTimer);
+                holdTimer = null;
+
+                element.style.transition = 'transform 0.3s ease';
+                element.style.transform = '';
+            }
+        };
+
+        element.addEventListener('pointerdown', startHold);
+        element.addEventListener('pointerup', cancelHold);
+        element.addEventListener('pointercancel', cancelHold);
+        element.addEventListener('pointerleave', cancelHold);
+        element.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+        element.style.userSelect = 'none';
+        element.style.cursor = 'default';
+    }
+
     initKeyboardNavigation() {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') { this.state.isKeyboardUser = true; this.body.classList.remove('no-focus-outline'); }
+            
+            // Factory Reset Confirmation Modal handling
+            if (this.poster.isFactoryResetModalVisible()) {
+                if (e.key === 'Enter') {
+                    this.poster.performFactoryReset();
+                    e.preventDefault();
+                    return;
+                }
+            }
+
             if (!this.poster.isControlsPanelVisible()) return;
             const isAddMode = this.poster.isAddHostFormOpen();
             if (isAddMode && e.key === 'Enter' && !this.elements.addHostConfirm.disabled) { this.elements.addHostConfirm.click(); e.preventDefault(); return; }
@@ -637,14 +730,31 @@ window.UIController = class UIController {
         if (!panel) return;
         panel.classList.remove('is-dimmed', 'is-dismissed');
         if (!this.poster.isControlsPanelVisible()) return;
-        this.poster.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
-        this.poster.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
+
+        // Only set inactivity timers if auto-hide is enabled
+        if (this.state.autoHideMenu) {
+            this.poster.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
+            this.poster.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
+        }
     }
 
     clearInactivityTimers() {
         if (this.poster.inactivityTimer) clearTimeout(this.poster.inactivityTimer);
         if (this.poster.dismissTimer) clearTimeout(this.poster.dismissTimer);
         this.poster.inactivityTimer = null; this.poster.dismissTimer = null;
+    }
+
+    resetGlobalInactivityTimer() {
+        if (this.globalInactivityTimer) clearTimeout(this.globalInactivityTimer);
+        this.poster.root.classList.remove('inactivity-hide');
+        
+        // Only hide if feature is enabled AND panel is NOT currently visible
+        const isAutoHideEnabled = this.state.autoHideMenu === true || this.state.autoHideMenu === 'true';
+        if (isAutoHideEnabled && !this.poster.isControlsPanelVisible()) {
+            this.globalInactivityTimer = setTimeout(() => {
+                this.poster.root.classList.add('inactivity-hide');
+            }, 6000); 
+        }
     }
 
     updateFocusableElements() {
