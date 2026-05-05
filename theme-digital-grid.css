@@ -131,7 +131,7 @@ body.theme-digital-grid .theme-frame::after {
 /* User Customizations & Layout Overrides */
 @media (max-width: 1800px) {
     body.theme-digital-grid .hosts-list span {
-        font-size: calc(1.3rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+        font-size: calc(1.3em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
     body.theme-digital-grid .hosts-list {
         max-width: 80vw;
@@ -148,14 +148,16 @@ body.theme-digital-grid .theme-frame::after {
 }
 @media (min-width: 1801px) {
     body.theme-digital-grid .logo-banner {
-        margin: 3rem 0 -3rem 0;
+        margin: 3rem 0 -2rem 0;
         scale:1.2;
     }
     body.theme-digital-grid .hosts-list span {
-        font-size: calc(1.6rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+        font-size: calc(1.7rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
     body.theme-digital-grid .event-footer {
         margin-bottom: 2vh;
+        margin-top: -2vh;
+        scale: 1.2;
     }
 }
 

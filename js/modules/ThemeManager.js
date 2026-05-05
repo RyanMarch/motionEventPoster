@@ -118,8 +118,11 @@ window.ThemeManager = class ThemeManager {
         const cntLabel = document.querySelector('label[for="slider-max-petals"]') || document.querySelector('#slider-max-petals')?.parentElement.querySelector('label');
         if (cntLabel) cntLabel.firstChild.textContent = `${spLabel} Count `;
 
-        const bLabel = document.getElementById('check-hide-border')?.parentElement;
-        if (bLabel) bLabel.lastChild.textContent = ` ${uiLabels.borderToggle}`;
+        const bLabel = document.getElementById('check-hide-border')?.closest('label');
+        if (bLabel) {
+            const labelSpan = bLabel.querySelector('.toggle-label');
+            if (labelSpan) labelSpan.textContent = uiLabels.borderToggle;
+        }
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
         if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
@@ -151,11 +154,8 @@ window.ThemeManager = class ThemeManager {
         // Update Core Colors
         this.root.style.setProperty('--color-primary', color);
         this.root.style.setProperty('--color-primary-rgb', rgbStr);
-        this.root.style.setProperty('--color-brand', color);
         this.root.style.setProperty('--color-accent', accentColor);
         this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
-        this.root.style.setProperty('--color-panel-accent', theme.colors.accent);
-        this.root.style.setProperty('--color-panel-brand', theme.colors.primary);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
         

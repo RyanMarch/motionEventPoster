@@ -225,12 +225,15 @@ body.theme-digital-grid .main-content {
 /* 1. Large Screen (1920x1080) Fullscreen Styles */
 @media (min-width: 1801px) {
     body.theme-spring .hosts-list {
-        max-width: 77vw;
         padding: 0;
+        max-width: var(--host-max-width);
     }
+    body.theme-spring .hosts-container {
+    transform: translateY(85px) scale(1.1);
+}
     body.theme-spring .event-footer {
-        /* top: 0.5rem; */
-        /* margin-bottom: 2vh; */
+        margin-bottom: 2vh;
+        margin-top: -2vh;
         scale:1.2;
     }
 
@@ -244,16 +247,21 @@ body.theme-digital-grid .main-content {
     }
 }
 
-/* 2. Smaller Screen & Windowed Styles ("The Smaller Pot") */
+/* 2. Smaller Screen & Windowed Styles */
 @media (max-width: 1800px) {
     body.theme-spring:not(.is-fullscreen) .event-footer {
-        top: -1rem;
+        margin-bottom: 1vh;
+        /* margin-top: -2vh; */
+        scale:1.1;
     }
     body.theme-spring.is-fullscreen .event-footer {
         top: 2rem;
     }
     body.theme-spring .hosts-container {
         margin: 1.5rem 0 -1rem 0;
+    }
+        body.theme-spring .hosts-list span {
+        font-size: calc(1.5rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
 }
 

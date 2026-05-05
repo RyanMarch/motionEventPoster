@@ -10,6 +10,13 @@
     --color-text: #ffffff;
     --color-dark-text: #1a1c1e;
 
+    /* UI Specific Colors (Divorced from Theme) */
+    --color-ui-accent: #f9d783;
+    --color-ui-brand: #032858;
+    --color-ui-text: #ffffff;
+    --color-ui-text-dim: rgba(255, 255, 255, 0.7);
+    --color-ui-bg-panel: rgba(13, 17, 23, 0.95);
+
     /* Theme Intensity (Controlled by JS) */
     --frame-intensity: 0.1;
 
@@ -98,7 +105,7 @@ body {
 
 @media (min-width: 1900px) {
     body {
-        zoom: 109%;
+        /* zoom: 109%; removed to prevent flickering */
     }
 }
 
@@ -129,12 +136,6 @@ html::before {
 .ff-mont {
     font-family: var(--font-primary);
 }
-
-/* 
-========================================
-PARTICLE SYSTEMS
-========================================
-*/
 
 /* 
 ========================================
@@ -475,7 +476,11 @@ body:not(.is-sliding) .main-content::after {
     white-space: nowrap;
     text-shadow: 0 3px 10px rgba(0, 0, 0, 0.93);
     pointer-events: auto;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    cursor: pointer;
 }
+
+
 
 .is-light-bg .hosts-list span {
     color: var(--color-dark-text);

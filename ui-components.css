@@ -11,6 +11,14 @@ advanced controls overlay.
     display: none !important;
 }
 
+/* Global No-Transitions state */
+.no-transitions,
+.no-transitions *,
+.no-transitions *:before,
+.no-transitions *:after {
+    transition: none !important;
+}
+
 .check-control.disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -89,7 +97,7 @@ advanced controls overlay.
 
 .custom-select-trigger {
     background: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    color: var(--color-ui-text);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 10px 12px;
@@ -145,8 +153,7 @@ advanced controls overlay.
     top: calc(100% + 4px);
     left: 0;
     width: 100%;
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--color-ui-bg-panel);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -169,7 +176,7 @@ advanced controls overlay.
     padding: 10px 12px;
     font-size: 0.85rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--color-ui-text);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -189,7 +196,7 @@ advanced controls overlay.
 
 .custom-select-option.selected {
     background: rgba(255, 255, 255, 0.05);
-    color: var(--color-accent, #fff);
+    color: var(--color-ui-accent);
 }
 
 /* 3. Controls Panel Container */
@@ -198,14 +205,12 @@ advanced controls overlay.
     top: 20px;
     right: 20px;
     width: 360px;
-    background: rgba(13, 17, 23, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--color-ui-bg-panel);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     z-index: 2000;
     font-family: var(--font-ui);
-    color: #fff;
+    color: var(--color-ui-text);
     display: flex;
     flex-direction: column;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
@@ -236,12 +241,10 @@ advanced controls overlay.
 
 #controls-panel.is-dimmed {
     opacity: 0.5;
-    backdrop-filter: blur(5px);
 }
 
 #controls-panel.is-dimmed:hover {
     opacity: 1;
-    backdrop-filter: blur(20px);
 }
 
 #controls-panel.is-dismissed {
@@ -293,7 +296,7 @@ advanced controls overlay.
     width: 32px;
     height: 32px;
     background: #111;
-    color: #fff;
+    color: var(--color-ui-text);
     border: 1px solid rgba(255, 255, 255, 0.3);
     font-weight: 900 !important;
     font-size: 1.3rem !important;
@@ -320,8 +323,8 @@ advanced controls overlay.
 }
 
 .btn-close-panel:hover {
-    color: var(--color-panel-accent);
-    border-color: var(--color-panel-accent);
+    color: var(--color-ui-accent);
+    border-color: var(--color-ui-accent);
     transform: scale(1.1) !important;
     background: rgba(30, 35, 45, 0.95);
 }
@@ -334,7 +337,7 @@ advanced controls overlay.
     margin: 0;
     font-family: var(--font-ui);
     font-weight: 700;
-    color: white;
+    color: var(--color-ui-text);
     font-size: 0.9rem;
     text-transform: titlecase;
     letter-spacing: 0.05em;
@@ -360,6 +363,12 @@ advanced controls overlay.
     margin-top: 4px;
 }
 
+#controls-panel .control-row--separator {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 #controls-panel .control-row .control {
     flex: 1;
     margin-top: 0;
@@ -376,7 +385,7 @@ advanced controls overlay.
 
 #controls-panel .stat-label {
     display: block;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.9);
     text-transform: uppercase;
@@ -387,6 +396,10 @@ advanced controls overlay.
     display: block;
     font-size: 1.2rem;
     font-weight: 700;
+}
+
+#controls-panel .stat-value--inactive {
+    opacity: 0.35;
 }
 
 #controls-panel .stat-unit {
@@ -408,12 +421,18 @@ advanced controls overlay.
 /* 5. Form Elements (Labels, Swatches, Inputs) */
 #controls-panel label {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 8px;
     margin-bottom: 4px;
     font-size: 0.75rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
     letter-spacing: 0.02em;
+}
+
+#controls-panel label span[id^="val-"] {
+    margin-left: auto;
+    opacity: 0.8;
 }
 
 .swatch-grid {
@@ -449,19 +468,19 @@ advanced controls overlay.
 }
 
 #controls-panel .swatch.active {
-    border-color: var(--color-panel-accent) !important;
+    border-color: var(--color-ui-accent) !important;
     transform: scale(1.15) !important;
-    box-shadow: 0 0 12px var(--color-panel-accent) !important;
+    box-shadow: 0 0 12px var(--color-ui-accent) !important;
     z-index: 10;
 }
 
 #controls-panel .swatch--custom {
     background: rgba(255, 255, 255, 0.05);
-    color: var(--color-panel-accent);
+    color: var(--color-ui-accent);
     font-size: 1.1rem;
     font-weight: 300;
     line-height: 1;
-    border: 1px dashed var(--color-panel-accent);
+    border: 1px dashed var(--color-ui-accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -510,7 +529,7 @@ advanced controls overlay.
 #controls-panel .button {
     flex: 1;
     background: #222;
-    color: white;
+    color: var(--color-ui-text);
     border: 2px solid #555;
     border-radius: 30px;
     cursor: pointer;
@@ -538,24 +557,25 @@ advanced controls overlay.
 
 .button--primary {
     background: rgba(249, 215, 131, 0.1) !important;
-    border-color: var(--color-accent) !important;
-    color: var(--color-accent) !important;
+    border-color: var(--color-ui-accent) !important;
+    color: var(--color-ui-accent) !important;
 }
 
 .button--secondary {
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: var(--color-ui-text) !important;
 }
 
 .button--danger {
     background: #ef5350 !important;
     border: none !important;
-    color: #fff !important;
+    color: var(--color-ui-text) !important;
 }
 
 .button--solid-gold {
-    background: var(--color-accent) !important;
-    color: var(--color-brand) !important;
+    background: var(--color-ui-accent) !important;
+    color: var(--color-ui-brand) !important;
 }
 
 .button--full {
@@ -564,90 +584,158 @@ advanced controls overlay.
     border-radius: 8px !important;
 }
 
-.btn-confirm-add-host:not(:disabled) {
-    background: var(--color-accent) !important;
-    color: var(--color-brand) !important;
-    opacity: 1;
 }
 
 /* 8. Checkboxes & Toggles */
 #controls-panel .check-control {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    margin-top: 0px !important;
-    cursor: pointer;
-    margin-bottom: 0px !important;
-}
-
-#controls-panel .check-control label {
     justify-content: flex-start !important;
-    margin-bottom: 0 !important;
-    gap: 8px;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.7rem;
     cursor: pointer;
+    padding: 6px 0;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
-#controls-panel .check-control--indented {
-    padding-left: 20px;
+.check-control:hover {
+    color: var(--color-ui-accent);
 }
 
-#controls-panel input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: #ffffff;
+.check-control input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
-    margin-right: 7px;
+    height: 0;
+    width: 0;
 }
 
-.toggle-control {
+.check-control .checkmark {
+    position: relative;
+    height: 18px;
+    width: 18px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.check-control:hover .checkmark {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.check-control input:checked ~ .checkmark {
+    background-color: var(--color-ui-accent);
+    border-color: var(--color-ui-accent);
+    box-shadow: 0 0 10px rgba(249, 215, 131, 0.3);
+}
+
+.check-control .checkmark:after {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 8px;
+    border: solid #111;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: -2px;
+}
+
+.check-control input:checked ~ .checkmark:after {
+    transform: rotate(45deg) scale(1);
+}
+
+/* Visibility Grid & Groups */
+.visibility-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 8px;
+    margin: 8px 0;
+}
+
+.sub-options-group {
+    margin-left: 0;
+    padding-left: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+}
+
+.check-control--indented {
+    /* No longer needs its own connector as it's in the group */
+}
+
+#controls-panel .toggle-control {
+    display: flex;
+    justify-content: flex-start !important;
     align-items: center;
     gap: 12px;
     cursor: pointer;
-    font-size: 0.75rem;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.2s;
+    font-size: 0.7rem;
+    color: var(--color-ui-text);
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .toggle-control:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.toggle-control--compact {
+#controls-panel .toggle-control--compact {
+    width: auto;
     margin: 0;
     flex-shrink: 1;
-    gap: 6px;
-    padding: 4px 6px;
+    gap: 8px;
+    padding: 4px 10px;
+}
+
+#controls-panel .toggle-control--simple {
+    background: transparent;
+    border: none;
+    padding: 6px 0;
+    width: 100%;
+}
+
+#controls-panel .toggle-control--simple:hover {
+    background: transparent;
 }
 
 .toggle-control--compact .toggle-label {
     letter-spacing: 0.2px;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
 }
 
 .toggle-label {
-    flex: 1;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.3px;
     text-transform: uppercase;
-    font-size: 0.65rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.9);
+    pointer-events: none;
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .toggle-switch {
     position: relative;
-    width: 38px;
-    height: 20px;
+    width: 42px;
+    height: 24px;
     flex-shrink: 0;
 }
 
@@ -659,15 +747,15 @@ advanced controls overlay.
     top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(0, 0, 0, 0.3);
     transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 20px;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toggle-switch .slider:before {
     position: absolute;
     content: "";
-    height: 14px; width: 14px;
-    left: 2px; bottom: 2px;
+    height: 18px; width: 18px;
+    left: 3px; bottom: 2px;
     background-color: #888;
     transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
@@ -691,10 +779,17 @@ advanced controls overlay.
     z-index: 10;
 }
 
-#controls-panel .toggle-control.keyboard-focused {
+#controls-panel .toggle-control.keyboard-focused,
+#controls-panel .check-control.keyboard-focused {
     background: rgba(249, 215, 131, 0.1) !important;
-    border-color: var(--color-accent) !important;
+    border-color: var(--color-ui-accent) !important;
     outline: none !important;
+}
+
+#controls-panel .check-control.keyboard-focused {
+    padding-left: 8px;
+    margin-left: -8px;
+    border-radius: 6px;
 }
 
 /* 10. Details/Advanced Sections */
@@ -705,7 +800,7 @@ advanced controls overlay.
 details.advanced-controls summary {
     padding: 8px 12px;
     cursor: pointer;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: #ffffff;
     list-style: none;
@@ -788,7 +883,7 @@ details[open].advanced-controls summary::after {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--color-accent);
+    color: 1px solid rgba(249, 215, 131, 0.3);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
     flex-shrink: 0;
     margin-left: -1px;
@@ -807,7 +902,7 @@ details[open].advanced-controls summary::after {
 
 .help-section-title {
     font-size: 0.9rem;
-    color: var(--color-text);
+    color: var(--color-ui-text);
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
@@ -836,7 +931,7 @@ details[open].advanced-controls summary::after {
     content: '•';
     position: absolute;
     left: 0;
-    color: var(--color-accent);
+    color: var(--color-ui-accent);
 }
 
 /* 11. Overlays (Modals, Hints, Blocker) */
@@ -914,7 +1009,7 @@ details[open].advanced-controls summary::after {
 }
 
 .reset-modal-box p {
-    color: rgba(255, 255, 255, 0.85);
+    color: #ffffff; /* High contrast for modals */
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 40px;
@@ -958,6 +1053,14 @@ details[open].advanced-controls summary::after {
     transform: translateY(0) scale(0.96) !important;
 }
 
+.return-key {
+    font-size: 1.2rem;
+    margin-left: 8px;
+    opacity: 0.7;
+    vertical-align: middle;
+    font-weight: 400;
+}
+
 /* Factory Reset Overlay (Floating Pill Banner) */
 .factory-reset-overlay {
     position: fixed;
@@ -979,10 +1082,10 @@ details[open].advanced-controls summary::after {
 
 .reset-content-pill {
     background: rgba(13, 17, 23, 0.9);
-    color: #fff;
+    color: var(--color-ui-text);
     padding: 15px 30px;
     border-radius: 50px;
-    border: 1px solid var(--color-accent);
+    border: 1px solid var(--color-ui-accent);
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     display: flex;
@@ -994,7 +1097,7 @@ details[open].advanced-controls summary::after {
 .reset-text {
     font-family: var(--font-ui);
     font-size: 0.9rem;
-    color: #fff;
+    color: var(--color-ui-text);
     margin: 0;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -1007,7 +1110,7 @@ details[open].advanced-controls summary::after {
     padding: 1px 6px;
     font-family: var(--font-ui);
     font-size: 0.9rem;
-    color: var(--color-accent);
+    color: var(--color-ui-accent);
     margin: 0 4px;
 }
 
@@ -1023,20 +1126,20 @@ details[open].advanced-controls summary::after {
 .reset-progress-bar {
     width: 0%;
     height: 100%;
-    background: var(--color-accent);
-    box-shadow: 0 0 10px var(--color-accent);
+    background: var(--color-ui-accent);
+    box-shadow: 0 0 10px var(--color-ui-accent);
 }
 
 .keyboard-hint {
     position: fixed;
     top: 30px; right: 30px;
     background: rgba(10, 10, 26, 0.95);
-    color: var(--color-text);
+    color: var(--color-ui-text);
     padding: 16px;
     border-radius: 16px;
     z-index: var(--z-debug);
     /* backdrop-filter: blur(20px); */
-    border: 2px solid var(--color-accent);
+    border: 2px solid var(--color-ui-accent);
     opacity: 0;
     visibility: hidden;
     transform: translateX(20px);
@@ -1052,6 +1155,16 @@ details[open].advanced-controls summary::after {
     transform: translateX(0);
 }
 
+.no-transitions .keyboard-hint {
+    transition: none !important;
+}
+
+.inactivity-hide .keyboard-hint {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateX(20px) !important;
+}
+
 .hint-row {
     display: flex;
     align-items: center;
@@ -1061,8 +1174,8 @@ details[open].advanced-controls summary::after {
 
 .hint-btn {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--color-accent);
-    color: var(--color-text);
+    border: 1px solid var(--color-ui-accent);
+    color: var(--color-ui-text);
     padding: 5px 12px;
     border-radius: 8px;
     font-family: var(--font-ui);
@@ -1077,9 +1190,9 @@ details[open].advanced-controls summary::after {
 }
 
 .hint-btn:hover {
-    background: var(--color-accent);
+    background: var(--color-ui-accent);
     color: #111;
-    border-color: var(--color-accent);
+    border-color: var(--color-ui-accent);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(249, 215, 131, 0.4);
 }
@@ -1089,9 +1202,9 @@ kbd {
     padding: 0.2em 0.6em;
     font-size: 0.9em;
     font-weight: 800;
-    color: var(--color-accent);
+    color: var(--color-ui-accent);
     background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--color-accent);
+    border: 1px solid var(--color-ui-accent);
     border-radius: 8px;
     vertical-align: middle;
     margin: 0 0.2em;
@@ -1101,7 +1214,7 @@ kbd {
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--color-primary);
+    background: var(--color-ui-brand);
     z-index: 100000;
     padding: 40px;
     box-sizing: border-box;
@@ -1115,54 +1228,90 @@ kbd {
 }
 
 .blocker-content {
-    background: rgba(13, 17, 23, 0.9);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 24px;
-    max-width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    padding: 50px 40px;
+    border-radius: 32px;
+    max-width: 440px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    color: #1a1c1e; /* Ensure dark text on light background */
 }
 
-.blocker-content h2 {
-    color: var(--color-accent);
-    font-size: 2.2rem;
-    margin-bottom: 20px;
+.mobile-blocker-header {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-blocker-header::before {
+    content: '🖥️';
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
+
+.blocker-logo-text {
     font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-ui-brand);
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    letter-spacing: 3px;
+}
+
+.blocker-content h1 {
+    color: #111;
+    font-size: 2rem;
+    margin-bottom: 16px;
+    font-family: var(--font-heading);
+    font-weight: 800;
     line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .blocker-content p {
     font-family: var(--font-primary);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 500;
 }
 
 .blocker-content .status-note {
-    font-size: 0.8rem;
-    opacity: 0.7;
-    margin-top: 10px;
-    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 20px;
+    font-family: var(--font-ui);
+    color: #000;
+    font-weight: 600;
+    background: rgba(0,0,0,0.05);
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
 }
 
 .btn-bypass-blocker {
     background: none !important;
     border: none !important;
-    color: rgba(255, 255, 255, 0.4) !important;
+    color: rgb(0, 0, 0) !important;
     text-decoration: underline;
-    font-size: 0.75rem !important;
+    font-size: 0.8rem !important;
     cursor: pointer;
     margin-top: 30px !important;
     padding: 10px !important;
     font-family: var(--font-primary);
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .btn-bypass-blocker:hover {
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: var(--color-ui-brand) !important;
+    transform: scale(1.05);
 }
 
 @media (max-width: 600px), (max-height: 500px) {
@@ -1177,9 +1326,9 @@ kbd {
 
 .fullscreen-countdown {
     position: fixed !important;
-    top: 10%;
+    top: 2%;
     left: 50%;
-    transform: translateX(-50%) scale(1.1);
+    transform: translateX(-50%) scale(1.5);
     z-index: 1000000;
     opacity: 1;
     visibility: visible;
@@ -1188,6 +1337,7 @@ kbd {
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
         visibility 0.4s ease;
+    filter: drop-shadow(5px 5px 10px #000000);
 }
 
 .fullscreen-countdown.is-countdown-hidden {
@@ -1211,17 +1361,18 @@ kbd {
         inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
-.countdown-text {
+.countdown-label {
     font-family: var(--font-ui);
-    font-size: 0.9rem;
-    color: var(--color-text);
+    font-size: 1rem;
+    color: #ffffff; /* Force white text for countdown pill */
     margin: 0;
     letter-spacing: 1px;
     white-space: nowrap;
+    font-weight: 600;
 }
 
 #countdown-number {
-    color: var(--color-accent);
+    color: var(--color-ui-accent);
     font-size: 1.4rem;
     font-weight: 700;
     display: inline-block;
@@ -1236,7 +1387,7 @@ kbd {
     border-radius: 50px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--color-text);
+    color: var(--color-ui-text);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
@@ -1284,13 +1435,12 @@ kbd {
     display: block !important;
     margin-bottom: 8px !important;
     font-size: 0.7rem !important;
-    color: var(--color-accent) !important;
+    color: var(--color-ui-accent) !important;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .form-error {
-    font-size: 0.68rem;
     color: #ff8e8e;
     background: rgba(255, 80, 80, 0.08);
     border: 1px solid rgba(255, 107, 107, 0.25);
@@ -1299,7 +1449,7 @@ kbd {
     margin-top: 6px;
     margin-bottom: 10px;
     font-family: var(--font-ui);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.4;
 }
 
@@ -1424,7 +1574,7 @@ kbd {
     border: 1px solid #444;
     border-radius: 6px;
     background: #111;
-    color: #fff;
+    color: var(--color-ui-text);
     font-family: var(--font-ui);
     font-size: 0.9rem;
 }
@@ -1435,40 +1585,60 @@ kbd {
     align-items: center;
     gap: 12px;
     margin-bottom: 6px;
-    padding: 8px 12px;
+    padding: 6px 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
 }
 
-.btn-remove-host, .btn-put-back-host {
-    max-width: 90px;
-    padding: 4px 5px;
-    border-radius: 4px;
+.added-host-name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-ui-text);
+}
+
+.btn-remove-host, .btn-restore-host {
+    width: 76px;
+    flex-shrink: 0;
+    padding: 5px 0;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 0.65rem;
     text-transform: uppercase;
     font-weight: 700;
+    text-align: center;
+    transition: all 0.2s;
 }
 
 .btn-remove-host {
-    background: rgba(255, 107, 107, 0.15);
-    border: 1px solid rgba(255, 107, 107, 0.3);
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.25);
     color: #ff8e8e;
 }
 
-.btn-put-back-host {
-    background: rgba(249, 215, 131, 0.15);
-    border: 1px solid rgba(249, 215, 131, 0.3);
+.btn-remove-host:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.4);
+}
+
+.btn-restore-host {
+    background: rgba(249, 215, 131, 0.1);
+    border: 1px solid rgba(249, 215, 131, 0.25);
     color: #f9d783;
 }
 
-/* 13. Animations */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    15%, 45%, 75% { transform: translateX(-5px); }
-    30%, 60%, 90% { transform: translateX(5px); }
+.btn-restore-host:hover {
+    background: rgba(249, 215, 131, 0.2);
+    border-color: rgba(249, 215, 131, 0.4);
 }
+
+/* 13. Animations */
+
 
 @keyframes fadeOut {
     0%, 70% { opacity: 1; transform: translateY(0); }

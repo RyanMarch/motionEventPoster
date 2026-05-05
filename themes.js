@@ -78,7 +78,8 @@
                 fallSpeed: 0.6,
                 maxPetals: 20,
                 windiness: 20,
-                hostTextSize: 1.0
+                hostTextSize: 1.0,
+                hostMaxWidth: 115
             },
             defaults: {
                 hostsTitle: "Thanks to our hosts",
@@ -205,9 +206,10 @@
                 hostTextSize: 1.0,
                 gustStrength: 15,
                 fallSpeed: 0.4,
-                maxPetals: 100,
+                maxPetals: 80,
                 windiness: 5,
-                hostMaxWidth: 100
+                hostMaxWidth: 120,
+                backdropOpacity: 65
             },
             defaults: {
                 hostsTitle: "Our Host Committee",
@@ -271,10 +273,10 @@
                 fallSpeed: 0.3,
                 maxPetals: 10,
                 windiness: 5,
-                backdropOpacity: 25
+                backdropOpacity: 50
             },
             defaults: {
-                hostsTitle: "OUR SPONSORS",
+                hostsTitle: "Musical Guests",
                 eventTitle: "RADIOTHON",
                 eventSubtitle: "24 HOURS OF LIVE BROADCASTING",
                 eventTopLabel: "PRESENTS"
@@ -296,7 +298,7 @@
             accent: '#F0F4F8',
             swatchName: 'Business Blue',
             colors: {
-                text: '#102A43',
+                text: '#0D2034',
                 darkText: '#05021e'
             },
             swatches: [
@@ -338,21 +340,21 @@
             frameClass: 'theme-frame--corporate',
             flags: { useAccentAsBackground: true, syncParticleColors: true },
             overrides: {
-                insetV: 60,
+                insetV: 80,
                 insetH: 80,
-                hostTextSize: 1.0,
+                hostTextSize: 1.15,
                 gustStrength: 75,
                 fallSpeed: 0.3,
                 maxPetals: 18,
                 windiness: 10,
                 backdropOpacity: 85,
-                hostMaxWidth: 110
+                hostMaxWidth: 143
             },
             defaults: {
                 hostsTitle: "PARTNERS",
                 eventTitle: "Corporate Event",
                 eventSubtitle: "Strategy Session",
-                eventTopLabel: "Annual"
+                eventTopLabel: "ANNUAL"
             },
             uiLabels: {
                 particlesPlural: 'Particles',

@@ -31,10 +31,13 @@ window.DEFAULTS = {
     isPetalsPaused: false,
     isBgPaused: false,
     disableAutoFullscreen: false,
+    autoHideMenu: true,
+    smoothTransitions: true,
     isAppRunning: false,
     bgColor: null,
     accentColor: null,
-    activeTheme: 'spring'
+    activeTheme: 'spring',
+    fpsCap: 90
 };
 
 window.POSTER_TEXT_DEFAULTS = {
@@ -77,10 +80,10 @@ window.DEFAULT_HOSTS = [
 
 window.SHORTCUT_CONFIGS = [
     { key: 'q', label: 'Q', desc: 'Toggle Quick Controls', action: 'toggleControls' },
-    { key: 'f', label: 'F', desc: 'Toggle Fullscreen', action: 'toggleFullscreen' },
+    { key: 'f', label: 'F', desc: 'Enter Fullscreen', action: 'toggleFullscreen' },
     { key: 'e', label: 'E', desc: 'Edit Poster Text', action: 'toggleEdit' },
     { key: 'c', label: 'C', desc: 'Customize Appearance', action: 'toggleCustomize' },
-    { key: 'a', label: 'A', desc: 'Add/Remove Hosts', action: 'toggleHosts' },
+    { key: 'a', label: 'A', desc: 'Add/Remove Names', action: 'toggleHosts' },
     { key: 'r', label: 'R', desc: 'Reset to Defaults', action: 'resetDefaults', condition: 'isCustomizeOpen' },
     { key: '?', label: '?', desc: 'Show Help Menu', action: 'toggleHelp' },
     { key: '/', label: '/', desc: 'Show Help Menu', action: 'toggleHelp' },

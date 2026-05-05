@@ -75,6 +75,7 @@ window.EventPoster = class EventPoster {
             factoryResetModal: document.getElementById('factory-reset-modal'),
             btnResetCancel: document.getElementById('btn-reset-cancel'),
             btnResetConfirm: document.getElementById('btn-reset-confirm'),
+            recoveryHint: document.getElementById('recovery-hint'),
             // poster text elements
             hostsTitleEl: document.getElementById('hosts-title'),
             eventTopLabelEl: document.getElementById('event-top-label'),
@@ -122,6 +123,7 @@ window.EventPoster = class EventPoster {
             btnCustomColor: document.getElementById('btn-custom-color'),
             mobileScreenSizeInfo: document.getElementById('mobile-screen-size-info'),
             btnBypassBlocker: document.getElementById('btn-bypass-blocker'),
+            mobileBlocker: document.getElementById('mobile-blocker'),
             themeFrame: document.querySelector('.theme-frame')
         };
 
@@ -136,11 +138,14 @@ window.EventPoster = class EventPoster {
             qrSoiree: document.getElementById('check-qr-soiree'),
             qrMembership: document.getElementById('check-qr-membership'),
             disableAutoFullscreen: document.getElementById('check-disable-auto-fullscreen'),
+            autoHideMenu: document.getElementById('check-auto-hide-menu'),
+            smoothTransitions: document.getElementById('check-smooth-transitions'),
             themeSelectContainer: document.getElementById('theme-custom-select'),
             themeSelectTrigger: document.getElementById('theme-select-trigger'),
             themeSelectIcon: document.getElementById('theme-select-icon'),
             themeSelectLabel: document.getElementById('theme-select-label'),
-            fullscreenToggle: document.getElementById('check-fullscreen')
+            fullscreenToggle: document.getElementById('check-fullscreen'),
+            fpsCapRadios: document.querySelectorAll('input[name="fpsCap"]')
         };
 
         this.controlLabels = {
@@ -221,6 +226,7 @@ window.EventPoster = class EventPoster {
         this.state.isKeyboardUser = false;
         this.state.isResizing = false;
         this.state.factoryResetStartTime = null;
+        this.state.hasEverAddedHost = localStorage.getItem(window.STORAGE_KEYS.hasEverAddedHost) === 'true';
     }
 
     init() {
@@ -234,6 +240,7 @@ window.EventPoster = class EventPoster {
         }
 
         if (window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
+            this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
             return;
         }
@@ -265,6 +272,7 @@ window.EventPoster = class EventPoster {
         this.renderHosts();
         this.updateSleepStatus('off');
         this.updateScreenSize();
+        this.updateTimerDisplay();
         this.startWakeLockHeartbeat();
         this.showKeyboardHint();
 
@@ -298,6 +306,11 @@ window.EventPoster = class EventPoster {
         if (this.controls.hostLayoutRadios) {
             this.controls.hostLayoutRadios.forEach(radio => { radio.checked = (radio.value === this.state.hostLayout); });
         }
+        
+        if (this.controls.fpsCapRadios) {
+            this.controls.fpsCapRadios.forEach(radio => { radio.checked = (Number(radio.value) === this.state.fpsCap); });
+        }
+        
         this.applyHostLayout(this.state.hostLayout);
 
         this.themeManager.syncWind();
@@ -312,6 +325,12 @@ window.EventPoster = class EventPoster {
         this.controls.hideHost.checked = this.state.hideHost;
         this.controls.hideBorder.checked = this.state.hideBorder;
         this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
+        
+        if (this.controls.autoHideMenu) this.controls.autoHideMenu.checked = this.state.autoHideMenu;
+        if (this.controls.smoothTransitions) {
+            this.controls.smoothTransitions.checked = this.state.smoothTransitions;
+            this.root.classList.toggle('no-transitions', !this.state.smoothTransitions);
+        }
 
         this.applyHideUiState(this.state.hideUi);
         this.body.classList.toggle('logo-hidden', this.state.hideLogo);
@@ -425,7 +444,10 @@ window.EventPoster = class EventPoster {
     renderHosts() {
         if (!this.elements.hostsList) return;
         this.elements.hostsList.innerHTML = '';
-        const allHosts = [...this.baseHosts, ...this.state.addedHosts].filter(h => !this.state.removedHosts.includes(h));
+        
+        // If the user has ever added a host, we stop showing base hosts entirely
+        const hostsToShow = this.state.hasEverAddedHost ? this.state.addedHosts : [...this.baseHosts, ...this.state.addedHosts];
+        const allHosts = hostsToShow.filter(h => !this.state.removedHosts.includes(h));
         
         allHosts.sort((a, b) => {
             const getSortKey = (name) => {
@@ -438,6 +460,7 @@ window.EventPoster = class EventPoster {
         allHosts.forEach(name => {
             const span = document.createElement('span');
             span.textContent = name;
+            this.ui.bindHostHold(span, name);
             this.elements.hostsList.appendChild(span);
         });
         this.elements.hostsEmptyHint?.classList.toggle('is-hidden', allHosts.length > 0);
@@ -448,7 +471,13 @@ window.EventPoster = class EventPoster {
 
     // Storage & Settings helpers
     loadSettings() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.settings) || '{}'); } catch { return {}; } }
-    saveSettings() { localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(this.state)); }
+    saveSettings() { 
+        const settings = {};
+        Object.keys(window.DEFAULTS).forEach(key => {
+            settings[key] = this.state[key];
+        });
+        localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(settings)); 
+    }
     loadPosterText() { try { return { ...window.POSTER_TEXT_DEFAULTS, ...JSON.parse(localStorage.getItem(window.STORAGE_KEYS.posterText) || '{}') }; } catch { return window.POSTER_TEXT_DEFAULTS; } }
     savePosterText() { localStorage.setItem(window.STORAGE_KEYS.posterText, JSON.stringify(this.state.posterText)); }
     readStoredHosts() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.addedHosts) || '[]'); } catch { return []; } }
@@ -462,13 +491,53 @@ window.EventPoster = class EventPoster {
     // UI visibility helpers
     isControlsPanelVisible() { return this.elements.controlsPanel?.classList.contains('is-visible'); }
     isAddHostFormOpen() { return !this.elements.addHostForm?.classList.contains('is-hidden'); }
+    isFactoryResetModalVisible() { return !this.elements.factoryResetModal?.classList.contains('is-hidden'); }
     isCustomizeOpen() { return this.elements.appearanceDetails?.open; }
     
     // Shortcut toggles
-    toggleEditPosterShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.editPosterDetails.open = true; this.elements.editPosterDetails.scrollIntoView({ behavior: 'smooth' }); }
-    toggleCustomizeShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.appearanceDetails.open = true; this.elements.appearanceDetails.scrollIntoView({ behavior: 'smooth' }); }
-    toggleAddHostShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.hostManagementDetails.open = true; this.openAddHostForm(); this.elements.hostManagementDetails.scrollIntoView({ behavior: 'smooth' }); }
-    toggleHelpShortcut() { if (!this.isControlsPanelVisible()) this.ui.toggleControlsPanel(); this.elements.helpDetails.open = true; this.elements.helpDetails.scrollIntoView({ behavior: 'smooth' }); }
+    toggleEditPosterShortcut() { 
+        if (!this.isControlsPanelVisible()) {
+            this.ui.toggleControlsPanel();
+            this.elements.editPosterDetails.open = true;
+        } else {
+            this.elements.editPosterDetails.open = !this.elements.editPosterDetails.open;
+        }
+        const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+    }
+    toggleCustomizeShortcut() { 
+        if (!this.isControlsPanelVisible()) {
+            this.ui.toggleControlsPanel();
+            this.elements.appearanceDetails.open = true;
+        } else {
+            this.elements.appearanceDetails.open = !this.elements.appearanceDetails.open;
+        }
+        const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+    }
+    toggleAddHostShortcut() { 
+        if (!this.isControlsPanelVisible()) {
+            this.ui.toggleControlsPanel();
+            this.elements.hostManagementDetails.open = true;
+            this.openAddHostForm();
+        } else {
+            const isNowOpen = !this.elements.hostManagementDetails.open;
+            this.elements.hostManagementDetails.open = isNowOpen;
+            if (isNowOpen) this.openAddHostForm();
+        }
+        const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+    }
+    toggleHelpShortcut() { 
+        if (!this.isControlsPanelVisible()) {
+            this.ui.toggleControlsPanel();
+            this.elements.helpDetails.open = true;
+        } else {
+            this.elements.helpDetails.open = !this.elements.helpDetails.open;
+        }
+        const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+    }
 
     // Add Host Logic
     openAddHostForm() { this.elements.addHostForm?.classList.remove('is-hidden'); this.elements.addHostInput?.focus(); }
@@ -479,8 +548,42 @@ window.EventPoster = class EventPoster {
         if (!val) return;
         if (this.state.addedHosts.includes(val) || this.baseHosts.includes(val)) { this.elements.addHostError.textContent = 'Name already in list'; this.elements.addHostError.classList.remove('is-hidden'); return; }
         this.state.addedHosts.push(val);
+        this.state.hasEverAddedHost = true;
+        localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
         localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
         this.renderHosts(); this.closeAddHostForm();
+    }
+
+    removeHostByName(name) {
+        if (!name) return;
+        const addedIdx = this.state.addedHosts.indexOf(name);
+        if (addedIdx !== -1) {
+            this.state.addedHosts.splice(addedIdx, 1);
+            this.persistAddedHosts();
+        }
+        
+        // Hide it from the poster by adding to removedHosts
+        if (!this.state.removedHosts.includes(name)) {
+            this.state.removedHosts.push(name);
+            this.persistRemovedHosts();
+        }
+        this.renderHosts();
+    }
+
+    restoreHostByName(name) {
+        if (!name) return;
+        
+        // Remove from hidden list
+        this.state.removedHosts = this.state.removedHosts.filter(h => h !== name);
+        this.persistRemovedHosts();
+
+        // If it's not a base host, it must be an added host, so put it back
+        if (!this.baseHosts.includes(name) && !this.state.addedHosts.includes(name)) {
+            this.state.addedHosts.push(name);
+            this.persistAddedHosts();
+        }
+        
+        this.renderHosts();
     }
 
     // Factory Reset Logic
@@ -551,22 +654,64 @@ window.EventPoster = class EventPoster {
     
     requestFullscreenMode() { if (!document.fullscreenElement) this.root.requestFullscreen().catch(() => { this.elements.fullscreenToggle.checked = false; }); }
     exitFullscreenMode() { if (document.fullscreenElement) document.exitFullscreen(); }
-    checkPersistentFullscreen() { if (localStorage.getItem(window.STORAGE_KEYS.fullscreenIntent) === 'true') { setTimeout(() => this.showFullscreenCountdown(), 2000); } }
+    checkPersistentFullscreen() {
+        if (localStorage.getItem(window.STORAGE_KEYS.fullscreenIntent) !== 'true') return;
+        
+        // Show the recovery hint immediately (matches the style of the countdown)
+        if (this.elements.recoveryHint) {
+            this.elements.recoveryHint.classList.remove('is-countdown-hidden');
+            
+            // Auto-hide after 10 seconds if no interaction
+            this.state.recoveryHintTimer = setTimeout(() => {
+                this.elements.recoveryHint?.classList.add('is-countdown-hidden');
+            }, 10000);
+        }
+        
+        // Wait for a user gesture (click) before starting the recovery countdown
+        const triggerRecovery = () => {
+            if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
+            
+            // Hide the hint immediately on interaction
+            if (this.elements.recoveryHint) {
+                this.elements.recoveryHint.classList.add('is-countdown-hidden');
+                if (this.state.recoveryHintTimer) clearTimeout(this.state.recoveryHintTimer);
+            }
+            
+            this.showFullscreenCountdown();
+        };
+
+        window.addEventListener('click', triggerRecovery, { once: true });
+    }
     
     showFullscreenCountdown() {
         if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
         this.elements.fullscreenCountdown.classList.remove('is-countdown-hidden');
-        let count = 3; this.elements.countdownNumber.textContent = count;
+        let count = 3; 
+        this.elements.countdownNumber.textContent = count;
+        
         this.state.countdownTimer = setInterval(() => {
-            count--; this.elements.countdownNumber.textContent = count;
-            if (count <= 0) { clearInterval(this.state.countdownTimer); this.cancelFullscreenCountdown(true); }
+            count--; 
+            this.elements.countdownNumber.textContent = count;
+            if (count <= 0) { 
+                this.cancelFullscreenCountdown(true, false); 
+            }
         }, 1000);
     }
-    cancelFullscreenCountdown(proceed = false) {
-        clearInterval(this.state.countdownTimer);
+
+    cancelFullscreenCountdown(triggerFullscreen = false, clearIntent = false) {
+        if (this.state.countdownTimer) {
+            clearInterval(this.state.countdownTimer);
+            this.state.countdownTimer = null;
+        }
         this.elements.fullscreenCountdown.classList.add('is-countdown-hidden');
-        if (proceed) { this.elements.fullscreenToggle.click(); }
-        else { localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); }
+        
+        if (triggerFullscreen) { 
+            this.elements.fullscreenToggle.click(); 
+        }
+        
+        if (clearIntent) { 
+            localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); 
+        }
     }
 
     updateScreenSize() { 
@@ -576,7 +721,22 @@ window.EventPoster = class EventPoster {
             this.elements.screenSize.textContent = `${w} × ${h}`; 
         }
     }
-    updateTimerDisplay() { if (this.state.fullscreenStartTime && this.elements.timer) { const sec = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); const m = Math.floor(sec / 60), s = sec % 60; this.elements.timer.textContent = `${m}:${s < 10 ? '0' : ''}${s}`; } }
+    updateTimerDisplay() {
+        if (!this.elements.timer) return;
+        
+        let timeStr = '0:00';
+        if (this.state.fullscreenStartTime) {
+            const sec = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000);
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            timeStr = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+        
+        if (this.elements.timer.textContent !== timeStr) {
+            this.elements.timer.textContent = timeStr;
+        }
+        this.elements.timer.classList.toggle('stat-value--inactive', timeStr === '0:00');
+    }
     
     showKeyboardHint() {
         if (!this.elements.keyboardHint) return;
@@ -594,7 +754,7 @@ window.EventPoster = class EventPoster {
     applyHideUiState(hidden) {
         this.body.classList.toggle('ui-hidden', hidden);
         // If we hide UI, we also hide the sub-toggles to keep panel clean
-        const subToggles = [this.controlLabels.hideLogo, this.controlLabels.hideDate, this.controlLabels.hideTitle, this.controlLabels.hideHost, this.controlLabels.qrSoiree, this.controlLabels.qrMembership];
+        const subToggles = [this.controlLabels.hideLogo, this.controlLabels.hideDate, this.controlLabels.hideTitle, this.controlLabels.hideHost];
         subToggles.forEach(el => el?.classList.toggle('is-hidden', hidden));
     }
 
