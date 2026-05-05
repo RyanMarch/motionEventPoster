@@ -2,15 +2,17 @@
   <h1>Interactive Event Poster</h1>
   <p><i>A professional, browser-based display for gala fundraisers and high-end venues.</i></p>
 
-  <a href="https://ryanmarch.github.io/motionEventPoster/">
-    <img src="https://img.shields.io/badge/VIEW_LIVE_DEMO-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />
-  </a>
+  [<img src="https://img.shields.io/badge/VIEW_LIVE_DEMO-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />][demo]
 
   <br>
 
-  <a href="https://ryanmarch.github.io/motionEventPoster/">
-    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
-  </a>
+  [<img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">][demo]
+
+  <!-- <video src="https://github-production-user-asset-6210df.s3.amazonaws.com/6699010/584341152-c1e34246-41ab-4b53-bd2d-faef1478f243.mp4" 
+         poster=".github/assets/eventPoster.png" 
+         width="100%" controls muted autoplay loop disablepictureinpicture playsinline>
+    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview">
+  </video> -->
 </div>
 
 
@@ -44,15 +46,15 @@ Choose from five curated visual identities, each with its own unique particle en
 ## Screenshots
 | **Spring Blossom** – *Fresh & Elegant* |
 |:---:|
-| ![Spring Blossom](.github/assets/eventPoster.png) |
+| [![Spring Blossom](.github/assets/eventPoster.png)][demo] |
 | **Digital Grid** – *High-Tech & Modern* |
-| ![Digital Grid](.github/assets/poster-digital.png) |
+| [![Digital Grid](.github/assets/poster-digital.png)][demo] |
 | **Alpine Winter** – *Frosty & Rustic* |
-| ![Alpine Winter](.github/assets/poster-winter.png) |
+| [![Alpine Winter](.github/assets/poster-winter.png)][demo] |
 | **Vintage Radio** – *Warm & Nostalgic*|
-| ![Vintage Radio](.github/assets/poster-radio.png) |
+| [![Vintage Radio](.github/assets/poster-radio.png)][demo] |
 | **Corporate Pro** – *Sleek & Professional* |
-| ![Corporate Pro](.github/assets/poster-corporate.png) |
+| [![Corporate Pro](.github/assets/poster-corporate.png)][demo] |
 
 ### Content Editor
 *   **Custom-To-You Branding:** Add your organization name and upload custom logos directly in the browser.
@@ -87,12 +89,12 @@ Choose from five curated visual identities, each with its own unique particle en
 
 | **Main Controls** | **Name Management** |
 |:---:|:---:|
-| ![Main Options](.github/assets/mgmt-main.png) | ![Hosts](.github/assets/mgmt-hosts.png) |
+| [![Main Options](.github/assets/mgmt-main.png)][demo] | [![Hosts](.github/assets/mgmt-hosts.png)][demo] |
 | *Live stats & toggles.* | *Real-time list editing.* |
 
 | **Content Editor** | **Appearance Settings** | **Help & Guidelines** |
 |:---:|:---:|:---:|
-| ![Content](.github/assets/mgmt-content.png) | ![Appearance](.github/assets/mgmt-appearance.png) | ![Help](.github/assets/mgmt-help.png) |
+| [![Content](.github/assets/mgmt-content.png)][demo] | [![Appearance](.github/assets/mgmt-appearance.png)][demo] | [![Help](.github/assets/mgmt-help.png)][demo] |
 | *Logos, titles, and QRs.* | *Physics & layout sliders.* | *Hotkeys & asset specs.* |
 
 
@@ -207,3 +209,5 @@ This architecture allows the project to remain entirely client-side, requiring n
 ---
 
 *Created for event fundraisers and beautiful public displays.*
+
+[demo]: https://motionEventPoster.ryanmarch.me/
