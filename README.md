@@ -8,13 +8,9 @@
 
   <br>
 
-  <video src=".github/assets/eventPoster.mp4" 
-         poster=".github/assets/eventPoster.png" 
-         width="100%" controls muted autoplay loop>
-    <a href="https://ryanmarch.github.io/motionEventPoster/">
-      <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
-    </a>
-  </video>
+  <a href="https://ryanmarch.github.io/motionEventPoster/">
+    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">
+  </a>
 </div>
 
 
