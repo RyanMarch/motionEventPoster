@@ -10,15 +10,20 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicons/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="assets/favicons/site.webmanifest" />
 
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Local fonts -->
     <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ui-components.css" />
+    <link rel="stylesheet" href="theme-spring.css" />
+    <link rel="stylesheet" href="theme-digital-grid.css">
+    <link rel="stylesheet" href="theme-alpine-winter.css">
+    <link rel="stylesheet" href="theme-vintage-radio.css">
+    <link rel="stylesheet" href="theme-corporate.css">
     <style>
-        /* Prevent Flash of Unstyled Content (FOUC) for hidden overlays */
         .is-loading #controls-panel,
         .is-loading .keyboard-hint {
             opacity: 0 !important;
@@ -29,30 +34,17 @@
 </head>
 
 <body class="is-loading">
+    
     <!-- Mobile Experience Blocker -->
     <div id="mobile-blocker" class="mobile-blocker">
-        <div class="mobile-blocker-content">
-            <div class="mobile-blocker-logo">
-                <span class="logo-text-custom ff-cin-dec">More Space Needed!</span>
-            </div>
-            <h1 class="ff-cin-dec">Larger Display Recommended</h1>
-            <p class="ff-mont">This motion poster is designed for large-scale displays and presentations.</p>
-            <p class="ff-mont">View on a larger screen for the full experience.</p>
-            <p id="mobile-screen-size-info" class="mobile-screen-size-info ff-mont"></p>
-            <button id="btn-proceed-anyway" class="btn-proceed-anyway ff-mont">Proceed anyway</button>
+        <div class="blocker-content">
+            <h1>Larger Display Recommended</h1>
+            <p>This motion poster is designed for large-scale displays and presentations.</p>
+            <p>View on a larger screen for the full experience.</p>
+            <p id="mobile-screen-size-info" class="status-note"></p>
+            <button id="btn-bypass-blocker" class="btn-bypass-blocker">Proceed with current display</button>
         </div>
     </div>
-
-    <!-- Background Swaying Flowers -->
-    <div class="sway-layer sway-top-right"></div>
-    <div class="sway-layer sway-top-left"></div>
-    <div class="sway-layer sway-bottom-left"></div>
-    <div class="sway-layer sway-bottom-right"></div>
-    <div class="sway-layer sway-top-1"></div>
-    <div class="sway-layer sway-top-2"></div>
-    <div class="sway-layer sway-top-3"></div>
-    <div class="sway-layer sway-left-side"></div>
-    <div class="sway-layer sway-right-side"></div>
 
     <!-- Keyboard Hint Overlay -->
     <div id="keyboard-hint" class="keyboard-hint">
@@ -73,55 +65,60 @@
     <!-- Main Decorative Border -->
     <div class="floral-bg"></div>
 
-    <!-- Particle Layers -->
-    <div id="particles-back" class="particle-layer"></div>
-    <div id="particles-front" class="particle-layer"></div>
-    <div id="particles-mid" class="particle-layer"></div>
-
-    <!-- UI Overlay Content -->
     <div class="content-wrapper">
+        <!-- Background elements moved inside for stacking context -->
+        <div id="vignette-overlay"></div>
+        <div id="particles-back" class="particle-layer"></div>
+        <div id="particles-mid" class="particle-layer"></div>
+        <div id="particles-front" class="particle-layer"></div>
+        <!-- Fullscreen Countdown Overlay -->
+        <div id="fullscreen-countdown" class="fullscreen-countdown is-countdown-hidden">
+            <div class="countdown-content">
+                <div class="countdown-label">Auto-fullscreen in</div>
+                <div id="countdown-number" class="countdown-number">3</div>
+                <button id="btn-cancel-fullscreen" class="button button--secondary">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Recovery Hint Overlay -->
+        <div id="recovery-hint" class="fullscreen-countdown is-countdown-hidden">
+            <div class="countdown-content">
+                <div class="countdown-label">Click anywhere to restore fullscreen mode</div>
+            </div>
+        </div>
+
+        <div class="theme-frame">
+            <div class="frame-rail rail-top"></div>
+            <div class="frame-rail rail-bottom"></div>
+            <div class="frame-rail rail-left"></div>
+            <div class="frame-rail rail-right"></div>
+            <div class="theme-texture"></div>
+            <div class="theme-frame-inner"></div>
+        </div>
         <div class="main-content">
             <div class="logo-banner" id="logo-banner">
                 <img id="logo-img" src="" alt="Logo" class="is-hidden">
-                <span id="logo-text" class="logo-text-custom ff-cin-dec">Your Organization</span>
+                <span id="logo-text" class="logo-text-custom">Your Organization</span>
             </div>
 
             <div class="hosts-container">
-                <h2 class="hosts-title ff-cin" id="hosts-title">Our Host Committee</h2>
+                <h2 class="hosts-title" id="hosts-title">Thanks to our hosts</h2>
 
-                <div class="hosts-list ff-mont">
-                    <span>The Honorable Alex Rivera</span>
-                    <span>Jordan &amp; Casey Beaumont</span>
-                    <span>Dr. Morgan Ellis</span>
-                    <span>Sam &amp; Taylor Hendricks</span>
-                    <span>The Honorable Priya Nair</span>
-                    <span>The Meridian Council</span>
-                    <span>Chris &amp; Robin Aldridge</span>
-                    <span>The Honorable Simone Okafor</span>
-                    <span>Jamie &amp; Peyton Walsh</span>
-                    <span>The Honorable Reese Caldwell</span>
-                    <span>Dr. Avery Sinclair</span>
-                    <span>Ted Waltham</span>
-                    <span>William S Grant</span>
-                    <span>Central State Foundation</span>
-                    <span>Blair &amp; Quinn Harmon</span>
-                    <span>The Ashford Family</span>
-                    <span>Finley &amp; Harper Tran</span>
-                    <span>The Honorable Charlie Monroe</span>
-                    <span>Drew &amp; Riley Sutton</span>
-                    <span>The Honorable Sage Whitmore</span>
+                <div class="hosts-list">
+                    <!-- Populated dynamically from DEFAULT_HOSTS or localStorage -->
                 </div>
                 <div id="hosts-empty-hint" class="hosts-empty-hint ff-mont is-hidden">
-                    Names will appear here when added
+                    <span>Names will appear here when added</span>
+                    <span>Press <kbd>Q</kbd> to open the <button id="btn-setup-hint-options" class="hint-btn">Quick Options</button> panel and add names.</span>
                 </div>
             </div>
         </div>
 
         <footer class="event-footer">
-            <div class="event-top-label ff-cin-dec" id="event-top-label">Annual</div>
-            <h1 class="event-title ff-cin-dec" id="event-title">Spring Soiree</h1>
-            <div class="event-subtitle ff-cin" id="event-subtitle">fundraiser</div>
-            <time class="event-date ff-cin" id="event-date">Wednesday, April 1, 2050</time>
+            <div class="event-top-label" id="event-top-label">Annual</div>
+            <h1 class="event-title" id="event-title">Spring Soiree</h1>
+            <div class="event-subtitle" id="event-subtitle">fundraiser</div>
+            <time class="event-date" id="event-date">Wednesday, April 1, 2050</time>
         </footer>
 
         <!-- QR Codes -->
@@ -133,14 +130,6 @@
         </div>
     </div>
 
-
-    <!-- Fullscreen Countdown Overlay -->
-    <div id="fullscreen-countdown" class="fullscreen-countdown is-hidden">
-        <div class="countdown-content">
-            <div class="countdown-text">Auto-fullscreen in <span id="countdown-number">3</span>...</div>
-            <button id="btn-cancel-fullscreen" class="button button--secondary">Cancel</button>
-        </div>
-    </div>
 
     <!-- Factory Reset Overlay (Holding State) -->
     <div id="factory-reset-overlay" class="factory-reset-overlay is-hidden">
@@ -157,11 +146,11 @@
         <div class="modal-backdrop"></div>
         <div class="modal-content-wrapper">
             <div class="reset-modal-box">
-                <h2 class="ff-cin">Factory Reset</h2>
-                <p class="ff-mont">All entered data will be deleted and the page will be refreshed.</p>
+                <h2>Factory Reset</h2>
+                <p>All entered data will be deleted and the page will be refreshed.</p>
                 <div class="modal-buttons">
                     <button id="btn-reset-cancel" class="button button--secondary">Go Back</button>
-                    <button id="btn-reset-confirm" class="button button--danger">Factory Reset</button>
+                    <button id="btn-reset-confirm" class="button button--danger">Factory Reset <span class="return-key">↵</span></button>
                 </div>
             </div>
         </div>
@@ -171,7 +160,7 @@
         <button id="btn-close-panel" class="btn-close-panel" aria-label="Close Panel" title="Close Panel">×</button>
         <div class="controls-panel-scroll">
             <div class="controls-panel-header">
-                <h3>[Q]uick controls</h3>
+                <h3>[Q]uick Controls</h3>
                 <label class="toggle-control toggle-control--compact" id="toggle-fullscreen-wrap">
                     <span class="toggle-switch">
                         <input type="checkbox" id="check-fullscreen">
@@ -199,7 +188,7 @@
 
                 <div class="stat-box">
                     <div class="stat-label">Fullscreen Time</div>
-                    <div class="stat-value" id="stat-timer">0:00</div>
+                    <div class="stat-value stat-value--inactive" id="stat-timer">0:00</div>
                 </div>
 
                 <div class="stat-box">
@@ -211,48 +200,59 @@
             <details class="advanced-controls" id="appearance-details">
                 <summary>[C]ustomize Appearance</summary>
 
-                <div class="panel-sub-section">
-                    <div class="panel-sub-section-title">Flowers</div>
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Petal Count <span id="val-max-petals">32</span></label>
-                            <input type="range" id="slider-max-petals" min="0" max="1000">
-                        </div>
-
-                        <div class="control">
-                            <label>Windiness <span id="val-gust-freq">50</span></label>
-                            <input type="range" id="slider-gust-freq" min="0" max="1000" step="1">
-                        </div>
-                    </div>
-
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Fall Speed <span id="val-fall-speed">0.6x</span></label>
-                            <input type="range" id="slider-fall-speed" min="0" max="5" step="0.1">
-                        </div>
-
-                        <div class="control">
-                            <label>Tumble Speed <span id="val-tumble-speed">1x</span></label>
-                            <input type="range" id="slider-tumble-speed" min="0" max="10" step="0.5">
+                <div class="panel-sub-section" id="appearance-general">
+                    <div class="panel-sub-section-title">Visual Theme</div>
+                    <div class="control">
+                        <div class="custom-select" id="theme-custom-select">
+                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                                <div class="trigger-content">
+                                    <span class="custom-select-icon" id="theme-select-icon">🌸</span>
+                                    <span class="custom-select-label" id="theme-select-label">Spring Blossom</span>
+                                </div>
+                                <div class="trigger-arrow"></div>
+                            </div>
+                            <div class="custom-select-options" id="theme-select-options">
+                                <!-- Dynamically populated from themes.js -->
+                            </div>
                         </div>
                     </div>
 
                     <div class="control">
-                        <label>Wave Strength <span id="val-gust-strength">10vw</span></label>
-                        <input type="range" id="slider-gust-strength" min="0" max="100" step="1">
+                        <label>Background <span id="val-bg-color">#032858</span></label>
+                        <div class="swatch-grid" id="bg-swatch-grid">
+                            <!-- Swatches injected by JS -->
+                            <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color" title="Custom Color">
+                                +
+                                <input type="color" id="picker-bg-color" value="#032858">
+                            </label>
+                        </div>
                     </div>
+                    <!-- Sliders injected here -->
+                    <div id="backdrop-ribbon-row">
+                        <!-- Backdrop slider will be injected here via Constants.js config -->
+                    </div>
+                </div>
+
+                <div class="panel-sub-section" id="appearance-particles">
+                    <div class="panel-sub-section-title" id="particles-section-title">Flowers</div>
+                    <!-- Sliders injected here -->
+                </div>
+
+                <div class="panel-sub-section" id="appearance-intensity">
+                    <div class="panel-sub-section-title">Motion</div>
+                    <!-- Sliders injected here -->
 
                     <div class="btn-group">
-                        <button id="btn-pause-petals">Pause Petals</button>
-                        <button id="btn-pause-bg">Pause Waves</button>
+                        <button id="btn-pause-petals">Pause Particles</button>
+                        <button id="btn-pause-bg">Pause Frame</button>
                     </div>
                 </div>
 
                 <div class="panel-sub-section">
-                    <div class="panel-sub-section-title">Text</div>
+                    <div class="panel-sub-section-title">Text & Layout</div>
 
                     <div class="control" style="margin-bottom: 12px;">
-                        <label>Host Layout</label>
+                        <label>Names Layout</label>
                         <div class="radio-tab-group" id="radio-group-host-layout">
                             <label class="radio-tab">
                                 <input type="radio" name="hostLayout" value="justify">
@@ -269,92 +269,99 @@
                         </div>
                     </div>
 
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Vertical Inset <span id="val-inset-v">60px</span></label>
-                            <input type="range" id="slider-inset-v" min="0" max="200">
-                        </div>
-
-                        <div class="control">
-                            <label>Horizontal Inset <span id="val-inset-h">80px</span></label>
-                            <input type="range" id="slider-inset-h" min="0" max="400">
-                        </div>
-                    </div>
-
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Host Text Size <span id="val-host-text-size">1x</span></label>
-                            <input type="range" id="slider-host-text-size" min="0.1" max="2" step="0.05">
-                        </div>
-
-                        <div class="control">
-                            <label>Max Width <span id="val-host-max-width">100%</span></label>
-                            <input type="range" id="slider-host-max-width" min="10" max="200" step="1">
-                        </div>
-                    </div>
-
-                    <div class="control-row">
-                        <div class="control">
-                            <label>Background <span id="val-bg-color">#032858</span></label>
-                            <div class="swatch-grid" id="bg-swatch-grid">
-                                <!-- Swatches injected by JS -->
-                                <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color" title="Custom Color">
-                                    +
-                                    <input type="color" id="picker-bg-color" value="#032858">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <label>Opacity <span id="val-backdrop-opacity">100%</span></label>
-                            <input type="range" id="slider-backdrop-opacity" min="0" max="100" step="1">
-                        </div>
+                    <div id="appearance-text-sliders">
+                         <!-- Sliders injected here -->
                     </div>
                 </div>
 
-                <div class="panel-section panel-section--tight">
-                    <label class="check-control">
-                        <input type="checkbox" id="check-hide-ui"> Hide all poster text
+                <div class="panel-sub-section">
+                    <div class="panel-sub-section-title">Poster Elements</div>
+                    
+                    <label class="toggle-control" style="margin-bottom: 12px;">
+                        <span class="toggle-switch">
+                            <input type="checkbox" id="check-hide-ui">
+                            <span class="slider"></span>
+                        </span>
+                        <span class="toggle-label">Hide all poster text</span>
                     </label>
-                    <div class="control-row">
-                        <label class="check-control check-control--indented control" id="label-hide-logo">
-                            <input type="checkbox" id="check-hide-logo"> Hide banner
-                        </label>
-                        <label class="check-control check-control--indented control" id="label-hide-title">
-                            <input type="checkbox" id="check-hide-title"> Hide title
-                        </label>
+
+                    <div class="sub-options-group">
+                        <div class="visibility-grid">
+                            <label class="toggle-control toggle-control--simple control" id="label-hide-logo">
+                                <span class="toggle-switch"><input type="checkbox" id="check-hide-logo"><span class="slider"></span></span>
+                                <span class="toggle-label">Hide banner</span>
+                            </label>
+                            <label class="toggle-control toggle-control--simple control" id="label-hide-title">
+                                <span class="toggle-switch"><input type="checkbox" id="check-hide-title"><span class="slider"></span></span>
+                                <span class="toggle-label">Hide title</span>
+                            </label>
+                            <label class="toggle-control toggle-control--simple control" id="label-hide-date">
+                                <span class="toggle-switch"><input type="checkbox" id="check-hide-date"><span class="slider"></span></span>
+                                <span class="toggle-label">Hide date</span>
+                            </label>
+                            <label class="toggle-control toggle-control--simple control" id="label-hide-host">
+                                <span class="toggle-switch"><input type="checkbox" id="check-hide-host"><span class="slider"></span></span>
+                                <span class="toggle-label">Hide names</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="control-row">
-                        <label class="check-control check-control--indented control" id="label-hide-date">
-                            <input type="checkbox" id="check-hide-date"> Hide date
-                        </label>
-                        <label class="check-control check-control--indented control" id="label-hide-host">
-                            <input type="checkbox" id="check-hide-host"> Hide host text
-                        </label>
+
+                    <div class="control-row control-row--separator">
+                        <div class="visibility-grid" style="margin: 0; width: 100%;">
+                            <label class="toggle-control toggle-control--simple control" id="label-qr-soiree">
+                                <span class="toggle-switch"><input type="checkbox" id="check-qr-soiree"><span class="slider"></span></span>
+                                <span class="toggle-label">Left QR code</span>
+                            </label>
+                            <label class="toggle-control toggle-control--simple control" id="label-qr-membership">
+                                <span class="toggle-switch"><input type="checkbox" id="check-qr-membership"><span class="slider"></span></span>
+                                <span class="toggle-label">Right QR code</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="control-row">
-                        <label class="check-control control" id="label-qr-soiree">
-                            <input type="checkbox" id="check-qr-soiree"> Left QR code
-                        </label>
-                        <label class="check-control control" id="label-qr-membership">
-                            <input type="checkbox" id="check-qr-membership">Right QR code
-                        </label>
+
+                    <label class="toggle-control toggle-control--simple" style="margin-top: 12px;"><span class="toggle-switch"><input type="checkbox" id="check-hide-border"><span class="slider"></span></span><span class="toggle-label">Hide background shapes</span></label>
+                </div>
+
+                <div class="panel-sub-section">
+                    <div class="panel-sub-section-title">App Preferences</div>
+                    
+                    <div class="control" style="margin-top: 4px; margin-bottom: 12px;">
+                        <label>Frame Rate Limit</label>
+                        <div class="radio-tab-group" id="radio-group-fps-cap">
+                            <label class="radio-tab">
+                                <input type="radio" name="fpsCap" value="30">
+                                <span>30</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="fpsCap" value="60" checked>
+                                <span>60</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="fpsCap" value="90">
+                                <span>90</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="fpsCap" value="120">
+                                <span>120</span>
+                            </label>
+                            <label class="radio-tab">
+                                <input type="radio" name="fpsCap" value="0">
+                                <span>Unlimited</span>
+                            </label>
+                        </div>
                     </div>
-                    <label class="check-control">
-                        <input type="checkbox" id="check-hide-border"> Hide flower border
-                    </label>
-                    <label class="check-control">
-                        <input type="checkbox" id="check-disable-auto-fullscreen"> Disable auto-fullscreen
-                    </label>
+
+                    <label class="toggle-control toggle-control--simple" style="margin-top: 4px;"><span class="toggle-switch"><input type="checkbox" id="check-auto-hide-menu" checked><span class="slider"></span></span><span class="toggle-label">Auto-hide Quick Controls menu</span></label>
+                    <label class="toggle-control toggle-control--simple" style="margin-top: 4px;"><span class="toggle-switch"><input type="checkbox" id="check-smooth-transitions" checked><span class="slider"></span></span><span class="toggle-label">Smooth transitions</span></label>
+                    <label class="toggle-control toggle-control--simple" style="margin-top: 4px;"><span class="toggle-switch"><input type="checkbox" id="check-disable-auto-fullscreen"><span class="slider"></span></span><span class="toggle-label">Disable auto-fullscreen</span></label>
                 </div>
 
                 <div class="btn-group btn-group--spaced">
                     <button id="btn-reset-defaults" class="button button--warning">[R]eset to Defaults</button>
                 </div>
-
-                <div id="wakelock-status" class="status-note">Checking...</div>
             </details>
 
-                        <!-- Edit Poster Text Section -->
+            <!-- Edit Poster Text Section -->
             <details class="advanced-controls" id="edit-poster-details">
                 <summary>[E]dit Poster Content</summary>
 
@@ -372,10 +379,6 @@
                                 <input type="radio" name="logoMode" value="text" checked>
                                 <span>Text</span>
                             </label>
-                            <!-- <label class="radio-tab">
-                                <input type="radio" name="logoMode" value="hidden">
-                                <span>Hidden</span>
-                            </label> -->
                         </div>
 
                         <!-- Image mode -->
@@ -401,11 +404,11 @@
                     </div>
                 </div>
 
-                <!-- Hosts Title -->
+                <!-- Names Section -->
                 <div class="panel-sub-section">
-                    <div class="panel-sub-section-title">Hosts Section Title</div>
+                    <div class="panel-sub-section-title">Names Section Title</div>
                     <div class="input-clear-row">
-                        <input type="text" id="input-hosts-title" class="text-input" placeholder="e.g. Our Host Committee" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input type="text" id="input-hosts-title" class="text-input" placeholder="e.g. Thanks to our hosts" autocomplete="off" autocorrect="off" spellcheck="false">
                         <button id="btn-clear-hosts-title" class="button button--warning btn-inline-clear" title="Clear">✕</button>
                     </div>
                 </div>
@@ -415,7 +418,7 @@
                     <div class="panel-sub-section-title">Event Details</div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-top-label">Top Label <span class="field-hint">(e.g. "Annual")</span></label>
+                        <label class="form-label" for="input-event-top-label">Top Label</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-top-label" class="text-input" placeholder="Annual" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-top-label" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -423,7 +426,7 @@
                     </div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-title">Event Title <span class="field-hint">(large)</span></label>
+                        <label class="form-label" for="input-event-title">Event Title</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-title" class="text-input" placeholder="Spring Soiree" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-title" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -431,7 +434,7 @@
                     </div>
 
                     <div class="control" style="margin-bottom: 8px;">
-                        <label class="form-label" for="input-event-subtitle">Subtitle <span class="field-hint">(e.g. "fundraiser")</span></label>
+                        <label class="form-label" for="input-event-subtitle">Subtitle</label>
                         <div class="input-clear-row">
                             <input type="text" id="input-event-subtitle" class="text-input" placeholder="fundraiser" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-subtitle" class="button button--warning btn-inline-clear" title="Clear">✕</button>
@@ -441,7 +444,7 @@
                     <div class="control">
                         <label class="form-label" for="input-event-date">Event Date</label>
                         <div class="input-clear-row">
-                            <input type="text" id="input-event-date" class="text-input" placeholder="Wednesday April 1 2050" autocomplete="off" autocorrect="off" spellcheck="false">
+                            <input type="text" id="input-event-date" class="text-input" placeholder="Wednesday, April 1, 2050" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="btn-clear-event-date" class="button button--warning btn-inline-clear" title="Clear">✕</button>
                         </div>
                     </div>
@@ -475,30 +478,29 @@
                         </div>
                     </div>
                 </div>
-
             </details>
 
             <!-- Host Management Section -->
             <details class="advanced-controls" id="host-management-details">
-                <summary>[A]dd and Remove Hosts</summary>
+                <summary>[A]dd and Remove Names</summary>
 
                 <div class="panel-sub-section">
-                    <button id="btn-show-add-host" class="button button--primary button--full">+ Add Host Name</button>
+                    <button id="btn-show-add-host" class="button button--primary button--full">+ Add Name</button>
 
                     <div id="add-host-form" class="add-host-form is-hidden">
-                        <label class="form-label" for="input-host-title">New Host</label>
+                        <label class="form-label" for="input-host-title">New Name</label>
                         <input type="text" id="input-host-title" class="text-input" placeholder="e.g. Kermit T. Frog"
                             autocomplete="off" autocorrect="off" spellcheck="false">
                         <div id="add-host-error" class="form-error is-hidden" role="alert" aria-live="polite"></div>
                         <div class="btn-group">
                             <button id="btn-cancel-add-host" class="button button--secondary">Cancel</button>
                             <button id="btn-confirm-add-host" class="button button--solid-gold" disabled>Add
-                                Host</button>
+                                Name</button>
                         </div>
                     </div>
 
                     <div id="added-hosts-list" class="added-hosts-list is-hidden">
-                        <div class="added-hosts-title">Your Hosts:</div>
+                        <div class="added-hosts-title">Added Names:</div>
                         <div id="added-hosts-items"></div>
                     </div>
 
@@ -513,51 +515,16 @@
             <details class="advanced-controls" id="help-details">
                 <summary>[?] Help & Shortcuts</summary>
                 <div class="panel-sub-section">
-                    <div class="shortcut-list">
-                        <div class="shortcut-item">
-                            <kbd>Q</kbd>
-                            <span class="shortcut-desc">Toggle Quick Controls</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>F</kbd>
-                            <span class="shortcut-desc">Enter Fullscreen</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>E</kbd>
-                            <span class="shortcut-desc">Edit Poster Text</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>C</kbd>
-                            <span class="shortcut-desc">Customize Appearance</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>R</kbd>
-                            <span class="shortcut-desc">Reset to Defaults (when [C] open)</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>A</kbd>
-                            <span class="shortcut-desc">Add/Remove Hosts</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>\</kbd>
-                            <span class="shortcut-desc">Hold to Factory Reset</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>?</kbd>
-                            <span class="shortcut-desc">Show this Help Menu</span>
-                        </div>
-                        <div class="shortcut-item">
-                            <kbd>Esc</kbd>
-                            <span class="shortcut-desc">Close Panel / Forms / Exit Fullscreen</span>
-                        </div>
+                    <div class="shortcut-list" id="shortcut-list">
+                        <!-- Dynamically populated from window.SHORTCUT_CONFIGS -->
                     </div>
                 </div>
                 <div class="panel-sub-section">
-                    <div class="help-section-title ff-cin">Asset Guidelines</div>
-                    <ul class="help-guidelines ff-mont">
-                        <li><strong>Logos</strong>: PNG or SVG with transparent backgrounds work best. Horizontal logos fit the banner more naturally.</li>
-                        <li><strong>QR Codes</strong>: Square, high-contrast images ensure reliable scanning from a distance.</li>
-                        <li><strong>File Size</strong>: Keep images under 2MB to ensure smooth performance and reliable saving.</li>
+                    <div class="help-section-title">Asset Guidelines</div>
+                    <ul class="help-guidelines">
+                        <li><strong>Logos</strong>: PNG or SVG with transparent backgrounds work best. Horizontal logos fit the banner more&nbsp;naturally.</li>
+                        <li><strong>QR Codes</strong>: Square, high-contrast images ensure reliable scanning from a&nbsp;distance.</li>
+                        <li><strong>File Size</strong>: Keep images under 2MB to ensure smooth performance and reliable&nbsp;saving.</li>
                     </ul>
                 </div>
             </details>
@@ -567,7 +534,15 @@
 
     <!-- Wake Lock Fallback Video -->
     <video id="wake-lock-video" class="wake-lock-video" loop muted playsinline></video>
-    <script src="script.js" defer></script>
+    <!-- Engine Scripts -->
+    <script src="themes.js"></script>
+    <script src="js/modules/Constants.js"></script>
+    <script src="js/modules/Utils.js"></script>
+    <script src="js/modules/ParticleEngine.js"></script>
+    <script src="js/modules/ThemeManager.js"></script>
+    <script src="js/modules/UIController.js"></script>
+    <script src="js/EventPoster.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
