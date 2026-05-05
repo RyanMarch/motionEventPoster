@@ -310,6 +310,12 @@ window.EventPoster = class EventPoster {
         if (this.controls.fpsCapRadios) {
             this.controls.fpsCapRadios.forEach(radio => { radio.checked = (Number(radio.value) === this.state.fpsCap); });
         }
+
+        if (this.elements.logoModeRadios) {
+            this.elements.logoModeRadios.forEach(radio => { radio.checked = (radio.value === this.state.posterText.logoMode); });
+        }
+
+        this.ui.syncPosterTextInputs();
         
         this.applyHostLayout(this.state.hostLayout);
 
@@ -437,6 +443,22 @@ window.EventPoster = class EventPoster {
         if (this.elements.logoTextEl) {
             this.elements.logoTextEl.classList.toggle('is-hidden', pt.logoMode !== 'text');
         }
+
+        // Toggle edit control visibility
+        if (this.elements.logoImageControls) {
+            this.elements.logoImageControls.classList.toggle('is-hidden', pt.logoMode !== 'image');
+        }
+        if (this.elements.logoTextControls) {
+            this.elements.logoTextControls.classList.toggle('is-hidden', pt.logoMode !== 'text');
+        }
+
+        // Sync radio buttons
+        if (this.elements.logoModeRadios) {
+            this.elements.logoModeRadios.forEach(radio => {
+                radio.checked = (radio.value === pt.logoMode);
+            });
+        }
+
         if (this.elements.qrSoireeImg) this.elements.qrSoireeImg.src = pt.qrLeftData || '';
         if (this.elements.qrMembershipImg) this.elements.qrMembershipImg.src = pt.qrRightData || '';
     }
