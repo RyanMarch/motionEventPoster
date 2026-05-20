@@ -83,7 +83,7 @@
 
         .rcs-sub {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.45);
+            color: #C2C3C5;
             margin: 0 0 32px;
             line-height: 1.5;
         }
@@ -269,10 +269,23 @@
         }
 
         @keyframes rcs-laser {
-            0% { top: 12%; opacity: 0.3; }
-            45% { opacity: 1; }
-            55% { opacity: 1; }
-            100% { top: 88%; opacity: 0.3; }
+            0% {
+                top: 12%;
+                opacity: 0.3;
+            }
+
+            45% {
+                opacity: 1;
+            }
+
+            55% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 88%;
+                opacity: 0.3;
+            }
         }
 
         .rcs-scanner-corners {
@@ -291,10 +304,37 @@
             pointer-events: none;
         }
 
-        .corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
-        .corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; border-top-right-radius: 8px; }
-        .corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; border-bottom-left-radius: 8px; }
-        .corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
+        .corner.tl {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+        }
+
+        .corner.tr {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 8px;
+        }
+
+        .corner.bl {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 8px;
+        }
+
+        .corner.br {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 8px;
+        }
 
         .rcs-scanner-status {
             font-size: 13.5px;
@@ -310,7 +350,7 @@
             padding: 16px;
             border-radius: 14px;
             border: none;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255);
             color: #0e0e1a;
             font-size: 16px;
             font-weight: 700;
@@ -320,7 +360,8 @@
         }
 
         .rcs-btn:disabled {
-            opacity: 0.25;
+            /* opacity: 0.25; */
+            background-color: #8A8A8D;
             cursor: not-allowed;
         }
 
@@ -356,6 +397,23 @@
             font-size: 14px;
             line-height: 1.5;
             margin-bottom: 20px;
+        }
+
+        .rcs-poster-link {
+            position: absolute;
+            bottom: max(24px, env(safe-area-inset-bottom, 24px));
+            left: 0;
+            right: 0;
+            font-size: 12px;
+            color: #ABABAB;
+            text-decoration: none;
+            text-align: center;
+            letter-spacing: 0.03em;
+            transition: color 0.2s ease;
+        }
+
+        .rcs-poster-link:hover {
+            color: rgba(255, 255, 255, 0.55);
         }
 
         /* ── Controller Layout ───────────────────────────────────────────── */
@@ -493,10 +551,13 @@
 
                 <div class="rcs-input-group">
                     <input type="text" id="rcs-code-input" class="rcs-code-input" maxlength="6" inputmode="text"
-                        autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="------" autofocus>
+                        autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="------"
+                        autofocus>
                     <button id="rcs-scan-btn" class="rcs-scan-btn" title="Scan QR Code">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                            </path>
                             <circle cx="12" cy="13" r="4"></circle>
                         </svg>
                     </button>
@@ -515,7 +576,9 @@
                 <p class="rcs-error" id="rcs-error-msg">Could not connect. Check the code and try again.</p>
                 <button id="rcs-retry-btn" class="rcs-btn">Try Again</button>
             </div>
+
         </div>
+        <a href="/" class="rcs-poster-link">Go to Motion Poster</a>
     </div>
 
     <!-- ── QR Scanner Modal ───────────────────────────────────────────── -->
@@ -539,7 +602,8 @@
                         </div>
                     </div>
                 </div>
-                <p id="scanner-status" class="rcs-scanner-status">Align the QR code within the frame to connect automatically.</p>
+                <p id="scanner-status" class="rcs-scanner-status">Align the QR code within the frame to connect
+                    automatically.</p>
             </div>
         </div>
     </div>
