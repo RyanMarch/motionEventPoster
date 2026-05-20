@@ -7,7 +7,7 @@
 BACKGROUND & SWAY LAYERS
 ========================================
 */
-.floral-bg {
+body.theme-spring .floral-bg {
     position: absolute;
     top: -3%;
     left: -3%;
@@ -19,11 +19,11 @@ BACKGROUND & SWAY LAYERS
     transition: opacity 0.4s ease-in-out;
 }
 
-body:not(.is-loading) .floral-bg {
+body.theme-spring:not(.is-loading) .floral-bg {
     opacity: 0.95;
 }
 
-.sway-layer {
+body.theme-spring .sway-layer {
     position: absolute;
     z-index: 0;
     background-size: contain;
@@ -36,18 +36,18 @@ body:not(.is-loading) .floral-bg {
     transition: opacity 0.4s ease-in-out;
 }
 
-body:not(.is-loading) .sway-layer {
+body.theme-spring:not(.is-loading) .sway-layer {
     opacity: 0.85;
 }
 
-.border-hidden .floral-bg,
-.border-hidden .sway-layer {
+body.theme-spring.border-hidden .floral-bg,
+body.theme-spring.border-hidden .sway-layer {
     opacity: 0 !important;
     animation-play-state: paused !important;
 }
 
 /* Specific Sway Positions */
-.sway-top-left {
+body.theme-spring .sway-top-left {
     top: -3%;
     left: 0%;
     width: 18vw;
@@ -60,7 +60,7 @@ body:not(.is-loading) .sway-layer {
     animation: sway-1 calc(12s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-top-right {
+body.theme-spring .sway-top-right {
     top: -2%;
     right: -2%;
     width: 15vw;
@@ -73,7 +73,7 @@ body:not(.is-loading) .sway-layer {
     animation: sway-2 calc(10s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-bottom-left {
+body.theme-spring .sway-bottom-left {
     bottom: -1%;
     left: -5%;
     width: 20vw;
@@ -84,7 +84,7 @@ body:not(.is-loading) .sway-layer {
     animation: sway-3 calc(14s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-bottom-left::before {
+body.theme-spring .sway-bottom-left::before {
     content: '';
     display: block;
     width: 100%;
@@ -97,7 +97,7 @@ body:not(.is-loading) .sway-layer {
     transform-origin: center;
 }
 
-.sway-bottom-right {
+body.theme-spring .sway-bottom-right {
     bottom: -2%;
     right: -5%;
     width: 22vw;
@@ -110,9 +110,9 @@ body:not(.is-loading) .sway-layer {
     animation: sway-4 calc(15s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-top-1,
-.sway-top-2,
-.sway-top-3 {
+body.theme-spring .sway-top-1,
+body.theme-spring .sway-top-2,
+body.theme-spring .sway-top-3 {
     top: -2%;
     width: 20vw;
     height: 20vh;
@@ -123,23 +123,23 @@ body:not(.is-loading) .sway-layer {
     --static-transform: rotate(0deg);
 }
 
-.sway-top-1 {
+body.theme-spring .sway-top-1 {
     left: 25%;
     animation: sway-top calc(11s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-top-2 {
+body.theme-spring .sway-top-2 {
     left: 50%;
     transform: translateX(-50%);
     animation: sway-top calc(13s / var(--gust-speed)) ease-in-out infinite alternate-reverse;
 }
 
-.sway-top-3 {
+body.theme-spring .sway-top-3 {
     left: 75%;
     animation: sway-top calc(12s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-left-side {
+body.theme-spring .sway-left-side {
     top: 65%;
     left: -6%;
     transform: translateY(-50%);
@@ -153,7 +153,7 @@ body:not(.is-loading) .sway-layer {
     animation: sway-side calc(14s / var(--gust-speed)) ease-in-out infinite alternate;
 }
 
-.sway-right-side {
+body.theme-spring .sway-right-side {
     top: 57%;
     right: -5%;
     transform: translateY(-50%);

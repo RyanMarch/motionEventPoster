@@ -21,12 +21,12 @@
     --frame-intensity: 0.1;
 
     /* Theme Assets (Injected by JS) */
-    --img-border: url('assets/images/flower_border_transparent.svg');
-    --img-sway-1: url('assets/images/pink-blooms-1.png');
-    --img-sway-2: url('assets/images/pink-blooms-with-stem.png');
-    --img-sway-3: url('assets/images/leafy-stem.png');
-    --img-sway-4: url('assets/images/pink-blooms.png');
-    --img-sway-side: url('assets/images/pink-blooms-2.png');
+    --img-border: none;
+    --img-sway-1: none;
+    --img-sway-2: none;
+    --img-sway-3: none;
+    --img-sway-4: none;
+    --img-sway-side: none;
 
     /* Fonts */
     --font-primary: 'Montserrat', system-ui, sans-serif;
