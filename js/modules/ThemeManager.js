@@ -80,6 +80,10 @@ window.ThemeManager = class ThemeManager {
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
+        // Remote sync
+        if (!window.remoteManager?._applying) {
+            window.remoteManager?.send({ type: 'theme', id: themeId });
+        }
     }
 
     /**
@@ -234,6 +238,10 @@ window.ThemeManager = class ThemeManager {
                 if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
                 
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
+                // Remote sync
+                if (!window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null });
+                }
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
         });
