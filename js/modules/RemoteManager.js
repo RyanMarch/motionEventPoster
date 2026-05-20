@@ -462,7 +462,7 @@ window.RemoteManager = class RemoteManager {
         const dot = document.getElementById('rc-status-dot');
         const text = document.getElementById('rc-status-text');
         if (dot) dot.className = `remote-status-dot remote-status-dot--${state}`;
-        if (text) text.textContent = state === 'connected' ? 'iPad connected!' : 'Waiting for iPad to connect…';
+        if (text) text.textContent = state === 'connected' ? 'Remote device connected!' : 'Waiting for remote device to connect…';
     }
 
     _updateBadge(state) {

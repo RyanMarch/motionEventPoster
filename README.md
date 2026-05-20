@@ -35,6 +35,17 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 *   **Theme-Specific Frames:** From elegant floral borders to rustic wood cabinets and frosted glass, each theme provides a unique window into your event.
 *   **Dynamic Visual Identity:** Instantly swap between professional, seasonal, or high-energy themes to match the tone of your gathering.
 
+> [!TIP]
+> **New in version 7**
+>
+> ### Remote Control
+> *   Access controls from a remote device (e.g. iPhone, iPad, etc.) for easy, flexible management.
+> *   Simply generate a code to start access from another device. 
+> *   Cutomize appearance, choose themes, add event details.
+> *   Add or remove names from the host list, all from the comfort of your seat. No need to go back to the presentation display.
+
+Remote access requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
+
 ## Themes
 Choose from five curated visual identities, each with its own unique particle engine and decorative frame:
 *   **Spring Blossom:** Delicate cherry blossoms and elegant floral frames.
@@ -157,7 +168,7 @@ Choose from five curated visual identities, each with its own unique particle en
 
 ---
 
-## Project Architecture (For Developers)
+## Project Architecture
 
 This project is built as a lightweight, zero-dependency "Vanilla" web application. It is designed for maximum performance and easy hosting on services like GitHub Pages.
 
@@ -204,7 +215,8 @@ This architecture allows the project to remain entirely client-side, requiring n
 
 | Version | Notes |
 |---------|-------|
-| v6 | **The "Themes" Update:** Introduced Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
+| v7 | **The "Remote" Update:** Remote control for managing and customizing the poster from a different device. |
+| v6 | **The "Themes" Update:** Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
 | v4 | Adds live host management, factory reset, auto-fullscreen, and responsive layouts. |
 | v1–v3 | Earlier iterations with static host lists and limited controls. |
