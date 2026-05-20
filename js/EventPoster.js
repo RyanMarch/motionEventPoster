@@ -253,20 +253,23 @@ window.EventPoster = class EventPoster {
         this.state.isAppRunning = true;
 
         this.hydrate();
-        
+
+        // Initialize RemoteManager early so its _applying flag is available during event binding
+        window.remoteManager = new window.RemoteManager(this);
+
         // Modules startup
         this.themeManager.initThemeSelector();
         this.themeManager.initSwatches();
         this.ui.initSlidersUI();
         this.ui.initShortcutsUI();
         this.ui.setupEventListeners();
-                
+
         this.themeManager.applyTheme(this.state.activeTheme, true);
         this.applyStateToUI();
         this.applyPosterText();
         this.particleEngine.adjustAmbientPetals();
         this.particleEngine.startAnimationLoop();
-        
+
         this.checkWakeLockSupport();
         this.checkPersistentFullscreen();
         this.renderHosts();
@@ -275,6 +278,9 @@ window.EventPoster = class EventPoster {
         this.updateTimerDisplay();
         this.startWakeLockHeartbeat();
         this.showKeyboardHint();
+
+        // Inject the Remote button into the controls panel header
+        window.remoteManager.init();
 
         requestAnimationFrame(() => {
             this.body.classList.remove('is-loading');

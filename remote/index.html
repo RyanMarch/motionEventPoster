@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Motion Poster — Remote</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/fonts/fonts.css">
+    <link rel="stylesheet" href="../css/ui-components.css">
+    <link rel="stylesheet" href="../css/remote.css">
+    <link rel="stylesheet" href="../css/themes/theme-spring.css">
+    <link rel="stylesheet" href="../css/themes/theme-digital-grid.css">
+    <link rel="stylesheet" href="../css/themes/theme-alpine-winter.css">
+    <link rel="stylesheet" href="../css/themes/theme-vintage-radio.css">
+    <link rel="stylesheet" href="../css/themes/theme-corporate.css">
+
+    <style>
+        /* ── CSS variable fallbacks (normally defined in styles.css which remote doesn't import) */
+        :root {
+            --color-ui-bg-panel: rgba(13, 17, 23, 0.98);
+            --color-ui-text: rgba(255, 255, 255, 0.9);
+            --color-ui-accent: #f9d783;
+            --color-ui-brand: #111;
+            --font-ui: 'Inter', system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #1a1a1f;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #e8e8f0;
+            overscroll-behavior: none;
+        }
+
+        /* ── Connect Screen ──────────────────────────────────────────────── */
+        #remote-connect-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #212122;
+            z-index: 999;
+            padding: 32px 24px;
+            padding-top: max(32px, env(safe-area-inset-top, 32px));
+        }
+
+        .rcs-inner {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .rcs-logo {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 40px;
+        }
+
+        .rcs-heading {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .rcs-sub {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.45);
+            margin: 0 0 32px;
+            line-height: 1.5;
+        }
+
+        .rcs-code-input {
+            display: block;
+            width: 100%;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 18px 12px;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            outline: none;
+            margin-bottom: 16px;
+            transition: border-color 0.15s, background 0.15s;
+            -webkit-text-stroke: 0;
+        }
+
+        .rcs-code-input::placeholder {
+            color: rgba(255, 255, 255, 0.18);
+            letter-spacing: 0.18em;
+        }
+
+        .rcs-code-input:focus {
+            border-color: rgba(140, 180, 255, 0.5);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .rcs-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0e0e1a;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, opacity 0.15s;
+            letter-spacing: -0.01em;
+        }
+
+        .rcs-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+        }
+
+        .rcs-btn:not(:disabled):active {
+            background: #fff;
+        }
+
+        .rcs-connecting {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+        }
+
+        .rcs-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: rc-spin 0.7s linear infinite;
+        }
+
+        @keyframes rc-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rcs-error {
+            color: rgba(248, 113, 113, 0.85);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* ── Controller Layout ───────────────────────────────────────────── */
+        #remote-controller {
+            display: none;
+            flex-direction: column;
+            height: 100dvh;
+            overflow: hidden;
+        }
+
+        #remote-controller.is-active {
+            display: flex;
+        }
+
+        #rc-header {
+            flex-shrink: 0;
+            padding: 12px 20px;
+            padding-top: max(12px, env(safe-area-inset-top, 12px));
+            background: rgba(4, 4, 77, 0.237);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rc-header-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .rc-header-code {
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .rc-header-dot {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #4ade80;
+        }
+
+        .rc-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+        }
+
+        #rc-scroll {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: env(safe-area-inset-bottom, 24px);
+        }
+
+        /* Re-style the controls panel to fit the remote page */
+        #controls-panel {
+            position: static !important;
+            width: 100% !important;
+            height: 100% !important;
+            transform: none !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: all !important;
+            border-radius: 0 !important;
+            border: none !important;
+            background: transparent !important;
+            max-width: none !important;
+            box-shadow: none !important;
+            display: block;
+            overflow: visible;
+        }
+
+        /* Hide controls irrelevant on remote */
+        #controls-panel .controls-panel-header,
+        #btn-close-panel,
+        #toggle-fullscreen-wrap,
+        .main-stats,
+        #help-details {
+            display: none !important;
+        }
+
+        /* Expand details sections open by default */
+        #appearance-details,
+        #edit-poster-details,
+        #host-management-details {
+            open: true;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Panel Spacing & Appearance ───────────────────────────────────── */
+
+        #appearance-details>summary,
+        #edit-poster-details>summary,
+        #host-management-details>summary {
+            min-height: 70px;
+        }
+
+        @media (min-width: 700px) {
+            #rc-scroll {
+                max-width: 600px;
+                width: 600px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── Connect Screen ──────────────────────────────────────────────── -->
+    <div id="remote-connect-screen">
+        <div class="rcs-inner">
+            <div class="rcs-logo">Motion Poster</div>
+
+            <div id="rcs-step-entry">
+                <h1 class="rcs-heading">Remote Control</h1>
+                <p class="rcs-sub">Enter the code shown on the host display's Remote panel.</p>
+                <input type="text" id="rcs-code-input" class="rcs-code-input" maxlength="6" inputmode="text"
+                    autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXXX">
+                <button id="rcs-connect-btn" class="rcs-btn" disabled>Connect</button>
+            </div>
+
+            <div id="rcs-step-connecting" style="display:none">
+                <div class="rcs-connecting">
+                    <div class="rcs-spinner"></div>
+                    <p style="color:rgba(255,255,255,0.5);margin:0;font-size:14px;">Connecting to poster…</p>
+                </div>
+            </div>
+
+            <div id="rcs-step-error" style="display:none">
+                <p class="rcs-error" id="rcs-error-msg">Could not connect. Check the code and try again.</p>
+                <button id="rcs-retry-btn" class="rcs-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Remote Controller ───────────────────────────────────────────── -->
+    <div id="remote-controller">
+        <div id="rc-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="rc-header-title">Remote Controller</span>
+                <span id="rc-header-code" class="rc-header-code" style="display: none;"></span>
+            </div>
+            <span class="rc-header-dot">
+                <span class="rc-dot"></span>
+                Live
+            </span>
+        </div>
+
+        <div id="rc-scroll">
+            <!-- Controls Panel (mirrors index.html structure) -->
+            <div id="controls-panel">
+                <div class="controls-panel-scroll">
+
+                    <!-- Appearance Section -->
+                    <details class="advanced-controls" id="appearance-details" open>
+                        <summary>Customize Appearance</summary>
+
+                        <div class="panel-sub-section" id="appearance-general">
+                            <div class="panel-sub-section-title">Visual Theme</div>
+                            <div class="control">
+                                <div class="custom-select" id="theme-custom-select">
+                                    <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                                        <div class="trigger-content">
+                                            <span class="custom-select-icon" id="theme-select-icon">🌸</span>
+                                            <span class="custom-select-label" id="theme-select-label">Spring
+                                                Blossom</span>
+                                        </div>
+                                        <div class="trigger-arrow"></div>
+                                    </div>
+                                    <div class="custom-select-options" id="theme-select-options"></div>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <label>Background <span id="val-bg-color">#032858</span></label>
+                                <div class="swatch-grid" id="bg-swatch-grid">
+                                    <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color"
+                                        title="Custom Color">
+                                        +
+                                        <input type="color" id="picker-bg-color" value="#032858">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="backdrop-ribbon-row"></div>
+                        </div>
+
+                        <div class="panel-sub-section" id="appearance-particles">
+                            <div class="panel-sub-section-title" id="particles-section-title">Flowers</div>
+                            <!-- Sliders injected -->
+                        </div>
+
+                        <div class="panel-sub-section" id="appearance-intensity">
+                            <div class="panel-sub-section-title">Motion</div>
+                            <!-- Sliders injected -->
+                            <div class="btn-group">
+                                <button id="btn-pause-petals">Pause Particles</button>
+                                <button id="btn-pause-bg">Pause Frame</button>
+                            </div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Text &amp; Layout</div>
+
+                            <div class="control" style="margin-bottom:12px">
+                                <label>Names Layout</label>
+                                <div class="radio-tab-group" id="radio-group-host-layout">
+                                    <label class="radio-tab"><input type="radio" name="hostLayout"
+                                            value="justify"><span>Justify</span></label>
+                                    <label class="radio-tab"><input type="radio" name="hostLayout" value="centered"
+                                            checked><span>Centered</span></label>
+                                    <label class="radio-tab"><input type="radio" name="hostLayout"
+                                            value="columns"><span>Columns</span></label>
+                                </div>
+                            </div>
+
+                            <div id="appearance-text-sliders"><!-- Sliders injected --></div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Poster Elements</div>
+
+                            <label class="toggle-control" style="margin-bottom:12px">
+                                <span class="toggle-switch">
+                                    <input type="checkbox" id="check-hide-ui">
+                                    <span class="slider"></span>
+                                </span>
+                                <span class="toggle-label">Hide all poster text</span>
+                            </label>
+
+                            <div class="sub-options-group">
+                                <div class="visibility-grid">
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox" id="check-hide-logo"><span
+                                                class="slider"></span></span>
+                                        <span class="toggle-label">Hide banner</span>
+                                    </label>
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox" id="check-hide-title"><span
+                                                class="slider"></span></span>
+                                        <span class="toggle-label">Hide title</span>
+                                    </label>
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox" id="check-hide-date"><span
+                                                class="slider"></span></span>
+                                        <span class="toggle-label">Hide date</span>
+                                    </label>
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox" id="check-hide-host"><span
+                                                class="slider"></span></span>
+                                        <span class="toggle-label">Hide names</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-row control-row--separator">
+                                <div class="visibility-grid" style="margin:0;width:100%">
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox" id="check-qr-soiree"><span
+                                                class="slider"></span></span>
+                                        <span class="toggle-label">Left QR code</span>
+                                    </label>
+                                    <label class="toggle-control toggle-control--simple control">
+                                        <span class="toggle-switch"><input type="checkbox"
+                                                id="check-qr-membership"><span class="slider"></span></span>
+                                        <span class="toggle-label">Right QR code</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <label class="toggle-control toggle-control--simple" style="margin-top:12px">
+                                <span class="toggle-switch"><input type="checkbox" id="check-hide-border"><span
+                                        class="slider"></span></span>
+                                <span class="toggle-label">Hide background shapes</span>
+                            </label>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Frame Rate</div>
+                            <div class="control" style="margin-top:4px;margin-bottom:12px">
+                                <div class="radio-tab-group" id="radio-group-fps-cap">
+                                    <label class="radio-tab"><input type="radio" name="fpsCap"
+                                            value="30"><span>30</span></label>
+                                    <label class="radio-tab"><input type="radio" name="fpsCap" value="60"
+                                            checked><span>60</span></label>
+                                    <label class="radio-tab"><input type="radio" name="fpsCap"
+                                            value="90"><span>90</span></label>
+                                    <label class="radio-tab"><input type="radio" name="fpsCap"
+                                            value="120"><span>120</span></label>
+                                    <label class="radio-tab"><input type="radio" name="fpsCap"
+                                            value="0"><span>∞</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <button id="btn-reset-defaults" class="button button--warning button--full">Reset to
+                                Defaults</button>
+                        </div>
+                    </details>
+
+                    <!-- Edit Poster Text Section -->
+                    <details class="advanced-controls" id="edit-poster-details" open>
+                        <summary>Edit Poster Content</summary>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Banner Text</div>
+                            <div class="input-clear-row">
+                                <textarea id="input-logo-text" class="text-input" placeholder="e.g. Your Organization"
+                                    rows="1" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+                                <button id="btn-clear-logo-text" class="button button--warning btn-inline-clear"
+                                    title="Clear">✕</button>
+                            </div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Names Section Title</div>
+                            <div class="input-clear-row">
+                                <input type="text" id="input-hosts-title" class="text-input"
+                                    placeholder="e.g. Thanks to our hosts" autocomplete="off" autocorrect="off"
+                                    spellcheck="false">
+                                <button id="btn-clear-hosts-title" class="button button--warning btn-inline-clear"
+                                    title="Clear">✕</button>
+                            </div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">Event Details</div>
+
+                            <div class="control" style="margin-bottom:8px">
+                                <label class="form-label" for="input-event-top-label">Top Label</label>
+                                <div class="input-clear-row">
+                                    <input type="text" id="input-event-top-label" class="text-input"
+                                        placeholder="Annual" autocomplete="off" autocorrect="off" spellcheck="false">
+                                    <button id="btn-clear-event-top-label"
+                                        class="button button--warning btn-inline-clear" title="Clear">✕</button>
+                                </div>
+                            </div>
+
+                            <div class="control" style="margin-bottom:8px">
+                                <label class="form-label" for="input-event-title">Event Title</label>
+                                <div class="input-clear-row">
+                                    <input type="text" id="input-event-title" class="text-input"
+                                        placeholder="Spring Soiree" autocomplete="off" autocorrect="off"
+                                        spellcheck="false">
+                                    <button id="btn-clear-event-title" class="button button--warning btn-inline-clear"
+                                        title="Clear">✕</button>
+                                </div>
+                            </div>
+
+                            <div class="control" style="margin-bottom:8px">
+                                <label class="form-label" for="input-event-subtitle">Subtitle</label>
+                                <div class="input-clear-row">
+                                    <input type="text" id="input-event-subtitle" class="text-input"
+                                        placeholder="fundraiser" autocomplete="off" autocorrect="off"
+                                        spellcheck="false">
+                                    <button id="btn-clear-event-subtitle"
+                                        class="button button--warning btn-inline-clear" title="Clear">✕</button>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <label class="form-label" for="input-event-date">Event Date</label>
+                                <div class="input-clear-row">
+                                    <input type="text" id="input-event-date" class="text-input"
+                                        placeholder="Wednesday, April 1, 2050" autocomplete="off" autocorrect="off"
+                                        spellcheck="false">
+                                    <button id="btn-clear-event-date" class="button button--warning btn-inline-clear"
+                                        title="Clear">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Add/Remove Names -->
+                    <details class="advanced-controls" id="host-management-details" open>
+                        <summary>Add and Remove Names</summary>
+
+                        <div class="panel-sub-section">
+                            <button id="btn-show-add-host" class="button button--primary button--full">+ Add
+                                Name</button>
+
+                            <div id="add-host-form" class="add-host-form is-hidden">
+                                <label class="form-label" for="input-host-title">New Name</label>
+                                <input type="text" id="input-host-title" class="text-input"
+                                    placeholder="e.g. Kermit T. Frog" autocomplete="off" autocorrect="off"
+                                    spellcheck="false">
+                                <div id="add-host-error" class="form-error is-hidden" role="alert" aria-live="polite">
+                                </div>
+                                <div class="btn-group">
+                                    <button id="btn-cancel-add-host" class="button button--secondary">Cancel</button>
+                                    <button id="btn-confirm-add-host" class="button button--solid-gold" disabled>Add
+                                        Name</button>
+                                </div>
+                            </div>
+
+                            <div id="added-hosts-list" class="added-hosts-list is-hidden">
+                                <div class="added-hosts-title">Added Names:</div>
+                                <div id="added-hosts-items"></div>
+                            </div>
+
+                            <div id="removed-hosts-list" class="added-hosts-list is-hidden">
+                                <div class="added-hosts-title">Recently Removed:</div>
+                                <div id="removed-hosts-items"></div>
+                            </div>
+                        </div>
+                    </details>
+
+                </div><!-- end controls-panel-scroll -->
+            </div><!-- end controls-panel -->
+        </div><!-- end rc-scroll -->
+    </div><!-- end remote-controller -->
+
+    <script src="../js/themes.js"></script>
+    <script src="../js/modules/Constants.js"></script>
+    <script src="RemoteController.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.remoteController = new RemoteController();
+            window.remoteController.init();
+        });
+    </script>
+
+</body>
+
+</html>

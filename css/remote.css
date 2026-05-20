@@ -1,0 +1,564 @@
+/* =============================================================================
+   Remote Control Styles
+   ============================================================================= */
+
+/* ── Remote section at bottom of controls panel ──────────────────────────── */
+
+.remote-panel-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 8px;
+    padding: 12px 16px 16px;
+}
+
+.remote-panel-section-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-remote-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.btn-remote-start:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-remote-start svg {
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+/* ── Status badge ────────────────────────────────────────────────────────── */
+
+.remote-status-badge {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 2px 7px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.remote-status-badge--connected {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+}
+
+.remote-status-badge--disconnected {
+    color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Connection Modal ────────────────────────────────────────────────────── */
+
+.remote-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+.remote-modal.is-open {
+    display: flex;
+}
+
+.remote-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.remote-modal-panel {
+    position: relative;
+    z-index: 1;
+    background: #1a1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 28px;
+    width: min(520px, 92vw);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+    color: #e8e8f0;
+    font-family: inherit;
+}
+
+.remote-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.remote-modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.remote-modal-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+}
+
+.remote-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+/* ── Step containers ─────────────────────────────────────────────────────── */
+
+.remote-step {
+    text-align: center;
+}
+
+.remote-step p {
+    margin: 8px 0;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+/* ── Loading step ────────────────────────────────────────────────────────── */
+
+.remote-step--loading {
+    padding: 32px 0;
+}
+
+.remote-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.75);
+    border-radius: 50%;
+    animation: remote-spin 0.75s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes remote-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Connection status indicator ─────────────────────────────────────────── */
+
+.remote-connection-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.remote-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.remote-status-dot--waiting {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+    animation: remote-pulse 2s ease-in-out infinite;
+}
+
+.remote-status-dot--connected {
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+    animation: none;
+}
+
+@keyframes remote-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* ── QR + Code layout ────────────────────────────────────────────────────── */
+
+.remote-connect-cols {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    text-align: left;
+}
+
+.remote-qr-wrap {
+    flex-shrink: 0;
+}
+
+.remote-qr {
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    background: #fff;
+    display: block;
+}
+
+.remote-code-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.remote-code-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.remote-code {
+    font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1;
+}
+
+.remote-url-hint {
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.remote-url-link {
+    color: rgba(140, 180, 255, 0.8);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.remote-url-link:hover {
+    color: rgba(180, 210, 255, 1);
+    text-decoration: underline;
+}
+
+/* ── Connected step ──────────────────────────────────────────────────────── */
+
+.remote-connected-icon {
+    font-size: 40px;
+    color: #4ade80;
+    margin-bottom: 12px;
+}
+
+.remote-connected-msg {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #fff !important;
+}
+
+.remote-connected-sub {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ── Error step ──────────────────────────────────────────────────────────── */
+
+.remote-error-icon {
+    font-size: 36px;
+    color: #f87171;
+    margin-bottom: 10px;
+}
+
+.remote-error-msg {
+    color: rgba(248, 113, 113, 0.85) !important;
+    font-size: 13px;
+}
+
+.remote-btn-retry {
+    margin-top: 12px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.remote-btn-retry:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* =============================================================================
+   Remote Mode — iPad Controller UI
+   ============================================================================= */
+
+body.remote-mode {
+    background: #0f0f1a;
+    overflow: hidden;
+}
+
+/* Hide all the poster canvas/animation elements in remote mode */
+body.remote-mode .sway-layer,
+body.remote-mode .floral-bg,
+body.remote-mode #particles-back,
+body.remote-mode #particles-front,
+body.remote-mode #particles-mid,
+body.remote-mode .content-wrapper,
+body.remote-mode .poster-frame,
+body.remote-mode .theme-frame,
+body.remote-mode #keyboard-hint,
+body.remote-mode #fullscreen-countdown,
+body.remote-mode #mobile-blocker,
+body.remote-mode #recovery-hint,
+body.remote-mode #wake-lock-video,
+body.remote-mode #factory-reset-overlay,
+body.remote-mode #factory-reset-modal {
+    display: none !important;
+}
+
+/* ── Remote Connect Screen ───────────────────────────────────────────────── */
+
+.remote-connect-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f0f1a;
+    z-index: 9999;
+    padding: 32px 24px;
+}
+
+.remote-connect-inner {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: #e8e8f0;
+    font-family: inherit;
+}
+
+.remote-connect-logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 36px;
+    letter-spacing: -0.02em;
+    opacity: 0.9;
+}
+
+.rcs-step {
+    animation: rcs-fadein 0.25s ease;
+}
+
+@keyframes rcs-fadein {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.rcs-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.rcs-code-input {
+    display: block;
+    width: 100%;
+    font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 16px 12px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.15s, background 0.15s;
+    box-sizing: border-box;
+}
+
+.rcs-code-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.2em;
+}
+
+.rcs-code-input:focus {
+    border-color: rgba(140, 180, 255, 0.5);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.rcs-connect-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f0f1a;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    letter-spacing: -0.01em;
+}
+
+.rcs-connect-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.rcs-connect-btn:not(:disabled):hover {
+    background: #fff;
+}
+
+.rcs-error-msg {
+    color: rgba(248, 113, 113, 0.85);
+    font-size: 13.5px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* ── iPad Controls Panel Layout ──────────────────────────────────────────── */
+
+body.remote-mode #controls-panel.remote-panel-active {
+    /* Full-screen controls on iPad */
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    border-radius: 0;
+    border: none;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    background: rgba(14, 14, 26, 0.98);
+    backdrop-filter: blur(20px);
+    /* Make it visible regardless of class state */
+    visibility: visible !important;
+    pointer-events: all !important;
+}
+
+/* Prevent auto-dismiss in remote mode */
+body.remote-mode #controls-panel.is-dismissed,
+body.remote-mode #controls-panel.is-dimmed {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+body.remote-mode .controls-panel-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Larger touch targets on iPad */
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Larger tap targets for iPad */
+body.remote-mode .toggle-control {
+    min-height: 44px;
+}
+
+body.remote-mode input[type="range"] {
+    height: 28px;
+}
+
+/* Hide controls that don't make sense remotely */
+body.remote-mode #toggle-fullscreen-wrap,
+body.remote-mode #btn-close-panel,
+body.remote-mode #btn-remote-start,
+body.remote-mode .remote-status-badge {
+    display: none !important;
+}
+
+/* ── Remote Controller Header (shown on iPad above controls) ─────────────── */
+
+.remote-controller-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    background: rgba(14, 14, 26, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 16px;
+    padding-top: max(10px, env(safe-area-inset-top, 10px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remote-ctrl-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.remote-ctrl-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+}
+
+/* Offset controls panel for the fixed header */
+body.remote-mode #controls-panel.remote-panel-active {
+    padding-top: calc(44px + env(safe-area-inset-top, 0px));
+}
