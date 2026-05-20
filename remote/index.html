@@ -65,11 +65,11 @@
         }
 
         .rcs-logo {
-            font-size: 13px;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.649);
             margin-bottom: 40px;
         }
 
@@ -88,7 +88,18 @@
             line-height: 1.5;
         }
 
+        .rcs-input-group {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
         .rcs-code-input {
+            margin-bottom: 0 !important;
+            flex: 1;
+            min-width: 0;
             display: block;
             width: 100%;
             font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
@@ -103,9 +114,14 @@
             background: rgba(255, 255, 255, 0.06);
             color: #fff;
             outline: none;
-            margin-bottom: 16px;
             transition: border-color 0.15s, background 0.15s;
             -webkit-text-stroke: 0;
+        }
+
+        body.remote-mode .rcs-code-input {
+            font-size: 32px;
+            padding: 16px 12px;
+            border-radius: 12px;
         }
 
         .rcs-code-input::placeholder {
@@ -116,6 +132,176 @@
         .rcs-code-input:focus {
             border-color: rgba(140, 180, 255, 0.5);
             background: rgba(255, 255, 255, 0.09);
+        }
+
+        .rcs-scan-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 74px;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        body.remote-mode .rcs-scan-btn {
+            width: 68px;
+            border-radius: 12px;
+        }
+
+        .rcs-scan-btn:hover {
+            border-color: rgba(140, 180, 255, 0.5);
+            background: rgba(255, 255, 255, 0.09);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .rcs-scan-btn:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        /* ── QR Scanner Modal Styles ── */
+        .rcs-scanner-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: rcs-fadein 0.25s ease;
+        }
+
+        .rcs-scanner-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .rcs-scanner-panel {
+            position: relative;
+            z-index: 1;
+            background: #1a1a2e;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rcs-scanner-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rcs-scanner-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .rcs-scanner-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .rcs-scanner-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .rcs-scanner-viewfinder {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: #000;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rcs-scanner-viewfinder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rcs-scanner-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .rcs-scanner-laser {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80, 0 0 15px rgba(74, 222, 128, 0.8);
+            animation: rcs-laser 2.2s infinite ease-in-out;
+        }
+
+        @keyframes rcs-laser {
+            0% { top: 12%; opacity: 0.3; }
+            45% { opacity: 1; }
+            55% { opacity: 1; }
+            100% { top: 88%; opacity: 0.3; }
+        }
+
+        .rcs-scanner-corners {
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+        }
+
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #4ade80;
+            pointer-events: none;
+        }
+
+        .corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
+        .corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; border-top-right-radius: 8px; }
+        .corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; border-bottom-left-radius: 8px; }
+        .corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
+
+        .rcs-scanner-status {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin: 8px 0 0;
+            line-height: 1.5;
         }
 
         .rcs-btn {
@@ -292,7 +478,7 @@
     </style>
 </head>
 
-<body>
+<body class="remote-mode">
 
     <!-- ── Connect Screen ──────────────────────────────────────────────── -->
     <div id="remote-connect-screen">
@@ -301,9 +487,20 @@
 
             <div id="rcs-step-entry">
                 <h1 class="rcs-heading">Remote Control</h1>
-                <p class="rcs-sub">Enter the code shown on the host display's Remote panel.</p>
-                <input type="text" id="rcs-code-input" class="rcs-code-input" maxlength="6" inputmode="text"
-                    autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXXX">
+                <p class="rcs-sub">Enter the code shown on the host display Wireless Remote pairing panel. </p>
+                <p class="rcs-sub"> On the main display, press the [W] key, or click the "Remote" button in the control
+                    panel to get started.</p>
+
+                <div class="rcs-input-group">
+                    <input type="text" id="rcs-code-input" class="rcs-code-input" maxlength="6" inputmode="text"
+                        autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="------" autofocus>
+                    <button id="rcs-scan-btn" class="rcs-scan-btn" title="Scan QR Code">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </button>
+                </div>
                 <button id="rcs-connect-btn" class="rcs-btn" disabled>Connect</button>
             </div>
 
@@ -317,6 +514,32 @@
             <div id="rcs-step-error" style="display:none">
                 <p class="rcs-error" id="rcs-error-msg">Could not connect. Check the code and try again.</p>
                 <button id="rcs-retry-btn" class="rcs-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── QR Scanner Modal ───────────────────────────────────────────── -->
+    <div id="rcs-scanner-modal" class="rcs-scanner-modal" style="display: none;">
+        <div class="rcs-scanner-backdrop"></div>
+        <div class="rcs-scanner-panel">
+            <div class="rcs-scanner-header">
+                <h2 class="rcs-scanner-title">Scan Host QR Code</h2>
+                <button class="rcs-scanner-close" id="btn-scanner-close" aria-label="Close">✕</button>
+            </div>
+            <div class="rcs-scanner-body">
+                <div class="rcs-scanner-viewfinder">
+                    <video id="scanner-video" autoplay playsinline muted></video>
+                    <div class="rcs-scanner-overlay">
+                        <div class="rcs-scanner-laser"></div>
+                        <div class="rcs-scanner-corners">
+                            <div class="corner tl"></div>
+                            <div class="corner tr"></div>
+                            <div class="corner bl"></div>
+                            <div class="corner br"></div>
+                        </div>
+                    </div>
+                </div>
+                <p id="scanner-status" class="rcs-scanner-status">Align the QR code within the frame to connect automatically.</p>
             </div>
         </div>
     </div>
