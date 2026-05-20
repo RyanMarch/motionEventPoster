@@ -45,12 +45,6 @@
             overscroll-behavior: none;
         }
 
-        #rc-scroll {
-            width: 600px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         /* ── Connect Screen ──────────────────────────────────────────────── */
         #remote-connect-screen {
             position: fixed;
@@ -286,6 +280,14 @@
         #edit-poster-details>summary,
         #host-management-details>summary {
             min-height: 70px;
+        }
+
+        @media (min-width: 700px) {
+            #rc-scroll {
+                max-width: 600px;
+                width: 600px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
