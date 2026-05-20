@@ -239,9 +239,7 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        // In remote mode (iPad controller), skip the screen-size blocker entirely
-        const isRemoteMode = new URLSearchParams(location.search).has('remote');
-        if (!isRemoteMode && window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
+        if (window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
             this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
             return;
@@ -254,11 +252,9 @@ window.EventPoster = class EventPoster {
         if (this.state.isAppRunning) return;
         this.state.isAppRunning = true;
 
-        const isRemoteMode = new URLSearchParams(location.search).has('remote');
-
         this.hydrate();
-        
-        // Initialize RemoteManager before event listeners so send() hooks are available during binding
+
+        // Initialize RemoteManager early so its _applying flag is available during event binding
         window.remoteManager = new window.RemoteManager(this);
 
         // Modules startup
@@ -267,26 +263,23 @@ window.EventPoster = class EventPoster {
         this.ui.initSlidersUI();
         this.ui.initShortcutsUI();
         this.ui.setupEventListeners();
-                
+
         this.themeManager.applyTheme(this.state.activeTheme, true);
         this.applyStateToUI();
         this.applyPosterText();
+        this.particleEngine.adjustAmbientPetals();
+        this.particleEngine.startAnimationLoop();
 
-        if (!isRemoteMode) {
-            this.particleEngine.adjustAmbientPetals();
-            this.particleEngine.startAnimationLoop();
-            this.checkWakeLockSupport();
-            this.checkPersistentFullscreen();
-            this.updateSleepStatus('off');
-            this.startWakeLockHeartbeat();
-            this.showKeyboardHint();
-        }
-
+        this.checkWakeLockSupport();
+        this.checkPersistentFullscreen();
         this.renderHosts();
+        this.updateSleepStatus('off');
         this.updateScreenSize();
         this.updateTimerDisplay();
+        this.startWakeLockHeartbeat();
+        this.showKeyboardHint();
 
-        // Initialize remote UI (button on host, or connect screen on iPad)
+        // Inject the Remote button into the controls panel header
         window.remoteManager.init();
 
         requestAnimationFrame(() => {
