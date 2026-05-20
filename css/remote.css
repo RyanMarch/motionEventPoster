@@ -2,23 +2,34 @@
    Remote Control Styles
    ============================================================================= */
 
-/* ── Remote button in controls panel header ──────────────────────────────── */
+/* ── Remote section at bottom of controls panel ──────────────────────────── */
+
+.remote-panel-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 8px;
+    padding: 12px 16px 16px;
+}
+
+.remote-panel-section-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
 .btn-remote-start {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
-    border-radius: 6px;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.07);
     color: rgba(255, 255, 255, 0.75);
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
     white-space: nowrap;
-    margin-left: auto;
 }
 
 .btn-remote-start:hover {

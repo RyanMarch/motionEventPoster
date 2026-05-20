@@ -45,36 +45,45 @@ window.RemoteManager = class RemoteManager {
     init() {
         this._injectButton();
         this._injectModal();
+
+        // If there's a saved room code from a previous session (e.g. after a Live Server
+        // reload), silently re-register the same PeerJS ID so the remote can reconnect
+        // without the user needing to touch the MacBook.
+        const savedCode = this._getSavedCode();
+        if (savedCode) {
+            this._startHost(/* silent= */ true);
+        }
     }
 
     // ─── Host UI ─────────────────────────────────────────────────────────────
 
     _injectButton() {
-        const header = document.querySelector('.controls-panel-header');
-        if (!header) return;
+        const scrollArea = document.querySelector('.controls-panel-scroll');
+        if (!scrollArea) return;
 
-        const btn = document.createElement('button');
-        btn.id = 'btn-remote-start';
-        btn.className = 'btn-remote-start';
-        btn.title = 'Start Remote Control';
-        btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-                <rect x="5" y="2" width="14" height="20" rx="2"/>
-                <line x1="12" y1="18" x2="12.01" y2="18"/>
-            </svg>
-            <span>Remote</span>`;
-        btn.addEventListener('click', () => this._startHost());
-        header.appendChild(btn);
+        // Build a bottom Remote section
+        const section = document.createElement('div');
+        section.className = 'remote-panel-section';
+        section.innerHTML = `
+            <div class="remote-panel-section-inner">
+                <button id="btn-remote-start" class="btn-remote-start" title="Start Remote Control">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="2" width="14" height="20" rx="2"/>
+                        <line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                    <span>Remote</span>
+                </button>
+                <span id="remote-status-badge" class="remote-status-badge" style="display:none"></span>
+            </div>`;
 
-        // Status badge — hidden until a remote connects
-        const badge = document.createElement('span');
-        badge.id = 'remote-status-badge';
-        badge.className = 'remote-status-badge';
-        badge.style.display = 'none';
+        scrollArea.appendChild(section);
+
+        scrollArea.querySelector('#btn-remote-start').addEventListener('click', () => this._startHost());
+
+        const badge = scrollArea.querySelector('#remote-status-badge');
         badge.addEventListener('click', () => this._openModal());
-        header.appendChild(badge);
         this._statusBadgeEl = badge;
     }
 
@@ -145,6 +154,16 @@ window.RemoteManager = class RemoteManager {
         return code;
     }
 
+    /** Returns the saved room code from this browser session, if any. */
+    _getSavedCode() {
+        try { return sessionStorage.getItem('remoteRoomCode') || null; } catch { return null; }
+    }
+
+    /** Persists the room code so it survives a Live Server / manual page reload. */
+    _saveCode(code) {
+        try { sessionStorage.setItem('remoteRoomCode', code); } catch { /* ignore */ }
+    }
+
     _loadPeerJS() {
         return new Promise((resolve, reject) => {
             if (window.Peer) { resolve(); return; }
@@ -162,14 +181,16 @@ window.RemoteManager = class RemoteManager {
         });
     }
 
-    async _startHost() {
-        this._openModal();
-        this._showModalStep('loading');
+    async _startHost(silent = false) {
+        if (!silent) {
+            this._openModal();
+            this._showModalStep('loading');
+        }
 
         try {
             await this._loadPeerJS();
         } catch {
-            this._showModalStep('error', 'Could not load the connection library. Check your internet connection.');
+            if (!silent) this._showModalStep('error', 'Could not load the connection library. Check your internet connection.');
             return;
         }
 
@@ -177,13 +198,19 @@ window.RemoteManager = class RemoteManager {
             if (this.peer) { this.peer.destroy(); this.peer = null; }
             this.peer = new Peer(code, { debug: 0 });
 
-            this.peer.on('open', (id) => this._showConnectionInfo(id));
+            this.peer.on('open', (id) => {
+                this._saveCode(id);
+                if (!silent) this._showConnectionInfo(id);
+                // Silent mode: just update the badge so the user can see it's live
+                else this._updateBadge('waiting');
+            });
 
             this.peer.on('error', (err) => {
                 if (err.type === 'unavailable-id') {
-                    tryCode(this._generateCode()); // collision — try again
+                    // Saved code is taken (e.g. stale session); generate a fresh one
+                    tryCode(this._generateCode());
                 } else {
-                    this._showModalStep('error', `Connection error: ${err.message || err.type}`);
+                    if (!silent) this._showModalStep('error', `Connection error: ${err.message || err.type}`);
                 }
             });
 
@@ -195,7 +222,9 @@ window.RemoteManager = class RemoteManager {
             });
         };
 
-        tryCode(this._generateCode());
+        // Reuse the code from the last session (survives Live Server reloads)
+        const savedCode = this._getSavedCode();
+        tryCode(savedCode || this._generateCode());
     }
 
     _showConnectionInfo(roomCode) {
@@ -222,10 +251,12 @@ window.RemoteManager = class RemoteManager {
             this._setStatusDot('connected');
             // Send full state snapshot immediately
             this._sendStateSync(conn);
-            // Show connected step briefly then let them close
+            // Show connected step briefly, then auto-dismiss the modal
             setTimeout(() => {
                 this._showModalStep('connected');
                 this._updateBadge('connected');
+                // Auto-close after 3 seconds so the host can get back to the poster
+                this._autoDismissTimer = setTimeout(() => this._closeModal(), 3000);
             }, 500);
         });
 
@@ -302,11 +333,28 @@ window.RemoteManager = class RemoteManager {
     }
 
     _applySlider({ id, value }) {
+        // Find the config so we know the stateKey and side effects
+        const config = (window.SLIDER_CONFIGS || []).find(c => c.id === id);
+        if (!config) return;
+
+        // 1. Update the DOM slider + display label (for visual feedback on host)
         const slider = document.getElementById(`slider-${id}`);
-        if (!slider) return;
-        slider.value = value;
-        slider.dispatchEvent(new Event('input', { bubbles: false }));
-        slider.dispatchEvent(new Event('change', { bubbles: false }));
+        const display = document.getElementById(`val-${id}`);
+        if (slider) slider.value = value;
+        if (display) display.textContent = `${value}${config.suffix || ''}`;
+
+        // 2. Write directly into poster state (avoids rAF + synthetic-event race)
+        const s = this.poster.state;
+        s[config.stateKey] = value;
+
+        // 3. Call any required side-effects (mirrors UIController.bindSliders)
+        if (id === 'max-petals')    this.poster.particleEngine?.adjustAmbientPetals();
+        if (id === 'gust-strength') this.poster.themeManager?.syncWind();
+        if (['host-text-size', 'host-max-width', 'inset-v', 'inset-h'].includes(id)) this.poster.syncLayout();
+        if (id === 'backdrop-opacity') this.poster.themeManager?.syncBackdrop();
+
+        // 4. Persist
+        this.poster.saveSettings();
     }
 
     _applyToggle({ id, checked }) {
@@ -363,6 +411,11 @@ window.RemoteManager = class RemoteManager {
     _applyButton({ id }) {
         const el = document.getElementById(id);
         if (el) el.click();
+        // After a pause toggle or reset, push updated state back to the remote so its
+        // controls reflect the new values.
+        if (id === 'btn-pause-petals' || id === 'btn-pause-bg' || id === 'btn-reset-defaults') {
+            setTimeout(() => this._sendStateSync(this.conn), 50);
+        }
     }
 
     _applyHostAdd({ name }) {
@@ -388,7 +441,11 @@ window.RemoteManager = class RemoteManager {
     // ─── Modal UX ─────────────────────────────────────────────────────────────
 
     _openModal()  { this._modalEl?.classList.add('is-open'); }
-    _closeModal() { this._modalEl?.classList.remove('is-open'); }
+    _closeModal() {
+        // Cancel any pending auto-dismiss so manual closes don't double-fire
+        if (this._autoDismissTimer) { clearTimeout(this._autoDismissTimer); this._autoDismissTimer = null; }
+        this._modalEl?.classList.remove('is-open');
+    }
 
     _showModalStep(step, errorMsg) {
         ['loading', 'ready', 'connected', 'error'].forEach(s => {

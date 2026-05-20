@@ -213,6 +213,13 @@ class RemoteController {
             const btn = document.getElementById('rcs-connect-btn');
             if (input) { input.value = ''; input.focus(); }
             if (btn) btn.disabled = true;
+
+            // Hide header room code display
+            const codeEl = document.getElementById('rc-header-code');
+            if (codeEl) {
+                codeEl.textContent = '';
+                codeEl.style.display = 'none';
+            }
         }
     }
 
@@ -237,6 +244,7 @@ class RemoteController {
 
     async _connect(roomCode) {
         this._showStep('connecting');
+        this.roomCode = roomCode;
 
         try {
             await this._loadPeerJS();
@@ -266,9 +274,9 @@ class RemoteController {
             conn.on('data', (msg) => this._onMessage(msg));
 
             conn.on('close', () => {
-                document.getElementById('remote-controller')?.classList.remove('is-active');
-                document.getElementById('remote-connect-screen').style.display = '';
-                this._showStep('error', 'Lost connection to the poster. Enter the room code again to reconnect.');
+                // The host may have just reloaded (e.g. Live Server). Retry automatically
+                // using the same room code before showing the error screen.
+                this._autoReconnect(roomCode);
             });
 
             conn.on('error', (err) => {
@@ -283,13 +291,80 @@ class RemoteController {
         });
     }
 
+    /**
+     * Attempts to reconnect to the same room code automatically.
+     * Shows a subtle "Reconnecting…" state rather than the full error screen.
+     * Gives up after maxAttempts and then shows the error screen.
+     */
+    _autoReconnect(roomCode, attempt = 1) {
+        const maxAttempts = 5;
+        const delayMs = 2000;
+
+        // Show the controller UI with a reconnecting indicator in the header
+        const dot = document.querySelector('.rc-header-dot');
+        if (dot) dot.innerHTML = '<span class="rc-dot" style="background:#f9a825;box-shadow:0 0 6px rgba(249,168,37,.6)"></span> Reconnecting…';
+
+        if (attempt > maxAttempts) {
+            // Give up — show the connect screen error
+            document.getElementById('remote-controller')?.classList.remove('is-active');
+            document.getElementById('remote-connect-screen').style.display = '';
+            this._showStep('error', 'Lost connection to the poster. Enter the room code again to reconnect.');
+            return;
+        }
+
+        setTimeout(async () => {
+            // Reconnect attempt: reuse the existing peer (still valid after conn close)
+            if (!this.peer || this.peer.destroyed) {
+                try { await this._loadPeerJS(); } catch { /* ignore */ }
+                this.peer = new Peer({ debug: 0 });
+            }
+
+            const tryConnect = () => {
+                const conn = this.peer.connect(roomCode, { reliable: true });
+                this.conn = conn;
+
+                const successTimeout = setTimeout(() => {
+                    this._autoReconnect(roomCode, attempt + 1);
+                }, 3000);
+
+                conn.on('open', () => {
+                    clearTimeout(successTimeout);
+                    // Restore the live indicator
+                    if (dot) dot.innerHTML = '<span class="rc-dot"></span> Live';
+                    this._onConnected();
+                });
+                conn.on('close', () => this._autoReconnect(roomCode));
+                conn.on('error', () => {
+                    clearTimeout(successTimeout);
+                    this._autoReconnect(roomCode, attempt + 1);
+                });
+            };
+
+            if (this.peer.open) {
+                tryConnect();
+            } else {
+                this.peer.on('open', tryConnect);
+            }
+        }, delayMs);
+    }
+
     _onConnected() {
         // Hide connect screen, show controller
         document.getElementById('remote-connect-screen').style.display = 'none';
         document.getElementById('remote-controller').classList.add('is-active');
 
-        // Wire all controls now that we have a connection
-        this._bindControls();
+        // Update the header room code display
+        const codeEl = document.getElementById('rc-header-code');
+        if (codeEl && this.roomCode) {
+            codeEl.textContent = this.roomCode;
+            codeEl.style.display = 'inline-block';
+        }
+
+        // Wire all controls — only once, even if we auto-reconnect multiple times
+        if (!this._controlsBound) {
+            this._bindControls();
+            this._controlsBound = true;
+        }
     }
 
     _send(msg) {
@@ -389,6 +464,18 @@ class RemoteController {
                 this._renderRemovedHosts(state.removedHosts || []);
             }
 
+            // Pause button labels
+            const pausePetalsBtn = document.getElementById('btn-pause-petals');
+            if (pausePetalsBtn && state.isPetalsPaused !== undefined) {
+                pausePetalsBtn.textContent = state.isPetalsPaused ? 'Resume Particles' : 'Pause Particles';
+                pausePetalsBtn.classList.toggle('active', !!state.isPetalsPaused);
+            }
+            const pauseBgBtn = document.getElementById('btn-pause-bg');
+            if (pauseBgBtn && state.isBgPaused !== undefined) {
+                pauseBgBtn.textContent = state.isBgPaused ? 'Resume Frame' : 'Pause Frame';
+                pauseBgBtn.classList.toggle('active', !!state.isBgPaused);
+            }
+
         } finally {
             this._applying = false;
         }
@@ -459,6 +546,11 @@ class RemoteController {
         });
         document.getElementById('btn-pause-bg')?.addEventListener('click', () => {
             if (!this._applying) this._send({ type: 'button', id: 'btn-pause-bg' });
+        });
+
+        // Reset to Defaults button
+        document.getElementById('btn-reset-defaults')?.addEventListener('click', () => {
+            if (!this._applying) this._send({ type: 'button', id: 'btn-reset-defaults' });
         });
 
         // Text inputs
