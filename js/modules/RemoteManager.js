@@ -106,17 +106,17 @@ window.RemoteManager = class RemoteManager {
                     <div id="remote-modal-ready" class="remote-step" style="display:none">
                         <div class="remote-connection-status">
                             <span class="remote-status-dot remote-status-dot--waiting" id="rc-status-dot"></span>
-                            <span id="rc-status-text">Waiting for iPad to connect…</span>
+                            <span id="rc-status-text">Waiting for remote device to connect…</span>
                         </div>
                         <div class="remote-connect-cols">
                             <div class="remote-qr-wrap">
                                 <img id="remote-qr-img" class="remote-qr" src="" alt="QR Code">
                             </div>
                             <div class="remote-code-wrap">
-                                <p class="remote-code-label">Or enter this code on the iPad:</p>
+                                <p class="remote-code-label">Or enter this code on the remote device:</p>
                                 <div class="remote-code" id="remote-room-code">——</div>
                                 <p class="remote-url-hint">
-                                    Open on iPad:<br>
+                                    Open on remote device:<br>
                                     <a id="remote-ipad-url" href="#" target="_blank" class="remote-url-link"></a>
                                 </p>
                             </div>
@@ -124,7 +124,7 @@ window.RemoteManager = class RemoteManager {
                     </div>
                     <div id="remote-modal-connected" class="remote-step" style="display:none">
                         <div class="remote-connected-icon">✓</div>
-                        <p class="remote-connected-msg">iPad connected!</p>
+                        <p class="remote-connected-msg">Remote device connected!</p>
                         <p class="remote-connected-sub">All controls are synced. You can close this panel.</p>
                     </div>
                     <div id="remote-modal-error" class="remote-step" style="display:none">
@@ -236,12 +236,12 @@ window.RemoteManager = class RemoteManager {
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(remoteUrl)}`;
 
         const codeEl = document.getElementById('remote-room-code');
-        const qrEl   = document.getElementById('remote-qr-img');
-        const urlEl  = document.getElementById('remote-ipad-url');
+        const qrEl = document.getElementById('remote-qr-img');
+        const urlEl = document.getElementById('remote-ipad-url');
 
         if (codeEl) codeEl.textContent = roomCode;
-        if (qrEl)   qrEl.src = qrUrl;
-        if (urlEl)  { urlEl.href = remoteUrl; urlEl.textContent = remoteUrl.replace(/^https?:\/\//, ''); }
+        if (qrEl) qrEl.src = qrUrl;
+        if (urlEl) { urlEl.href = remoteUrl; urlEl.textContent = remoteUrl.replace(/^https?:\/\//, ''); }
 
         this._showModalStep('ready');
     }
@@ -315,16 +315,16 @@ window.RemoteManager = class RemoteManager {
         this._applying = true;
         try {
             switch (msg.type) {
-                case 'slider':       this._applySlider(msg);      break;
-                case 'toggle':       this._applyToggle(msg);      break;
-                case 'radio':        this._applyRadio(msg);       break;
-                case 'color':        this._applyColor(msg);       break;
-                case 'swatch':       this._applySwatch(msg);      break;
-                case 'theme':        this._applyTheme(msg);       break;
-                case 'text':         this._applyText(msg);        break;
-                case 'button':       this._applyButton(msg);      break;
-                case 'host-add':     this._applyHostAdd(msg);     break;
-                case 'host-remove':  this._applyHostRemove(msg);  break;
+                case 'slider': this._applySlider(msg); break;
+                case 'toggle': this._applyToggle(msg); break;
+                case 'radio': this._applyRadio(msg); break;
+                case 'color': this._applyColor(msg); break;
+                case 'swatch': this._applySwatch(msg); break;
+                case 'theme': this._applyTheme(msg); break;
+                case 'text': this._applyText(msg); break;
+                case 'button': this._applyButton(msg); break;
+                case 'host-add': this._applyHostAdd(msg); break;
+                case 'host-remove': this._applyHostRemove(msg); break;
                 case 'host-restore': this._applyHostRestore(msg); break;
             }
         } finally {
@@ -348,7 +348,7 @@ window.RemoteManager = class RemoteManager {
         s[config.stateKey] = value;
 
         // 3. Call any required side-effects (mirrors UIController.bindSliders)
-        if (id === 'max-petals')    this.poster.particleEngine?.adjustAmbientPetals();
+        if (id === 'max-petals') this.poster.particleEngine?.adjustAmbientPetals();
         if (id === 'gust-strength') this.poster.themeManager?.syncWind();
         if (['host-text-size', 'host-max-width', 'inset-v', 'inset-h'].includes(id)) this.poster.syncLayout();
         if (id === 'backdrop-opacity') this.poster.themeManager?.syncBackdrop();
@@ -440,7 +440,7 @@ window.RemoteManager = class RemoteManager {
 
     // ─── Modal UX ─────────────────────────────────────────────────────────────
 
-    _openModal()  { this._modalEl?.classList.add('is-open'); }
+    _openModal() { this._modalEl?.classList.add('is-open'); }
     _closeModal() {
         // Cancel any pending auto-dismiss so manual closes don't double-fire
         if (this._autoDismissTimer) { clearTimeout(this._autoDismissTimer); this._autoDismissTimer = null; }
@@ -459,9 +459,9 @@ window.RemoteManager = class RemoteManager {
     }
 
     _setStatusDot(state) {
-        const dot  = document.getElementById('rc-status-dot');
+        const dot = document.getElementById('rc-status-dot');
         const text = document.getElementById('rc-status-text');
-        if (dot)  dot.className  = `remote-status-dot remote-status-dot--${state}`;
+        if (dot) dot.className = `remote-status-dot remote-status-dot--${state}`;
         if (text) text.textContent = state === 'connected' ? 'iPad connected!' : 'Waiting for iPad to connect…';
     }
 
