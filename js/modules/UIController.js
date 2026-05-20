@@ -119,7 +119,10 @@ window.UIController = class UIController {
 
             // Global Escape handling
             if (key === 'Escape') {
-                if (this.poster.isAddHostFormOpen()) {
+                if (window.remoteManager?._modalEl?.classList.contains('is-open')) {
+                    window.remoteManager._closeModal();
+                    event.preventDefault(); return;
+                } else if (this.poster.isAddHostFormOpen()) {
                     this.poster.closeAddHostForm();
                     event.preventDefault(); return;
                 } else if (this.poster.isFactoryResetModalVisible()) {
@@ -156,6 +159,7 @@ window.UIController = class UIController {
                 case 'toggleHosts': this.poster.toggleAddHostShortcut(); event.preventDefault(); break;
                 case 'toggleHelp': this.poster.toggleHelpShortcut(); event.preventDefault(); break;
                 case 'resetDefaults': this.poster.resetDefaults(); event.preventDefault(); break;
+                case 'startRemote': window.remoteManager?._startHost(); event.preventDefault(); break;
             }
         });
         document.addEventListener('keyup', (event) => { if (event.key === '\\') this.poster.handleFactoryResetKeyUp(); });
@@ -230,6 +234,11 @@ window.UIController = class UIController {
                     if (['host-text-size', 'host-max-width', 'inset-v', 'inset-h'].includes(config.id)) this.poster.syncLayout();
                     if (config.id === 'backdrop-opacity') this.poster.themeManager?.syncBackdrop();
                     
+                    // Remote sync
+                    if (!window.remoteManager?._applying) {
+                        window.remoteManager?.send({ type: 'slider', id: config.id, value: numVal });
+                    }
+
                     rafId = null;
                 });
             });
@@ -311,7 +320,15 @@ window.UIController = class UIController {
             });
         });
         const bindToggle = (ctrl, key, callback) => {
-            ctrl?.addEventListener('change', (e) => { this.state[key] = e.target.checked; callback?.(e.target.checked); this.poster.saveSettings(); });
+            ctrl?.addEventListener('change', (e) => {
+                this.state[key] = e.target.checked;
+                callback?.(e.target.checked);
+                this.poster.saveSettings();
+                // Remote sync
+                if (!window.remoteManager?._applying && ctrl?.id) {
+                    window.remoteManager?.send({ type: 'toggle', id: ctrl.id, checked: e.target.checked });
+                }
+            });
         };
         bindToggle(this.controls.hideUi, 'hideUi', (v) => this.poster.applyHideUiState(v));
         bindToggle(this.controls.hideLogo, 'hideLogo', (v) => { this.body.classList.toggle('logo-hidden', v); setTimeout(() => this.poster.optimizeLayouts(), 50); });
@@ -324,6 +341,22 @@ window.UIController = class UIController {
         bindToggle(this.controls.disableAutoFullscreen, 'disableAutoFullscreen');
         bindToggle(this.controls.autoHideMenu, 'autoHideMenu', (v) => { if (!v) this.poster.root.classList.remove('inactivity-hide'); });
         bindToggle(this.controls.smoothTransitions, 'smoothTransitions', (v) => this.poster.root.classList.toggle('no-transitions', !v));
+
+        // Radio group remote sync (host layout, fps cap)
+        this.controls.hostLayoutRadios?.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked && !window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'radio', name: 'hostLayout', value: e.target.value });
+                }
+            });
+        });
+        this.controls.fpsCapRadios?.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked && !window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'radio', name: 'fpsCap', value: e.target.value });
+                }
+            });
+        });
     }
 
     bindColorPicker() {
@@ -342,13 +375,32 @@ window.UIController = class UIController {
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = color.toUpperCase();
             this.poster.themeManager?.syncBackdrop();
             this.poster.themeManager?.updateSwatchActiveState();
+
+            // Remote sync
+            if (!window.remoteManager?._applying) {
+                window.remoteManager?.send({ type: 'color', value: color });
+            }
         });
         this.elements.bgColorPicker?.addEventListener('change', () => this.poster.saveSettings());
     }
 
     bindButtons() {
-        this.elements.pausePetalsButton?.addEventListener('click', () => { this.state.isPetalsPaused = !this.state.isPetalsPaused; this.poster.syncPauseStates(); this.poster.saveSettings(); });
-        this.elements.pauseBgButton?.addEventListener('click', () => { this.state.isBgPaused = !this.state.isBgPaused; this.poster.syncPauseStates(); this.poster.saveSettings(); });
+        this.elements.pausePetalsButton?.addEventListener('click', () => {
+            this.state.isPetalsPaused = !this.state.isPetalsPaused;
+            this.poster.syncPauseStates();
+            this.poster.saveSettings();
+            if (!window.remoteManager?._applying) {
+                window.remoteManager?.send({ type: 'button', id: 'btn-pause-petals' });
+            }
+        });
+        this.elements.pauseBgButton?.addEventListener('click', () => {
+            this.state.isBgPaused = !this.state.isBgPaused;
+            this.poster.syncPauseStates();
+            this.poster.saveSettings();
+            if (!window.remoteManager?._applying) {
+                window.remoteManager?.send({ type: 'button', id: 'btn-pause-bg' });
+            }
+        });
         this.elements.resetDefaultsButton?.addEventListener('click', () => this.poster.resetDefaults());
         this.elements.closePanelBtn?.addEventListener('click', () => { if (this.poster.isControlsPanelVisible()) this.toggleControlsPanel(); });
         this.elements.btnResetCancel?.addEventListener('click', () => this.poster.hideFactoryResetConfirmation());
@@ -387,11 +439,19 @@ window.UIController = class UIController {
                 if (input.tagName === 'TEXTAREA') this.poster.autoGrowTextarea(input);
                 this.state.posterText[key] = e.target.value;
                 this.poster.savePosterText(); this.poster.applyPosterText();
+                // Remote sync
+                if (!window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'text', key, value: e.target.value });
+                }
             });
             clear?.addEventListener('click', () => {
                 this.state.posterText[key] = '';
                 if (input) { input.value = ''; if (input.tagName === 'TEXTAREA') this.poster.autoGrowTextarea(input); }
                 this.poster.savePosterText(); this.poster.applyPosterText();
+                // Remote sync
+                if (!window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'text', key, value: '' });
+                }
             });
         };
         bindTF(this.elements.inputLogoText, this.elements.btnClearLogoText, 'logoText');

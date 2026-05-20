@@ -85,6 +85,7 @@ window.SHORTCUT_CONFIGS = [
     { key: 'c', label: 'C', desc: 'Customize Appearance', action: 'toggleCustomize' },
     { key: 'a', label: 'A', desc: 'Add/Remove Names', action: 'toggleHosts' },
     { key: 'r', label: 'R', desc: 'Reset to Defaults', action: 'resetDefaults', condition: 'isCustomizeOpen' },
+    { key: 'w', label: 'W', desc: 'Start Wireless Remote', action: 'startRemote' },
     { key: '?', label: '?', desc: 'Show Help Menu', action: 'toggleHelp' },
     { key: '/', label: '/', desc: 'Show Help Menu', action: 'toggleHelp' },
     { key: '\\', label: '\\', desc: 'Hold to Factory Reset', action: 'factoryReset' },
