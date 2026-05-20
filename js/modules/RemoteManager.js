@@ -34,6 +34,12 @@ window.RemoteManager = class RemoteManager {
         this._applying = false;
     }
 
+    // Public send — called by UIController/ThemeManager hooks.
+    // No-op when no iPad is connected; forwards when connected.
+    send(msg) {
+        if (this.conn?.open) this.conn.send(msg);
+    }
+
     // ─── Init ────────────────────────────────────────────────────────────────
 
     init() {
@@ -193,9 +199,10 @@ window.RemoteManager = class RemoteManager {
     }
 
     _showConnectionInfo(roomCode) {
-        // Build the URL for the /remote/ page relative to where index.html lives.
-        // e.g. https://motionposter.ryanmarch.me/remote/?room=ABC123
-        const base = location.href.replace(/[?#].*$/, '').replace(/\/?$/, '/');
+        // Build the URL for the /remote/ page, stripping any filename (e.g. index.html)
+        // so it works whether the address bar shows "/" or "/index.html".
+        const pageUrl = location.href.replace(/[?#].*$/, '');
+        const base = pageUrl.endsWith('/') ? pageUrl : pageUrl.substring(0, pageUrl.lastIndexOf('/') + 1);
         const remoteUrl = `${base}remote/?room=${roomCode}`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(remoteUrl)}`;
 
