@@ -80,6 +80,10 @@ window.ThemeManager = class ThemeManager {
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
+        // Remote sync
+        if (!window.remoteManager?._applying) {
+            window.remoteManager?.send({ type: 'theme', id: themeId });
+        }
     }
 
     /**
@@ -94,12 +98,24 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--font-heading', theme.fonts.heading);
 
         // Update Assets
-        this.root.style.setProperty('--img-border', theme.assets.border);
-        this.root.style.setProperty('--img-sway-1', theme.assets.sway1);
-        this.root.style.setProperty('--img-sway-2', theme.assets.sway2);
-        this.root.style.setProperty('--img-sway-3', theme.assets.sway3);
-        this.root.style.setProperty('--img-sway-4', theme.assets.sway4);
-        this.root.style.setProperty('--img-sway-side', theme.assets.swaySide);
+        const resolveAsset = (val) => {
+            if (!val || val === 'none') return 'none';
+            const match = val.match(/url\(['"]?([^'"]+?)['"]?\)/);
+            if (match && match[1]) {
+                const path = match[1];
+                // Resolve path relative to document URL to avoid relative-path resolution issues in dynamic CSS variables
+                const absoluteUrl = new URL(path, window.location.href).href;
+                return `url('${absoluteUrl}')`;
+            }
+            return val;
+        };
+
+        this.root.style.setProperty('--img-border', resolveAsset(theme.assets.border));
+        this.root.style.setProperty('--img-sway-1', resolveAsset(theme.assets.sway1));
+        this.root.style.setProperty('--img-sway-2', resolveAsset(theme.assets.sway2));
+        this.root.style.setProperty('--img-sway-3', resolveAsset(theme.assets.sway3));
+        this.root.style.setProperty('--img-sway-4', resolveAsset(theme.assets.sway4));
+        this.root.style.setProperty('--img-sway-side', resolveAsset(theme.assets.swaySide));
 
         // Update Labels
         const uiLabels = theme.uiLabels || {
@@ -222,6 +238,10 @@ window.ThemeManager = class ThemeManager {
                 if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
                 
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
+                // Remote sync
+                if (!window.remoteManager?._applying) {
+                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null });
+                }
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
         });

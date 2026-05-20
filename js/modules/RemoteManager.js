@@ -73,7 +73,7 @@ window.RemoteManager = class RemoteManager {
                         <rect x="5" y="2" width="14" height="20" rx="2"/>
                         <line x1="12" y1="18" x2="12.01" y2="18"/>
                     </svg>
-                    <span>Remote</span>
+                    <span>[W]ireless Remote</span>
                 </button>
                 <span id="remote-status-badge" class="remote-status-badge" style="display:none"></span>
             </div>`;
@@ -114,10 +114,26 @@ window.RemoteManager = class RemoteManager {
                             </div>
                             <div class="remote-code-wrap">
                                 <p class="remote-code-label">Or enter this code on the remote device:</p>
-                                <div class="remote-code" id="remote-room-code">——</div>
+                                <div class="remote-code-row" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                    <div class="remote-code" id="remote-room-code" style="margin-bottom: 0;">——</div>
+                                    <button id="btn-copy-code" class="btn-copy-icon" title="Copy Code">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                </div>
                                 <p class="remote-url-hint">
                                     Open on remote device:<br>
-                                    <a id="remote-ipad-url" href="#" target="_blank" class="remote-url-link"></a>
+                                    <span style="display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; width: 100%;">
+                                        <a id="remote-ipad-url" href="#" target="_blank" class="remote-url-link"></a>
+                                        <button id="btn-copy-url" class="btn-copy-icon" title="Copy URL" style="flex-shrink: 0;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
+                                        </button>
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -143,6 +159,36 @@ window.RemoteManager = class RemoteManager {
             this._showModalStep('loading');
             this._startHost();
         });
+
+        const copyCodeBtn = modal.querySelector('#btn-copy-code');
+        const copyUrlBtn = modal.querySelector('#btn-copy-url');
+
+        const attachCopyHandler = (btn, textFn) => {
+            btn?.addEventListener('click', async () => {
+                const text = textFn();
+                if (!text || text === '——') return;
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    btn.classList.add('copied');
+                    const originalHTML = btn.innerHTML;
+                    const size = btn.id === 'btn-copy-code' ? '16' : '14';
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>`;
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = originalHTML;
+                    }, 2000);
+                } catch (err) {
+                    console.warn('[RemoteManager] clipboard write failed:', err);
+                }
+            });
+        };
+
+        attachCopyHandler(copyCodeBtn, () => modal.querySelector('#remote-room-code')?.textContent);
+        attachCopyHandler(copyUrlBtn, () => modal.querySelector('#remote-ipad-url')?.href);
     }
 
     // ─── Host Session ─────────────────────────────────────────────────────────
@@ -440,7 +486,13 @@ window.RemoteManager = class RemoteManager {
 
     // ─── Modal UX ─────────────────────────────────────────────────────────────
 
-    _openModal() { this._modalEl?.classList.add('is-open'); }
+    _openModal() {
+        // Auto-hide the controls panel overlay when pairing modal is displayed
+        if (this.poster.isControlsPanelVisible?.()) {
+            this.poster.ui?.toggleControlsPanel();
+        }
+        this._modalEl?.classList.add('is-open');
+    }
     _closeModal() {
         // Cancel any pending auto-dismiss so manual closes don't double-fire
         if (this._autoDismissTimer) { clearTimeout(this._autoDismissTimer); this._autoDismissTimer = null; }
