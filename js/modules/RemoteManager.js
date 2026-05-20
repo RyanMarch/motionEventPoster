@@ -95,7 +95,7 @@ window.RemoteManager = class RemoteManager {
             <div class="remote-modal-backdrop"></div>
             <div class="remote-modal-panel">
                 <div class="remote-modal-header">
-                    <h2 class="remote-modal-title">Remote Control</h2>
+                    <h2 class="remote-modal-title">Wireless Remote - Control Pairing</h2>
                     <button class="remote-modal-close" id="btn-remote-modal-close" aria-label="Close">✕</button>
                 </div>
                 <div class="remote-modal-body">
@@ -113,7 +113,7 @@ window.RemoteManager = class RemoteManager {
                                 <img id="remote-qr-img" class="remote-qr" src="" alt="QR Code">
                             </div>
                             <div class="remote-code-wrap">
-                                <p class="remote-code-label">Or enter this code on the remote device:</p>
+                                <p class="remote-code-label">Scan QR or <br/>enter this code on remote device:</p>
                                 <div class="remote-code-row" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
                                     <div class="remote-code" id="remote-room-code" style="margin-bottom: 0;">——</div>
                                     <button id="btn-copy-code" class="btn-copy-icon" title="Copy Code">
@@ -125,8 +125,8 @@ window.RemoteManager = class RemoteManager {
                                 </div>
                                 <p class="remote-url-hint">
                                     Open on remote device:<br>
-                                    <span style="display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; width: 100%;">
-                                        <a id="remote-ipad-url" href="#" target="_blank" class="remote-url-link"></a>
+                                    <span style="display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; width: 100%; min-width: 0; overflow: hidden;">
+                                        <a id="remote-ipad-url" href="#" target="_blank" class="remote-url-link" style="flex: 1; min-width: 0;"></a>
                                         <button id="btn-copy-url" class="btn-copy-icon" title="Copy URL" style="flex-shrink: 0;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -167,7 +167,7 @@ window.RemoteManager = class RemoteManager {
             btn?.addEventListener('click', async () => {
                 const text = textFn();
                 if (!text || text === '——') return;
-                
+
                 try {
                     await navigator.clipboard.writeText(text);
                     btn.classList.add('copied');
@@ -278,7 +278,7 @@ window.RemoteManager = class RemoteManager {
         // so it works whether the address bar shows "/" or "/index.html".
         const pageUrl = location.href.replace(/[?#].*$/, '');
         const base = pageUrl.endsWith('/') ? pageUrl : pageUrl.substring(0, pageUrl.lastIndexOf('/') + 1);
-        const remoteUrl = `${base}remote/?room=${roomCode}`;
+        const remoteUrl = `${base}remote/?code=${roomCode}`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(remoteUrl)}`;
 
         const codeEl = document.getElementById('remote-room-code');
@@ -522,6 +522,6 @@ window.RemoteManager = class RemoteManager {
         if (!badge) return;
         badge.style.display = '';
         badge.className = `remote-status-badge remote-status-badge--${state}`;
-        badge.textContent = state === 'connected' ? '● Connected' : '○ Disconnected';
+        badge.textContent = state === 'connected' ? '● Connected' : '○ Not Connected';
     }
 };

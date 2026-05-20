@@ -2,7 +2,7 @@
  * RemoteController — iPad-side only.
  *
  * Responsibilities:
- *  1. Show connect screen, handle code input / auto-connect from ?room=
+ *  1. Show connect screen, handle code input / auto-connect from ?code=
  *  2. Load PeerJS lazily, connect to the Host peer
  *  3. Receive initial state-sync → populate all controls
  *  4. Bind every control → send message to Host
@@ -17,7 +17,7 @@ class RemoteController {
         this._applying = false; // Suppress re-sends while populating from state-sync
 
         const params = new URLSearchParams(location.search);
-        this.prefilledRoom = (params.get('room') || '').toUpperCase();
+        this.prefilledRoom = (params.get('code') || '').toUpperCase();
     }
 
     // ─── Init ───────────────────────────────────────────────────────────────
@@ -28,8 +28,19 @@ class RemoteController {
         this._wireConnectScreen();
         this._wireAddHost();
 
+        const input = document.getElementById('rcs-code-input');
+        if (input && !this.prefilledRoom) {
+            // Auto-focus on load
+            input.focus();
+            // A secondary focus attempt to ensure it succeeds even during layout/rendering cycles
+            setTimeout(() => {
+                if (document.activeElement !== input) {
+                    input.focus();
+                }
+            }, 50);
+        }
+
         if (this.prefilledRoom) {
-            const input = document.getElementById('rcs-code-input');
             if (input) input.value = this.prefilledRoom;
             // Small delay so the page finishes rendering before connecting
             setTimeout(() => this._connect(this.prefilledRoom), 400);
@@ -197,6 +208,8 @@ class RemoteController {
         });
 
         retryBtn?.addEventListener('click', () => this._showStep('entry'));
+
+        this._wireScanner();
     }
 
     _showStep(step, errorMsg) {
@@ -259,7 +272,7 @@ class RemoteController {
         this.peer = new Peer({ debug: 0 });
 
         const connectTimeout = setTimeout(() => {
-            this._showStep('error', `Could not reach the poster with code "${roomCode}". Make sure the MacBook is showing the Remote panel and try again.`);
+            this._showStep('error', `Could not reach the poster with code "${roomCode}". Make sure to open the Remote Pairing panel and try again.`);
         }, 15000);
 
         this.peer.on('open', () => {
@@ -555,12 +568,12 @@ class RemoteController {
 
         // Text inputs
         const textBindings = [
-            ['input-logo-text',       'btn-clear-logo-text',       'logoText'],
-            ['input-hosts-title',     'btn-clear-hosts-title',     'hostsTitle'],
+            ['input-logo-text', 'btn-clear-logo-text', 'logoText'],
+            ['input-hosts-title', 'btn-clear-hosts-title', 'hostsTitle'],
             ['input-event-top-label', 'btn-clear-event-top-label', 'eventTopLabel'],
-            ['input-event-title',     'btn-clear-event-title',     'eventTitle'],
-            ['input-event-subtitle',  'btn-clear-event-subtitle',  'eventSubtitle'],
-            ['input-event-date',      'btn-clear-event-date',      'eventDate'],
+            ['input-event-title', 'btn-clear-event-title', 'eventTitle'],
+            ['input-event-subtitle', 'btn-clear-event-subtitle', 'eventSubtitle'],
+            ['input-event-date', 'btn-clear-event-date', 'eventDate'],
         ];
         textBindings.forEach(([inputId, clearId, key]) => {
             const input = document.getElementById(inputId);
@@ -586,12 +599,12 @@ class RemoteController {
     // ─── Add Host Form ───────────────────────────────────────────────────────
 
     _wireAddHost() {
-        const showBtn    = document.getElementById('btn-show-add-host');
-        const form       = document.getElementById('add-host-form');
-        const input      = document.getElementById('input-host-title');
+        const showBtn = document.getElementById('btn-show-add-host');
+        const form = document.getElementById('add-host-form');
+        const input = document.getElementById('input-host-title');
         const confirmBtn = document.getElementById('btn-confirm-add-host');
-        const cancelBtn  = document.getElementById('btn-cancel-add-host');
-        const errorEl    = document.getElementById('add-host-error');
+        const cancelBtn = document.getElementById('btn-cancel-add-host');
+        const errorEl = document.getElementById('add-host-error');
 
         showBtn?.addEventListener('click', () => {
             form?.classList.remove('is-hidden');
@@ -685,6 +698,144 @@ class RemoteController {
         items.innerHTML = '';
         hosts.forEach(name => this._addToRemovedList(name));
         if (list) list.classList.toggle('is-hidden', !hosts.length);
+    }
+
+    // ─── QR Scanner ─────────────────────────────────────────────────────────
+
+    _loadJsQR() {
+        return new Promise((resolve, reject) => {
+            if (window.jsQR) { resolve(); return; }
+            const s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Failed to load jsQR'));
+            document.head.appendChild(s);
+        });
+    }
+
+    _wireScanner() {
+        const scanBtn = document.getElementById('rcs-scan-btn');
+        const closeBtn = document.getElementById('btn-scanner-close');
+        const backdrop = document.querySelector('.rcs-scanner-backdrop');
+
+        scanBtn?.addEventListener('click', () => this._startScanner());
+        closeBtn?.addEventListener('click', () => this._stopScanner());
+        backdrop?.addEventListener('click', () => this._stopScanner());
+    }
+
+    async _startScanner() {
+        const statusEl = document.getElementById('scanner-status');
+        if (statusEl) statusEl.textContent = 'Accessing camera…';
+
+        const modal = document.getElementById('rcs-scanner-modal');
+        if (modal) modal.style.display = 'flex';
+
+        try {
+            // Lazily load jsQR library
+            await this._loadJsQR();
+
+            // Request environment camera access
+            this.scannerStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'environment' }
+            });
+
+            const video = document.getElementById('scanner-video');
+            if (video) {
+                video.srcObject = this.scannerStream;
+                video.setAttribute('playsinline', 'true'); // Required for iOS Safari
+                video.play();
+            }
+
+            this.scannerActive = true;
+            if (statusEl) statusEl.textContent = 'Align the QR code within the frame to connect automatically.';
+            requestAnimationFrame(() => this._scanFrame());
+
+        } catch (err) {
+            console.error('[RemoteController] Camera access failed:', err);
+            if (statusEl) {
+                statusEl.innerHTML = '<span style="color:#ff8e8e">Camera access denied or unavailable. Please enter the code manually.</span>';
+            }
+            this.scannerActive = false;
+        }
+    }
+
+    _stopScanner() {
+        this.scannerActive = false;
+        if (this.scannerStream) {
+            this.scannerStream.getTracks().forEach(track => track.stop());
+            this.scannerStream = null;
+        }
+        const video = document.getElementById('scanner-video');
+        if (video) video.srcObject = null;
+
+        const modal = document.getElementById('rcs-scanner-modal');
+        if (modal) modal.style.display = 'none';
+    }
+
+    _scanFrame() {
+        if (!this.scannerStream || !this.scannerActive) return;
+
+        const video = document.getElementById('scanner-video');
+        if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+            if (!this.scannerCanvas) {
+                this.scannerCanvas = document.createElement('canvas');
+            }
+            const canvas = this.scannerCanvas;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: 'dontInvert',
+            });
+
+            if (code && code.data) {
+                this._handleScanSuccess(code.data);
+                return;
+            }
+        }
+
+        // Recursively capture next frame
+        if (this.scannerActive) {
+            requestAnimationFrame(() => this._scanFrame());
+        }
+    }
+
+    _handleScanSuccess(data) {
+        let roomCode = '';
+        try {
+            // Extract code if it's a full pairing URL (e.g., https://.../remote/?code=ABCDEF)
+            if (data.includes('?code=')) {
+                const url = new URL(data);
+                roomCode = (url.searchParams.get('code') || '').toUpperCase();
+            } else if (data.includes('&code=')) {
+                // Handle different URL formats just in case
+                const params = new URLSearchParams(data.substring(data.indexOf('?')));
+                roomCode = (params.get('code') || '').toUpperCase();
+            } else {
+                roomCode = data.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+            }
+        } catch {
+            roomCode = data.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+        }
+
+        if (roomCode && roomCode.length >= 4) {
+            const input = document.getElementById('rcs-code-input');
+            if (input) {
+                input.value = roomCode;
+                const connectBtn = document.getElementById('rcs-connect-btn');
+                if (connectBtn) connectBtn.disabled = false;
+            }
+            this._stopScanner();
+            this._connect(roomCode);
+        } else {
+            // Invalid data format, resume scanning
+            if (this.scannerActive) {
+                requestAnimationFrame(() => this._scanFrame());
+            }
+        }
     }
 
     _escHtml(str) {

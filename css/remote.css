@@ -94,7 +94,7 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 18px;
     padding: 28px;
-    width: min(520px, 92vw);
+    width: min(640px, 94vw);
     box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
     color: #e8e8f0;
     font-family: inherit;
@@ -177,7 +177,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 20px;
+    margin: 2.5rem 0;
     font-size: 13px;
     color: rgba(255, 255, 255, 0.65);
 }
@@ -268,7 +268,11 @@
 .remote-url-link {
     color: rgba(140, 180, 255, 0.8);
     text-decoration: none;
-    word-break: break-all;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .remote-url-link:hover {
@@ -534,13 +538,256 @@ body.remote-mode .controls-panel-scroll {
     padding-bottom: env(safe-area-inset-bottom, 20px);
 }
 
-/* Larger tap targets for iPad */
-body.remote-mode .toggle-control {
-    min-height: 44px;
+/* Larger tap targets for iPad remote viewer mode */
+body.remote-mode .toggle-control,
+body.remote-mode .toggle-control--simple {
+    min-height: 48px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
+body.remote-mode .toggle-control--simple {
+    padding: 10px 0;
+}
+
+body.remote-mode .check-control {
+    min-height: 48px;
+    padding: 10px 0;
+    font-size: 0.8rem;
+}
+
+body.remote-mode .check-control .checkmark {
+    height: 22px;
+    width: 22px;
+    border-radius: 6px;
+}
+
+body.remote-mode .check-control .checkmark:after {
+    width: 5px;
+    height: 10px;
+}
+
+/* Range Sliders Touch Enhancement */
 body.remote-mode input[type="range"] {
-    height: 28px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 38px;
+    /* Generous touch target bounds */
+    background: transparent;
+    cursor: pointer;
+    margin: 4px 0;
+}
+
+body.remote-mode input[type="range"]:focus {
+    outline: none;
+}
+
+/* Webkit / iOS Safari Track & Thumb */
+body.remote-mode input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    border: none;
+    transition: background 0.15s ease;
+}
+
+body.remote-mode input[type="range"]:hover::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body.remote-mode input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.4);
+    margin-top: -9px;
+    /* Vertically centered: (8px - 26px) / 2 = -9px */
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+}
+
+body.remote-mode input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.22);
+    background-color: var(--color-ui-accent, #f9d783);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6), 0 0 8px var(--color-ui-accent, rgba(249, 215, 131, 0.4));
+}
+
+/* Firefox Track & Thumb */
+body.remote-mode input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    border: none;
+    transition: background 0.15s ease;
+}
+
+body.remote-mode input[type="range"]:hover::-moz-range-track {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body.remote-mode input[type="range"]::-moz-range-thumb {
+    border: none;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+}
+
+body.remote-mode input[type="range"]:active::-moz-range-thumb {
+    transform: scale(1.22);
+    background-color: var(--color-ui-accent, #f9d783);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6), 0 0 8px var(--color-ui-accent, rgba(249, 215, 131, 0.4));
+}
+
+/* General Buttons Touch Target Enhancement */
+body.remote-mode #controls-panel button:not(.swatch),
+body.remote-mode #controls-panel .button:not(.swatch) {
+    min-height: 48px;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.remote-mode #controls-panel button:not(.swatch):active,
+body.remote-mode #controls-panel .button:not(.swatch):active {
+    transform: scale(0.96);
+}
+
+body.remote-mode #controls-panel .btn-group {
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/* Pause Buttons styling */
+body.remote-mode #btn-pause-petals,
+body.remote-mode #btn-pause-bg {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+body.remote-mode #btn-pause-petals:hover,
+body.remote-mode #btn-pause-bg:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+
+body.remote-mode #btn-pause-petals.active,
+body.remote-mode #btn-pause-bg.active {
+    background: #ffffff;
+    color: #0f0f1a;
+    border-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+}
+
+/* Radio tab group layout */
+body.remote-mode .radio-tab-group {
+    padding: 5px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+body.remote-mode .radio-tab span {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    border-radius: 9px;
+}
+
+/* Custom Select Dropdowns */
+body.remote-mode .custom-select {
+    margin-top: 8px;
+}
+
+body.remote-mode .custom-select-trigger {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+}
+
+body.remote-mode .custom-select-option {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+body.remote-mode .custom-select-options {
+    max-height: 180px;
+    border-radius: 10px;
+}
+
+/* Details and Accordion components */
+body.remote-mode details.advanced-controls summary {
+    padding: 14px 16px;
+    font-size: 0.8rem;
+    border-radius: 10px;
+    margin: 8px 0;
+}
+
+/* Text Inputs and Inline Clear buttons */
+body.remote-mode .text-input {
+    height: 44px !important;
+    padding: 10px 14px;
+    font-size: 16px !important;
+    /* Prevent iOS Safari auto-zoom on focus (requires >= 16px) */
+    border-radius: 8px;
+}
+
+body.remote-mode textarea.text-input {
+    height: auto !important;
+    min-height: 44px !important;
+    padding: 10px 14px;
+}
+
+body.remote-mode .btn-inline-clear {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+}
+
+/* Upload and Host Management buttons */
+body.remote-mode .button--upload,
+body.remote-mode .button--clear-sm {
+    padding: 12px 16px !important;
+    font-size: 0.85rem !important;
+}
+
+body.remote-mode .added-host-row {
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+body.remote-mode .btn-remove-host,
+body.remote-mode .btn-restore-host {
+    width: 90px;
+    min-height: 38px;
+    border-radius: 19px;
+    font-size: 0.75rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Hide controls that don't make sense remotely */
