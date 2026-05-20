@@ -239,9 +239,7 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        // In remote mode (iPad controller), skip the screen-size blocker entirely
-        const isRemoteMode = new URLSearchParams(location.search).has('remote');
-        if (!isRemoteMode && window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
+        if (window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
             this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
             return;
@@ -254,13 +252,8 @@ window.EventPoster = class EventPoster {
         if (this.state.isAppRunning) return;
         this.state.isAppRunning = true;
 
-        const isRemoteMode = new URLSearchParams(location.search).has('remote');
-
         this.hydrate();
         
-        // Initialize RemoteManager before event listeners so send() hooks are available during binding
-        window.remoteManager = new window.RemoteManager(this);
-
         // Modules startup
         this.themeManager.initThemeSelector();
         this.themeManager.initSwatches();
@@ -271,23 +264,17 @@ window.EventPoster = class EventPoster {
         this.themeManager.applyTheme(this.state.activeTheme, true);
         this.applyStateToUI();
         this.applyPosterText();
-
-        if (!isRemoteMode) {
-            this.particleEngine.adjustAmbientPetals();
-            this.particleEngine.startAnimationLoop();
-            this.checkWakeLockSupport();
-            this.checkPersistentFullscreen();
-            this.updateSleepStatus('off');
-            this.startWakeLockHeartbeat();
-            this.showKeyboardHint();
-        }
-
+        this.particleEngine.adjustAmbientPetals();
+        this.particleEngine.startAnimationLoop();
+        
+        this.checkWakeLockSupport();
+        this.checkPersistentFullscreen();
         this.renderHosts();
+        this.updateSleepStatus('off');
         this.updateScreenSize();
         this.updateTimerDisplay();
-
-        // Initialize remote UI (button on host, or connect screen on iPad)
-        window.remoteManager.init();
+        this.startWakeLockHeartbeat();
+        this.showKeyboardHint();
 
         requestAnimationFrame(() => {
             this.body.classList.remove('is-loading');
@@ -587,10 +574,6 @@ window.EventPoster = class EventPoster {
         localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
         localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
         this.renderHosts(); this.closeAddHostForm();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-add', name: val });
-        }
     }
 
     removeHostByName(name) {
@@ -607,10 +590,6 @@ window.EventPoster = class EventPoster {
             this.persistRemovedHosts();
         }
         this.renderHosts();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-remove', name });
-        }
     }
 
     restoreHostByName(name) {
@@ -627,10 +606,6 @@ window.EventPoster = class EventPoster {
         }
         
         this.renderHosts();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-restore', name });
-        }
     }
 
     // Factory Reset Logic
