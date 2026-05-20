@@ -239,7 +239,10 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        if (window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches) {
+        const isTooSmall = window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches;
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+        if (isTooSmall || isTouchDevice) {
             this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
             return;

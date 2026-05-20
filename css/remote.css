@@ -485,7 +485,7 @@ body.remote-mode #factory-reset-modal {
 }
 
 .rcs-connect-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
