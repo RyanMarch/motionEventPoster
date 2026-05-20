@@ -734,9 +734,14 @@ class RemoteController {
             // Lazily load jsQR library
             await this._loadJsQR();
 
+            // Check if mediaDevices is available at all (requires HTTPS)
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw Object.assign(new Error('Camera API unavailable'), { name: 'NotSupportedError' });
+            }
+
             // Request environment camera access
             this.scannerStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'environment' }
+                video: { facingMode: { ideal: 'environment' } }
             });
 
             const video = document.getElementById('scanner-video');
@@ -752,10 +757,26 @@ class RemoteController {
 
         } catch (err) {
             console.error('[RemoteController] Camera access failed:', err);
-            if (statusEl) {
-                statusEl.innerHTML = '<span style="color:#ff8e8e">Camera access denied or unavailable. Please enter the code manually.</span>';
-            }
             this.scannerActive = false;
+
+            if (statusEl) {
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    // Permission was denied or was never prompted (e.g. site is blocked in Safari settings)
+                    statusEl.innerHTML = [
+                        '<span style="color:#ff8e8e;font-weight:600">Camera access was denied.</span>',
+                        '<br><span style="color:#ccc;font-size:0.9em">',
+                        'On iPhone/iPad: go to <strong>Settings → Safari → Camera</strong> and set it to <em>Allow</em>, then reload this page.',
+                        '</span>',
+                        '<br><br><span style="color:#aaa;font-size:0.85em">You can also enter the pairing code manually below.</span>',
+                    ].join('');
+                } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                    statusEl.innerHTML = '<span style="color:#ff8e8e">No camera found on this device. Please enter the code manually.</span>';
+                } else if (err.name === 'NotSupportedError') {
+                    statusEl.innerHTML = '<span style="color:#ff8e8e">Camera scanning requires a secure (HTTPS) connection. Please enter the code manually.</span>';
+                } else {
+                    statusEl.innerHTML = `<span style="color:#ff8e8e">Could not access camera (${err.name || 'unknown error'}). Please enter the code manually.</span>`;
+                }
+            }
         }
     }
 
@@ -806,15 +827,19 @@ class RemoteController {
     _handleScanSuccess(data) {
         let roomCode = '';
         try {
-            // Extract code if it's a full pairing URL (e.g., https://.../remote/?code=ABCDEF)
-            if (data.includes('?code=')) {
+            // Extract code if it's a full pairing URL.
+            // Supports both ?code= (current) and ?room= (legacy) parameter names.
+            const hasQuery = data.includes('?');
+            if (hasQuery) {
                 const url = new URL(data);
-                roomCode = (url.searchParams.get('code') || '').toUpperCase();
-            } else if (data.includes('&code=')) {
-                // Handle different URL formats just in case
-                const params = new URLSearchParams(data.substring(data.indexOf('?')));
-                roomCode = (params.get('code') || '').toUpperCase();
-            } else {
+                roomCode = (
+                    url.searchParams.get('code') ||
+                    url.searchParams.get('room') || // backward-compat with old QR codes
+                    ''
+                ).toUpperCase();
+            }
+            // If no URL params matched, treat the raw data as the code itself
+            if (!roomCode) {
                 roomCode = data.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
             }
         } catch {
