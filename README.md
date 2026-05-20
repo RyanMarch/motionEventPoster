@@ -164,15 +164,18 @@ This project is built as a lightweight, zero-dependency "Vanilla" web applicatio
 ### File Structure
 *   `index.html`: The core structure and entry point.
 *   `js/main.js`: Initializes the application and handles loading states.
+*   `js/themes.js`: Centralized configuration for all themes.
 *   `js/EventPoster.js`: The central orchestrator managing state, persistence, and layout.
 *   `js/modules/`:
     *   `ThemeManager.js`: Handles visual themes, color derivations, and CSS variables.
     *   `ParticleEngine.js`: Manages the high-performance atmospheric animation system.
     *   `UIController.js`: Manages all user interactions, keyboard shortcuts, and form logic.
     *   `Constants.js`: Centralized configuration for defaults and storage keys.
-*   `styles.css`: Core layout engine and base utility classes.
-*   `ui-components.css`: Modern, modular UI styles for the management panel.
-*   `theme-[name].css`: Specific styling and animation overrides for each theme.
+*   `css/`:
+    *   `styles.css`: Core layout engine and base utility classes.
+    *   `ui-components.css`: Modern, modular UI styles for the management panel.
+    *   `themes/`:
+        *   `theme-[name].css`: Specific styling and animation overrides for each theme.
 
 ### Persistence Strategy
 The application uses the browser's `localStorage` API to store all user configurations. This ensures that:

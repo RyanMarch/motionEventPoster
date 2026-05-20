@@ -33,7 +33,7 @@ body.theme-alpine-winter .theme-frame::before {
 body.theme-alpine-winter .frame-rail {
     position: absolute;
     background-color: #90765a; /* Restored the warm timber brown */
-    background-image: url('assets/images/wood-grain-rustic.png');
+    background-image: url('../../assets/images/wood-grain-rustic.png');
     background-blend-mode: multiply; /* Blends the rustic texture into the warm brown */
     background-size: cover;
     background-repeat: no-repeat;
