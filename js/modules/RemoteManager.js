@@ -278,7 +278,7 @@ window.RemoteManager = class RemoteManager {
         // so it works whether the address bar shows "/" or "/index.html".
         const pageUrl = location.href.replace(/[?#].*$/, '');
         const base = pageUrl.endsWith('/') ? pageUrl : pageUrl.substring(0, pageUrl.lastIndexOf('/') + 1);
-        const remoteUrl = `${base}remote/?room=${roomCode}`;
+        const remoteUrl = `${base}remote/?code=${roomCode}`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(remoteUrl)}`;
 
         const codeEl = document.getElementById('remote-room-code');
