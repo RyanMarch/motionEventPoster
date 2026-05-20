@@ -2,7 +2,7 @@
  * RemoteController — iPad-side only.
  *
  * Responsibilities:
- *  1. Show connect screen, handle code input / auto-connect from ?room=
+ *  1. Show connect screen, handle code input / auto-connect from ?code=
  *  2. Load PeerJS lazily, connect to the Host peer
  *  3. Receive initial state-sync → populate all controls
  *  4. Bind every control → send message to Host
@@ -17,7 +17,7 @@ class RemoteController {
         this._applying = false; // Suppress re-sends while populating from state-sync
 
         const params = new URLSearchParams(location.search);
-        this.prefilledRoom = (params.get('room') || '').toUpperCase();
+        this.prefilledRoom = (params.get('code') || '').toUpperCase();
     }
 
     // ─── Init ───────────────────────────────────────────────────────────────
@@ -806,14 +806,14 @@ class RemoteController {
     _handleScanSuccess(data) {
         let roomCode = '';
         try {
-            // Extract code if it's a full pairing URL (e.g., https://.../remote/?room=ABCDEF)
-            if (data.includes('?room=')) {
+            // Extract code if it's a full pairing URL (e.g., https://.../remote/?code=ABCDEF)
+            if (data.includes('?code=')) {
                 const url = new URL(data);
-                roomCode = (url.searchParams.get('room') || '').toUpperCase();
-            } else if (data.includes('&room=')) {
+                roomCode = (url.searchParams.get('code') || '').toUpperCase();
+            } else if (data.includes('&code=')) {
                 // Handle different URL formats just in case
                 const params = new URLSearchParams(data.substring(data.indexOf('?')));
-                roomCode = (params.get('room') || '').toUpperCase();
+                roomCode = (params.get('code') || '').toUpperCase();
             } else {
                 roomCode = data.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
             }
