@@ -580,10 +580,6 @@ window.EventPoster = class EventPoster {
         localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
         localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
         this.renderHosts(); this.closeAddHostForm();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-add', name: val });
-        }
     }
 
     removeHostByName(name) {
@@ -600,10 +596,6 @@ window.EventPoster = class EventPoster {
             this.persistRemovedHosts();
         }
         this.renderHosts();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-remove', name });
-        }
     }
 
     restoreHostByName(name) {
@@ -620,10 +612,6 @@ window.EventPoster = class EventPoster {
         }
         
         this.renderHosts();
-        // Remote sync
-        if (!window.remoteManager?._applying) {
-            window.remoteManager?.send({ type: 'host-restore', name });
-        }
     }
 
     // Factory Reset Logic
