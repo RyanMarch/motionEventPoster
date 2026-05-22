@@ -239,8 +239,14 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        const isTooSmall = window.matchMedia("(max-width: 1280px), (max-height: 800px)").matches;
         const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+        
+        // On touch-primary devices (like iPad or mobile phones), evaluate window dimensions.
+        // On pointer-fine devices (laptops, desktops, projectors), use the physical screen dimensions 
+        // to avoid false-positives from browser chrome (e.g. Safari tab/address bars on 13" laptops).
+        const isTooSmall = isTouchDevice
+            ? (window.innerWidth < 1280 || window.innerHeight < 800)
+            : (window.screen.width < 1280 || window.screen.height < 800);
 
         if (isTooSmall || isTouchDevice) {
             this.elements.mobileBlocker?.classList.add('is-visible');
