@@ -447,7 +447,10 @@ window.EventPoster = class EventPoster {
         if (this.elements.logoTextEl) this.elements.logoTextEl.textContent = pt.logoText;
         if (this.elements.hostsTitleEl) this.elements.hostsTitleEl.textContent = pt.hostsTitle;
         if (this.elements.eventTopLabelEl) this.elements.eventTopLabelEl.textContent = pt.eventTopLabel;
-        if (this.elements.eventTitleEl) this.elements.eventTitleEl.textContent = pt.eventTitle;
+        if (this.elements.eventTitleEl) {
+            this.elements.eventTitleEl.textContent = pt.eventTitle;
+            this.elements.eventTitleEl.setAttribute('data-text', pt.eventTitle);
+        }
         if (this.elements.eventSubtitleEl) this.elements.eventSubtitleEl.textContent = pt.eventSubtitle;
         if (this.elements.eventDateEl) this.elements.eventDateEl.textContent = pt.eventDate;
 

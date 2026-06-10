@@ -32,9 +32,12 @@ window.ParticleEngine = class ParticleEngine {
     createPetal() {
         const container = this.getRandomLayer();
         const element = document.createElement('div');
-        element.className = 'petal';
-        const size = Math.random() * 12 + 10;
         const type = this.getRandomPetalType();
+        element.className = `petal petal--${type.type || 'dust'}`;
+        if (type.type) {
+            element.dataset.type = type.type;
+        }
+        const size = Math.random() * 12 + 10;
         element.style.width = `${size}px`;
         element.style.height = `${size * (type.type === 'star' || type.type === 'dust' ? 1.0 : 1.25)}px`;
         

@@ -43,6 +43,7 @@ window.ThemeManager = class ThemeManager {
         if (!skipOverrides) {
             this.state.accentColor = null;
             this.state.bgColor = null;
+            this.state.secondaryColor = null;
         }
         
         if (theme.overrides && !skipOverrides) {
@@ -68,7 +69,6 @@ window.ThemeManager = class ThemeManager {
                 this.elements.logoBanner.style.display = disp;
             }
         }
-        
         Object.values(this.poster.layers).forEach(layer => layer.innerHTML = '');
         this.state.petals = [];
         this.poster.particleEngine?.adjustAmbientPetals();
@@ -166,12 +166,18 @@ window.ThemeManager = class ThemeManager {
         const accentColor = this.state.accentColor || theme.colors.accent;
         const accentRgb = window.PosterUtils.hexToRgb(accentColor);
         const accentRgbStr = accentRgb ? `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}` : rgbStr;
+
+        const secondaryColor = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
+        const secondaryRgb = window.PosterUtils.hexToRgb(secondaryColor);
+        const secondaryRgbStr = secondaryRgb ? `${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}` : rgbStr;
         
         // Update Core Colors
         this.root.style.setProperty('--color-primary', color);
         this.root.style.setProperty('--color-primary-rgb', rgbStr);
         this.root.style.setProperty('--color-accent', accentColor);
         this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
+        this.root.style.setProperty('--color-secondary', secondaryColor);
+        this.root.style.setProperty('--color-secondary-rgb', secondaryRgbStr);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
         
@@ -230,6 +236,7 @@ window.ThemeManager = class ThemeManager {
             btn.addEventListener('click', () => {
                 this.state.bgColor = colorObj.hex;
                 this.state.accentColor = colorObj.accent || null;
+                this.state.secondaryColor = colorObj.secondary || null;
                 
                 const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
                 const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
@@ -240,7 +247,7 @@ window.ThemeManager = class ThemeManager {
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
                 // Remote sync
                 if (!window.remoteManager?._applying) {
-                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null });
+                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null, secondary: colorObj.secondary || null });
                 }
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
@@ -349,7 +356,6 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--gust-impact', impact);
         this.root.style.setProperty('--gust-speed', speed.toFixed(3));
         this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
-        
-        
+        this.root.style.setProperty('--grid-play-state', strength === 0 ? 'paused' : 'running');
     }
 };

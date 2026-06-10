@@ -533,6 +533,7 @@ body:not(.is-sliding) .main-content::after {
 }
 
 .event-date {
+    display: inline-block;
     font-size: 1.3rem;
     letter-spacing: 3px;
     font-family: var(--font-heading);
@@ -615,16 +616,17 @@ body:not(.is-sliding) .event-date {
 
 /* Hide Date State */
 .date-hidden .event-date {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
-    max-height: 0;
-    margin: 0;
-    pointer-events: none;
-    overflow: hidden;
+    opacity: 0 !important;
+    transform: translateY(20px) scale(0.8) !important;
+    max-height: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
 }
 
 .date-hidden .event-subtitle {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .date-hidden .logo-banner {
@@ -644,7 +646,7 @@ body:not(.is-sliding) .event-date {
 }
 
 .date-hidden .event-footer {
-    transform: translateY(6vh) scale(1.1);
+    transform: translateY(1.5vh) scale(1.1);
 }
 
 /* Hide Title State */

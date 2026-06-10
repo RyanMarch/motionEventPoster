@@ -4,24 +4,25 @@
  * This file contains all visual identities for the Motion Backdrop Engine.
  */
 
-(function() {
+(function () {
     /**
      * Helper to define a theme and minimize color repetition.
      * Only requires 'primary' and 'accent' to be defined once.
      */
     const defineTheme = (config) => {
-        const { primary, accent, swatchName, ...rest } = config;
-        
+        const { primary, accent, secondary, swatchName, ...rest } = config;
+
         return {
             ...rest,
             colors: {
                 primary,
                 accent,
+                secondary,
                 text: rest.colors?.text || '#ffffff',
                 darkText: rest.colors?.darkText || '#1a1c1e'
             },
             swatches: [
-                { hex: primary, name: swatchName || 'Original', accent },
+                { hex: primary, name: swatchName || 'Original', accent, secondary },
                 ...(rest.swatches || [])
             ],
             overrides: {
@@ -302,22 +303,22 @@
                 darkText: '#05021e'
             },
             swatches: [
-                { hex: '#56CCF2', name: 'Sky Blue',      accent: '#e3f0fdff' },
+                { hex: '#56CCF2', name: 'Sky Blue', accent: '#e3f0fdff' },
                 { hex: '#192b57ff', name: 'Onyx & Lime', accent: '#BCE29E' },
-                { hex: '#111827', name: 'Tech Teal',     accent: '#41baacff' },
-                { hex: '#171717', name: 'Carbon Cyan',   accent: '#A5F3FC' },
-                { hex: '#064E3B', name: 'Deep Forest',   accent: '#D9F99D' },
-                { hex: '#18181B', name: 'Onyx Gold',     accent: '#FDE68A' },
+                { hex: '#111827', name: 'Tech Teal', accent: '#41baacff' },
+                { hex: '#171717', name: 'Carbon Cyan', accent: '#A5F3FC' },
+                { hex: '#064E3B', name: 'Deep Forest', accent: '#D9F99D' },
+                { hex: '#18181B', name: 'Onyx Gold', accent: '#FDE68A' },
                 { hex: '#1E1B4B', name: 'Midnight Rose', accent: '#FFE4E6' },
                 { hex: '#451A03', name: 'Warm Espresso', accent: '#FFEDD5' },
                 { hex: '#F0F4F8', name: 'Business Blue Rev', accent: '#005FB8' },
-                { hex: '#e3f0fdff', name: 'Sky Blue Rev',      accent: '#56CCF2' },
+                { hex: '#e3f0fdff', name: 'Sky Blue Rev', accent: '#56CCF2' },
                 { hex: '#BCE29E', name: 'Onyx & Lime Rev', accent: '#192b57ff' },
-                { hex: '#41baacff', name: 'Tech Teal Rev',   accent: '#111827' },
-                { hex: '#A5F3FC', name: 'Carbon Cyan Rev',   accent: '#171717' },
-                { hex: '#D9F99D', name: 'Deep Forest Rev',   accent: '#064E3B' },
-                { hex: '#FDE68A', name: 'Onyx Gold Rev',     accent: '#18181B' },
-            // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
+                { hex: '#41baacff', name: 'Tech Teal Rev', accent: '#111827' },
+                { hex: '#A5F3FC', name: 'Carbon Cyan Rev', accent: '#171717' },
+                { hex: '#D9F99D', name: 'Deep Forest Rev', accent: '#064E3B' },
+                { hex: '#FDE68A', name: 'Onyx Gold Rev', accent: '#18181B' },
+                // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
                 { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
             ],
             fonts: {
@@ -362,6 +363,83 @@
                 borderToggle: 'Hide Background Shapes',
                 gustStrength: 'Shape Movement Intensity',
                 frameName: 'Shapes'
+            }
+        }),
+
+        'retro-wave': defineTheme({
+            id: 'retro-wave',
+            name: 'Retro Wave',
+            icon: '🌴',
+            primary: '#180030',
+            accent: '#ff007f',
+            secondary: '#00ffff',
+            swatchName: 'Neon Pink',
+            colors: {
+                text: '#ffffff',
+                darkText: '#180030'
+            },
+            swatches: [
+                { hex: '#0b111e', name: 'Grid Runner', accent: '#00d2ff', secondary: '#ffb703' },
+                { hex: '#002a3a', name: 'Miami', accent: '#00f0ff', secondary: '#ff007f' },
+                { hex: '#2b001d', name: 'Sunset', accent: '#ffea00', secondary: '#ff007f' },
+                { hex: '#09001b', name: 'Synthwave', accent: '#bd00ff', secondary: '#00ffff' },
+                { hex: '#051a05', name: 'Radioactive', accent: '#39ff14', secondary: '#ff007f' },
+                { hex: '#0c0c00', name: 'Cyberpunk', accent: '#ffe600', secondary: '#00ffff' },
+                { hex: '#0b001a', name: 'Indigo', accent: '#ff00ff', secondary: '#00ffcc' },
+                { hex: '#140024', name: 'Arcade', accent: '#ff0055', secondary: '#ffaa00' },
+                { hex: '#ffd6e8', name: 'Flamingo', accent: '#ff007f', secondary: '#00ffff' },
+                { hex: '#d6fdf6', name: 'Mint', accent: '#009492ff', secondary: '#7b2cbf' },
+                { hex: '#e5dbff', name: 'Vapor', accent: '#ff00c8', secondary: '#00d2ff' },
+                { hex: '#fdf5e6', name: 'Dunes', accent: '#ff6600', secondary: '#00a8cc' },
+                { hex: '#ffe4e6', name: 'Sunset', accent: '#f489faff', secondary: '#ff007f' },
+                { hex: '#2c0012', name: 'Overdrive', accent: '#ff0055', secondary: '#00ffcc' },
+                { hex: '#18002a', name: 'Supernova', accent: '#ffd700', secondary: '#ff00ff' },
+                { hex: '#0d1e0d', name: 'Dream', accent: '#adff2f', secondary: '#ff00ff' }
+            ],
+            fonts: {
+                primary: "'ITC Avant Garde Gothic', 'Avant Garde', 'Century Gothic', 'Futura', 'Jost', sans-serif",
+                display: "'Audiowide', sans-serif",
+                heading: "'Yellowtail', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ff007f', gradient: '#a80054', type: 'triangle', weight: 35 },
+                { color: '#00ffff', gradient: '#00a8a8', type: 'square', weight: 35 },
+                { color: '#ffff00', gradient: '#a8a800', type: 'star', weight: 20 },
+                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 10, isWhite: true }
+            ],
+            frameClass: 'theme-frame--retro-wave',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 40,
+                insetH: 40,
+                hostTextSize: 1.1,
+                gustStrength: 50,
+                fallSpeed: 0.5,
+                maxPetals: 15,
+                windiness: 12,
+                backdropOpacity: 70,
+                hostMaxWidth: 130
+            },
+            defaults: {
+                hostsTitle: "Vaporwave Visionaries",
+                eventTitle: "Retro Wave",
+                eventSubtitle: "Neon Nights & Good Vibes",
+                eventTopLabel: "Radical"
+            },
+            uiLabels: {
+                particlesPlural: 'Particles',
+                particlesSingular: 'Particle',
+                borderToggle: 'Hide VHS scanlines & grid',
+                gustStrength: 'Glitch Intensity',
+                frameName: 'Scanlines'
             }
         })
     };
