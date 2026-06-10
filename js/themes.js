@@ -441,6 +441,67 @@
                 gustStrength: 'Glitch Intensity',
                 frameName: 'Scanlines'
             }
+        }),
+
+        'cinema': defineTheme({
+            id: 'cinema',
+            name: 'Cinema Premiere',
+            icon: '🍿',
+            primary: '#0A0A0A',
+            accent: '#FFD700',
+            secondary: '#8B0000',
+            swatchName: 'Velvet Premiere',
+            colors: {
+                text: '#ffffff',
+                darkText: '#111111'
+            },
+            swatches: [
+                { hex: '#050B14', name: 'Cosmic IMAX', accent: '#00D2FF', secondary: '#1A233A' },
+                { hex: '#0F0902', name: 'Golden Age', accent: '#E5C158', secondary: '#4E2F17' },
+                { hex: '#0A0E0B', name: 'Noir & Silver', accent: '#E0E0E0', secondary: '#2B3A30' }
+            ],
+            fonts: {
+                primary: "'Bebas Neue', sans-serif",
+                display: "'Limelight', Georgia, serif",
+                heading: "'Yesteryear', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 80, shape: '50%', isWhite: true },
+                { color: '#e0e0e0', gradient: '#999999', type: 'dust', weight: 20, shape: '50%', isWhite: true }
+            ],
+            frameClass: 'theme-frame--cinema',
+            overrides: {
+                insetV: 60,
+                insetH: 80,
+                hostTextSize: 1.0,
+                gustStrength: 10,
+                fallSpeed: 0.15, // Theatre dust floats slowly
+                maxPetals: 60,  // Subtle dust motes
+                windiness: 3,   // Quiet air inside
+                backdropOpacity: 80,
+                hostMaxWidth: 110
+            },
+            defaults: {
+                hostsTitle: "Starring",
+                eventTitle: "Cinema Premiere",
+                eventSubtitle: "Featured Screening",
+                eventTopLabel: "Now Showing"
+            },
+            uiLabels: {
+                particlesPlural: 'Dust Motes',
+                particlesSingular: 'Mote',
+                borderToggle: 'Hide velvet curtains',
+                gustStrength: 'Marquee Brightness',
+                frameName: 'Curtains'
+            }
         })
     };
 })();

@@ -390,7 +390,7 @@ window.EventPoster = class EventPoster {
         const frameName = this.theme?.uiLabels?.frameName || 'Frame';
         this.elements.pauseBgButton.classList.toggle('active', this.state.isBgPaused);
         this.elements.pauseBgButton.textContent = this.state.isBgPaused ? `Resume ${frameName}` : `Pause ${frameName}`;
-        document.querySelectorAll('.sway-layer, .floral-bg').forEach(el => el.classList.toggle('paused', this.state.isBgPaused));
+        document.querySelectorAll('.sway-layer, .floral-bg, .theme-frame, .logo-banner, .event-footer').forEach(el => el.classList.toggle('paused', this.state.isBgPaused));
     }
 
     applyHostLayout(layout) {

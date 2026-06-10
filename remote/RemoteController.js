@@ -168,7 +168,7 @@ class RemoteController {
             btn.dataset.color = colorObj.hex;
             btn.title = colorObj.name;
             btn.addEventListener('click', () => {
-                if (!this._applying) this._send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null });
+                if (!this._applying) this._send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null, secondary: colorObj.secondary || null });
                 // Update picker display
                 const picker = document.getElementById('picker-bg-color');
                 if (picker) picker.value = colorObj.hex;

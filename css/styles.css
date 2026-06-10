@@ -429,6 +429,9 @@ body:not(.is-sliding) .main-content::after {
     padding: 0 40px;
     pointer-events: none;
     transition: all 0.5s ease;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Centered (Default) */
@@ -438,6 +441,7 @@ body:not(.is-sliding) .main-content::after {
     justify-content: center;
     align-items: center;
     gap: calc(20px * var(--dynamic-scale)) calc(60px * var(--dynamic-scale));
+    width: 100%;
 }
 
 /* Justify */
