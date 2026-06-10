@@ -26,6 +26,7 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 *   **Event Reliability:** Built-in features prevent the screen from sleeping and ensure the poster automatically recovers if the power blinks or the page refreshes.
 *   **Your Branding, Your Customization:** All customizations, including uploaded logos and QR codes, are saved directly into your browser. They persist through refreshes and restarts, so your work is never lost.
 *   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly without having to edit code.
+*   **Untethered Remote Control:** Easily pair a secondary device to control all layouts, text, and styling in real-time from anywhere.
 
 ## Features
 
@@ -36,8 +37,6 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 *   **Dynamic Visual Identity:** Instantly swap between professional, seasonal, or high-energy themes to match the tone of your gathering.
 
 > [!TIP]
-> **New in version 7**
->
 > ### Remote Control
 > *   Access controls from a remote device (e.g. iPhone, iPad, etc.) for easy, flexible management.
 > *   Simply generate a code to start access from another device. 
@@ -47,12 +46,13 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 Remote access requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
 
 ## Themes
-Choose from five curated visual identities, each with its own unique particle engine and decorative frame:
+Choose from six visual identities, each with its own unique particle engine and decorative frame:
 *   **Spring Blossom:** Delicate cherry blossoms and elegant floral frames.
-*   **Digital Grid:** High-tech neon accents and techy-glass with sci-fi light beams.
+*   **Digital Grid:** High-tech accents and techy-glass with striking light beams.
 *   **Alpine Winter:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
 *   **Vintage Radio:** Warm wood textures, with a tuning needle and floating particles of light.
 *   **Corporate Pro:** Modern geometric shapes and professional, abstract gradients.
+*   **Retro Wave:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
 
 ## Screenshots
 | **Spring Blossom** – *Fresh & Elegant* |
@@ -66,6 +66,8 @@ Choose from five curated visual identities, each with its own unique particle en
 | [![Vintage Radio](.github/assets/poster-radio.png)][demo] |
 | **Corporate Pro** – *Sleek & Professional* |
 | [![Corporate Pro](.github/assets/poster-corporate.png)][demo] |
+| **Retro Wave** – *Neon Nights & Good Vibes* |
+| [![Retro Wave](.github/assets/poster-retro-wave.png)][demo] |
 
 ### Content Editor
 *   **Custom-To-You Branding:** Add your organization name and upload custom logos directly in the browser.
@@ -115,6 +117,15 @@ Choose from five curated visual identities, each with its own unique particle en
 3.  **Open Options:** Press **'Q'** (Quick Controls) to start customizing your poster.
 4.  **Set Your Branding:** Upload your logo and QR codes, set your colors, and add your host names.
 5.  **Display:** Plug your computer into a large display or projector and let it run!
+
+### Using the Remote Control
+1. Launch the motion poster on your primary device.
+2. Open the control panel and click **Start Pairing**.
+3. On your secondary device (e.g., an iPhone or iPad), connect using one of three methods:
+   - Scan the on-screen **QR Code**.
+   - Navigate to the displayed URL and enter the temporary **Pairing Code**.
+   - Copy and share the direct link.
+4. Once connected, use the mobile-optimized interface to update names, layouts, and appearance on the fly. 
 
 ## Keyboard Shortcuts
 
@@ -202,6 +213,16 @@ This architecture allows the project to remain entirely client-side, requiring n
 *   **Optimized For:** 1080p (FHD) and 1440p (QHD) displays.
 *   **Reliability:** Includes a silent video fallback for the Wake Lock API on older browsers.
 
+## Technical Architecture: Remote Syncing
+
+The remote control feature is designed to be completely zero-config and infrastructure-free for event environments with unpredictable internet access. 
+
+- **Network Requirements:** Both the host display and the remote device only need to reside on the same local network (local venue Wi-Fi, ethernet, or a smartphone cellular hotspot).
+- **Communication Protocol:** It uses simple, local peer-to-peer data channels for syncing.
+- **State Synchronization:** Actions are broadcast across the local connection, ensuring that state changes are mirrored instantly on the presentation UI.
+
+*Note: Due to standard browser security specifications, entering or exiting full-screen mode must be done directly on the host device and cannot be triggered via the remote.*
+
 ---
 
 ### Display Notes
@@ -215,6 +236,7 @@ This architecture allows the project to remain entirely client-side, requiring n
 
 | Version | Notes |
 |---------|-------|
+| v8 | **The "Retro Wave" Update:** Added Retro Wave theme. |
 | v7 | **The "Remote" Update:** Remote control for managing and customizing the poster from a different device. |
 | v6 | **The "Themes" Update:** Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
