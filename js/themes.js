@@ -456,9 +456,12 @@
                 darkText: '#111111'
             },
             swatches: [
-                { hex: '#050B14', name: 'Cosmic IMAX', accent: '#00D2FF', secondary: '#1A233A' },
-                { hex: '#0F0902', name: 'Golden Age', accent: '#E5C158', secondary: '#4E2F17' },
-                { hex: '#0A0E0B', name: 'Noir & Silver', accent: '#E0E0E0', secondary: '#2B3A30' }
+                { hex: '#050B14', name: 'Cosmic', accent: '#00D2FF', secondary: '#16223F' },
+                { hex: '#0D0905', name: 'Golden Age', accent: '#F4D068', secondary: '#7C5315' },
+                { hex: '#0A0A0A', name: 'Noir', accent: '#ECEFF1', secondary: '#5A2E32' },
+                { hex: '#060A07', name: 'Emerald Palace', accent: '#E5BA5C', secondary: '#123C24' },
+                { hex: '#0B0612', name: 'Arthouse', accent: '#39FF14', secondary: '#4B1263' },
+                { hex: '#0A080D', name: 'Technicolor', accent: '#FF597B', secondary: '#0D3A37' }
             ],
             fonts: {
                 primary: "'Bebas Neue', sans-serif",
@@ -479,14 +482,14 @@
             ],
             frameClass: 'theme-frame--cinema',
             overrides: {
-                insetV: 60,
-                insetH: 80,
+                insetV: 95,
+                insetH: 130,
                 hostTextSize: 1.0,
                 gustStrength: 10,
                 fallSpeed: 0.15, // Theatre dust floats slowly
-                maxPetals: 60,  // Subtle dust motes
-                windiness: 3,   // Quiet air inside
-                backdropOpacity: 80,
+                maxPetals: 20,
+                windiness: 1,   // Quiet air inside
+                backdropOpacity: 0,
                 hostMaxWidth: 110
             },
             defaults: {
@@ -500,7 +503,7 @@
                 particlesSingular: 'Mote',
                 borderToggle: 'Hide velvet curtains',
                 gustStrength: 'Marquee Brightness',
-                frameName: 'Curtains'
+                frameName: 'Marquee Glow'
             }
         })
     };

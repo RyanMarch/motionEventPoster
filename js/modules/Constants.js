@@ -36,6 +36,7 @@ window.DEFAULTS = {
     isAppRunning: false,
     bgColor: null,
     accentColor: null,
+    secondaryColor: null,
     activeTheme: 'spring',
     fpsCap: 90
 };

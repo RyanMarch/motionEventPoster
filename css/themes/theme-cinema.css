@@ -45,19 +45,19 @@ body.theme-cinema .frame-rail {
 
 /* Horizontal Rails */
 body.theme-cinema .rail-top {
-    height: 50px;
+    height: 85px;
     left: 0;
     right: 0;
     top: 0;
-    background-color: #6A000A;
+    background-color: var(--color-secondary);
     background-image: repeating-linear-gradient(90deg,
-            #1A0003 0px,
-            #4A0007 20px,
-            #7A000F 40px,
-            #8B0012 60px,
-            #7A000F 80px,
-            #4A0007 100px,
-            #1A0003 120px);
+            rgba(0, 0, 0, 0.8) 0px,
+            rgba(0, 0, 0, 0.45) 20px,
+            rgba(0, 0, 0, 0.15) 40px,
+            rgba(255, 255, 255, 0.08) 60px,
+            rgba(0, 0, 0, 0.15) 80px,
+            rgba(0, 0, 0, 0.45) 100px,
+            rgba(0, 0, 0, 0.8) 120px);
     background-size: 120px 100%;
     border-bottom: 4px solid var(--color-accent);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
@@ -102,18 +102,18 @@ body.theme-cinema .rail-bottom {
 /* Vertical Rails - Heavy Side Curtains */
 body.theme-cinema .rail-left,
 body.theme-cinema .rail-right {
-    width: 65px;
+    width: 115px;
     top: 0;
     bottom: 0;
-    background-color: #6A000A;
+    background-color: var(--color-secondary);
     background-image: repeating-linear-gradient(90deg,
-            #1F0002 0px,
-            #3C0005 10px,
-            #6B000B 20px,
-            #8C0010 35px,
-            #6B000B 50px,
-            #3C0005 60px,
-            #1F0002 70px);
+            rgba(0, 0, 0, 0.8) 0px,
+            rgba(0, 0, 0, 0.5) 10px,
+            rgba(0, 0, 0, 0.15) 20px,
+            rgba(255, 255, 255, 0.08) 35px,
+            rgba(0, 0, 0, 0.15) 50px,
+            rgba(0, 0, 0, 0.5) 60px,
+            rgba(0, 0, 0, 0.8) 70px);
     background-size: 70px 100%;
 }
 
@@ -142,10 +142,10 @@ body.border-hidden.theme-cinema .theme-texture {
 /* Inner Screen Frame with Filmstrips */
 body.theme-cinema .theme-frame-inner {
     position: absolute;
-    top: 50px;
+    top: 85px;
     bottom: 30px;
-    left: 65px;
-    right: 65px;
+    left: 115px;
+    right: 115px;
     border: 6px solid #141414;
     box-shadow:
         inset 0 0 50px rgba(0, 0, 0, 0.95),
@@ -196,7 +196,13 @@ body.theme-cinema .hosts-title {
     letter-spacing: 0.05em;
     font-weight: normal;
     text-transform: none;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.95);
+    text-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.95),
+        0 0 10px rgba(var(--color-secondary-rgb), 0.35);
+}
+
+body.theme-cinema .hosts-list {
+    padding: 0;
 }
 
 body.theme-cinema .hosts-list span {
@@ -218,7 +224,9 @@ body.theme-cinema .event-title {
     line-height: 1.05;
     margin: 10px 0 5px 0;
     text-shadow:
+        0 -1px 0 rgba(255, 255, 255, 0.45),
         0 4px 15px rgba(0, 0, 0, 0.95),
+        0 0 15px rgba(var(--color-secondary-rgb), 0.3),
         0 0 25px rgba(var(--color-accent-rgb), 0.35);
     animation: titleLightGlow 3s infinite alternate ease-in-out;
 }
@@ -226,13 +234,17 @@ body.theme-cinema .event-title {
 @keyframes titleLightGlow {
     0% {
         text-shadow:
+            0 -1px 0 rgba(255, 255, 255, 0.4),
             0 4px 15px rgba(0, 0, 0, 0.95),
+            0 0 12px rgba(var(--color-secondary-rgb), 0.25),
             0 0 20px rgba(var(--color-accent-rgb), 0.25);
     }
 
     100% {
         text-shadow:
+            0 -1px 0 rgba(255, 255, 255, 0.65),
             0 4px 15px rgba(0, 0, 0, 0.95),
+            0 0 20px rgba(var(--color-secondary-rgb), 0.5),
             0 0 35px rgba(var(--color-accent-rgb), 0.55),
             0 0 60px rgba(var(--color-accent-rgb), 0.25);
     }
@@ -245,7 +257,9 @@ body.theme-cinema .event-subtitle {
     color: #ffffff;
     font-size: 2.1rem;
     letter-spacing: 0.03em;
-    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    text-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.95),
+        0 0 8px rgba(var(--color-secondary-rgb), 0.3);
     text-transform: none !important;
 }
 
@@ -370,18 +384,66 @@ body.theme-cinema .hosts-container {
     position: relative;
     z-index: 30;
     margin: 2.2rem auto 0 auto;
-    padding: 2.0rem 4.0rem;
+    /* padding: 2.0rem 4.0rem; */
     max-width: var(--host-max-width, 850px);
+}
+
+body.theme-cinema.logo-hidden .hosts-container {
+    max-width: calc(var(--host-max-width, 850px) / 1.1);
+}
+
+@media (min-width: 1900px) {
+    body.theme-cinema.logo-hidden .hosts-container {
+        max-width: calc(1650px / 1.05) !important;
+    }
+}
+
+/* Adjust layout when date is hidden in Cinema theme */
+body.theme-cinema.date-hidden .logo-banner {
+    transform: none;
+}
+
+@media (min-width: 1400px) and (max-width: 1900px) {
+    body.theme-cinema.date-hidden .logo-banner {
+        transform: translateY(2.3rem);
+    }
+}
+
+body.theme-cinema.date-hidden .hosts-container {
+    transform: translateY(0.5rem);
+}
+
+@media (min-width: 1400px) and (max-width: 1900px) {
+    body.theme-cinema.date-hidden .hosts-container {
+        transform: translateY(calc(2.3rem + 0.5rem));
+    }
+}
+
+@media (min-width: 1900px) {
+    body.theme-cinema.date-hidden .hosts-container {
+        transform: translateY(calc(55px + 0.5rem));
+    }
+}
+
+body.theme-cinema.date-hidden .hosts-list {
+    transform: none;
+}
+
+body.theme-cinema.date-hidden .event-footer {
+    transform: none;
+    padding: 33px 45px 20px 45px;
+}
+
+@media (max-width: 1600px) {
+    body.theme-cinema.date-hidden .event-footer {
+        padding: 22px 30px 12px 30px;
+    }
 }
 
 body.theme-cinema .hosts-container::before {
     content: '';
     position: absolute;
     inset: 0.5rem;
-    background: radial-gradient(ellipse at center,
-            rgba(0, 0, 0, 0.94) 0%,
-            rgba(0, 0, 0, 0.75) 65%,
-            transparent 100%);
     opacity: var(--backdrop-opacity, 0.8);
     border-radius: 16px;
     z-index: -1;
@@ -459,13 +521,14 @@ body.theme-cinema .theme-texture::after {
     }
 }
 
-/* Subtle Film Grain Noise Texture on screen */
+/* Subtle Acoustic Micro-Perforated Screen Texture */
 body.theme-cinema .theme-texture::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filmGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filmGrain)'/%3E%3C/svg%3E");
-    opacity: 0.14;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 8px 8px;
+    opacity: 0.45;
     mix-blend-mode: overlay;
     pointer-events: none;
     z-index: 1;
@@ -495,21 +558,26 @@ body.is-sliding.theme-cinema .hosts-container::before {
 
 @media (max-width: 1600px) {
     body.theme-cinema .content-wrapper {
-        padding: 30px 45px !important;
+        padding: 85px 105px 30px 105px !important;
     }
 
     body.theme-cinema .theme-frame {
         padding: 0;
     }
 
+    body.theme-cinema .rail-top {
+        height: 80px;
+    }
+
     body.theme-cinema .theme-frame-inner {
-        left: 45px;
-        right: 45px;
+        top: 70px;
+        left: 85px;
+        right: 85px;
     }
 
     body.theme-cinema .rail-left,
     body.theme-cinema .rail-right {
-        width: 45px;
+        width: 85px;
     }
 
     body.theme-cinema .logo-banner {
@@ -519,7 +587,8 @@ body.is-sliding.theme-cinema .hosts-container::before {
 
     body.theme-cinema .hosts-container {
         padding: 0;
-        margin-top: 0;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     body.theme-cinema .hosts-title {
@@ -542,6 +611,10 @@ body.is-sliding.theme-cinema .hosts-container::before {
 }
 
 @media (min-width: 1801px) {
+    body.theme-cinema .main-content {
+        max-width: 1650px !important;
+    }
+
     body.theme-cinema .logo-banner {
         scale: 1.15;
         transform-origin: top center;
@@ -549,11 +622,22 @@ body.is-sliding.theme-cinema .hosts-container::before {
     }
 
     body.theme-cinema .hosts-container {
-        margin-top: 3.5rem;
+        --host-max-width: 1250px;
+        margin-top: 0.5rem;
+        max-width: 1650px !important;
+        margin-bottom: 2.5rem;
+    }
+
+    body.theme-cinema.logo-hidden .hosts-container {
+        max-width: calc(1650px / 1.1) !important;
+    }
+
+    body.theme-cinema .hosts-list {
+        max-width: 1650px !important;
     }
 
     body.theme-cinema .hosts-list span {
-        font-size: calc(2.2rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+        font-size: calc(2.0rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
 
     body.theme-cinema .event-footer {
