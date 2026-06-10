@@ -37,7 +37,7 @@ window.ParticleEngine = class ParticleEngine {
         if (type.type) {
             element.dataset.type = type.type;
         }
-        const size = Math.random() * 12 + 10;
+        const size = (Math.random() * 12 + 10) * (type.sizeMultiplier || 1.0);
         element.style.width = `${size}px`;
         element.style.height = `${size * (type.type === 'star' || type.type === 'dust' ? 1.0 : 1.25)}px`;
         
@@ -93,12 +93,12 @@ window.ParticleEngine = class ParticleEngine {
             isWhite: type.isWhite,
             x: Math.random() * 120 - 10,
             y: Math.random() * 140 - 20,
-            mass: Math.random() * 0.8 + 0.4,
+            mass: (Math.random() * 0.8 + 0.4) * (type.massMultiplier || 1.0),
             aero: Math.random() * 0.5 + 0.5,
             rotation: Math.random() * 360,
-            rotSpeed: (Math.random() - 0.5) * 100,
-            baseFallSpeed: Math.random() * 15 + 5,
-            naturalDrift: (Math.random() - 0.5) * 5,
+            rotSpeed: (Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier || 1.0),
+            baseFallSpeed: (Math.random() * 15 + 5) * (type.speedMultiplier || 1.0),
+            naturalDrift: (Math.random() - 0.5) * 5 * (type.driftMultiplier || 1.0),
         };
     }
 

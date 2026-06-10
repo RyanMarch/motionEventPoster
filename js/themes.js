@@ -477,8 +477,9 @@
                 swaySide: "none"
             },
             particles: [
-                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 80, shape: '50%', isWhite: true },
-                { color: '#e0e0e0', gradient: '#999999', type: 'dust', weight: 20, shape: '50%', isWhite: true }
+                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 60, shape: '50%', isWhite: true },
+                { color: '#e0e0e0', gradient: '#999999', type: 'dust', weight: 15, shape: '50%', isWhite: true },
+                { color: '#fffbec', gradient: '#ffd700', type: 'popcorn', weight: 25, shape: '50%', isWhite: true, speedMultiplier: 3.8, massMultiplier: 2.6, rotSpeedMultiplier: 1.8, sizeMultiplier: 2.8 }
             ],
             frameClass: 'theme-frame--cinema',
             overrides: {
@@ -499,8 +500,8 @@
                 eventTopLabel: "Now Showing"
             },
             uiLabels: {
-                particlesPlural: 'Dust Motes',
-                particlesSingular: 'Mote',
+                particlesPlural: 'Motes & Popcorn',
+                particlesSingular: 'Particle',
                 borderToggle: 'Hide velvet curtains',
                 gustStrength: 'Marquee Brightness',
                 frameName: 'Marquee Glow'
