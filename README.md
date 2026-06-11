@@ -54,6 +54,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
 *   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
+*   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 
 ## Screenshots
 | | |
@@ -61,7 +62,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 | **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.png)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.png)][demo-digital] |
 | **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.png)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.png)][demo-radio] |
 | **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] |
-| **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] | |
+| **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] |
 
 
 ### Content Editor
@@ -231,7 +232,7 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 | Version | Notes |
 |---------|-------|
-| v8 | **The "Retro Wave" Update:** Added Retro Wave theme. |
+| v8 | **The Party Update:** Added themes: *Electric Pulse*, *Retro Wave*, and *Cinema*. |
 | v7 | **The "Remote" Update:** Remote control for managing and customizing the poster from a different device. |
 | v6 | **The "Themes" Update:** Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
@@ -243,3 +244,11 @@ The remote control feature is designed to be completely zero-config and infrastr
 *Created for event fundraisers and beautiful public displays.*
 
 [demo]: https://motionEventPoster.ryanmarch.me/
+[demo-spring]: https://motionEventPoster.ryanmarch.me/?theme=spring
+[demo-digital]: https://motionEventPoster.ryanmarch.me/?theme=digital-grid
+[demo-winter]: https://motionEventPoster.ryanmarch.me/?theme=alpine-winter
+[demo-radio]: https://motionEventPoster.ryanmarch.me/?theme=vintage-radio
+[demo-corporate]: https://motionEventPoster.ryanmarch.me/?theme=corporate
+[demo-retro-wave]: https://motionEventPoster.ryanmarch.me/?theme=retro-wave
+[demo-electric-pulse]: https://motionEventPoster.ryanmarch.me/?theme=electric-pulse
+[demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
