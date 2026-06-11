@@ -657,9 +657,7 @@ body:not(.is-sliding) .event-date {
     transform: translateY(6.5vh);
 }
 
-.date-hidden .hosts-list {
-    transform: scale(1.05);
-}
+
 
 .date-hidden .event-footer {
     transform: translateY(1.5vh) scale(1.1);
@@ -682,7 +680,7 @@ body:not(.is-sliding) .event-date {
 }
 
 .title-hidden .hosts-container {
-    transform: translateY(8vh) scale(1.05);
+    transform: translateY(8vh);
     transform-origin: center center;
 }
 
@@ -707,19 +705,18 @@ body:not(.is-sliding) .event-date {
 }
 
 .logo-hidden .hosts-container {
-    transform: scale(1.1);
     transform-origin: bottom center;
 }
 
 @media (min-width: 1400px) and (max-width: 1900px) {
     .logo-hidden .hosts-container {
-        transform: translateY(2.3rem) scale(1.1);
+        transform: translateY(2.3rem);
     }
 }
 
 @media (min-width: 1900px) {
     .logo-hidden .hosts-container {
-        transform: translateY(10px) scale(1.05);
+        transform: translateY(10px);
     }
 }
 
@@ -785,7 +782,7 @@ body:not(.is-sliding) .event-date {
 }
 
 .logo-hidden.date-hidden.title-hidden .hosts-container {
-    transform: translateY(7.5rem) scale(1.1);
+    transform: translateY(7.5rem);
 }
 
 /* 

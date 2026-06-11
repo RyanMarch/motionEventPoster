@@ -655,6 +655,72 @@
                 gustStrength: 'Wind & Sway',
                 frameName: 'Decorations'
             }
+        }),
+
+        'summer-cookout': defineTheme({
+            id: 'summer-cookout',
+            name: 'Summer Cookout',
+            icon: '🍔',
+            primary: '#22252A',
+            accent: '#D32F2F',
+            secondary: '#FBC02D',
+            swatchName: 'Charcoal Grill',
+            colors: {
+                text: '#FFF8F0',
+                darkText: '#22252A'
+            },
+            swatches: [
+                { hex: '#1A365D', name: 'Gingham Blue', accent: '#D32F2F', secondary: '#E2E8F0' },
+                { hex: '#7A1A1A', name: 'Gingham Red', accent: '#D32F2F', secondary: '#F9F6F0' },
+                { hex: '#1A3F2A', name: 'Watermelon Slice', accent: '#E91E63', secondary: '#E8F5E9' },
+                { hex: '#2A1B14', name: 'Sunset BBQ', accent: '#E65100', secondary: '#FFE0B2' },
+                { hex: '#0D3B4C', name: 'Citrus Lemonade', accent: '#FFB300', secondary: '#FFF9C4' },
+                { hex: '#1E0F0A', name: 'Campfire Amber', accent: '#D84315', secondary: '#FFB13D' },
+                { hex: '#004D40', name: 'Ocean Breeze', accent: '#00BFA5', secondary: '#E0F2F1' },
+            ],
+            fonts: {
+                primary: "'PT Sans', system-ui, sans-serif",
+                display: "'Lilita One', cursive, sans-serif",
+                heading: "'Alfa Slab One', cursive, sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF7043', gradient: '#D32F2F', type: 'cookout-ember', weight: 45, speedMultiplier: -0.65, rotSpeedMultiplier: 1.2, sizeMultiplier: 0.9, massMultiplier: 1.1 },
+                { color: '#FBC02D', gradient: '#FF7043', type: 'cookout-spark', weight: 35, speedMultiplier: -0.75, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.7, massMultiplier: 0.9 },
+                { color: '#FFF59D', gradient: '#FBC02D', type: 'cookout-firefly', weight: 20, speedMultiplier: 0.2, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.2, massMultiplier: 0.5 }
+            ],
+            frameClass: 'theme-frame--summer-cookout',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.5,
+                maxPetals: 30,
+                windiness: 12,
+                hostMaxWidth: 120,
+                backdropOpacity: 65
+            },
+            defaults: {
+                hostsTitle: "Thanks to our hosts",
+                eventTitle: "Backyard Cookout",
+                eventSubtitle: "BBQ & Drinks",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Embers & Fireflies',
+                particlesSingular: 'Ember',
+                borderToggle: 'Hide string lights',
+                gustStrength: 'Wind & Sway',
+                frameName: 'String Lights'
+            }
         })
     };
 })();
