@@ -477,6 +477,7 @@ advanced controls overlay.
     justify-content: center;
     background-clip: content-box;
     box-sizing: border-box;
+    overflow: hidden !important;
 }
 
 #controls-panel .swatch:hover {
@@ -1764,7 +1765,6 @@ kbd {
     }
 }
 
-/* 14. Technical Utilities */
 .wake-lock-video {
     position: fixed;
     top: -10px;
@@ -1773,4 +1773,9 @@ kbd {
     height: 1px;
     opacity: 0.01;
     pointer-events: none;
+}
+
+/* Hide backdrop slider for Electric Pulse theme to improve performance */
+body.theme-electric-pulse #backdrop-ribbon-row {
+    display: none !important;
 }

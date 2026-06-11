@@ -46,28 +46,23 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 Remote access requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
 
 ## Themes
-Choose from six visual identities, each with its own unique particle engine and decorative frame:
-*   **Spring Blossom:** Delicate cherry blossoms and elegant floral frames.
-*   **Digital Grid:** High-tech accents and techy-glass with striking light beams.
-*   **Alpine Winter:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
-*   **Vintage Radio:** Warm wood textures, with a tuning needle and floating particles of light.
-*   **Corporate Pro:** Modern geometric shapes and professional, abstract gradients.
-*   **Retro Wave:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
+Choose from multiple visual identities, each with its own unique particle engine and decorative frame:
+*   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral frames.
+*   **[Digital Grid][demo-digital]:** High-tech accents and techy-glass with striking light beams.
+*   **[Alpine Winter][demo-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
+*   **[Vintage Radio][demo-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
+*   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
+*   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
+*   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
 
 ## Screenshots
-| **Spring Blossom** – *Fresh & Elegant* |
-|:---:|
-| [![Spring Blossom](.github/assets/eventPoster.png)][demo] |
-| **Digital Grid** – *High-Tech & Modern* |
-| [![Digital Grid](.github/assets/poster-digital.png)][demo] |
-| **Alpine Winter** – *Frosty & Rustic* |
-| [![Alpine Winter](.github/assets/poster-winter.png)][demo] |
-| **Vintage Radio** – *Warm & Nostalgic*|
-| [![Vintage Radio](.github/assets/poster-radio.png)][demo] |
-| **Corporate Pro** – *Sleek & Professional* |
-| [![Corporate Pro](.github/assets/poster-corporate.png)][demo] |
-| **Retro Wave** – *Neon Nights & Good Vibes* |
-| [![Retro Wave](.github/assets/poster-retro-wave.png)][demo] |
+| | |
+| :---: | :---: |
+| **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.png)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.png)][demo-digital] |
+| **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.png)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.png)][demo-radio] |
+| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] |
+| **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] | |
+
 
 ### Content Editor
 *   **Custom-To-You Branding:** Add your organization name and upload custom logos directly in the browser.
@@ -217,11 +212,11 @@ This architecture allows the project to remain entirely client-side, requiring n
 
 The remote control feature is designed to be completely zero-config and infrastructure-free for event environments with unpredictable internet access. 
 
-- **Network Requirements:** Both the host display and the remote device only need to reside on the same local network (local venue Wi-Fi, ethernet, or a smartphone cellular hotspot).
+- **Network Requirements:** Both the display device and the remote device only need to reside on the same local network (local venue Wi-Fi, ethernet, or a smartphone cellular hotspot).
 - **Communication Protocol:** It uses simple, local peer-to-peer data channels for syncing.
 - **State Synchronization:** Actions are broadcast across the local connection, ensuring that state changes are mirrored instantly on the presentation UI.
 
-*Note: Due to standard browser security specifications, entering or exiting full-screen mode must be done directly on the host device and cannot be triggered via the remote.*
+*Note: Due to standard browser security specifications, entering or exiting full-screen mode must be done directly on the primary device and cannot be triggered via the remote.*
 
 ---
 
