@@ -57,6 +57,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 *   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Summer Cookout][demo-summer-cookout]:** Warm, festive summer barbecue atmosphere with floating embers and string lights, perfect for outdoor gatherings.
+*   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing turquoise water ripples with floating bubbles, beach balls, and lemon, orange, and lime fruit slices.
 
 ## Screenshots
 | | |
@@ -66,6 +67,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 | **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.png)][demo-celebration] |
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] |
+| **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | |
 
 
 ### Content Editor
@@ -255,3 +257,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
 [demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration
 [demo-summer-cookout]: https://motionEventPoster.ryanmarch.me/?theme=summer-cookout
+[demo-tropical-oasis]: https://motionEventPoster.ryanmarch.me/?theme=tropical-oasis

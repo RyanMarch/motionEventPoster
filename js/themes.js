@@ -721,6 +721,78 @@
                 gustStrength: 'Wind & Sway',
                 frameName: 'String Lights'
             }
+        }),
+
+        'tropical-oasis': defineTheme({
+            id: 'tropical-oasis',
+            name: 'Tropical Oasis',
+            icon: '🌊',
+            primary: '#028090',
+            accent: '#f0a500',
+            secondary: '#f26419',
+            swatchName: 'Turquoise Water',
+            colors: {
+                text: '#ffffff',
+                darkText: '#012a36'
+            },
+            swatches: [
+                { hex: '#00a896', name: 'Coral Beach', accent: '#fab1a0', secondary: '#e63946' },
+                { hex: '#005f73', name: 'Blue Lagoon', accent: '#ee9b00', secondary: '#ca6702' },
+                { hex: '#f4a261', name: 'Sunset Pool', accent: '#e76f51', secondary: '#2a9d8f' },
+                { hex: '#2ec4b6', name: 'Tropical Mojito', accent: '#c7f9cc', secondary: '#ffbf69' },
+                { hex: '#f8f9fa', name: 'Bright Oasis', accent: '#00b4d8', secondary: '#ff7096' }
+            ],
+            fonts: {
+                primary: "'Quicksand', system-ui, sans-serif",
+                display: "'Lilita One', cursive, sans-serif",
+                heading: "'Fredoka', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Bubbles rising (negative speedMultiplier)
+                { color: '#ffffff', gradient: '#e0f2f1', type: 'tropical-oasis-bubble', weight: 45, speedMultiplier: -0.55, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.8, massMultiplier: 0.7, isWhite: true },
+                { color: '#ffffff', gradient: '#b2dfdb', type: 'tropical-oasis-bubble-large', weight: 20, speedMultiplier: -0.65, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.3, massMultiplier: 0.6, isWhite: true },
+                // Beach balls (conic-gradient stripes styled in CSS)
+                { color: '#ff5722', gradient: '#ffeb3b', type: 'tropical-oasis-beachball', weight: 12, speedMultiplier: 0.4, rotSpeedMultiplier: 1.5, sizeMultiplier: 2.1, massMultiplier: 1.1 },
+                // Fruit slices (lemon, orange, lime)
+                { color: '#ffeb3b', gradient: '#fbc02d', type: 'tropical-oasis-fruit-lemon', weight: 10, speedMultiplier: 0.5, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.25, massMultiplier: 0.8 },
+                { color: '#ff9800', gradient: '#f57c00', type: 'tropical-oasis-fruit-orange', weight: 8, speedMultiplier: 0.45, rotSpeedMultiplier: 0.7, sizeMultiplier: 1.35, massMultiplier: 0.9 },
+                { color: '#4caf50', gradient: '#388e3c', type: 'tropical-oasis-fruit-lime', weight: 7, speedMultiplier: 0.55, rotSpeedMultiplier: 0.9, sizeMultiplier: 1.15, massMultiplier: 0.7 },
+                // Splash / ripples on pool water surface
+                { color: '#ffffff', gradient: '#e0f2f1', type: 'tropical-oasis-splash', weight: 25, speedMultiplier: 0.08, rotSpeedMultiplier: 0, sizeMultiplier: 1.0, massMultiplier: 0.4, isWhite: true }
+            ],
+            frameClass: 'theme-frame--tropical-oasis',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.3,
+                maxPetals: 65,
+                windiness: 2,
+                hostMaxWidth: 120,
+                backdropOpacity: 65
+            },
+            defaults: {
+                hostsTitle: "Thanks to our hosts",
+                eventTitle: "Pool Party",
+                eventSubtitle: "Tropical Oasis",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Pool Floats',
+                particlesSingular: 'Float',
+                borderToggle: 'Hide decorations',
+                gustStrength: 'Water Current',
+                frameName: 'Water Current'
+            }
         })
     };
 })();

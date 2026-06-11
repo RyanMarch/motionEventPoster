@@ -66,13 +66,16 @@ window.ThemeManager = class ThemeManager {
             this.syncWind();
         }
         
+        Object.values(THEMES).forEach(t => {
+            this.body.classList.remove(`theme-${t.id}`);
+        });
+        this.body.classList.add(`theme-${themeId}`);
+
         if (this.elements.themeFrame) {
             Object.values(THEMES).forEach(t => {
                 if (t.frameClass) this.elements.themeFrame.classList.remove(t.frameClass);
-                this.body.classList.remove(`theme-${t.id}`);
             });
             if (theme.frameClass) this.elements.themeFrame.classList.add(theme.frameClass);
-            this.body.classList.add(`theme-${themeId}`);
             if (this.elements.logoBanner) {
                 const disp = this.elements.logoBanner.style.display;
                 this.elements.logoBanner.style.display = 'none';
