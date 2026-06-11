@@ -583,6 +583,78 @@
                 gustStrength: 'Light & Stage Motion',
                 frameName: 'Stage Movement'
             }
+        }),
+
+        'celebration': defineTheme({
+            id: 'celebration',
+            name: 'Celebration',
+            icon: '🎉',
+            primary: '#100520', // Vibrant deep night background
+            accent: '#FF007F',  // Hot magenta
+            secondary: '#00E5FF', // Bright cyan
+            swatchName: 'Party Time',
+            colors: {
+                text: '#ffffff',
+                darkText: '#100520'
+            },
+            swatches: [
+                { hex: '#0F1A1C', name: 'Golden Jubilee', accent: '#FFD700', secondary: '#F8F9FA' },
+                { hex: '#21092F', name: 'Parade', accent: '#FF5E00', secondary: '#FFC400' },
+                { hex: '#0B0C10', name: 'Midnight Sparkler', accent: '#00E5FF', secondary: '#FFD700' },
+                { hex: '#071E22', name: 'Festival Glow', accent: '#ADFF2F', secondary: '#FF007F' },
+                { hex: '#FFF9E6', name: 'Confetti Pop', accent: '#FF3F80', secondary: '#3F51B5' },
+                { hex: '#FFF0F6', name: 'Candy Land', accent: '#9C27B0', secondary: '#00BCD4' },
+                { hex: '#FAF5EC', name: 'Champagne Toast', accent: '#D4AF37', secondary: '#5D4037' }
+            ],
+            fonts: {
+                primary: "'Nunito', system-ui, sans-serif",
+                display: "'Pacifico', cursive",
+                heading: "'Chewy', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF007F', gradient: '#D00060', type: 'confetti-magenta', weight: 20 },
+                { color: '#00E5FF', gradient: '#00B0D0', type: 'confetti-cyan', weight: 20 },
+                { color: '#FFD700', gradient: '#D5A600', type: 'confetti-yellow', weight: 20 },
+                { color: '#9D00FF', gradient: '#7500C0', type: 'confetti-purple', weight: 15 },
+                { color: '#FF6B6B', gradient: '#D04B4B', type: 'confetti-red', weight: 15 },
+                { color: '#00FF66', gradient: '#00C850', type: 'confetti-green', weight: 10 },
+                // Balloons (floating upwards using negative speedMultiplier - increased weights for higher density)
+                { color: '#FF007F', gradient: '#FF66B2', type: 'balloon-magenta', weight: 35, speedMultiplier: -0.65, rotSpeedMultiplier: 0, massMultiplier: 1.5, sizeMultiplier: 2.2 },
+                { color: '#00E5FF', gradient: '#66FFFF', type: 'balloon-cyan', weight: 35, speedMultiplier: -0.55, rotSpeedMultiplier: 0, massMultiplier: 1.4, sizeMultiplier: 2.5 },
+                { color: '#FFD700', gradient: '#FFE866', type: 'balloon-yellow', weight: 35, speedMultiplier: -0.6, rotSpeedMultiplier: 0, massMultiplier: 1.6, sizeMultiplier: 2.0 }
+            ],
+            frameClass: 'theme-frame--celebration',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 0.95,
+                gustStrength: 40,
+                fallSpeed: 0.7,
+                maxPetals: 25,
+                windiness: 15,
+                hostMaxWidth: 115
+            },
+            defaults: {
+                hostsTitle: "Special Guests",
+                eventTitle: "Grand Celebration",
+                eventSubtitle: "All-Day Party",
+                eventTopLabel: "Welcome To Our"
+            },
+            uiLabels: {
+                particlesPlural: 'Party Favors',
+                particlesSingular: 'Favor',
+                borderToggle: 'Hide decorations',
+                gustStrength: 'Wind & Sway',
+                frameName: 'Decorations'
+            }
         })
     };
 })();

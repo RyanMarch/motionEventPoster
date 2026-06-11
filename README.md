@@ -52,6 +52,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 *   **[Alpine Winter][demo-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
 *   **[Vintage Radio][demo-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
+*   **[Celebration][demo-celebration]:** Colorful confetti and balloons, perfect for birthdays, grand openings, and milestone events.
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
 *   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
@@ -61,8 +62,9 @@ Choose from multiple visual identities, each with its own unique particle engine
 | :---: | :---: |
 | **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.png)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.png)][demo-digital] |
 | **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.png)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.png)][demo-radio] |
-| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] |
-| **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] |
+| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.png)][demo-celebration] |
+| **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
+| **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] |
 
 
 ### Content Editor
@@ -250,3 +252,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-retro-wave]: https://motionEventPoster.ryanmarch.me/?theme=retro-wave
 [demo-electric-pulse]: https://motionEventPoster.ryanmarch.me/?theme=electric-pulse
 [demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
+[demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration

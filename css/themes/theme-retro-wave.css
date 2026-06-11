@@ -488,6 +488,6 @@ body.theme-retro-wave .sway-bottom-right,
 body.theme-retro-wave .sway-bottom-right::before,
 body.theme-retro-wave .sway-bottom-right::after,
 body.theme-retro-wave .event-title::after {
-    animation-play-state: var(--grid-play-state, running) !important;
+    animation-play-state: var(--grid-play-state, running);
 }
 
