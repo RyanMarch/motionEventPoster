@@ -79,7 +79,8 @@ body {
     height: 100%;
     height: -webkit-fill-available;
     overflow: hidden;
-    background-color: #032858; /* Fallback for initial load */
+    background-color: #032858;
+    /* Fallback for initial load */
     background-color: var(--color-primary);
     font-family: var(--font-primary);
     color: var(--color-text);
@@ -88,7 +89,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -webkit-backface-visibility: hidden; /* Safari edge rendering fix */
+    -webkit-backface-visibility: hidden;
+    /* Safari edge rendering fix */
 }
 
 body {
@@ -97,7 +99,7 @@ body {
 }
 
 /* Fullscreen & Backdrop Normalization */
-:fullscreen, 
+:fullscreen,
 ::backdrop,
 :-webkit-full-screen {
     background-color: var(--color-primary) !important;
@@ -115,9 +117,9 @@ body {
 html::before {
     content: '';
     position: fixed;
-    top: -5vh; 
+    top: -5vh;
     left: -5vw;
-    width: 110vw; 
+    width: 110vw;
     height: 110vh;
     background-color: var(--color-primary);
     z-index: -10000;
@@ -152,7 +154,8 @@ PARTICLE SYSTEMS
     contain: layout style;
     opacity: 0;
     transition: opacity 2s ease-in-out;
-    overflow: hidden; /* Prevent 1px leaks at the viewport edges */
+    overflow: hidden;
+    /* Prevent 1px leaks at the viewport edges */
 }
 
 body:not(.is-loading) .particle-layer {
@@ -215,7 +218,10 @@ body:not(.is-loading) .content-wrapper {
 /* Global Vignette Overlay — Moved inside content-wrapper */
 #vignette-overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: radial-gradient(ellipse at center, var(--overlay-dark), var(--overlay-mid) 39.92%, var(--overlay-clear) 77.73%);
     z-index: 1;
     pointer-events: none;
@@ -235,7 +241,8 @@ body:not(.is-loading) #vignette-overlay {
     right: 25px;
     bottom: 25px;
     pointer-events: none;
-    z-index: 50; /* Bring it in front of the background */
+    z-index: 50;
+    /* Bring it in front of the background */
     transition: all 1s ease-in-out;
     opacity: 0;
 }
@@ -358,6 +365,13 @@ body:not(.is-sliding) .main-content::after {
         transform: translateY(2.3rem);
     }
 }
+
+@media (width: 1512px) {
+    .hosts-container {
+        transform: translateY(3.5rem);
+    }
+}
+
 
 @media (min-width: 1900px) {
     .hosts-container {
@@ -633,9 +647,7 @@ body:not(.is-sliding) .event-date {
     transform: translateY(1vh) scale(1.06);
 }
 
-.date-hidden .hosts-title {
-
-}
+.date-hidden .hosts-title {}
 
 .date-hidden .hosts-container {
     transform: translateY(6.5vh);
@@ -723,20 +735,20 @@ body:not(.is-sliding) .event-date {
 }
 
 .host-hidden .event-footer {
-    transform: translateY(-7rem) scale(1.45)
+    transform: translateY(-3.5rem) scale(1.45)
 }
 
 .host-hidden .logo-banner {
-    transform: translateY(7rem) scale(1.7);
+    transform: translateY(3rem) scale(1.7);
 }
 
 /* Combined States */
 .host-hidden.date-hidden .event-footer {
-    transform: translateY(-6rem) scale(1.7);
+    transform: translateY(-2.5rem) scale(1.7);
 }
 
 .host-hidden.date-hidden .logo-banner {
-    transform: translateY(9rem) scale(2);
+    transform: translateY(4.5rem) scale(2);
 }
 
 .host-hidden.date-hidden.title-hidden .main-content::before,
@@ -783,9 +795,7 @@ body:not(.is-fullscreen) .main-content {
     top: -2rem;
 }
 
-body:not(.is-fullscreen) .event-footer {
-
-}
+body:not(.is-fullscreen) .event-footer {}
 
 @media (min-width: 2500px) {
     body:not(.is-fullscreen) .main-content {

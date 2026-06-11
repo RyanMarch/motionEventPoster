@@ -178,9 +178,24 @@ window.EventPoster = class EventPoster {
     hydrate() {
         const s = this.settings;
         
+        // Save original theme ID before any deep link override to detect text default transitions
+        const originalThemeId = s.activeTheme || window.DEFAULTS.activeTheme;
+
+        // Check for theme URL parameter to deep link to specific themes
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlTheme = urlParams.get('theme');
+        this.themeOverridden = false;
+        if (urlTheme && window.THEMES[urlTheme]) {
+            if (s.activeTheme !== urlTheme) {
+                s.activeTheme = urlTheme;
+                this.themeOverridden = true;
+            }
+        }
+
         // Determine active theme early to apply its overrides during hydration
         this.state.activeTheme = s.activeTheme || window.DEFAULTS.activeTheme;
-        this.theme = window.THEMES[this.state.activeTheme] || window.THEMES.spring;
+        // Set this.theme to the original saved theme so ThemeManager can transition contextual defaults correctly
+        this.theme = window.THEMES[originalThemeId] || window.THEMES.spring;
         this.petalTypes = this.theme.particles;
 
         Object.keys(window.DEFAULTS).forEach((key) => {
@@ -273,7 +288,7 @@ window.EventPoster = class EventPoster {
         this.ui.initShortcutsUI();
         this.ui.setupEventListeners();
 
-        this.themeManager.applyTheme(this.state.activeTheme, true);
+        this.themeManager.applyTheme(this.state.activeTheme, !this.themeOverridden);
         this.applyStateToUI();
         this.applyPosterText();
         this.particleEngine.adjustAmbientPetals();
@@ -425,12 +440,12 @@ window.EventPoster = class EventPoster {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
         const MIN_SCALE = 0.35; const GAPS = 60;
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
-        const logoH = this.elements.logoBanner.offsetHeight;
-        const footerH = this.elements.eventFooter.offsetHeight;
+        const logoH = this.elements.logoBanner.getBoundingClientRect().height;
+        const footerH = this.elements.eventFooter.getBoundingClientRect().height;
         const titleH = this.containers.hosts.querySelector('.hosts-title').offsetHeight;
         const listH = this.elements.hostsList.offsetHeight;
         const totalH = logoH + footerH + titleH + listH + GAPS;
-        const availH = window.innerHeight;
+        const availH = window.innerHeight - (this.state.insetV * 2);
         let scale = 1;
         if (totalH > availH) {
             const hAreaH = titleH + listH;

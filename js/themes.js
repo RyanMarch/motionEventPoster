@@ -441,6 +441,84 @@
                 gustStrength: 'Glitch Intensity',
                 frameName: 'Scanlines'
             }
+        }),
+
+        'electric-pulse': defineTheme({
+            id: 'electric-pulse',
+            name: 'Electric Pulse',
+            icon: '🎸',
+            primary: '#0B191E',
+            accent: '#00FF88',
+            secondary: '#FFD700',
+            swatchName: 'Echo Forest',
+            colors: {
+                text: '#ffffff',
+                darkText: '#090714'
+            },
+            swatches: [
+                { hex: '#090714', name: 'Main Stage', accent: '#FF1A75', secondary: '#00F2FE' },
+                { hex: '#140505', name: 'Twilight', accent: '#FF3C00', secondary: '#FFCC00' },
+                { hex: '#0D0B1C', name: 'Aftershock', accent: '#FF7A00', secondary: '#FF1A75' },
+                { hex: '#000000', name: 'Rave', accent: '#00FFCC', secondary: '#9600a7ff' },
+                { hex: '#160824', name: 'Violet', accent: '#CC00FF', secondary: '#00FFFF' },
+                { hex: '#050C1A', name: 'Subzero', accent: '#0084ffff', secondary: '#46dbf5ff' },
+                { hex: '#0F081D', name: 'Hyperpop', accent: '#8ACE00', secondary: '#d7ffd7ff' },
+                { hex: '#1F3540', name: 'Deep Tech', accent: '#00FFCC', secondary: '#FF007F' },
+                { hex: '#32303F', name: 'Steel Pulse', accent: '#FF7A00', secondary: '#00F2FE' },
+                { hex: '#FFF5F8', name: 'Dayglow', accent: '#FF1A75', secondary: '#00F2FE' },
+                { hex: '#F0F9FF', name: 'Static', accent: '#7B2CBF', secondary: '#FF007F' },
+                { hex: '#FDFFE0', name: 'Acid Sun', accent: '#9D00FF', secondary: '#00E5FF' },
+                { hex: '#FFF6F0', name: 'Solar Flares', accent: '#FF5E00', secondary: '#FF007F' },
+                { hex: '#EFFFFB', name: 'Mint Glitch', accent: '#00B3A6', secondary: '#0066FF' },
+                { hex: '#B5B8C0', name: 'Concrete', accent: '#FF1A75', secondary: '#00E5FF' },
+                { hex: '#C8B195', name: 'Desert Laser', accent: '#9D00FF', secondary: '#FF3C00' },
+            ],
+            fonts: {
+                primary: "'Archivo Black', sans-serif",
+                display: "'Bungee Shade', sans-serif",
+                heading: "'Bungee Inline', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF1A75', gradient: '#B30047', type: 'confetti', weight: 40 },
+                { color: '#00F2FE', gradient: '#00A8B3', type: 'confetti', weight: 30 },
+                { color: '#FFD700', gradient: '#B39600', type: 'confetti', weight: 20 },
+                { useThemeAccent: true, type: 'laser', weight: 25 },
+                // { color: '#ffffff', gradient: '#e0e0e0', type: 'dust', weight: 10, isWhite: true }
+            ],
+            frameClass: 'theme-frame--electric-pulse',
+            flags: { syncParticleColors: true, showAccentAsSwatch: true },
+            overrides: {
+                insetV: 65,
+                insetH: 40,
+                hostTextSize: 1.1,
+                gustStrength: 45,
+                fallSpeed: 0.6,
+                maxPetals: 65,
+                windiness: 12,
+                backdropOpacity: 0,
+                hostMaxWidth: 123
+            },
+            defaults: {
+                hostsTitle: "Special Guests",
+                eventTitle: "ELECTRIC PULSE",
+                eventSubtitle: "LIVE MUSIC FESTIVAL",
+                eventTopLabel: "PRESENTS"
+            },
+            uiLabels: {
+                particlesPlural: 'Confetti & Lasers',
+                particlesSingular: 'Confetti Piece',
+                borderToggle: 'Hide Stage Scaffold',
+                gustStrength: 'Light & Stage Motion',
+                frameName: 'Stage Movement'
+            }
         })
     };
 })();

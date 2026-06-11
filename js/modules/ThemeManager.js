@@ -14,10 +14,21 @@ window.ThemeManager = class ThemeManager {
 
     applyTheme(themeId, skipOverrides = false) {
         if (this.state.isApplyingTheme) return;
+
+        const theme = THEMES[themeId] || THEMES.spring;
+
+        if (this.state.activeTheme && this.state.activeTheme !== theme.id) {
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('theme')) {
+                url.searchParams.delete('theme');
+                const newUrl = url.pathname + url.search + url.hash;
+                window.history.replaceState(null, '', newUrl);
+            }
+        }
+
         this.state.isApplyingTheme = true;
 
         const prevTheme = this.poster.theme;
-        const theme = THEMES[themeId] || THEMES.spring;
         
         // Handle contextual default labels
         if (prevTheme && prevTheme.defaults && theme.defaults) {
@@ -181,6 +192,10 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
         
+        // Dynamic Bunting color SVG generation
+        const buntingSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 35' width='50' height='35'><path d='M0,0 Q25,8 50,0 L50,2 L25,32 L0,2 Z' fill='${encodeURIComponent(accentColor)}' opacity='0.85'/><path d='M0,0 Q25,8 50,0 L42,0 L25,24 L8,0 Z' fill='${encodeURIComponent(secondaryColor)}' opacity='0.95'/></svg>")`;
+        this.root.style.setProperty('--bunting-image', buntingSvg);
+        
         // Stable theme-defined colors (non-swapped reference)
         const themePrimaryRgb = window.PosterUtils.hexToRgb(theme.colors.primary);
         const themeAccentRgb = window.PosterUtils.hexToRgb(theme.colors.accent);
@@ -228,9 +243,16 @@ window.ThemeManager = class ThemeManager {
         this.elements.swatchGrid.querySelectorAll('.swatch:not(.swatch--custom)').forEach(s => s.remove());
         const swatches = this.poster.theme.swatches || [];
         swatches.forEach(colorObj => {
-            const btn = document.createElement('button');
+            const btn = document.createElement('span');
             btn.className = 'swatch';
-            btn.style.backgroundColor = colorObj.hex;
+            btn.setAttribute('role', 'button');
+            btn.tabIndex = 0;
+            const showAccent = this.poster.theme.flags?.showAccentAsSwatch;
+            if (showAccent && colorObj.accent) {
+                btn.style.backgroundColor = colorObj.accent;
+            } else {
+                btn.style.backgroundColor = colorObj.hex;
+            }
             btn.dataset.color = colorObj.hex;
             btn.title = colorObj.name;
             btn.addEventListener('click', () => {
@@ -248,6 +270,12 @@ window.ThemeManager = class ThemeManager {
                 // Remote sync
                 if (!window.remoteManager?._applying) {
                     window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null, secondary: colorObj.secondary || null });
+                }
+            });
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
                 }
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);

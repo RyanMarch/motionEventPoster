@@ -150,6 +150,12 @@ class RemoteController {
         document.querySelectorAll('#theme-select-options .custom-select-option').forEach(opt => {
             opt.classList.toggle('selected', opt.dataset.value === id);
         });
+        if (typeof THEMES !== 'undefined') {
+            Object.keys(THEMES).forEach(tid => {
+                document.body.classList.remove(`theme-${tid}`);
+            });
+        }
+        document.body.classList.add(`theme-${id}`);
     }
 
     _initSwatches(themeId) {
