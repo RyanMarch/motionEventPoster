@@ -232,16 +232,14 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 | Version | Notes |
 |---------|-------|
-| v8 | **The Party Update:** Added themes: *Electric Pulse*, *Retro Wave*, and *Cinema*. |
-| v7 | **The "Remote" Update:** Remote control for managing and customizing the poster from a different device. |
-| v6 | **The "Themes" Update:** Theme Engine with 5 curated themes (Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom). Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
+| v8 | **The Party Update:** Added themes: *Electric Pulse*, *Retro Wave*, and *Cinema*.  |
+| v7 | **The Remote Update:** Remote control for managing and customizing the poster from a different device. |
+| v6 | **The Themes Update:** Theme Engine with 5 curated themes: *Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom*. Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
 | v4 | Adds live host management, factory reset, auto-fullscreen, and responsive layouts. |
 | v1–v3 | Earlier iterations with static host lists and limited controls. |
 
 ---
-
-*Created for event fundraisers and beautiful public displays.*
 
 [demo]: https://motionEventPoster.ryanmarch.me/
 [demo-spring]: https://motionEventPoster.ryanmarch.me/?theme=spring
