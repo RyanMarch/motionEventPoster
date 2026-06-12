@@ -428,10 +428,7 @@ body:not(.is-sliding) .main-content::after {
 }
 
 .hosts-empty-hint.is-hidden {
-    display: block !important;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
+    display: none !important;
 }
 
 .hosts-list {

@@ -89,7 +89,7 @@ window.ThemeManager = class ThemeManager {
         
         this.syncUI(); // Handle expensive label/font updates once
         this.syncBackdrop(); // Handle color/opacity sync
-        
+
         this.initSwatches();
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();

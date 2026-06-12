@@ -439,21 +439,44 @@ window.EventPoster = class EventPoster {
 
     enforceVerticalFit() {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
-        const MIN_SCALE = 0.35; const GAPS = 60;
+        const MIN_SCALE = 0.35;
+        
+        // Reset scale temporarily to measure natural sizes
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
+        
+        // Measure element dimensions (including transforms like scale)
         const logoH = this.elements.logoBanner.getBoundingClientRect().height;
         const footerH = this.elements.eventFooter.getBoundingClientRect().height;
-        const titleH = this.containers.hosts.querySelector('.hosts-title').offsetHeight;
-        const listH = this.elements.hostsList.offsetHeight;
-        const totalH = logoH + footerH + titleH + listH + GAPS;
+        const hostsH = this.containers.hosts.getBoundingClientRect().height;
+        
+        // Compute element margins
+        const getVerticalMargin = (el) => {
+            const style = window.getComputedStyle(el);
+            return parseFloat(style.marginTop || 0) + parseFloat(style.marginBottom || 0);
+        };
+        const logoMargin = getVerticalMargin(this.elements.logoBanner);
+        const hostsMargin = getVerticalMargin(this.containers.hosts);
+        const footerMargin = getVerticalMargin(this.elements.eventFooter);
+        
+        // Compute fixed padding/border of the hosts container (non-scalable height)
+        const hostsStyle = window.getComputedStyle(this.containers.hosts);
+        const hostsFixed = parseFloat(hostsStyle.paddingTop || 0) + 
+                           parseFloat(hostsStyle.paddingBottom || 0) + 
+                           parseFloat(hostsStyle.borderTopWidth || 0) + 
+                           parseFloat(hostsStyle.borderBottomWidth || 0);
+        
+        const hostsScalable = hostsH - hostsFixed;
+        
+        // Total non-scalable vertical height
+        const nonScalableH = logoH + logoMargin + hostsFixed + hostsMargin + footerH + footerMargin;
         const availH = window.innerHeight - (this.state.insetV * 2);
+        
         let scale = 1;
-        if (totalH > availH) {
-            const hAreaH = titleH + listH;
-            const nonHAreaH = logoH + footerH + GAPS;
-            const targetH = availH - nonHAreaH;
-            scale = targetH > 0 && hAreaH > 0 ? targetH / hAreaH : MIN_SCALE;
+        if (hostsScalable > 0) {
+            const targetH = availH - nonScalableH;
+            scale = targetH > 0 ? targetH / hostsScalable : MIN_SCALE;
         }
+        
         scale = Math.max(MIN_SCALE, Math.min(1.0, scale));
         this.containers.hosts.style.setProperty('--dynamic-scale', scale.toFixed(3));
     }

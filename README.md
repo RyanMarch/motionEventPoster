@@ -60,6 +60,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing turquoise water ripples with floating bubbles, beach balls, and lemon, orange, and lime fruit slices.
 *   **[Disco Fever][demo-disco-fever]:** Funky retro dance experience with a spinning disco ball, pulsing spotlights, a dance floor grid, and drifting light reflections.
 *   **[Mardi Gras][demo-mardi-gras]:** Festive and mysterious carnival with ornate Venetian masks, sweeping spotlights, and a parade of falling beads, feathers, and gold confetti.
+*   **[Art Deco Gala][demo-art-deco-gala]:** Glamorous and geometric Roaring 20s style with a repeating gold Art Deco pattern, swaying crystal chandelier, corner champagne flutes, and a mix of gold dust, sparkles, and rising champagne bubble particles.
 
 ## Screenshots
 | | |
@@ -70,7 +71,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] |
 | **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.png)][demo-disco-fever] |
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | |
+| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | **Art Deco Gala** – *Glamorous Art Deco Gala* <br> [![Art Deco Gala](.github/assets/poster-gatsby-gala.png)][demo-art-deco-gala] |
 
 
 ### Content Editor
@@ -240,6 +241,7 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 | Version | Notes |
 |---------|-------|
+| v10 | **The Deco Update:** Added *Art Deco Gala* theme with a repeating gold geometric pattern, swinging crystal chandelier, corner champagne flutes, and falling/rising particles (gold dust, sparkles, champagne bubbles). |
 | v9 | **The Carnival Update:** Added *Mardi Gras / Masquerade Carnival* theme with ornate Venetian mask decorations, sweeping spotlights, gold frame, and a mix of carnival beads, feathers, and gold confetti particles. |
 | v8 | **The Party Pack:** Added themes: *Celebration*, *Retro Wave*, *Electric Pulse*, *Cinema*, *Summer Cookout*, *Tropical Oasis*, *Disco Fever*.|
 | v7 | **The Remote Update:** Remote control for managing and customizing the poster from a different device. |
@@ -264,3 +266,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-tropical-oasis]: https://motionEventPoster.ryanmarch.me/?theme=tropical-oasis
 [demo-disco-fever]: https://motionEventPoster.ryanmarch.me/?theme=disco-fever
 [demo-mardi-gras]: https://motionEventPoster.ryanmarch.me/?theme=mardi-gras
+[demo-art-deco-gala]: https://motionEventPoster.ryanmarch.me/?theme=art-deco-gala

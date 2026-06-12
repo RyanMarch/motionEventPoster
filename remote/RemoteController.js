@@ -156,6 +156,7 @@ class RemoteController {
             });
         }
         document.body.classList.add(`theme-${id}`);
+
     }
 
     _initSwatches(themeId) {

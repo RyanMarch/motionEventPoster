@@ -935,6 +935,69 @@
                 gustStrength: 'Twirl Speed',
                 frameName: 'Gold Frame'
             }
+        }),
+
+        'art-deco-gala': defineTheme({
+            id: 'art-deco-gala',
+            name: 'Art Deco Gala',
+            icon: '🥂',
+            primary: '#0B0B0C',
+            accent: '#D4AF37',
+            secondary: '#C5A059',
+            swatchName: 'Roaring Black',
+            colors: {
+                text: '#ffffff',
+                darkText: '#0B0B0C'
+            },
+            swatches: [
+                { hex: '#1C1C1D', name: 'Gilded Onyx', accent: '#E5C158', secondary: '#B39343' },
+                { hex: '#0F161E', name: 'Sapphire Deco', accent: '#F3E5AB', secondary: '#D4AF37' },
+                { hex: '#220A0A', name: 'Velvet Wine', accent: '#D4AF37', secondary: '#C5A059' },
+            ],
+            fonts: {
+                primary: "'Josefin Sans', system-ui, sans-serif",
+                display: "'Limelight', Georgia, serif",
+                heading: "'Limelight', Georgia, serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Gold Diamonds (floating)
+                { color: '#D4AF37', gradient: '#8C6F2D', type: 'art-deco-diamond', weight: 35, speedMultiplier: 0.4, sizeMultiplier: 0.85, massMultiplier: 0.6 },
+                // Sparkles (twinkling star/glimmer sparkles)
+                { color: '#FFECA0', gradient: '#D4AF37', type: 'art-deco-sparkle', weight: 25, speedMultiplier: 0.25, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.0, massMultiplier: 0.6 },
+            ],
+            frameClass: 'theme-frame--art-deco-gala',
+            overrides: {
+                insetV: 60,
+                insetH: 80,
+                hostTextSize: 1.3,
+                gustStrength: 20,
+                fallSpeed: 0.5,
+                maxPetals: 35,
+                windiness: 8,
+                hostMaxWidth: 143,
+                backdropOpacity: 70
+            },
+            defaults: {
+                hostsTitle: "Distinguished Patrons",
+                eventTitle: "Art Deco Gala",
+                eventSubtitle: "Charity Soiree",
+                eventTopLabel: "The Roaring 20s"
+            },
+            uiLabels: {
+                particlesPlural: 'Stars & Diamonds',
+                particlesSingular: 'Star',
+                borderToggle: 'Hide geometric frame',
+                gustStrength: 'Breeze Intensity',
+                frameName: 'Deco Frame'
+            }
         })
     };
 })();
