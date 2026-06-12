@@ -953,6 +953,12 @@
                 { hex: '#1C1C1D', name: 'Gilded Onyx', accent: '#E5C158', secondary: '#B39343' },
                 { hex: '#0F161E', name: 'Sapphire Deco', accent: '#F3E5AB', secondary: '#D4AF37' },
                 { hex: '#220A0A', name: 'Velvet Wine', accent: '#D4AF37', secondary: '#C5A059' },
+                { hex: '#0B1A12', name: 'Emerald Court', accent: '#D4AF37', secondary: '#9FC8A0' },
+                // { hex: '#180C04', name: 'Midnight Copper', accent: '#B87333', secondary: '#E8C49A' },q
+                { hex: '#08101E', name: 'Navy Opulence', accent: '#C0C0C0', secondary: '#A8B8C8' },
+                // Light schemes
+                { hex: '#F0EAD6', name: 'Parchment', accent: '#7C5C2E', secondary: '#3D2B0F' },
+                { hex: '#F5E8E8', name: 'Blush Parlor', accent: '#8B3A3A', secondary: '#5C2020' },
             ],
             fonts: {
                 primary: "'Josefin Sans', system-ui, sans-serif",

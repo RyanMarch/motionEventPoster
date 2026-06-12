@@ -71,7 +71,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] |
 | **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.png)][demo-disco-fever] |
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | **Art Deco Gala** – *Glamorous Art Deco Gala* <br> [![Art Deco Gala](.github/assets/poster-gatsby-gala.png)][demo-art-deco-gala] |
+| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.png)][demo-art-deco-gala] |
 
 
 ### Content Editor
