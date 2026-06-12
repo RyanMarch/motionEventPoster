@@ -87,6 +87,7 @@ window.ParticleEngine = class ParticleEngine {
         container.appendChild(element);
         return {
             element,
+            type: type.type,
             accentShift: type.accentShift,
             useThemePrimary: type.useThemePrimary,
             useThemeAccent: type.useThemeAccent,
@@ -96,9 +97,11 @@ window.ParticleEngine = class ParticleEngine {
             mass: (Math.random() * 0.8 + 0.4) * (type.massMultiplier !== undefined ? type.massMultiplier : 1.0),
             aero: Math.random() * 0.5 + 0.5,
             rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (Math.random() * 360),
-            rotSpeed: (Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0),
+            rotSpeed: (type.type && type.type.includes('reflection')) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
             baseFallSpeed: (Math.random() * 15 + 5) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0),
             naturalDrift: (Math.random() - 0.5) * 5 * (type.driftMultiplier !== undefined ? type.driftMultiplier : 1.0),
+            horizontalSpeed: (type.type && type.type.includes('reflection')) ? -(Math.random() * 6 + 3) : 0,
+            verticalDrift: (type.type && type.type.includes('reflection')) ? (Math.random() - 0.5) * 0.8 : 0
         };
     }
 
@@ -142,12 +145,18 @@ window.ParticleEngine = class ParticleEngine {
         this.state.windDirection += (this.state.targetWindDirection - this.state.windDirection) * (1 - Math.exp(-dt * 0.5));
         const totalWind = (this.state.currentWind + this.state.gustForce) * this.state.windDirection;
         this.state.petals.forEach(p => {
-            const gravityEffect = p.baseFallSpeed * p.mass * this.state.fallSpeed;
-            const windEffect = totalWind * (p.aero / p.mass);
-            p.x += (windEffect + p.naturalDrift) * dt;
-            p.y += gravityEffect * dt;
-            const speedFactor = Math.abs(windEffect) / 10 + 1;
-            p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+            if (p.type && p.type.includes('reflection')) {
+                // Reflections sweep horizontally without gravity, wind, or tumbling
+                p.x += p.horizontalSpeed * dt;
+                p.y += p.verticalDrift * dt;
+            } else {
+                const gravityEffect = p.baseFallSpeed * p.mass * this.state.fallSpeed;
+                const windEffect = totalWind * (p.aero / p.mass);
+                p.x += (windEffect + p.naturalDrift) * dt;
+                p.y += gravityEffect * dt;
+                const speedFactor = Math.abs(windEffect) / 10 + 1;
+                p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+            }
             if (p.y > 110) { p.y = -10; p.x = Math.random() * 120 - 10; }
             else if (p.y < -20) p.y = 110;
             if (p.x > 110) p.x = -10;

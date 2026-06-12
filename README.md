@@ -58,6 +58,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Summer Cookout][demo-summer-cookout]:** Warm, festive summer barbecue atmosphere with floating embers and string lights, perfect for outdoor gatherings.
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing turquoise water ripples with floating bubbles, beach balls, and lemon, orange, and lime fruit slices.
+*   **[Disco Fever][demo-disco-fever]:** Funky retro dance experience with a spinning disco ball, pulsing spotlights, a dance floor grid, and drifting light reflections.
 
 ## Screenshots
 | | |
@@ -67,7 +68,7 @@ Choose from multiple visual identities, each with its own unique particle engine
 | **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.png)][demo-celebration] |
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] |
-| **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | |
+| **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.png)][demo-disco-fever] |
 
 
 ### Content Editor
@@ -237,9 +238,9 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 | Version | Notes |
 |---------|-------|
-| v8 | **The Party Update:** Added themes: *Electric Pulse*, *Retro Wave*, and *Cinema*.  |
+| v8 | **The Party Pack:** Added themes: *Celebration*, *Retro Wave*, *Electric Pulse*, *Cinema*, *Summer Cookout*, *Tropical Oasis*, *Disco Fever*.|
 | v7 | **The Remote Update:** Remote control for managing and customizing the poster from a different device. |
-| v6 | **The Themes Update:** Theme Engine with 5 curated themes: *Corporate Pro, Vintage Radio, Alpine Winter, Digital Grid, Spring Blossom*. Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
+| v6 | **The Themes Update:** Theme Engine with 5 curated themes: *Spring Blossom*, *Digital Grid*, *Alpine Winter*, *Vintage Radio*, *Corporate Pro*. Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
 | v4 | Adds live host management, factory reset, auto-fullscreen, and responsive layouts. |
 | v1–v3 | Earlier iterations with static host lists and limited controls. |
@@ -252,9 +253,10 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-winter]: https://motionEventPoster.ryanmarch.me/?theme=alpine-winter
 [demo-radio]: https://motionEventPoster.ryanmarch.me/?theme=vintage-radio
 [demo-corporate]: https://motionEventPoster.ryanmarch.me/?theme=corporate
+[demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration
 [demo-retro-wave]: https://motionEventPoster.ryanmarch.me/?theme=retro-wave
 [demo-electric-pulse]: https://motionEventPoster.ryanmarch.me/?theme=electric-pulse
 [demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
-[demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration
 [demo-summer-cookout]: https://motionEventPoster.ryanmarch.me/?theme=summer-cookout
 [demo-tropical-oasis]: https://motionEventPoster.ryanmarch.me/?theme=tropical-oasis
+[demo-disco-fever]: https://motionEventPoster.ryanmarch.me/?theme=disco-fever

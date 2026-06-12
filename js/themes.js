@@ -793,6 +793,71 @@
                 gustStrength: 'Water Current',
                 frameName: 'Water Current'
             }
+        }),
+
+        'disco-fever': defineTheme({
+            id: 'disco-fever',
+            name: 'Disco Fever',
+            icon: '🪩',
+            primary: '#1A052E',
+            accent: '#FBC02D',
+            secondary: '#E91E63',
+            swatchName: 'Original Plum',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1A052E'
+            },
+            swatches: [
+                { hex: '#11001C', name: 'Studio 54', accent: '#FFD700', secondary: '#FAF5EC' },
+                { hex: '#2A0845', name: 'Velvet Disco', accent: '#FFEB3B', secondary: '#FF007F' },
+                { hex: '#0D0221', name: 'Neon Hustle', accent: '#39FF14', secondary: '#00F0FF' },
+                { hex: '#260401', name: 'Boogie Nights', accent: '#FFA500', secondary: '#FF007F' },
+                { hex: '#020C1B', name: 'Midnight Roller', accent: '#00FFFF', secondary: '#BD00FF' },
+                { hex: '#0A0A0A', name: 'Glitter & Gold', accent: '#FFD700', secondary: '#E5E9EC' }
+            ],
+            fonts: {
+                primary: "'Jost', system-ui, sans-serif",
+                display: "'Pacifico', cursive",
+                heading: "'Lilita One', cursive, sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ffffff', gradient: '#fff5dc', type: 'disco-reflection-white', weight: 60, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5, isWhite: true },
+                { color: '#FBC02D', gradient: '#FF9800', type: 'disco-reflection-gold', weight: 40, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
+            ],
+            frameClass: 'theme-frame--disco-fever',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.05,
+                gustStrength: 35,
+                fallSpeed: 0.4,
+                maxPetals: 25,
+                windiness: 6,
+                hostMaxWidth: 125,
+                backdropOpacity: 55
+            },
+            defaults: {
+                hostsTitle: "DJ & DANCERS",
+                eventTitle: "DISCO FEVER",
+                eventSubtitle: "RETRO DANCE PARTY",
+                eventTopLabel: "GET DOWN AT THE"
+            },
+            uiLabels: {
+                particlesPlural: 'Reflections',
+                particlesSingular: 'Reflection',
+                borderToggle: 'Hide dance floor grid',
+                gustStrength: 'Spotlight Speed',
+                frameName: 'Spotlight Sway'
+            }
         })
     };
 })();

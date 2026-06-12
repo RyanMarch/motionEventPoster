@@ -1,0 +1,474 @@
+/**
+ * 1970s DISCO FEVER THEME STYLES
+ */
+
+/* Main Background Sky Gradient: Night Club Plum & Warm Magenta */
+body.theme-disco-fever {
+    background: linear-gradient(180deg, var(--color-primary) 0%, rgba(var(--color-primary-rgb), 0.98) 50%, rgba(var(--color-secondary-rgb), 0.2) 100%) !important;
+}
+
+/* Flashing Light-Up Grid Dance Floor (Bottom 35%) */
+body.theme-disco-fever .theme-texture {
+    background-image:
+        repeating-conic-gradient(from 0deg,
+            rgba(233, 30, 99, 0.12) 0deg 90deg,
+            rgba(255, 152, 0, 0.12) 90deg 180deg,
+            rgba(255, 235, 59, 0.12) 180deg 270deg,
+            rgba(156, 39, 176, 0.12) 270deg 360deg);
+    background-size: 80px 80px;
+    background-position: center bottom;
+    position: absolute;
+    bottom: 0;
+    left: -20%;
+    width: 140%;
+    height: calc(2 * (100% - 91px));
+    transform: perspective(250px) rotateX(65deg);
+    transform-origin: bottom center;
+    opacity: calc(0.55 + 0.45 * var(--frame-intensity));
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%);
+    animation: dance-floor-flash 8s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: filter;
+}
+
+@keyframes dance-floor-flash {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* 70s Conic Sunburst Background Overlay */
+body.theme-disco-fever .theme-frame-inner {
+    position: absolute;
+    top: calc(91px - 150vmax);
+    left: calc(50% - 150vmax);
+    width: 300vmax;
+    height: 300vmax;
+    background-image: repeating-conic-gradient(from 0deg at 50% 50%,
+            transparent 0%,
+            transparent 4%,
+            rgba(var(--color-accent-rgb), 0.02) 4%,
+            rgba(var(--color-accent-rgb), 0.04) 8%);
+    animation: sunburst-rotate 140s linear infinite;
+    transform-origin: center center;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes sunburst-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dynamic Warm Spotlights */
+body.theme-disco-fever .theme-frame::before,
+body.theme-disco-fever .theme-frame::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    width: 70%;
+    height: 200%;
+    transform-origin: top center;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 2;
+    will-change: transform;
+    transition: opacity 1s ease;
+}
+
+body.theme-disco-fever .theme-frame::before {
+    left: 10%;
+    background: radial-gradient(ellipse at top, rgba(var(--color-accent-rgb), 0.35) 0%, rgba(var(--color-accent-rgb), 0.06) 40%, transparent 75%);
+    animation: spotlight-swing-left calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+body.theme-disco-fever .theme-frame::after {
+    right: 10%;
+    background: radial-gradient(ellipse at top, rgba(var(--color-secondary-rgb), 0.35) 0%, rgba(var(--color-secondary-rgb), 0.06) 40%, transparent 75%);
+    animation: spotlight-swing-right calc(10s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes spotlight-swing-left {
+    0% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes spotlight-swing-right {
+    0% {
+        transform: rotate(-15deg);
+    }
+
+    100% {
+        transform: rotate(20deg);
+    }
+}
+
+/* 70s Stripe Poster Frame */
+body.theme-disco-fever .theme-frame {
+    opacity: 1;
+    border: 4px solid var(--color-accent);
+    border-radius: 24px;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 0 4px var(--color-primary),
+        0 0 0 8px var(--color-secondary),
+        0 0 0 12px var(--color-primary),
+        0 0 0 16px var(--color-accent),
+        0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+body.theme-disco-fever .frame-rail {
+    display: none !important;
+    /* Hide other theme frame bars */
+}
+
+/* Hide theme overlays when border-hidden is active */
+body.border-hidden.theme-disco-fever .theme-frame,
+body.border-hidden.theme-disco-fever .theme-texture,
+body.border-hidden.theme-disco-fever .theme-frame-inner,
+body.border-hidden.theme-disco-fever .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* Floral assets & unused sway layers disabled */
+body.theme-disco-fever .floral-bg {
+    display: none !important;
+}
+
+body.theme-disco-fever .sway-top-left,
+body.theme-disco-fever .sway-top-right,
+body.theme-disco-fever .sway-bottom-left,
+body.theme-disco-fever .sway-bottom-right,
+body.theme-disco-fever .sway-left-side,
+body.theme-disco-fever .sway-right-side,
+body.theme-disco-fever .sway-top-1,
+body.theme-disco-fever .sway-top-3,
+body.theme-disco-fever .sway-bottom-3,
+body.theme-disco-fever .sway-bottom-4,
+body.theme-disco-fever .sway-bottom-5,
+body.theme-disco-fever .sway-bottom-6 {
+    display: none !important;
+}
+
+/* ----------------------------------------------------
+   Top-Center Hanging & Swaying/Spinning Disco Ball
+   ---------------------------------------------------- */
+body.theme-disco-fever .sway-top-2 {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 200px;
+    z-index: 105;
+    /* Hangs cleanly in front of content stack */
+    pointer-events: none;
+    transform-origin: top center;
+    animation: disco-ball-sway calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Hanging wire */
+body.theme-disco-fever .sway-top-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 75px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.25));
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+/* Spherical mirror ball */
+body.theme-disco-fever .sway-top-2::after {
+    content: '';
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background:
+        /* Rotating mirror panel grids */
+        repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0, 0, 0, 0.18) 6px, rgba(0, 0, 0, 0.18) 8px),
+        repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(0, 0, 0, 0.18) 6px, rgba(0, 0, 0, 0.18) 8px),
+        /* Spherical 3D lighting gradient */
+        radial-gradient(circle at 35% 35%, #ffffff 0%, #d8d8d8 25%, #7e7e7e 60%, #1c1c1c 100%);
+    background-size: 100% 100%;
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(var(--color-accent-rgb), 0.35),
+        inset 0 0 14px rgba(255, 255, 255, 0.75);
+    animation: disco-ball-spin 9s linear infinite;
+    will-change: background-position;
+}
+
+@keyframes disco-ball-sway {
+    0% {
+        transform: translateX(-50%) rotate(-4deg);
+    }
+
+    100% {
+        transform: translateX(-50%) rotate(4deg);
+    }
+}
+
+@keyframes disco-ball-spin {
+    0% {
+        background-position: 0px 0px, 0px 0px, center;
+    }
+
+    100% {
+        background-position: 82px 0px, 0px 0px, center;
+    }
+}
+
+/* ----------------------------------------------------
+   Retro Logo Banner & Typography (Groovy 70s Plaque)
+   ---------------------------------------------------- */
+body.theme-disco-fever .logo-banner {
+    position: relative;
+    /* Tucked up under the hanging disco ball */
+    margin-top: 60px !important;
+    margin-bottom: -20px !important;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 3px solid var(--color-accent);
+    border-radius: 28px;
+    padding: 10px 48px;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 10px rgba(var(--color-accent-rgb), 0.15);
+}
+
+/* 70s Typographic Text Shadow Styling for Date Line */
+body.theme-disco-fever .event-date {
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px var(--color-primary);
+    letter-spacing: 3px;
+    margin-top: 10px;
+}
+
+body.theme-disco-fever .event-date {
+    margin-top: -5px;
+}
+
+body.theme-disco-fever .logo-text-custom {
+    font-family: var(--font-display);
+    color: var(--color-accent) !important;
+    text-shadow:
+        2px 2px 0px var(--color-primary),
+        4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+    letter-spacing: 1.5px;
+    font-weight: normal;
+}
+
+/* 70s Typographic Text Shadow Styling */
+body.theme-disco-fever .event-title {
+    font-family: var(--font-display);
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 1px;
+    text-shadow:
+        3px 3px 0px var(--color-secondary),
+        6px 6px 0px var(--color-primary),
+        9px 9px 20px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-disco-fever .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.8rem;
+    color: var(--color-accent);
+    text-shadow: 2px 2px 0px var(--color-primary);
+    letter-spacing: 4px;
+}
+
+body.theme-disco-fever .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 2rem;
+    color: var(--color-accent);
+    text-shadow: 2px 2px 0px var(--color-primary);
+    letter-spacing: 4px;
+    margin-top: 15px;
+}
+
+body.theme-disco-fever .hosts-title {
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    text-shadow: 2px 2px 0px var(--color-primary);
+}
+
+body.theme-disco-fever .hosts-list span {
+    font-family: var(--font-primary);
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 2px 2px 0px var(--color-primary), 4px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+body.theme-disco-fever .hosts-list {
+    padding: 0;
+}
+
+/* ----------------------------------------------------
+   Disco Ball Specular Reflection Particles (Glitter)
+   ---------------------------------------------------- */
+body.theme-disco-fever .petal[class*="disco-reflection-"] {
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 2px !important;
+    /* rectangular mirrors */
+    opacity: 0.8 !important;
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 4px rgba(var(--color-accent-rgb), 0.4);
+    animation: reflection-glimmer 3s ease-in-out infinite alternate;
+}
+
+body.theme-disco-fever .petal--disco-reflection-white {
+    background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0) 80%) !important;
+}
+
+body.theme-disco-fever .petal--disco-reflection-gold {
+    background: radial-gradient(circle, var(--color-accent) 0%, rgba(var(--color-accent-rgb), 0.7) 40%, rgba(var(--color-accent-rgb), 0) 80%) !important;
+}
+
+@keyframes reflection-glimmer {
+    0% {
+        opacity: 0.25;
+        filter: brightness(0.7);
+    }
+
+    100% {
+        opacity: 0.85;
+        filter: brightness(1.3);
+    }
+}
+
+/* Translucent Host container backdrop overlay */
+body.theme-disco-fever .hosts-container {
+    position: relative;
+    z-index: 100;
+}
+
+/* Countdown Overlay Override */
+body.theme-disco-fever .fullscreen-countdown .countdown-content {
+    background: rgba(26, 5, 46, 0.98) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 25px rgba(var(--color-accent-rgb), 0.4),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.2) !important;
+    border-radius: 12px !important;
+}
+
+body.theme-disco-fever .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+}
+
+body.theme-disco-fever .fullscreen-countdown #countdown-number {
+    color: var(--color-secondary) !important;
+    text-shadow: 0 0 12px rgba(var(--color-secondary-rgb), 0.8) !important;
+}
+
+/* ----------------------------------------------------
+   Responsive Layout & Scaling Rules
+   ---------------------------------------------------- */
+body.theme-disco-fever .main-content {
+    max-width: 1700px;
+}
+
+@media (max-width: 1800px) {
+    body.theme-disco-fever .hosts-list span {
+        font-size: calc(1.4em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-disco-fever .hosts-container {
+        margin: 2.5vh 0 -4vh 0;
+    }
+
+    body.theme-disco-fever .event-footer {
+        margin-bottom: 0.5vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-disco-fever .logo-banner {
+        scale: 1.15;
+        margin-top: 150px !important;
+    }
+
+    body.theme-disco-fever .hosts-list span {
+        font-size: calc(1.70em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-disco-fever .hosts-container {
+        margin-top: 0.5vh;
+        margin-bottom: -3vh;
+    }
+
+    body.theme-disco-fever .event-footer {
+        scale: 1.15;
+        margin-bottom: 0.5vh;
+    }
+}
+
+/* Connect play/pause states to CSS animations */
+body.theme-disco-fever .theme-texture,
+body.theme-disco-fever .theme-frame-inner,
+body.theme-disco-fever .sway-top-2,
+body.theme-disco-fever .sway-top-2::after,
+body.theme-disco-fever .logo-banner {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+/* Light BG Adaptations */
+body.theme-disco-fever.is-light-bg .event-title {
+    color: var(--color-accent) !important;
+    text-shadow:
+        2px 2px 0px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-disco-fever.is-light-bg .hosts-title,
+body.theme-disco-fever.is-light-bg .hosts-list span,
+body.theme-disco-fever.is-light-bg .event-subtitle,
+body.theme-disco-fever.is-light-bg .event-top-label,
+body.theme-disco-fever.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-disco-fever.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-disco-fever.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
