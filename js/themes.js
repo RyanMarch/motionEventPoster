@@ -858,6 +858,83 @@
                 gustStrength: 'Spotlight Speed',
                 frameName: 'Spotlight Sway'
             }
+        }),
+
+        'mardi-gras': defineTheme({
+            id: 'mardi-gras',
+            name: 'Mardi Gras',
+            icon: '🎭',
+            primary: '#1E0035',
+            accent: '#FFD700',
+            secondary: '#00A86B',
+            swatchName: 'Royal Night',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1E0035'
+            },
+            swatches: [
+                { hex: '#12001F', name: 'Midnight Court', accent: '#FFD700', secondary: '#00A86B' },
+                { hex: '#0A1A08', name: 'Emerald Isle', accent: '#FFD700', secondary: '#9B30FF' },
+                { hex: '#1A0012', name: 'Velvet Rose', accent: '#FFD700', secondary: '#E040FB' },
+                { hex: '#0D0020', name: 'Deep Indigo', accent: '#FFA500', secondary: '#00BCD4' },
+                { hex: '#1A1000', name: 'Bronze Dusk', accent: '#FF8C00', secondary: '#7B68EE' },
+                { hex: '#000A12', name: 'Midnight Teal', accent: '#FFD700', secondary: '#26C6DA' }
+            ],
+            fonts: {
+                primary: "'Josefin Sans', system-ui, sans-serif",
+                display: "'Cinzel Decorative', Georgia, serif",
+                heading: "'Cinzel', Georgia, serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Gold confetti
+                { color: '#FFD700', gradient: '#C8960C', type: 'mardi-gras-confetti-gold', weight: 25, speedMultiplier: 0.65, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.85, massMultiplier: 1.0 },
+                // Purple confetti
+                { color: '#9B30FF', gradient: '#6A00C8', type: 'mardi-gras-confetti-purple', weight: 15, speedMultiplier: 0.55, rotSpeedMultiplier: 2.0, sizeMultiplier: 0.8, massMultiplier: 0.9 },
+                // Green confetti
+                { color: '#00A86B', gradient: '#007045', type: 'mardi-gras-confetti-green', weight: 15, speedMultiplier: 0.60, rotSpeedMultiplier: 1.6, sizeMultiplier: 0.88, massMultiplier: 1.0 },
+                // Carnival beads
+                { color: '#FFD700', gradient: '#FFA500', type: 'mardi-gras-bead-gold', weight: 20, speedMultiplier: 0.45, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.1, massMultiplier: 1.3 },
+                { color: '#9B30FF', gradient: '#6600BB', type: 'mardi-gras-bead-purple', weight: 15, speedMultiplier: 0.40, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.05, massMultiplier: 1.2 },
+                // Feathers – long wispy fall
+                { color: '#c040ff', gradient: '#7a00cc', type: 'mardi-gras-feather-purple', weight: 12, speedMultiplier: 0.28, rotSpeedMultiplier: 0.6, sizeMultiplier: 1.4, massMultiplier: 0.5 },
+                { color: '#40c060', gradient: '#1a7a30', type: 'mardi-gras-feather-green', weight: 10, speedMultiplier: 0.25, rotSpeedMultiplier: 0.5, sizeMultiplier: 1.5, massMultiplier: 0.45 },
+                { color: '#FFD700', gradient: '#C89B00', type: 'mardi-gras-feather-gold', weight: 8, speedMultiplier: 0.22, rotSpeedMultiplier: 0.55, sizeMultiplier: 1.35, massMultiplier: 0.5 },
+                // Gold dust sparkles
+                { color: '#FFE566', gradient: '#D4A000', type: 'mardi-gras-dust-gold', weight: 20, speedMultiplier: 0.15, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3, isWhite: false }
+            ],
+            frameClass: 'theme-frame--mardi-gras',
+            overrides: {
+                insetV: 65,
+                insetH: 75,
+                hostTextSize: 1.2,
+                gustStrength: 35,
+                fallSpeed: 0.55,
+                maxPetals: 45,
+                windiness: 10,
+                hostMaxWidth: 120,
+                backdropOpacity: 60
+            },
+            defaults: {
+                hostsTitle: "Our Distinguished Guests",
+                eventTitle: "Mardi Gras",
+                eventSubtitle: "Masquerade Carnival",
+                eventTopLabel: "Laissez les bons temps rouler"
+            },
+            uiLabels: {
+                particlesPlural: 'Beads & Feathers',
+                particlesSingular: 'Bead',
+                borderToggle: 'Hide carnival frame',
+                gustStrength: 'Twirl Speed',
+                frameName: 'Gold Frame'
+            }
         })
     };
 })();
