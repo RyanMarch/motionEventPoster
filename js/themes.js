@@ -1004,6 +1004,71 @@
                 gustStrength: 'Breeze Intensity',
                 frameName: 'Deco Frame'
             }
+        }),
+
+        'halloween': defineTheme({
+            id: 'halloween',
+            name: 'Halloween Soiree',
+            icon: '🎃',
+            primary: '#0C0914',
+            accent: '#FF5E00',
+            secondary: '#39FF14',
+            swatchName: 'Midnight Slime',
+            colors: {
+                text: '#ffffff',
+                darkText: '#0C0914'
+            },
+            swatches: [
+                { hex: '#0C0914', name: 'Midnight Slime', accent: '#39FF14', secondary: '#FF5E00' },
+                { hex: '#0A0812', name: 'Pumpkin Glow', accent: '#FF5E00', secondary: '#B600FF' },
+                { hex: '#08010E', name: 'Gothic Night', accent: '#CC00FF', secondary: '#39FF14' },
+                { hex: '#0F0202', name: 'Vampire Velvet', accent: '#FF003C', secondary: '#FFD700' },
+                { hex: '#FAF7FC', name: 'Spectral Mist', accent: '#4B0082', secondary: '#39FF14' }
+            ],
+            fonts: {
+                primary: "'Nunito', system-ui, sans-serif",
+                display: "Creepster, 'Eater', cursive",
+                heading: "Creepster, cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#111111', gradient: '#222222', type: 'halloween-bat', weight: 30, speedMultiplier: 0.8, rotSpeedMultiplier: 1.5, sizeMultiplier: 1.25, massMultiplier: 1.2 },
+                { color: '#ffffff', gradient: '#d9e2ec', type: 'halloween-ghost', weight: 25, speedMultiplier: -0.45, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.4, massMultiplier: 0.8, isWhite: true },
+                { color: '#FF5E00', gradient: '#cc3b00', type: 'halloween-pumpkin', weight: 20, speedMultiplier: 0.5, rotSpeedMultiplier: 0.6, sizeMultiplier: 1.3, massMultiplier: 1.0 },
+                { color: '#39FF14', gradient: '#20b000', type: 'halloween-sparkle', weight: 25, speedMultiplier: 0.3, rotSpeedMultiplier: 0.8, sizeMultiplier: 0.8, massMultiplier: 0.6 }
+            ],
+            frameClass: 'theme-frame--halloween',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.05,
+                gustStrength: 35,
+                fallSpeed: 0.55,
+                maxPetals: 30,
+                windiness: 12,
+                hostMaxWidth: 120,
+                backdropOpacity: 65
+            },
+            defaults: {
+                hostsTitle: "Ghoulish Guests",
+                eventTitle: "Halloween Soiree",
+                eventSubtitle: "Costume Party",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Bats & Ghosts',
+                particlesSingular: 'Bat',
+                borderToggle: 'Hide haunted frame',
+                gustStrength: 'Wind Intensity',
+                frameName: 'Haunted Frame'
+            }
         })
     };
 })();
