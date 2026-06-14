@@ -134,6 +134,10 @@ class RemoteController {
         document.addEventListener('click', (e) => {
             if (!selectEl?.contains(e.target)) selectEl?.classList.remove('is-open');
         });
+
+        // Initial sync of UI labels for the default theme
+        const defaultThemeId = Object.keys(THEMES)[0] || 'spring';
+        this._syncUILabels(defaultThemeId);
     }
 
     _selectTheme(id, name, icon) {
@@ -143,6 +147,7 @@ class RemoteController {
         this._updateThemeActive(id);
         // Update swatches for the new theme
         this._initSwatches(id);
+        this._syncUILabels(id);
         if (!this._applying) this._send({ type: 'theme', id });
     }
 
@@ -191,6 +196,41 @@ class RemoteController {
         document.querySelectorAll('#bg-swatch-grid .swatch:not(.swatch--custom)').forEach(s => {
             s.classList.toggle('active', (s.dataset.color || '').toLowerCase() === (color || '').toLowerCase());
         });
+    }
+
+    _syncUILabels(themeId) {
+        if (typeof THEMES === 'undefined') return;
+        const theme = THEMES[themeId] || Object.values(THEMES)[0];
+        if (!theme) return;
+
+        const uiLabels = theme.uiLabels || {
+            particlesPlural: 'Particles',
+            particlesSingular: 'Particle',
+            borderToggle: 'Hide background motif',
+            gustStrength: 'Frame Intensity'
+        };
+
+        const pLabel = uiLabels.particlesPlural;
+        const spLabel = uiLabels.particlesSingular;
+
+        const pTitle = document.getElementById('particles-section-title');
+        if (pTitle) pTitle.textContent = pLabel;
+
+        const cntLabel = document.querySelector('label[for="slider-max-petals"]') || document.querySelector('#slider-max-petals')?.parentElement?.querySelector('label');
+        if (cntLabel && cntLabel.firstChild) {
+            cntLabel.firstChild.textContent = `${spLabel} Count `;
+        }
+
+        const bLabel = document.getElementById('check-hide-border')?.closest('label');
+        if (bLabel) {
+            const labelSpan = bLabel.querySelector('.toggle-label');
+            if (labelSpan) labelSpan.textContent = uiLabels.borderToggle;
+        }
+
+        const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement?.querySelector('label');
+        if (wLabel && wLabel.firstChild) {
+            wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
+        }
     }
 
     // ─── Connect Screen ─────────────────────────────────────────────────────
@@ -457,6 +497,7 @@ class RemoteController {
                     document.getElementById('theme-select-label').textContent = theme.name;
                     this._updateThemeActive(state.activeTheme);
                     this._initSwatches(state.activeTheme);
+                    this._syncUILabels(state.activeTheme);
                 }
             }
 
