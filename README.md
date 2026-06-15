@@ -46,32 +46,64 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 Remote access requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
 
 ## Themes
-Choose from multiple visual identities, each with its own unique particle engine and decorative frame:
+Choose from curated visual identity packs, each with its own unique particle engine, decorative frame, and color palette.
+
+### 📦 Standard Pack
 *   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral frames.
 *   **[Digital Grid][demo-digital]:** High-tech accents and techy-glass with striking light beams.
 *   **[Alpine Winter][demo-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
 *   **[Vintage Radio][demo-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
-*   **[Celebration][demo-celebration]:** Colorful confetti and balloons, perfect for birthdays, grand openings, and milestone events.
-*   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
+
+### 🥳 Party Pack
 *   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
-*   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
+*   **[Celebration][demo-celebration]:** Colorful confetti and balloons, perfect for birthdays, grand openings, and milestone events.
 *   **[Summer Cookout][demo-summer-cookout]:** Warm, festive summer barbecue atmosphere with floating embers and string lights, perfect for outdoor gatherings.
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing turquoise water ripples with floating bubbles, beach balls, and lemon, orange, and lime fruit slices.
-*   **[Disco Fever][demo-disco-fever]:** Funky retro dance experience with a spinning disco ball, pulsing spotlights, a dance floor grid, and drifting light reflections.
 *   **[Mardi Gras][demo-mardi-gras]:** Festive and mysterious carnival with ornate Venetian masks, sweeping spotlights, and a parade of falling beads, feathers, and gold confetti.
+
+### 🪩 Decades Pack
+*   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
+*   **[Disco Fever][demo-disco-fever]:** Funky retro dance experience with a spinning disco ball, pulsing spotlights, a dance floor grid, and drifting light reflections.
 *   **[Art Deco Gala][demo-art-deco-gala]:** Glamorous and geometric Roaring 20s style with a repeating gold Art Deco pattern, swaying crystal chandelier, corner champagne flutes, and a mix of gold dust, sparkles, and rising champagne bubble particles.
 
+### 🌌 Specialty Pack
+*   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
+
+### 🎃 Holiday Pack
+*   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
+
 ## Screenshots
+
+### 📦 Standard Pack
 | | |
 | :---: | :---: |
 | **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.png)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.png)][demo-digital] |
 | **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.png)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.png)][demo-radio] |
-| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.png)][demo-celebration] |
-| **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] |
-| **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] |
-| **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.png)][demo-disco-fever] |
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.png)][demo-art-deco-gala] |
+| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | |
+
+### 🥳 Party Pack
+| | |
+| :---: | :---: |
+| **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.png)][demo-electric-pulse] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.png)][demo-celebration] |
+| **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.png)][demo-summer-cookout] | **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.png)][demo-tropical-oasis] |
+| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.png)][demo-mardi-gras] | |
+
+### 🪩 Decades Pack
+| | |
+| :---: | :---: |
+| **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.png)][demo-retro-wave] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.png)][demo-disco-fever] |
+| **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.png)][demo-art-deco-gala] | |
+
+### 🌌 Specialty Pack
+| | |
+| :---: | :---: |
+| **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.png)][demo-cinema] | |
+
+### 🎃 Holiday Pack
+| | |
+| :---: | :---: |
+| **Halloween** – *Spooky & Atmospheric* <br> [![Halloween](.github/assets/poster-halloween.png)][demo-halloween] | |
 
 
 ### Content Editor
@@ -258,12 +290,13 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-winter]: https://motionEventPoster.ryanmarch.me/?theme=alpine-winter
 [demo-radio]: https://motionEventPoster.ryanmarch.me/?theme=vintage-radio
 [demo-corporate]: https://motionEventPoster.ryanmarch.me/?theme=corporate
-[demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration
-[demo-retro-wave]: https://motionEventPoster.ryanmarch.me/?theme=retro-wave
 [demo-electric-pulse]: https://motionEventPoster.ryanmarch.me/?theme=electric-pulse
-[demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
+[demo-celebration]: https://motionEventPoster.ryanmarch.me/?theme=celebration
 [demo-summer-cookout]: https://motionEventPoster.ryanmarch.me/?theme=summer-cookout
 [demo-tropical-oasis]: https://motionEventPoster.ryanmarch.me/?theme=tropical-oasis
 [demo-disco-fever]: https://motionEventPoster.ryanmarch.me/?theme=disco-fever
 [demo-mardi-gras]: https://motionEventPoster.ryanmarch.me/?theme=mardi-gras
+[demo-retro-wave]: https://motionEventPoster.ryanmarch.me/?theme=retro-wave
 [demo-art-deco-gala]: https://motionEventPoster.ryanmarch.me/?theme=art-deco-gala
+[demo-cinema]: https://motionEventPoster.ryanmarch.me/?theme=cinema
+[demo-halloween]: https://motionEventPoster.ryanmarch.me/?theme=halloween

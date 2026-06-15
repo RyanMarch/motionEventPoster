@@ -251,7 +251,10 @@ window.ThemeManager = class ThemeManager {
             btn.setAttribute('role', 'button');
             btn.tabIndex = 0;
             const showAccent = this.poster.theme.flags?.showAccentAsSwatch;
-            if (showAccent && colorObj.accent) {
+            const showSecondary = this.poster.theme.flags?.showSecondaryAsSwatch;
+            if (showSecondary && colorObj.secondary) {
+                btn.style.backgroundColor = colorObj.secondary;
+            } else if (showAccent && colorObj.accent) {
                 btn.style.backgroundColor = colorObj.accent;
             } else {
                 btn.style.backgroundColor = colorObj.hex;
@@ -267,7 +270,7 @@ window.ThemeManager = class ThemeManager {
                 const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
                 
                 if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
-                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
+                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.resolveColorLabel(colorObj.name);
                 
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
                 // Remote sync
@@ -286,46 +289,128 @@ window.ThemeManager = class ThemeManager {
         this.updateSwatchActiveState();
     }
 
-    /**
-     * Dynamically builds the theme selection dropdown based on THEMES configuration.
-     */
     initThemeSelector() {
         const container = document.getElementById('theme-select-options');
         if (!container) return;
 
         container.innerHTML = '';
-        Object.values(THEMES).forEach(theme => {
-            const opt = document.createElement('div');
-            opt.className = 'custom-select-option';
-            opt.dataset.value = theme.id;
-            opt.dataset.icon = theme.icon || '✨';
-            opt.tabIndex = 0;
+
+        // Identify existing/built themes by checking stylesheet link tags in the document
+        const existingThemeIds = new Set();
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.includes('css/themes/theme-')) {
+                const urlPath = href.split('?')[0];
+                const filename = urlPath.substring(urlPath.lastIndexOf('/') + 1);
+                if (filename.startsWith('theme-') && filename.endsWith('.css')) {
+                    const themeId = filename.substring(6, filename.length - 4);
+                    existingThemeIds.add(themeId);
+                }
+            }
+        });
+
+        // 1. Render Sticky Jump Links at the top of the dropdown container
+        const jumpLinksDiv = document.createElement('div');
+        jumpLinksDiv.className = 'custom-select-jump-links';
+        jumpLinksDiv.setAttribute('role', 'navigation');
+        jumpLinksDiv.setAttribute('aria-label', 'Jump to theme pack');
+        
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
+            if (packThemes.length === 0) return;
+
+            const link = document.createElement('button');
+            link.type = 'button';
+            link.className = 'jump-link';
+            link.tabIndex = -1; // Keep keyboard focus cycle on custom options
+            link.title = `Jump to ${packInfo.name}`;
             
             const iconSpan = document.createElement('span');
-            iconSpan.className = 'option-icon';
-            iconSpan.textContent = opt.dataset.icon;
+            iconSpan.textContent = packInfo.icon;
+            link.appendChild(iconSpan);
             
-            opt.appendChild(iconSpan);
-            opt.appendChild(document.createTextNode(` ${theme.name}`));
-            
-            const selectTheme = () => {
-                this.applyTheme(theme.id);
-                this.poster.controls.themeSelectContainer.classList.remove('is-open');
-                this.poster.controls.themeSelectTrigger?.focus();
-            };
+            const textSpan = document.createElement('span');
+            textSpan.className = 'jump-link-text';
+            textSpan.textContent = packInfo.name.split(' ')[0]; // E.g. "Standard", "Holiday"
+            link.appendChild(textSpan);
 
-            opt.addEventListener('click', selectTheme);
-            opt.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    selectTheme();
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent closing/toggling the select
+                const groupEl = container.querySelector(`.custom-select-group[data-pack="${packId}"]`);
+                if (groupEl) {
+                    const stickyHeight = jumpLinksDiv.offsetHeight || 36;
+                    container.scrollTo({
+                        top: groupEl.offsetTop - stickyHeight,
+                        behavior: 'smooth'
+                    });
                 }
             });
 
-            container.appendChild(opt);
+            jumpLinksDiv.appendChild(link);
+        });
+        container.appendChild(jumpLinksDiv);
+
+        // 2. Iterate through packs to build grouped dropdown layout
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            // Filter themes belonging to this pack and check if CSS exists
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
+            if (packThemes.length === 0) return;
+
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'custom-select-group';
+            groupDiv.dataset.pack = packId;
+            groupDiv.setAttribute('role', 'group');
+            groupDiv.setAttribute('aria-label', packInfo.name);
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'custom-select-group-header';
+            headerDiv.setAttribute('role', 'presentation');
+            headerDiv.textContent = `${packInfo.icon} ${packInfo.name}`;
+            groupDiv.appendChild(headerDiv);
+
+            packThemes.forEach(theme => {
+                const opt = document.createElement('div');
+                opt.className = 'custom-select-option';
+                opt.dataset.value = theme.id;
+                opt.dataset.icon = theme.icon || '✨';
+                opt.setAttribute('role', 'option');
+                opt.setAttribute('aria-selected', 'false');
+                opt.tabIndex = -1; // Managed programmatically via arrow keys
+
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'option-icon';
+                iconSpan.textContent = opt.dataset.icon;
+
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'option-label';
+                labelSpan.textContent = theme.name;
+
+                opt.appendChild(iconSpan);
+                opt.appendChild(labelSpan);
+
+                const selectTheme = () => {
+                    this.applyTheme(theme.id);
+                    this.poster.controls.themeSelectContainer.classList.remove('is-open');
+                    this.poster.controls.themeSelectTrigger?.setAttribute('aria-expanded', 'false');
+                    this.poster.controls.themeSelectTrigger?.focus();
+                };
+
+                opt.addEventListener('click', selectTheme);
+                opt.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectTheme();
+                    }
+                });
+
+                groupDiv.appendChild(opt);
+            });
+
+            container.appendChild(groupDiv);
         });
 
-        // Re-cache options in EventPoster if needed
+        // Re-cache options in EventPoster
         this.poster.controls.themeSelectOptions = container.querySelectorAll('.custom-select-option');
         this.updateThemeSelectorActiveState();
     }
@@ -336,7 +421,9 @@ window.ThemeManager = class ThemeManager {
     updateThemeSelectorActiveState() {
         if (!this.poster.controls.themeSelectOptions) return;
         this.poster.controls.themeSelectOptions.forEach(opt => {
-            opt.classList.toggle('selected', opt.dataset.value === this.state.activeTheme);
+            const isSelected = opt.dataset.value === this.state.activeTheme;
+            opt.classList.toggle('selected', isSelected);
+            opt.setAttribute('aria-selected', isSelected ? 'true' : 'false');
         });
     }
 
@@ -372,6 +459,29 @@ window.ThemeManager = class ThemeManager {
                 this.elements.btnCustomColor.style.borderColor = '';
             }
         }
+    }
+
+    /**
+     * Returns the display text for the color scheme span (the part after "Color Scheme: ").
+     * Shows the named swatch name when one matches, otherwise the hex value.
+     */
+    resolveColorLabel(swatchName) {
+        if (swatchName) return swatchName;
+        // Look up current bgColor against the active theme's swatches
+        const currentBg = (this.state.bgColor || this.poster.theme.colors.primary).toLowerCase();
+        const currentAccent = (this.state.accentColor || this.poster.theme.colors.accent || '').toLowerCase();
+        const match = (this.poster.theme.swatches || []).find(sw => {
+            const swHex = sw.hex.toLowerCase();
+            const swAccent = (sw.accent || '').toLowerCase();
+            return swHex === currentBg && (!swAccent || swAccent === currentAccent);
+        });
+        if (match) return match.name;
+        // Custom color — fall back to hex
+        const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
+        const displayColor = isAccentBg
+            ? (this.state.accentColor || this.poster.theme.colors.accent)
+            : (this.state.bgColor || this.poster.theme.colors.primary);
+        return displayColor.toUpperCase();
     }
 
     syncWind() {

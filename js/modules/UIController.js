@@ -372,7 +372,7 @@ window.UIController = class UIController {
                 this.state.accentColor = this.poster.deriveAccentColor(color);
             }
             
-            if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = color.toUpperCase();
+            if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.poster.themeManager?.resolveColorLabel();
             this.poster.themeManager?.syncBackdrop();
             this.poster.themeManager?.updateSwatchActiveState();
 
@@ -514,8 +514,11 @@ window.UIController = class UIController {
         this.elements.fullscreenToggle?.addEventListener('click', async () => {
             if (this.elements.fullscreenToggle.checked) {
                 localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'true');
-                await this.poster.requestWakeLock();
+                // requestFullscreenMode() must run synchronously within the user activation
+                // window. Awaiting requestWakeLock() first causes Chromium to reject the
+                // fullscreen request (activation expires after the first await).
                 this.poster.requestFullscreenMode();
+                await this.poster.requestWakeLock();
             } else {
                 localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false');
                 this.poster.exitFullscreenMode();
@@ -571,22 +574,97 @@ window.UIController = class UIController {
     }
 
     bindThemeSelector() {
-        if (!this.controls.themeSelectContainer) return;
+        const container = this.controls.themeSelectContainer;
+        const trigger = this.controls.themeSelectTrigger;
+        if (!container || !trigger) return;
 
-        this.controls.themeSelectTrigger?.addEventListener('click', () => {
-            this.controls.themeSelectContainer.classList.toggle('is-open');
+        const openDropdown = () => {
+            container.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+        };
+
+        const closeDropdown = () => {
+            container.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+        };
+
+        trigger.addEventListener('click', () => {
+            const isOpen = container.classList.contains('is-open');
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
         });
 
-        this.controls.themeSelectTrigger?.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+        // Event delegation on select container to handle all keyboard shortcuts
+        container.addEventListener('keydown', (e) => {
+            const isOpen = container.classList.contains('is-open');
+            const options = Array.from(container.querySelectorAll('.custom-select-option'));
+            if (options.length === 0) return;
+
+            const activeEl = document.activeElement;
+            const isOptionFocused = options.includes(activeEl);
+
+            if (e.key === 'ArrowDown') {
                 e.preventDefault();
-                this.controls.themeSelectContainer.classList.toggle('is-open');
+                e.stopPropagation(); // Prevent bubbling to the global options panel handler
+                if (!isOpen) {
+                    openDropdown();
+                    options[0].focus();
+                } else if (isOptionFocused) {
+                    const idx = options.indexOf(activeEl);
+                    const nextIdx = (idx + 1) % options.length;
+                    options[nextIdx].focus();
+                } else {
+                    options[0].focus();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent bubbling to the global options panel handler
+                if (!isOpen) {
+                    openDropdown();
+                    options[options.length - 1].focus();
+                } else if (isOptionFocused) {
+                    const idx = options.indexOf(activeEl);
+                    const prevIdx = (idx - 1 + options.length) % options.length;
+                    options[prevIdx].focus();
+                } else {
+                    options[options.length - 1].focus();
+                }
+            } else if (e.key === 'Escape') {
+                if (isOpen) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent bubbling to the global options panel handler
+                    closeDropdown();
+                    trigger.focus();
+                }
+            } else if (e.key === 'Tab') {
+                // Let Tab naturally move focus, but close the dropdown
+                closeDropdown();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                if (isOptionFocused) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent bubbling to the global options panel handler
+                    activeEl.click(); // This will apply theme, close dropdown, and focus trigger
+                } else if (activeEl === trigger) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent bubbling to the global options panel handler
+                    if (isOpen) {
+                        closeDropdown();
+                    } else {
+                        openDropdown();
+                        // Focus selected option or first option
+                        const selectedOpt = container.querySelector('.custom-select-option.selected') || options[0];
+                        selectedOpt?.focus();
+                    }
+                }
             }
         });
 
         document.addEventListener('click', (e) => {
-            if (!this.controls.themeSelectContainer.contains(e.target)) {
-                this.controls.themeSelectContainer.classList.remove('is-open');
+            if (!container.contains(e.target)) {
+                closeDropdown();
             }
         });
     }

@@ -436,7 +436,7 @@ window.RemoteManager = class RemoteManager {
         const picker = document.getElementById('picker-bg-color');
         if (picker) picker.value = color;
         const val = document.getElementById('val-bg-color');
-        if (val) val.textContent = color.toUpperCase();
+        if (val) val.textContent = this.poster.themeManager?.resolveColorLabel() ?? color.toUpperCase();
     }
 
     _applyTheme({ id }) {
