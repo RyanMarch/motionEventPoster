@@ -102,37 +102,113 @@ class RemoteController {
 
     _initThemeSelector() {
         const container = document.getElementById('theme-select-options');
+        const trigger = document.getElementById('theme-select-trigger');
+        const selectEl = document.getElementById('theme-custom-select');
         if (!container || typeof THEMES === 'undefined') return;
 
-        Object.values(THEMES).forEach(theme => {
-            const opt = document.createElement('div');
-            opt.className = 'custom-select-option';
-            opt.dataset.value = theme.id;
-            opt.tabIndex = 0;
+        container.innerHTML = '';
 
-            const icon = document.createElement('span');
-            icon.className = 'option-icon';
-            icon.textContent = theme.icon || '✨';
+        // 1. Render Sticky Jump Links at the top of the dropdown container
+        const jumpLinksDiv = document.createElement('div');
+        jumpLinksDiv.className = 'custom-select-jump-links';
+        jumpLinksDiv.setAttribute('role', 'navigation');
+        jumpLinksDiv.setAttribute('aria-label', 'Jump to theme pack');
+        
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId);
+            if (packThemes.length === 0) return;
 
-            opt.appendChild(icon);
-            opt.appendChild(document.createTextNode(` ${theme.name}`));
+            const link = document.createElement('button');
+            link.type = 'button';
+            link.className = 'jump-link';
+            link.tabIndex = -1; // Keep keyboard focus cycle on custom options
+            link.title = `Jump to ${packInfo.name}`;
+            
+            const iconSpan = document.createElement('span');
+            iconSpan.textContent = packInfo.icon;
+            link.appendChild(iconSpan);
+            
+            const textSpan = document.createElement('span');
+            textSpan.className = 'jump-link-text';
+            textSpan.textContent = packInfo.name.split(' ')[0]; // E.g. "Standard", "Holiday"
+            link.appendChild(textSpan);
 
-            opt.addEventListener('click', () => {
-                this._selectTheme(theme.id, theme.name, theme.icon);
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent closing/toggling the select
+                const groupEl = container.querySelector(`.custom-select-group[data-pack="${packId}"]`);
+                if (groupEl) {
+                    const stickyHeight = jumpLinksDiv.offsetHeight || 36;
+                    container.scrollTo({
+                        top: groupEl.offsetTop - stickyHeight,
+                        behavior: 'smooth'
+                    });
+                }
             });
-            opt.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this._selectTheme(theme.id, theme.name, theme.icon); }
+
+            jumpLinksDiv.appendChild(link);
+        });
+        container.appendChild(jumpLinksDiv);
+
+        // 2. Iterate through packs to build grouped dropdown layout
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            // Filter themes belonging to this pack
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId);
+            if (packThemes.length === 0) return;
+
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'custom-select-group';
+            groupDiv.dataset.pack = packId;
+            groupDiv.setAttribute('role', 'group');
+            groupDiv.setAttribute('aria-label', packInfo.name);
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'custom-select-group-header';
+            headerDiv.setAttribute('role', 'presentation');
+            headerDiv.textContent = `${packInfo.icon} ${packInfo.name}`;
+            groupDiv.appendChild(headerDiv);
+
+            packThemes.forEach(theme => {
+                const opt = document.createElement('div');
+                opt.className = 'custom-select-option';
+                opt.dataset.value = theme.id;
+                opt.setAttribute('role', 'option');
+                opt.setAttribute('aria-selected', 'false');
+                opt.tabIndex = -1; // Programmatically focused
+
+                const icon = document.createElement('span');
+                icon.className = 'option-icon';
+                icon.textContent = theme.icon || '✨';
+
+                opt.appendChild(icon);
+                opt.appendChild(document.createTextNode(` ${theme.name}`));
+
+                opt.addEventListener('click', () => {
+                    this._selectTheme(theme.id, theme.name, theme.icon);
+                });
+                opt.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { 
+                        e.preventDefault(); 
+                        this._selectTheme(theme.id, theme.name, theme.icon); 
+                    }
+                });
+
+                groupDiv.appendChild(opt);
             });
 
-            container.appendChild(opt);
+            container.appendChild(groupDiv);
         });
 
         // Toggle dropdown
-        const trigger = document.getElementById('theme-select-trigger');
-        const selectEl = document.getElementById('theme-custom-select');
-        trigger?.addEventListener('click', () => selectEl?.classList.toggle('is-open'));
+        trigger?.addEventListener('click', () => {
+            const isOpen = selectEl?.classList.toggle('is-open');
+            trigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
         document.addEventListener('click', (e) => {
-            if (!selectEl?.contains(e.target)) selectEl?.classList.remove('is-open');
+            if (!selectEl?.contains(e.target)) {
+                selectEl?.classList.remove('is-open');
+                trigger?.setAttribute('aria-expanded', 'false');
+            }
         });
 
         // Initial sync of UI labels for the default theme
@@ -141,9 +217,11 @@ class RemoteController {
     }
 
     _selectTheme(id, name, icon) {
+        const trigger = document.getElementById('theme-select-trigger');
         document.getElementById('theme-select-icon').textContent = icon || '✨';
         document.getElementById('theme-select-label').textContent = name;
         document.getElementById('theme-custom-select')?.classList.remove('is-open');
+        trigger?.setAttribute('aria-expanded', 'false');
         this._updateThemeActive(id);
         // Update swatches for the new theme
         this._initSwatches(id);
@@ -153,7 +231,9 @@ class RemoteController {
 
     _updateThemeActive(id) {
         document.querySelectorAll('#theme-select-options .custom-select-option').forEach(opt => {
-            opt.classList.toggle('selected', opt.dataset.value === id);
+            const isSelected = opt.dataset.value === id;
+            opt.classList.toggle('selected', isSelected);
+            opt.setAttribute('aria-selected', isSelected ? 'true' : 'false');
         });
         if (typeof THEMES !== 'undefined') {
             Object.keys(THEMES).forEach(tid => {

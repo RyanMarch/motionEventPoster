@@ -221,21 +221,25 @@
                     <div class="panel-sub-section-title">Visual Theme</div>
                     <div class="control">
                         <div class="custom-select" id="theme-custom-select">
-                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0" role="combobox"
+                                aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-select-options"
+                                aria-autocomplete="none">
                                 <div class="trigger-content">
                                     <span class="custom-select-icon" id="theme-select-icon">🌸</span>
                                     <span class="custom-select-label" id="theme-select-label">Spring Blossom</span>
                                 </div>
                                 <div class="trigger-arrow"></div>
                             </div>
-                            <div class="custom-select-options" id="theme-select-options">
+                            <div class="custom-select-options" id="theme-select-options" role="listbox"
+                                aria-label="Visual Theme">
                                 <!-- Dynamically populated from themes.js -->
                             </div>
                         </div>
                     </div>
 
                     <div class="control">
-                        <label>Background <span id="val-bg-color">#032858</span></label>
+                        <label class="background-color-label">Color Scheme: <span
+                                id="val-bg-color">#032858</span></label>
                         <div class="swatch-grid" id="bg-swatch-grid">
                             <!-- Swatches injected by JS -->
                             <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color"

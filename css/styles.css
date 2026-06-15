@@ -15,7 +15,7 @@
     --color-ui-brand: #032858;
     --color-ui-text: #ffffff;
     --color-ui-text-dim: rgba(255, 255, 255, 0.7);
-    --color-ui-bg-panel: rgba(13, 17, 23, 0.95);
+    --color-ui-bg-panel: rgba(13, 17, 23, 0.97);
 
     /* Theme Intensity (Controlled by JS) */
     --frame-intensity: 0.1;

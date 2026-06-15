@@ -330,7 +330,7 @@ window.EventPoster = class EventPoster {
         const displayColor = isAccentBg ? currentAccent : currentBg;
 
         if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
-        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
+        if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.themeManager.resolveColorLabel();
 
         this.themeManager.updateSwatchActiveState();
 
