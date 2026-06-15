@@ -514,8 +514,11 @@ window.UIController = class UIController {
         this.elements.fullscreenToggle?.addEventListener('click', async () => {
             if (this.elements.fullscreenToggle.checked) {
                 localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'true');
-                await this.poster.requestWakeLock();
+                // requestFullscreenMode() must run synchronously within the user activation
+                // window. Awaiting requestWakeLock() first causes Chromium to reject the
+                // fullscreen request (activation expires after the first await).
                 this.poster.requestFullscreenMode();
+                await this.poster.requestWakeLock();
             } else {
                 localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false');
                 this.poster.exitFullscreenMode();

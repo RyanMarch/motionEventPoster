@@ -738,8 +738,6 @@ advanced controls overlay.
     border-radius: 8px !important;
 }
 
-}
-
 /* 8. Checkboxes & Toggles */
 #controls-panel .check-control {
     display: flex;
@@ -822,10 +820,6 @@ advanced controls overlay.
     padding-left: 10px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 12px;
-}
-
-.check-control--indented {
-    /* No longer needs its own connector as it's in the group */
 }
 
 #controls-panel .toggle-control {
