@@ -55,6 +55,11 @@ window.ParticleEngine = class ParticleEngine {
             const rgb = window.PosterUtils.hexToRgb(color);
             const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
             gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+        } else if (type.useThemeSecondary) {
+            color = this.state.secondaryColor || this.poster.theme.colors.secondary || '#ffffff';
+            const rgb = window.PosterUtils.hexToRgb(color);
+            const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+            gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
         } else if (this.poster.theme.id === 'digital-grid') {
             const accent = this.state.accentColor || this.poster.theme.colors.accent;
             if (type.isWhite) {
@@ -91,6 +96,7 @@ window.ParticleEngine = class ParticleEngine {
             accentShift: type.accentShift,
             useThemePrimary: type.useThemePrimary,
             useThemeAccent: type.useThemeAccent,
+            useThemeSecondary: type.useThemeSecondary,
             isWhite: type.isWhite,
             x: Math.random() * 120 - 10,
             y: Math.random() * 140 - 20,
@@ -187,6 +193,12 @@ window.ParticleEngine = class ParticleEngine {
             } else if (p.useThemeAccent) {
                 color = accent;
                 gradient = window.PosterUtils.hslToHex(aH, aS, aL * 0.7);
+            } else if (p.useThemeSecondary) {
+                const secondary = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
+                const sRgb = window.PosterUtils.hexToRgb(secondary);
+                const { h: sH, s: sS, l: sL } = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
+                color = secondary;
+                gradient = window.PosterUtils.hslToHex(sH, sS, sL * 0.7);
             } else if (theme.id === 'digital-grid' && p.accentShift !== undefined) {
                 const h = (aH + p.accentShift) % 360;
                 const s = Math.max(aS, 0.8);

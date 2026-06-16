@@ -98,12 +98,14 @@ body {
     box-shadow: 0 0 0 100vmax var(--color-primary);
 }
 
-/* Fullscreen & Backdrop Normalization */
+/* Fullscreen & Backdrop Normalization (disabled to prevent iframe layout/rendering bugs) */
+/*
 :fullscreen,
 ::backdrop,
 :-webkit-full-screen {
     background-color: var(--color-primary) !important;
 }
+*/
 
 @media (min-width: 1900px) {
     body {
@@ -437,7 +439,7 @@ body:not(.is-sliding) .main-content::after {
     max-width: calc(var(--host-max-width) * var(--host-width-base));
     margin-bottom: 0;
     /* Handled by spacers now */
-    padding: 0 40px;
+    /* padding: 0 40px; */
     pointer-events: none;
     transition: all 0.5s ease;
     width: 100%;
