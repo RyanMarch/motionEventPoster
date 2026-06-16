@@ -1157,7 +1157,7 @@
                 particlesPlural: 'Particles',
                 particlesSingular: 'Particle',
                 borderToggle: 'Hide architectural frame',
-                gustStrength: 'Air Current',
+                gustStrength: 'Animation Intensity',
                 frameName: 'Gallery Frame'
             }
         }),

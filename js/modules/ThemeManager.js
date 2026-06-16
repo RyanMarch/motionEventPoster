@@ -94,6 +94,7 @@ window.ThemeManager = class ThemeManager {
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
+        this.poster.cacheSwayLayers();
         // Remote sync
         if (!window.remoteManager?._applying) {
             window.remoteManager?.send({ type: 'theme', id: themeId });

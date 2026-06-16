@@ -213,6 +213,43 @@ window.ParticleEngine = class ParticleEngine {
         });
     }
 
+    updateBackgroundShapesFade(now) {
+        if (!this.poster.swayLayers || !this.poster.swayLayerBases) return;
+
+        const strength = this.state.gustStrength; // 0 to 100
+        
+        // If the background animations are paused, don't update opacity
+        if (this.state.isBgPaused) return;
+
+        // Fading frequency scales with intensity:
+        // at 0: very slow cycle (e.g. 0.05 Hz, 20s period)
+        // at 100: faster cycle (e.g. 0.3 Hz, 3.3s period)
+        const frequency = 0.05 + (strength / 100) * 0.25;
+
+        // Fading intensity/amplitude scales with intensity:
+        // at 0: 0 (no fading, static base opacity)
+        // at 100: 0.35 (subtle but noticeable fading)
+        const amplitude = (strength / 100) * 0.35;
+
+        this.poster.swayLayers.forEach((el, i) => {
+            const baseOpacity = this.poster.swayLayerBases[i] || 0.85;
+            
+            // If the base opacity is 0 (hidden or not used), keep it as is
+            if (baseOpacity === 0) return;
+
+            // Desynchronize the shapes using a phase offset
+            const phaseOffset = i * 1.7;
+            const sine = Math.sin((now / 1000) * frequency * 2 * Math.PI + phaseOffset);
+
+            // Compute dynamic opacity: base opacity modulated by the sine wave
+            // Using a multiplier ensures it scales proportionally to the theme's default opacity
+            const dynamicOpacity = baseOpacity * (1 + sine * amplitude);
+
+            // Clamp between 0 and 1
+            el.style.opacity = Math.max(0, Math.min(1, dynamicOpacity)).toFixed(3);
+        });
+    }
+
     startAnimationLoop() {
         const loop = (now) => {
             requestAnimationFrame(loop);
@@ -248,6 +285,7 @@ window.ParticleEngine = class ParticleEngine {
             }
 
             if (!this.state.isPetalsPaused) this.updatePhysics(dt);
+            this.updateBackgroundShapesFade(now);
         };
         requestAnimationFrame(loop);
     }

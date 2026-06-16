@@ -11,18 +11,18 @@ window.EventPoster = class EventPoster {
 
         this.cacheElements();
         this.createSwayLayers();
-        
+
         this.state = { ...window.DEFAULTS };
         this.settings = this.loadSettings();
         this.baseHosts = window.DEFAULT_HOSTS || [];
-        
+
         this.init();
     }
 
     cacheElements() {
         this.root = document.documentElement;
         this.body = document.body;
-        
+
         this.layers = {
             back: document.getElementById('particles-back'),
             front: document.getElementById('particles-front'),
@@ -176,9 +176,22 @@ window.EventPoster = class EventPoster {
         });
     }
 
+    cacheSwayLayers() {
+        requestAnimationFrame(() => {
+            this.swayLayers = Array.from(document.querySelectorAll('.sway-layer'));
+            this.swayLayerBases = this.swayLayers.map(el => {
+                el.style.opacity = '';
+                const computed = window.getComputedStyle(el).opacity;
+                const opacity = parseFloat(computed);
+                return isNaN(opacity) ? 0.85 : opacity;
+            });
+        });
+    }
+
+
     hydrate() {
         const s = this.settings;
-        
+
         // Save original theme ID before any deep link override to detect text default transitions
         const originalThemeId = s.activeTheme || window.DEFAULTS.activeTheme;
 
@@ -201,12 +214,12 @@ window.EventPoster = class EventPoster {
 
         Object.keys(window.DEFAULTS).forEach((key) => {
             let defaultValue = window.DEFAULTS[key];
-            
+
             // If the active theme has an override for this key, use it as the new baseline
             if (this.theme.overrides && this.theme.overrides[key] !== undefined) {
                 defaultValue = this.theme.overrides[key];
             }
-            
+
             const savedValue = s[key];
             if (savedValue === undefined || savedValue === null) {
                 this.state[key] = defaultValue;
@@ -228,7 +241,7 @@ window.EventPoster = class EventPoster {
         this.state.targetWindDirection = 1;
         this.state.gustForce = 0;
         this.state.downtimeTimer = 0;
-        
+
         this.state.addedHosts = this.readStoredHosts();
         this.state.removedHosts = this.readStoredRemovedHosts();
         this.state.posterText = this.loadPosterText();
@@ -256,7 +269,7 @@ window.EventPoster = class EventPoster {
         }
 
         const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-        
+
         // On touch-primary devices (like iPad or mobile phones), evaluate window dimensions.
         // On pointer-fine devices (laptops, desktops, projectors), use the physical screen dimensions 
         // to avoid false-positives from browser chrome (e.g. Safari tab/address bars on 13" laptops).
@@ -337,7 +350,7 @@ window.EventPoster = class EventPoster {
         if (this.controls.hostLayoutRadios) {
             this.controls.hostLayoutRadios.forEach(radio => { radio.checked = (radio.value === this.state.hostLayout); });
         }
-        
+
         if (this.controls.fpsCapRadios) {
             this.controls.fpsCapRadios.forEach(radio => { radio.checked = (Number(radio.value) === this.state.fpsCap); });
         }
@@ -347,7 +360,7 @@ window.EventPoster = class EventPoster {
         }
 
         this.ui.syncPosterTextInputs();
-        
+
         this.applyHostLayout(this.state.hostLayout);
 
         this.themeManager.syncWind();
@@ -362,7 +375,7 @@ window.EventPoster = class EventPoster {
         this.controls.hideHost.checked = this.state.hideHost;
         this.controls.hideBorder.checked = this.state.hideBorder;
         this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
-        
+
         if (this.controls.autoHideMenu) this.controls.autoHideMenu.checked = this.state.autoHideMenu;
         if (this.controls.smoothTransitions) {
             this.controls.smoothTransitions.checked = this.state.smoothTransitions;
@@ -440,15 +453,15 @@ window.EventPoster = class EventPoster {
     enforceVerticalFit() {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
         const MIN_SCALE = 0.35;
-        
+
         // Reset scale temporarily to measure natural sizes
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
-        
+
         // Measure element dimensions (including transforms like scale)
         const logoH = this.elements.logoBanner.getBoundingClientRect().height;
         const footerH = this.elements.eventFooter.getBoundingClientRect().height;
         const hostsH = this.containers.hosts.getBoundingClientRect().height;
-        
+
         // Compute element margins
         const getVerticalMargin = (el) => {
             const style = window.getComputedStyle(el);
@@ -457,26 +470,26 @@ window.EventPoster = class EventPoster {
         const logoMargin = getVerticalMargin(this.elements.logoBanner);
         const hostsMargin = getVerticalMargin(this.containers.hosts);
         const footerMargin = getVerticalMargin(this.elements.eventFooter);
-        
+
         // Compute fixed padding/border of the hosts container (non-scalable height)
         const hostsStyle = window.getComputedStyle(this.containers.hosts);
-        const hostsFixed = parseFloat(hostsStyle.paddingTop || 0) + 
-                           parseFloat(hostsStyle.paddingBottom || 0) + 
-                           parseFloat(hostsStyle.borderTopWidth || 0) + 
-                           parseFloat(hostsStyle.borderBottomWidth || 0);
-        
+        const hostsFixed = parseFloat(hostsStyle.paddingTop || 0) +
+            parseFloat(hostsStyle.paddingBottom || 0) +
+            parseFloat(hostsStyle.borderTopWidth || 0) +
+            parseFloat(hostsStyle.borderBottomWidth || 0);
+
         const hostsScalable = hostsH - hostsFixed;
-        
+
         // Total non-scalable vertical height
         const nonScalableH = logoH + logoMargin + hostsFixed + hostsMargin + footerH + footerMargin;
         const availH = window.innerHeight - (this.state.insetV * 2);
-        
+
         let scale = 1;
         if (hostsScalable > 0) {
             const targetH = availH - nonScalableH;
             scale = targetH > 0 ? targetH / hostsScalable : MIN_SCALE;
         }
-        
+
         scale = Math.max(MIN_SCALE, Math.min(1.0, scale));
         this.containers.hosts.style.setProperty('--dynamic-scale', scale.toFixed(3));
     }
@@ -523,11 +536,11 @@ window.EventPoster = class EventPoster {
     renderHosts() {
         if (!this.elements.hostsList) return;
         this.elements.hostsList.innerHTML = '';
-        
+
         // If the user has ever added a host, we stop showing base hosts entirely
         const hostsToShow = this.state.hasEverAddedHost ? this.state.addedHosts : [...this.baseHosts, ...this.state.addedHosts];
         const allHosts = hostsToShow.filter(h => !this.state.removedHosts.includes(h));
-        
+
         allHosts.sort((a, b) => {
             const getSortKey = (name) => {
                 const words = name.toLowerCase().split(/\s+/).filter(w => !window.TITLE_FILTER_WORDS.has(w));
@@ -550,12 +563,12 @@ window.EventPoster = class EventPoster {
 
     // Storage & Settings helpers
     loadSettings() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.settings) || '{}'); } catch { return {}; } }
-    saveSettings() { 
+    saveSettings() {
         const settings = {};
         Object.keys(window.DEFAULTS).forEach(key => {
             settings[key] = this.state[key];
         });
-        localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(settings)); 
+        localStorage.setItem(window.STORAGE_KEYS.settings, JSON.stringify(settings));
     }
     loadPosterText() { try { return { ...window.POSTER_TEXT_DEFAULTS, ...JSON.parse(localStorage.getItem(window.STORAGE_KEYS.posterText) || '{}') }; } catch { return window.POSTER_TEXT_DEFAULTS; } }
     savePosterText() { localStorage.setItem(window.STORAGE_KEYS.posterText, JSON.stringify(this.state.posterText)); }
@@ -566,15 +579,15 @@ window.EventPoster = class EventPoster {
 
     // Logic Helpers
     deriveAccentColor(hex) { return window.PosterUtils.deriveAccentColor(hex); }
-    
+
     // UI visibility helpers
     isControlsPanelVisible() { return this.elements.controlsPanel?.classList.contains('is-visible'); }
     isAddHostFormOpen() { return !this.elements.addHostForm?.classList.contains('is-hidden'); }
     isFactoryResetModalVisible() { return !this.elements.factoryResetModal?.classList.contains('is-hidden'); }
     isCustomizeOpen() { return this.elements.appearanceDetails?.open; }
-    
+
     // Shortcut toggles
-    toggleEditPosterShortcut() { 
+    toggleEditPosterShortcut() {
         if (!this.isControlsPanelVisible()) {
             this.ui.toggleControlsPanel();
             this.elements.editPosterDetails.open = true;
@@ -584,7 +597,7 @@ window.EventPoster = class EventPoster {
         const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
         if (scrollContainer) scrollContainer.scrollTop = 0;
     }
-    toggleCustomizeShortcut() { 
+    toggleCustomizeShortcut() {
         if (!this.isControlsPanelVisible()) {
             this.ui.toggleControlsPanel();
             this.elements.appearanceDetails.open = true;
@@ -594,7 +607,7 @@ window.EventPoster = class EventPoster {
         const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
         if (scrollContainer) scrollContainer.scrollTop = 0;
     }
-    toggleAddHostShortcut() { 
+    toggleAddHostShortcut() {
         if (!this.isControlsPanelVisible()) {
             this.ui.toggleControlsPanel();
             this.elements.hostManagementDetails.open = true;
@@ -607,7 +620,7 @@ window.EventPoster = class EventPoster {
         const scrollContainer = this.elements.controlsPanel.querySelector('.controls-panel-scroll');
         if (scrollContainer) scrollContainer.scrollTop = 0;
     }
-    toggleHelpShortcut() { 
+    toggleHelpShortcut() {
         if (!this.isControlsPanelVisible()) {
             this.ui.toggleControlsPanel();
             this.elements.helpDetails.open = true;
@@ -644,7 +657,7 @@ window.EventPoster = class EventPoster {
             this.state.addedHosts.splice(addedIdx, 1);
             this.persistAddedHosts();
         }
-        
+
         // Hide it from the poster by adding to removedHosts
         if (!this.state.removedHosts.includes(name)) {
             this.state.removedHosts.push(name);
@@ -659,7 +672,7 @@ window.EventPoster = class EventPoster {
 
     restoreHostByName(name) {
         if (!name) return;
-        
+
         // Remove from hidden list
         this.state.removedHosts = this.state.removedHosts.filter(h => h !== name);
         this.persistRemovedHosts();
@@ -669,7 +682,7 @@ window.EventPoster = class EventPoster {
             this.state.addedHosts.push(name);
             this.persistAddedHosts();
         }
-        
+
         this.renderHosts();
         // Remote sync
         if (!window.remoteManager?._applying) {
@@ -698,14 +711,14 @@ window.EventPoster = class EventPoster {
     performFactoryReset() { localStorage.clear(); window.location.reload(); }
 
     resetDefaults() {
-        this.state = { 
+        this.state = {
             ...this.state,
-            ...window.DEFAULTS, 
+            ...window.DEFAULTS,
             isAppRunning: this.state.isAppRunning,
             activeTheme: this.state.activeTheme, // Preserve the current theme
-            addedHosts: this.state.addedHosts, 
-            removedHosts: this.state.removedHosts, 
-            posterText: this.state.posterText 
+            addedHosts: this.state.addedHosts,
+            removedHosts: this.state.removedHosts,
+            posterText: this.state.posterText
         };
 
         // Re-apply the current theme's overrides on top of the global defaults
@@ -715,9 +728,9 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        this.saveSettings(); 
+        this.saveSettings();
         this.applyStateToUI();
-        
+
         // Trigger necessary side-effects so the engine actually reflects the reset state
         this.syncLayout();
         this.themeManager?.syncWind();
@@ -742,49 +755,49 @@ window.EventPoster = class EventPoster {
         }
     }
     startWakeLockHeartbeat() { setInterval(() => { if (this.state.wakeLockActive && !this.state.wakeLock && this.state.wakeLockMode === 'native') this.requestWakeLock(); }, 15000); }
-    
+
     requestFullscreenMode() { if (!document.fullscreenElement) this.root.requestFullscreen().catch(() => { this.elements.fullscreenToggle.checked = false; }); }
     exitFullscreenMode() { if (document.fullscreenElement) document.exitFullscreen(); }
     checkPersistentFullscreen() {
         if (localStorage.getItem(window.STORAGE_KEYS.fullscreenIntent) !== 'true') return;
-        
+
         // Show the recovery hint immediately (matches the style of the countdown)
         if (this.elements.recoveryHint) {
             this.elements.recoveryHint.classList.remove('is-countdown-hidden');
-            
+
             // Auto-hide after 10 seconds if no interaction
             this.state.recoveryHintTimer = setTimeout(() => {
                 this.elements.recoveryHint?.classList.add('is-countdown-hidden');
             }, 10000);
         }
-        
+
         // Wait for a user gesture (click) before starting the recovery countdown
         const triggerRecovery = () => {
             if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
-            
+
             // Hide the hint immediately on interaction
             if (this.elements.recoveryHint) {
                 this.elements.recoveryHint.classList.add('is-countdown-hidden');
                 if (this.state.recoveryHintTimer) clearTimeout(this.state.recoveryHintTimer);
             }
-            
+
             this.showFullscreenCountdown();
         };
 
         window.addEventListener('click', triggerRecovery, { once: true });
     }
-    
+
     showFullscreenCountdown() {
         if (this.state.disableAutoFullscreen || document.fullscreenElement) return;
         this.elements.fullscreenCountdown.classList.remove('is-countdown-hidden');
-        let count = 3; 
+        let count = 3;
         this.elements.countdownNumber.textContent = count;
-        
+
         this.state.countdownTimer = setInterval(() => {
-            count--; 
+            count--;
             this.elements.countdownNumber.textContent = count;
-            if (count <= 0) { 
-                this.cancelFullscreenCountdown(true, false); 
+            if (count <= 0) {
+                this.cancelFullscreenCountdown(true, false);
             }
         }, 1000);
     }
@@ -795,26 +808,26 @@ window.EventPoster = class EventPoster {
             this.state.countdownTimer = null;
         }
         this.elements.fullscreenCountdown.classList.add('is-countdown-hidden');
-        
-        if (triggerFullscreen) { 
-            this.elements.fullscreenToggle.click(); 
+
+        if (triggerFullscreen) {
+            this.elements.fullscreenToggle.click();
         }
-        
-        if (clearIntent) { 
-            localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false'); 
+
+        if (clearIntent) {
+            localStorage.setItem(window.STORAGE_KEYS.fullscreenIntent, 'false');
         }
     }
 
-    updateScreenSize() { 
+    updateScreenSize() {
         if (this.elements.screenSize) {
             const w = window.innerWidth || document.documentElement.clientWidth;
             const h = window.innerHeight || document.documentElement.clientHeight;
-            this.elements.screenSize.textContent = `${w} × ${h}`; 
+            this.elements.screenSize.textContent = `${w} × ${h}`;
         }
     }
     updateTimerDisplay() {
         if (!this.elements.timer) return;
-        
+
         let timeStr = '0:00';
         if (this.state.fullscreenStartTime) {
             const sec = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000);
@@ -822,13 +835,13 @@ window.EventPoster = class EventPoster {
             const s = sec % 60;
             timeStr = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
-        
+
         if (this.elements.timer.textContent !== timeStr) {
             this.elements.timer.textContent = timeStr;
         }
         this.elements.timer.classList.toggle('stat-value--inactive', timeStr === '0:00');
     }
-    
+
     showKeyboardHint() {
         if (!this.elements.keyboardHint) return;
         setTimeout(() => { if (!this.isControlsPanelVisible() && !document.fullscreenElement) { this.elements.keyboardHint.classList.add('is-visible'); setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000); } }, 1500);
@@ -841,7 +854,7 @@ window.EventPoster = class EventPoster {
     }
 
     autoGrowTextarea(el) { el.style.height = 'auto'; el.style.height = (el.scrollHeight) + 'px'; }
-    
+
     applyHideUiState(hidden) {
         this.body.classList.toggle('ui-hidden', hidden);
         // If we hide UI, we also hide the sub-toggles to keep panel clean
