@@ -30,12 +30,13 @@ body.theme-minimal-elegance {
     --z-particles-mid: 2;
     --z-content: 200;
     --z-particles-front: 250;
+    --elegance-dark-text: rgba(var(--color-dark-text-rgb, 17, 17, 17), 0.95);
+    --elegance-light-text: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
 }
 
 body.theme-minimal-elegance #bg-swatch-grid {
     max-width: 240px !important;
 }
-
 
 /* ============================================================
    TEXTURE LAYER — Matte Watercolor Paper & Fine Linen
@@ -89,8 +90,6 @@ body.theme-minimal-elegance .sway-layer {
 /* Mat 1: Large soft panel — lower right, warm tint */
 body.theme-minimal-elegance .sway-bottom-right {
     display: block !important;
-    top: auto;
-    left: auto;
     bottom: -15vh;
     right: -15vw;
     width: 55vw;
@@ -105,13 +104,11 @@ body.theme-minimal-elegance.is-light-bg .sway-bottom-right {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.15));
 }
 
-/* Mat 2: Subtle dark accent — upper left */
+/* Mat 2: Subtle dark accent — upper left - Reuses the existing sway-top-right layer name for compatibility.*/
 body.theme-minimal-elegance .sway-top-right {
     display: block !important;
     top: -10vh;
     left: -10vw;
-    bottom: auto;
-    right: auto;
     width: 40vw;
     height: 40vh;
     background: linear-gradient(to bottom right, rgba(var(--color-secondary-rgb), 0.08), rgba(var(--color-secondary-rgb), 0.03));
@@ -125,12 +122,12 @@ body.theme-minimal-elegance.is-light-bg .sway-top-right {
 }
 
 /* Mat 3: Right-side thin vertical architectural accent stripe */
+/* Reuses existing sway-left-side layer name for compatibility.
+   Positioned on the right side for this theme. */
 body.theme-minimal-elegance .sway-left-side {
     display: block !important;
     top: 10vh;
     right: -5vw;
-    left: auto;
-    bottom: auto;
     width: 15vw;
     height: 80vh;
     background: linear-gradient(to bottom, rgba(var(--color-accent-rgb), 0.12), rgba(var(--color-accent-rgb), 0.03));
@@ -144,8 +141,6 @@ body.theme-minimal-elegance .sway-bottom-left {
     display: block !important;
     bottom: -5vh;
     left: 5vw;
-    top: auto;
-    right: auto;
     width: 80vw;
     height: 12vh;
     background: linear-gradient(to top, rgba(var(--color-secondary-rgb), 0.10), transparent);
@@ -345,7 +340,7 @@ body.theme-minimal-elegance .logo-text-custom {
     font-weight: 300;
     letter-spacing: 0.45em;
     text-transform: uppercase;
-    color: var(--color-dark-text) !important;
+    color: var(--elegance-dark-text) !important;
     text-shadow: none !important;
     font-size: 0.85em;
 }
@@ -397,15 +392,14 @@ body.theme-minimal-elegance.is-light-bg .hosts-title {
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .hosts-title {
-    color: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
+    color: var(--elegance-light-text);
 }
 
 body.theme-minimal-elegance .hosts-list span {
     font-weight: 300;
-    color: var(--color-dark-text);
+    color: var(--elegance-dark-text);
     margin: 5px 14px;
     letter-spacing: 0.05em;
-    /* text-shadow: 0px 0px 10px rgba(50, 50, 50, 0.4); */
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .hosts-list span {
@@ -431,11 +425,11 @@ body.theme-minimal-elegance .event-top-label {
     font-size: 0.85rem;
     letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: rgba(var(--color-dark-text-rgb, 17, 17, 17), 0.95);
+    color: var(--elegance-dark-text);
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .event-top-label {
-    color: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
+    color: var(--elegance-light-text);
 }
 
 body.theme-minimal-elegance .event-title {
@@ -444,7 +438,7 @@ body.theme-minimal-elegance .event-title {
     font-variation-settings: 'opsz' 30;
     font-size: 6rem;
     font-weight: 400;
-    color: var(--color-dark-text);
+    color: var(--elegance-dark-text);
     margin: 0.1em 0 0.15em 0;
     letter-spacing: 0.75rem;
     line-height: 1.05;
@@ -461,12 +455,12 @@ body.theme-minimal-elegance .event-subtitle {
     font-weight: 300;
     letter-spacing: 0.4em;
     text-transform: uppercase;
-    color: rgba(var(--color-dark-text-rgb, 17, 17, 17), 0.95);
+    color: var(--elegance-dark-text);
     margin-bottom: 0;
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .event-subtitle {
-    color: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
+    color: var(--elegance-light-text);
 }
 
 body.theme-minimal-elegance .event-date {
@@ -479,7 +473,7 @@ body.theme-minimal-elegance .event-date {
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .event-date {
-    color: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
+    color: var(--elegance-light-text);
 }
 
 /* ============================================================
@@ -497,13 +491,6 @@ body.theme-minimal-elegance .petal--dust {
     box-shadow: 0 0 4px rgba(var(--color-accent-rgb), 0.2);
 }
 
-/* Highly blurred out-of-focus bokeh */
-/* body.theme-minimal-elegance .petal--bokeh {
-    filter: blur(5px) !important;
-    opacity: 0.12 !important;
-    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
-} */
-
 /* ============================================================
    FULLSCREEN COUNTDOWN OVERLAY
    ============================================================ */
@@ -517,7 +504,7 @@ body.theme-minimal-elegance .fullscreen-countdown .countdown-content {
 
 body.theme-minimal-elegance .fullscreen-countdown .countdown-text {
     font-family: var(--font-primary) !important;
-    color: var(--color-dark-text) !important;
+    color: var(--elegance-dark-text) !important;
     letter-spacing: 0.2em;
     font-weight: 300;
 }
@@ -542,6 +529,7 @@ body.theme-minimal-elegance .hosts-list {
     max-width: calc(var(--host-max-width) * var(--host-width-base)) !important;
 }
 
+/* Split optimized for poster compositions. Large-format layouts begin above 1800px render width. */
 @media (max-width: 1800px) {
 
     body.theme-minimal-elegance .logo-banner {
@@ -642,7 +630,8 @@ body.theme-minimal-elegance .hosts-list {
 }
 
 
-/* Reliable exact centering when logo and hosts are hidden (works whether date is hidden or visible) */
+/* When logo and host sections are hidden, the event title becomes the sole focal element and is centered independently
+   of document flow. Works whether the date is visible or hidden. */
 body.theme-minimal-elegance.logo-hidden.host-hidden .event-footer {
     position: absolute !important;
     top: 50% !important;
