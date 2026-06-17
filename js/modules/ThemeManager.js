@@ -94,6 +94,7 @@ window.ThemeManager = class ThemeManager {
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
+        this.poster.cacheSwayLayers();
         // Remote sync
         if (!window.remoteManager?._applying) {
             window.remoteManager?.send({ type: 'theme', id: themeId });
@@ -194,6 +195,15 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--color-secondary-rgb', secondaryRgbStr);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
+        
+        const textRgb = window.PosterUtils.hexToRgb(theme.colors.text);
+        const darkTextRgb = window.PosterUtils.hexToRgb(theme.colors.darkText || '#1a1c1e');
+        if (textRgb) {
+            this.root.style.setProperty('--color-text-rgb', `${textRgb.r}, ${textRgb.g}, ${textRgb.b}`);
+        }
+        if (darkTextRgb) {
+            this.root.style.setProperty('--color-dark-text-rgb', `${darkTextRgb.r}, ${darkTextRgb.g}, ${darkTextRgb.b}`);
+        }
         
         // Dynamic Bunting color SVG generation
         const buntingSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 35' width='50' height='35'><path d='M0,0 Q25,8 50,0 L50,2 L25,32 L0,2 Z' fill='${encodeURIComponent(accentColor)}' opacity='0.85'/><path d='M0,0 Q25,8 50,0 L42,0 L25,24 L8,0 Z' fill='${encodeURIComponent(secondaryColor)}' opacity='0.95'/></svg>")`;

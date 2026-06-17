@@ -216,12 +216,12 @@
             overrides: {
                 insetV: 50,
                 insetH: 60,
-                hostTextSize: 1.0,
+                hostTextSize: 0.95,
                 gustStrength: 15,
                 fallSpeed: 0.4,
                 maxPetals: 80,
                 windiness: 5,
-                hostMaxWidth: 120,
+                hostMaxWidth: 112,
                 backdropOpacity: 65
             },
             defaults: {
@@ -1043,7 +1043,7 @@
             },
             swatches: [
                 { hex: '#0B1A12', name: 'Toxic Slime', accent: '#39FF14', secondary: '#111111' },
-                { hex: '#160824', name: 'Witch\'s Brew', accent: '#9D00FF', secondary: '#FF7518' },
+                { hex: '#160824', name: 'Witchy Brew', accent: '#9D00FF', secondary: '#FF7518' },
                 { hex: '#2A0808', name: 'Vampire Bite', accent: '#D32F2F', secondary: '#000000' }
             ],
             fonts: {
@@ -1091,26 +1091,33 @@
         }),
 
         // --- STANDARD PACK ---
-        'minimalist-elegance': defineTheme({
-            id: 'minimalist-elegance',
-            name: 'Minimalist Elegance',
+        'minimal-elegance': defineTheme({
+            id: 'minimal-elegance',
+            name: 'Minimal Elegance',
             pack: 'standard',
-            icon: '🏛️',
+            icon: '🖼️',
             primary: '#F5F5F7',
             accent: '#D4AF37',
             secondary: '#111111',
             swatchName: 'Gallery White',
             colors: {
-                text: '#111111',
-                darkText: '#ffffff'
+                text: '#ffffff',
+                darkText: '#111111'
             },
             swatches: [
-                { hex: '#111111', name: 'Onyx Black', accent: '#E5C158', secondary: '#F5F5F7' },
                 { hex: '#EBEBEB', name: 'Cool Marble', accent: '#78909C', secondary: '#263238' },
-                { hex: '#FAF9F6', name: 'Warm Alabaster', accent: '#A1887F', secondary: '#3E2723' }
+                { hex: '#FAF9F6', name: 'Warm Alabaster', accent: '#A1887F', secondary: '#3E2723' },
+                { hex: '#F5F5F5', name: 'White', accent: '#050505', secondary: '#050505' },
+                { hex: '#F7F4EB', name: 'Champagne Toast', accent: '#D4AF37', secondary: '#3D352E' },
+                { hex: '#E8ECE9', name: 'Sage Studio', accent: '#5A6B5C', secondary: '#2B332D' },
+                { hex: '#2C2226', name: 'Plum Gallery', accent: '#D3C2B0', secondary: '#FAF8F5' },
+                { hex: '#1F1A17', name: 'Espresso Matte', accent: '#C6B3A1', secondary: '#FDFBF7' },
+                { hex: '#212529', name: 'Midnight Navy', accent: '#1A73E8', secondary: '#F8F9FA' },
+                { hex: '#111111', name: 'Onyx Black', accent: '#E5C158', secondary: '#F5F5F7' },
+                { hex: '#161616', name: 'Black', accent: '#ffffff', secondary: '#ffffff' },
             ],
             fonts: {
-                primary: "'Inter', sans-serif",
+                primary: "'Montserrat', sans-serif",
                 display: "'Bodoni Moda', serif",
                 heading: "'Bodoni Moda', serif"
             },
@@ -1123,20 +1130,22 @@
                 swaySide: "none"
             },
             particles: [
-                { color: '#D4AF37', gradient: '#C5A059', type: 'dust', weight: 30, speedMultiplier: 0.2, sizeMultiplier: 0.6, massMultiplier: 0.4 },
-                { color: '#111111', gradient: '#333333', type: 'dust', weight: 10, speedMultiplier: 0.15, sizeMultiplier: 0.4, massMultiplier: 0.3 }
+                { useThemeAccent: true, type: 'dust', weight: 65, speedMultiplier: 0.18, sizeMultiplier: 0.7, massMultiplier: 0.4 },
+                { useThemeSecondary: true, type: 'dust', weight: 45, speedMultiplier: 0.12, sizeMultiplier: 0.5, massMultiplier: 0.3 },
+                // { useThemeAccent: true, type: 'bokeh', weight: 15, speedMultiplier: 0.08, sizeMultiplier: 2.2, massMultiplier: 0.2 }
             ],
-            frameClass: 'theme-frame--minimalist-elegance',
+            frameClass: 'theme-frame--minimal-elegance',
+            flags: { syncParticleColors: true },
             overrides: {
                 insetV: 70,
                 insetH: 90,
-                hostTextSize: 0.9,
+                hostTextSize: 1,
                 gustStrength: 10,
                 fallSpeed: 0.2,
                 maxPetals: 15,
                 windiness: 3,
                 hostMaxWidth: 150,
-                backdropOpacity: 0
+                backdropOpacity: 60
             },
             defaults: {
                 hostsTitle: "Featured Artists",
@@ -1145,10 +1154,10 @@
                 eventTopLabel: "Exclusive"
             },
             uiLabels: {
-                particlesPlural: 'Dust Motes',
-                particlesSingular: 'Mote',
+                particlesPlural: 'Particles',
+                particlesSingular: 'Particle',
                 borderToggle: 'Hide architectural frame',
-                gustStrength: 'Air Current',
+                gustStrength: 'Animation Intensity',
                 frameName: 'Gallery Frame'
             }
         }),

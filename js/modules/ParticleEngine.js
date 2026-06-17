@@ -55,6 +55,11 @@ window.ParticleEngine = class ParticleEngine {
             const rgb = window.PosterUtils.hexToRgb(color);
             const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
             gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+        } else if (type.useThemeSecondary) {
+            color = this.state.secondaryColor || this.poster.theme.colors.secondary || '#ffffff';
+            const rgb = window.PosterUtils.hexToRgb(color);
+            const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+            gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
         } else if (this.poster.theme.id === 'digital-grid') {
             const accent = this.state.accentColor || this.poster.theme.colors.accent;
             if (type.isWhite) {
@@ -91,6 +96,7 @@ window.ParticleEngine = class ParticleEngine {
             accentShift: type.accentShift,
             useThemePrimary: type.useThemePrimary,
             useThemeAccent: type.useThemeAccent,
+            useThemeSecondary: type.useThemeSecondary,
             isWhite: type.isWhite,
             x: Math.random() * 120 - 10,
             y: Math.random() * 140 - 20,
@@ -187,6 +193,12 @@ window.ParticleEngine = class ParticleEngine {
             } else if (p.useThemeAccent) {
                 color = accent;
                 gradient = window.PosterUtils.hslToHex(aH, aS, aL * 0.7);
+            } else if (p.useThemeSecondary) {
+                const secondary = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
+                const sRgb = window.PosterUtils.hexToRgb(secondary);
+                const { h: sH, s: sS, l: sL } = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
+                color = secondary;
+                gradient = window.PosterUtils.hslToHex(sH, sS, sL * 0.7);
             } else if (theme.id === 'digital-grid' && p.accentShift !== undefined) {
                 const h = (aH + p.accentShift) % 360;
                 const s = Math.max(aS, 0.8);
@@ -198,6 +210,43 @@ window.ParticleEngine = class ParticleEngine {
             }
             
             p.element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
+        });
+    }
+
+    updateBackgroundShapesFade(now) {
+        if (!this.poster.swayLayers || !this.poster.swayLayerBases) return;
+
+        const strength = this.state.gustStrength; // 0 to 100
+        
+        // If the background animations are paused, don't update opacity
+        if (this.state.isBgPaused) return;
+
+        // Fading frequency scales with intensity:
+        // at 0: very slow cycle (e.g. 0.05 Hz, 20s period)
+        // at 100: faster cycle (e.g. 0.3 Hz, 3.3s period)
+        const frequency = 0.05 + (strength / 100) * 0.25;
+
+        // Fading intensity/amplitude scales with intensity:
+        // at 0: 0 (no fading, static base opacity)
+        // at 100: 0.35 (subtle but noticeable fading)
+        const amplitude = (strength / 100) * 0.35;
+
+        this.poster.swayLayers.forEach((el, i) => {
+            const baseOpacity = this.poster.swayLayerBases[i] || 0.85;
+            
+            // If the base opacity is 0 (hidden or not used), keep it as is
+            if (baseOpacity === 0) return;
+
+            // Desynchronize the shapes using a phase offset
+            const phaseOffset = i * 1.7;
+            const sine = Math.sin((now / 1000) * frequency * 2 * Math.PI + phaseOffset);
+
+            // Compute dynamic opacity: base opacity modulated by the sine wave
+            // Using a multiplier ensures it scales proportionally to the theme's default opacity
+            const dynamicOpacity = baseOpacity * (1 + sine * amplitude);
+
+            // Clamp between 0 and 1
+            el.style.opacity = Math.max(0, Math.min(1, dynamicOpacity)).toFixed(3);
         });
     }
 
@@ -236,6 +285,7 @@ window.ParticleEngine = class ParticleEngine {
             }
 
             if (!this.state.isPetalsPaused) this.updatePhysics(dt);
+            this.updateBackgroundShapesFade(now);
         };
         requestAnimationFrame(loop);
     }
