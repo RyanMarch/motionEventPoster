@@ -2,7 +2,7 @@
   <h1>Interactive Event Poster</h1>
   <p><i>A professional, browser-based display for gala fundraisers and high-end venues.</i></p>
 
-  [<img src="https://img.shields.io/badge/VIEW_LIVE_DEMO-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />][demo]
+  [<img src="https://img.shields.io/badge/Open_Motion_Poster-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />][demo]
 
   <br>
 
@@ -19,9 +19,9 @@
 ## Overview
 [Motion Poster](https://motionposter.ryanmarch.me) is a professional-grade, browser-based display tool designed for gala fundraisers, non-profit events, and high-end venue kiosks. It replaces static slides and paper posters with a living, breathing digital poster that captures attention and elevates the atmosphere of any physical space.
 
-Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect without needing a developer.
+Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect.
 
-**Quick start:** Simply open **[Motion Poster](https://motionposter.ryanmarch.me)**, make your customizations, and you're ready to go!
+**Quick start:** Open **[Motion Poster](https://motionposter.ryanmarch.me)**, make your customizations, and you're ready to go!
 
 ## Contents
   - [Key Benefits](#key-benefits)
@@ -53,11 +53,11 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
   - [Version History](#version-history)
 
 ## Key Benefits
-*   **Easy To Use:** Simply open, customize, and you're ready to go.
+*   **Easy To Use:** Choose your theme, add content, and you're ready to go.
 *   **Your Branding, Your Customization:** All customizations, including uploaded logos and QR codes, are saved directly into your browser. They persist through refreshes and restarts, so your work is never lost.
-*   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly without having to edit code.
+*   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly.
 *   **Untethered Remote Control:** Easily pair a secondary device to control all layouts, text, and styling in real-time from anywhere.
-*   **Event Reliability:** Built-in features prevent the screen from sleeping and ensure the poster automatically recovers if the power blinks or the page refreshes.
+*   **Event Reliability:** Fullscreen mode prevents the screen from sleeping and will automatically resume fullscreen mode if interrupted.
 
 ## Features
 
@@ -69,13 +69,13 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 
 ### Remote Control
 *   **No App Required:** Access controls from any web browser on any device (e.g. iPhone, iPad, etc.) - no app download needed.
-*   **Easy Pairing:** Simply generate a code to start access from another device. 
+*   **Easy Pairing:** Use a pairing code to start access from another device. 
 *   **Cutomize appearance**: Choose themes, pick colors, tweak the layout, and add event details.
 *   **Name Management**: Add or remove names from the host list.
 
 Remote control allows for full poster control, all from the comfort of your seat. No need to go back to the presentation display.
 
-Remote pairing requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
+Remote pairing requires the remote device to be on the same network as the host device. Cellular hotspots work well for this purpose if a Wi-Fi network is not available.
 
 *More: [Using the Remote Control](#using-the-remote-control)*
 
@@ -135,27 +135,27 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **Visual Layout Control:** Independently toggle the visibility of every element, including the logo, title, date, the host list, and even the background animations.
 
 ### Name Management
-*   **Seamless Entry:** Easily add or remove names one at a time via a simple form.
-*   **Interactive Removal:** Remove a name quickly by simply holding down on a name, or choose it from the list to remove it.
+*   **Seamless Entry:** Easily add or remove names one at a time via the form.
+*   **Interactive Removal:** Remove a name quickly by holding down on a name, or choose it from the list to remove it.
 *   **Smart Font Scaling:** The names list automatically adjusts its font size and layout to fit your screen perfectly, whether you have 5 names or 50.
 *   **Flexible Layout Modes:** Choose between Justified, Centered, or Column-based layouts to suit your aesthetic preferences.
 *   **Safety Net:** Recently removed names are stored in a "Recently Removed" list within the menu, allowing you to restore them with a single click if you make a mistake.
 
 ### Appearance & Performance Settings
-*   **Hardware Wake Lock:** Automatically tells the computer to stay awake, preventing embarrassing screensavers or sleep modes during your event.
+*   **Hardware Wake Lock:** Automatically tells the computer to stay awake, preventing screensavers or sleep modes during your event.
 *   **Auto-Fullscreen Recovery:** Remembers your fullscreen state. If the browser reloads, it's easy to jump back into presentation mode.
-*   **Touch-Friendly Hotspot:** No keyboard? No problem. A hidden "hold" zone in the top-right corner allows you to open settings with a simple touch or tap-and-hold.
+*   **Touch-Friendly Hotspot:** No keyboard? No problem. A hidden "hold" zone in the top-right corner allows you to open settings with a tap-and-hold.
 *   **Performance Engineering:**
     *   **Frame Rate Limiter:** Cap performance at 30, 60, 90, or 120 FPS to save battery or ensure smooth motion on high-refresh displays.
     *   **Smooth Transitions:** Toggle UI animations for a snappier feel or a more cinematic experience.
 *   **Styling Lab:**
-    *   **Text Backdrop Strength:** Control the legibility of names against complex backgrounds.
+    *   **Text Backdrop Strength:** Add more separation and legibility for names against complex backgrounds.
     *   **Layout Control:** Fine-tune the **Max Width**, **Vertical Spacing**, and **Horizontal Spacing** to fit any screen.
     *   **Live Color Picker:** Match the background and accent colors to your brand's specific palette.
 
 ## Quick Controls
 
-Everything you see on the poster is controlled via an intuitive management interface in the app. No code required.
+All text and appearance settings on the poster are controlled via an intuitive management interface in the app. No coding required.
 
 ### Status
 - **Fullscreen toggle** — puts the browser into fullscreen mode and activates Wake Lock to prevent the screen from sleeping
@@ -217,7 +217,7 @@ Everything you see on the poster is controlled via an intuitive management inter
 
 ## Project Architechture and Technical Specs
 
-This project is built as a lightweight, zero-dependency "Vanilla" web application. It is designed for maximum performance and easy hosting on services like GitHub Pages.
+This project is built as a lightweight web application. It is designed for maximum performance and easy deployment.
 
 ### File Structure
 *   `index.html`: The core structure and entry point.
@@ -254,7 +254,7 @@ This architecture allows the project to remain entirely client-side, requiring n
 The remote control feature is designed to be completely zero-config and infrastructure-free for event environments with unpredictable internet access. 
 
 - **Network Requirements:** Both the display device and the remote device only need to reside on the same local network (local venue Wi-Fi, ethernet, or a smartphone cellular hotspot).
-- **Communication Protocol:** It uses simple, local peer-to-peer data channels for syncing.
+- **Communication Protocol:** It uses local peer-to-peer data channels for syncing.
 - **State Synchronization:** Actions are broadcast across the local connection, ensuring that state changes are mirrored instantly on the presentation UI.
 
 *Note: Due to standard browser security specifications, entering or exiting full-screen mode must be done directly on the primary device and cannot be triggered via the remote.*
