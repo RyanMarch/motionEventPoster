@@ -25,7 +25,7 @@ body.theme-minimal-elegance .floral-bg {
 
 /* Light gallery background */
 body.theme-minimal-elegance {
-    background-color: var(--color-primary) !important;
+    background-color: var(--color-primary);
     --z-particles-back: 1;
     --z-particles-mid: 2;
     --z-content: 200;
@@ -36,6 +36,18 @@ body.theme-minimal-elegance {
 
 body.theme-minimal-elegance #bg-swatch-grid {
     max-width: 240px !important;
+}
+
+body.theme-minimal-elegance.is-light-bg #fullscreen-countdown,
+body.theme-minimal-elegance.is-light-bg #recovery-hint,
+body.theme-minimal-elegance.is-light-bg .countdown-label,
+body.theme-minimal-elegance.is-light-bg .countdown-number {
+    color: var(--elegance-dark-text) !important;
+    opacity: 1 !important;
+}
+
+body.theme-minimal-elegance.is-light-bg #btn-cancel-fullscreen {
+    background-color: var(--elegance-dark-text) !important;
 }
 
 /* ============================================================
@@ -457,6 +469,7 @@ body.theme-minimal-elegance .event-subtitle {
     text-transform: uppercase;
     color: var(--elegance-dark-text);
     margin-bottom: 0;
+    margin-top: 6px;
 }
 
 body.theme-minimal-elegance:not(.is-light-bg) .event-subtitle {
