@@ -14,10 +14,21 @@ window.ThemeManager = class ThemeManager {
 
     applyTheme(themeId, skipOverrides = false) {
         if (this.state.isApplyingTheme) return;
+
+        const theme = THEMES[themeId] || THEMES.spring;
+
+        if (this.state.activeTheme && this.state.activeTheme !== theme.id) {
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('theme')) {
+                url.searchParams.delete('theme');
+                const newUrl = url.pathname + url.search + url.hash;
+                window.history.replaceState(null, '', newUrl);
+            }
+        }
+
         this.state.isApplyingTheme = true;
 
         const prevTheme = this.poster.theme;
-        const theme = THEMES[themeId] || THEMES.spring;
         
         // Handle contextual default labels
         if (prevTheme && prevTheme.defaults && theme.defaults) {
@@ -43,6 +54,7 @@ window.ThemeManager = class ThemeManager {
         if (!skipOverrides) {
             this.state.accentColor = null;
             this.state.bgColor = null;
+            this.state.secondaryColor = null;
         }
         
         if (theme.overrides && !skipOverrides) {
@@ -54,13 +66,16 @@ window.ThemeManager = class ThemeManager {
             this.syncWind();
         }
         
+        Object.values(THEMES).forEach(t => {
+            this.body.classList.remove(`theme-${t.id}`);
+        });
+        this.body.classList.add(`theme-${themeId}`);
+
         if (this.elements.themeFrame) {
             Object.values(THEMES).forEach(t => {
                 if (t.frameClass) this.elements.themeFrame.classList.remove(t.frameClass);
-                this.body.classList.remove(`theme-${t.id}`);
             });
             if (theme.frameClass) this.elements.themeFrame.classList.add(theme.frameClass);
-            this.body.classList.add(`theme-${themeId}`);
             if (this.elements.logoBanner) {
                 const disp = this.elements.logoBanner.style.display;
                 this.elements.logoBanner.style.display = 'none';
@@ -68,18 +83,18 @@ window.ThemeManager = class ThemeManager {
                 this.elements.logoBanner.style.display = disp;
             }
         }
-        
         Object.values(this.poster.layers).forEach(layer => layer.innerHTML = '');
         this.state.petals = [];
         this.poster.particleEngine?.adjustAmbientPetals();
         
         this.syncUI(); // Handle expensive label/font updates once
         this.syncBackdrop(); // Handle color/opacity sync
-        
+
         this.initSwatches();
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
+        this.poster.cacheSwayLayers();
         // Remote sync
         if (!window.remoteManager?._applying) {
             window.remoteManager?.send({ type: 'theme', id: themeId });
@@ -166,14 +181,33 @@ window.ThemeManager = class ThemeManager {
         const accentColor = this.state.accentColor || theme.colors.accent;
         const accentRgb = window.PosterUtils.hexToRgb(accentColor);
         const accentRgbStr = accentRgb ? `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}` : rgbStr;
+
+        const secondaryColor = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
+        const secondaryRgb = window.PosterUtils.hexToRgb(secondaryColor);
+        const secondaryRgbStr = secondaryRgb ? `${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}` : rgbStr;
         
         // Update Core Colors
         this.root.style.setProperty('--color-primary', color);
         this.root.style.setProperty('--color-primary-rgb', rgbStr);
         this.root.style.setProperty('--color-accent', accentColor);
         this.root.style.setProperty('--color-accent-rgb', accentRgbStr);
+        this.root.style.setProperty('--color-secondary', secondaryColor);
+        this.root.style.setProperty('--color-secondary-rgb', secondaryRgbStr);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
+        
+        const textRgb = window.PosterUtils.hexToRgb(theme.colors.text);
+        const darkTextRgb = window.PosterUtils.hexToRgb(theme.colors.darkText || '#1a1c1e');
+        if (textRgb) {
+            this.root.style.setProperty('--color-text-rgb', `${textRgb.r}, ${textRgb.g}, ${textRgb.b}`);
+        }
+        if (darkTextRgb) {
+            this.root.style.setProperty('--color-dark-text-rgb', `${darkTextRgb.r}, ${darkTextRgb.g}, ${darkTextRgb.b}`);
+        }
+        
+        // Dynamic Bunting color SVG generation
+        const buntingSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 35' width='50' height='35'><path d='M0,0 Q25,8 50,0 L50,2 L25,32 L0,2 Z' fill='${encodeURIComponent(accentColor)}' opacity='0.85'/><path d='M0,0 Q25,8 50,0 L42,0 L25,24 L8,0 Z' fill='${encodeURIComponent(secondaryColor)}' opacity='0.95'/></svg>")`;
+        this.root.style.setProperty('--bunting-image', buntingSvg);
         
         // Stable theme-defined colors (non-swapped reference)
         const themePrimaryRgb = window.PosterUtils.hexToRgb(theme.colors.primary);
@@ -222,25 +256,42 @@ window.ThemeManager = class ThemeManager {
         this.elements.swatchGrid.querySelectorAll('.swatch:not(.swatch--custom)').forEach(s => s.remove());
         const swatches = this.poster.theme.swatches || [];
         swatches.forEach(colorObj => {
-            const btn = document.createElement('button');
+            const btn = document.createElement('span');
             btn.className = 'swatch';
-            btn.style.backgroundColor = colorObj.hex;
+            btn.setAttribute('role', 'button');
+            btn.tabIndex = 0;
+            const showAccent = this.poster.theme.flags?.showAccentAsSwatch;
+            const showSecondary = this.poster.theme.flags?.showSecondaryAsSwatch;
+            if (showSecondary && colorObj.secondary) {
+                btn.style.backgroundColor = colorObj.secondary;
+            } else if (showAccent && colorObj.accent) {
+                btn.style.backgroundColor = colorObj.accent;
+            } else {
+                btn.style.backgroundColor = colorObj.hex;
+            }
             btn.dataset.color = colorObj.hex;
             btn.title = colorObj.name;
             btn.addEventListener('click', () => {
                 this.state.bgColor = colorObj.hex;
                 this.state.accentColor = colorObj.accent || null;
+                this.state.secondaryColor = colorObj.secondary || null;
                 
                 const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
                 const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
                 
                 if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
-                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = displayColor.toUpperCase();
+                if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.resolveColorLabel(colorObj.name);
                 
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
                 // Remote sync
                 if (!window.remoteManager?._applying) {
-                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null });
+                    window.remoteManager?.send({ type: 'swatch', color: colorObj.hex, accent: colorObj.accent || null, secondary: colorObj.secondary || null });
+                }
+            });
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    btn.click();
                 }
             });
             this.elements.swatchGrid.insertBefore(btn, this.elements.btnCustomColor);
@@ -248,46 +299,128 @@ window.ThemeManager = class ThemeManager {
         this.updateSwatchActiveState();
     }
 
-    /**
-     * Dynamically builds the theme selection dropdown based on THEMES configuration.
-     */
     initThemeSelector() {
         const container = document.getElementById('theme-select-options');
         if (!container) return;
 
         container.innerHTML = '';
-        Object.values(THEMES).forEach(theme => {
-            const opt = document.createElement('div');
-            opt.className = 'custom-select-option';
-            opt.dataset.value = theme.id;
-            opt.dataset.icon = theme.icon || '✨';
-            opt.tabIndex = 0;
+
+        // Identify existing/built themes by checking stylesheet link tags in the document
+        const existingThemeIds = new Set();
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.includes('css/themes/theme-')) {
+                const urlPath = href.split('?')[0];
+                const filename = urlPath.substring(urlPath.lastIndexOf('/') + 1);
+                if (filename.startsWith('theme-') && filename.endsWith('.css')) {
+                    const themeId = filename.substring(6, filename.length - 4);
+                    existingThemeIds.add(themeId);
+                }
+            }
+        });
+
+        // 1. Render Sticky Jump Links at the top of the dropdown container
+        const jumpLinksDiv = document.createElement('div');
+        jumpLinksDiv.className = 'custom-select-jump-links';
+        jumpLinksDiv.setAttribute('role', 'navigation');
+        jumpLinksDiv.setAttribute('aria-label', 'Jump to theme pack');
+        
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
+            if (packThemes.length === 0) return;
+
+            const link = document.createElement('button');
+            link.type = 'button';
+            link.className = 'jump-link';
+            link.tabIndex = -1; // Keep keyboard focus cycle on custom options
+            link.title = `Jump to ${packInfo.name}`;
             
             const iconSpan = document.createElement('span');
-            iconSpan.className = 'option-icon';
-            iconSpan.textContent = opt.dataset.icon;
+            iconSpan.textContent = packInfo.icon;
+            link.appendChild(iconSpan);
             
-            opt.appendChild(iconSpan);
-            opt.appendChild(document.createTextNode(` ${theme.name}`));
-            
-            const selectTheme = () => {
-                this.applyTheme(theme.id);
-                this.poster.controls.themeSelectContainer.classList.remove('is-open');
-                this.poster.controls.themeSelectTrigger?.focus();
-            };
+            const textSpan = document.createElement('span');
+            textSpan.className = 'jump-link-text';
+            textSpan.textContent = packInfo.name.split(' ')[0]; // E.g. "Standard", "Holiday"
+            link.appendChild(textSpan);
 
-            opt.addEventListener('click', selectTheme);
-            opt.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    selectTheme();
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent closing/toggling the select
+                const groupEl = container.querySelector(`.custom-select-group[data-pack="${packId}"]`);
+                if (groupEl) {
+                    const stickyHeight = jumpLinksDiv.offsetHeight || 36;
+                    container.scrollTo({
+                        top: groupEl.offsetTop - stickyHeight,
+                        behavior: 'smooth'
+                    });
                 }
             });
 
-            container.appendChild(opt);
+            jumpLinksDiv.appendChild(link);
+        });
+        container.appendChild(jumpLinksDiv);
+
+        // 2. Iterate through packs to build grouped dropdown layout
+        Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
+            // Filter themes belonging to this pack and check if CSS exists
+            const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
+            if (packThemes.length === 0) return;
+
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'custom-select-group';
+            groupDiv.dataset.pack = packId;
+            groupDiv.setAttribute('role', 'group');
+            groupDiv.setAttribute('aria-label', packInfo.name);
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'custom-select-group-header';
+            headerDiv.setAttribute('role', 'presentation');
+            headerDiv.textContent = `${packInfo.icon} ${packInfo.name}`;
+            groupDiv.appendChild(headerDiv);
+
+            packThemes.forEach(theme => {
+                const opt = document.createElement('div');
+                opt.className = 'custom-select-option';
+                opt.dataset.value = theme.id;
+                opt.dataset.icon = theme.icon || '✨';
+                opt.setAttribute('role', 'option');
+                opt.setAttribute('aria-selected', 'false');
+                opt.tabIndex = -1; // Managed programmatically via arrow keys
+
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'option-icon';
+                iconSpan.textContent = opt.dataset.icon;
+
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'option-label';
+                labelSpan.textContent = theme.name;
+
+                opt.appendChild(iconSpan);
+                opt.appendChild(labelSpan);
+
+                const selectTheme = () => {
+                    this.applyTheme(theme.id);
+                    this.poster.controls.themeSelectContainer.classList.remove('is-open');
+                    this.poster.controls.themeSelectTrigger?.setAttribute('aria-expanded', 'false');
+                    this.poster.controls.themeSelectTrigger?.focus();
+                };
+
+                opt.addEventListener('click', selectTheme);
+                opt.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectTheme();
+                    }
+                });
+
+                groupDiv.appendChild(opt);
+            });
+
+            container.appendChild(groupDiv);
         });
 
-        // Re-cache options in EventPoster if needed
+        // Re-cache options in EventPoster
         this.poster.controls.themeSelectOptions = container.querySelectorAll('.custom-select-option');
         this.updateThemeSelectorActiveState();
     }
@@ -298,7 +431,9 @@ window.ThemeManager = class ThemeManager {
     updateThemeSelectorActiveState() {
         if (!this.poster.controls.themeSelectOptions) return;
         this.poster.controls.themeSelectOptions.forEach(opt => {
-            opt.classList.toggle('selected', opt.dataset.value === this.state.activeTheme);
+            const isSelected = opt.dataset.value === this.state.activeTheme;
+            opt.classList.toggle('selected', isSelected);
+            opt.setAttribute('aria-selected', isSelected ? 'true' : 'false');
         });
     }
 
@@ -336,6 +471,29 @@ window.ThemeManager = class ThemeManager {
         }
     }
 
+    /**
+     * Returns the display text for the color scheme span (the part after "Color Scheme: ").
+     * Shows the named swatch name when one matches, otherwise the hex value.
+     */
+    resolveColorLabel(swatchName) {
+        if (swatchName) return swatchName;
+        // Look up current bgColor against the active theme's swatches
+        const currentBg = (this.state.bgColor || this.poster.theme.colors.primary).toLowerCase();
+        const currentAccent = (this.state.accentColor || this.poster.theme.colors.accent || '').toLowerCase();
+        const match = (this.poster.theme.swatches || []).find(sw => {
+            const swHex = sw.hex.toLowerCase();
+            const swAccent = (sw.accent || '').toLowerCase();
+            return swHex === currentBg && (!swAccent || swAccent === currentAccent);
+        });
+        if (match) return match.name;
+        // Custom color — fall back to hex
+        const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
+        const displayColor = isAccentBg
+            ? (this.state.accentColor || this.poster.theme.colors.accent)
+            : (this.state.bgColor || this.poster.theme.colors.primary);
+        return displayColor.toUpperCase();
+    }
+
     syncWind() {
         const strength = this.state.gustStrength; // 0-100
         const impact = strength / 10;
@@ -349,7 +507,6 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--gust-impact', impact);
         this.root.style.setProperty('--gust-speed', speed.toFixed(3));
         this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
-        
-        
+        this.root.style.setProperty('--grid-play-state', strength === 0 ? 'paused' : 'running');
     }
 };

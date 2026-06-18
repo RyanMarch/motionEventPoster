@@ -32,9 +32,12 @@ window.ParticleEngine = class ParticleEngine {
     createPetal() {
         const container = this.getRandomLayer();
         const element = document.createElement('div');
-        element.className = 'petal';
-        const size = Math.random() * 12 + 10;
         const type = this.getRandomPetalType();
+        element.className = `petal petal--${type.type || 'dust'}`;
+        if (type.type) {
+            element.dataset.type = type.type;
+        }
+        const size = (Math.random() * 12 + 10) * (type.sizeMultiplier || 1.0);
         element.style.width = `${size}px`;
         element.style.height = `${size * (type.type === 'star' || type.type === 'dust' ? 1.0 : 1.25)}px`;
         
@@ -49,6 +52,11 @@ window.ParticleEngine = class ParticleEngine {
             gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
         } else if (type.useThemeAccent) {
             color = this.state.accentColor || this.poster.theme.colors.accent;
+            const rgb = window.PosterUtils.hexToRgb(color);
+            const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
+            gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
+        } else if (type.useThemeSecondary) {
+            color = this.state.secondaryColor || this.poster.theme.colors.secondary || '#ffffff';
             const rgb = window.PosterUtils.hexToRgb(color);
             const { h, s, l } = window.PosterUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
             gradient = window.PosterUtils.hslToHex(h, s, l * 0.7);
@@ -84,18 +92,22 @@ window.ParticleEngine = class ParticleEngine {
         container.appendChild(element);
         return {
             element,
+            type: type.type,
             accentShift: type.accentShift,
             useThemePrimary: type.useThemePrimary,
             useThemeAccent: type.useThemeAccent,
+            useThemeSecondary: type.useThemeSecondary,
             isWhite: type.isWhite,
             x: Math.random() * 120 - 10,
             y: Math.random() * 140 - 20,
-            mass: Math.random() * 0.8 + 0.4,
+            mass: (Math.random() * 0.8 + 0.4) * (type.massMultiplier !== undefined ? type.massMultiplier : 1.0),
             aero: Math.random() * 0.5 + 0.5,
-            rotation: Math.random() * 360,
-            rotSpeed: (Math.random() - 0.5) * 100,
-            baseFallSpeed: Math.random() * 15 + 5,
-            naturalDrift: (Math.random() - 0.5) * 5,
+            rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (Math.random() * 360),
+            rotSpeed: (type.type && type.type.includes('reflection')) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
+            baseFallSpeed: (Math.random() * 15 + 5) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0),
+            naturalDrift: (Math.random() - 0.5) * 5 * (type.driftMultiplier !== undefined ? type.driftMultiplier : 1.0),
+            horizontalSpeed: (type.type && type.type.includes('reflection')) ? -(Math.random() * 6 + 3) : 0,
+            verticalDrift: (type.type && type.type.includes('reflection')) ? (Math.random() - 0.5) * 0.8 : 0
         };
     }
 
@@ -139,12 +151,18 @@ window.ParticleEngine = class ParticleEngine {
         this.state.windDirection += (this.state.targetWindDirection - this.state.windDirection) * (1 - Math.exp(-dt * 0.5));
         const totalWind = (this.state.currentWind + this.state.gustForce) * this.state.windDirection;
         this.state.petals.forEach(p => {
-            const gravityEffect = p.baseFallSpeed * p.mass * this.state.fallSpeed;
-            const windEffect = totalWind * (p.aero / p.mass);
-            p.x += (windEffect + p.naturalDrift) * dt;
-            p.y += gravityEffect * dt;
-            const speedFactor = Math.abs(windEffect) / 10 + 1;
-            p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+            if (p.type && p.type.includes('reflection')) {
+                // Reflections sweep horizontally without gravity, wind, or tumbling
+                p.x += p.horizontalSpeed * dt;
+                p.y += p.verticalDrift * dt;
+            } else {
+                const gravityEffect = p.baseFallSpeed * p.mass * this.state.fallSpeed;
+                const windEffect = totalWind * (p.aero / p.mass);
+                p.x += (windEffect + p.naturalDrift) * dt;
+                p.y += gravityEffect * dt;
+                const speedFactor = Math.abs(windEffect) / 10 + 1;
+                p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+            }
             if (p.y > 110) { p.y = -10; p.x = Math.random() * 120 - 10; }
             else if (p.y < -20) p.y = 110;
             if (p.x > 110) p.x = -10;
@@ -175,6 +193,12 @@ window.ParticleEngine = class ParticleEngine {
             } else if (p.useThemeAccent) {
                 color = accent;
                 gradient = window.PosterUtils.hslToHex(aH, aS, aL * 0.7);
+            } else if (p.useThemeSecondary) {
+                const secondary = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
+                const sRgb = window.PosterUtils.hexToRgb(secondary);
+                const { h: sH, s: sS, l: sL } = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
+                color = secondary;
+                gradient = window.PosterUtils.hslToHex(sH, sS, sL * 0.7);
             } else if (theme.id === 'digital-grid' && p.accentShift !== undefined) {
                 const h = (aH + p.accentShift) % 360;
                 const s = Math.max(aS, 0.8);
@@ -186,6 +210,43 @@ window.ParticleEngine = class ParticleEngine {
             }
             
             p.element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
+        });
+    }
+
+    updateBackgroundShapesFade(now) {
+        if (!this.poster.swayLayers || !this.poster.swayLayerBases) return;
+
+        const strength = this.state.gustStrength; // 0 to 100
+        
+        // If the background animations are paused, don't update opacity
+        if (this.state.isBgPaused) return;
+
+        // Fading frequency scales with intensity:
+        // at 0: very slow cycle (e.g. 0.05 Hz, 20s period)
+        // at 100: faster cycle (e.g. 0.3 Hz, 3.3s period)
+        const frequency = 0.05 + (strength / 100) * 0.25;
+
+        // Fading intensity/amplitude scales with intensity:
+        // at 0: 0 (no fading, static base opacity)
+        // at 100: 0.35 (subtle but noticeable fading)
+        const amplitude = (strength / 100) * 0.35;
+
+        this.poster.swayLayers.forEach((el, i) => {
+            const baseOpacity = this.poster.swayLayerBases[i] || 0.85;
+            
+            // If the base opacity is 0 (hidden or not used), keep it as is
+            if (baseOpacity === 0) return;
+
+            // Desynchronize the shapes using a phase offset
+            const phaseOffset = i * 1.7;
+            const sine = Math.sin((now / 1000) * frequency * 2 * Math.PI + phaseOffset);
+
+            // Compute dynamic opacity: base opacity modulated by the sine wave
+            // Using a multiplier ensures it scales proportionally to the theme's default opacity
+            const dynamicOpacity = baseOpacity * (1 + sine * amplitude);
+
+            // Clamp between 0 and 1
+            el.style.opacity = Math.max(0, Math.min(1, dynamicOpacity)).toFixed(3);
         });
     }
 
@@ -224,6 +285,7 @@ window.ParticleEngine = class ParticleEngine {
             }
 
             if (!this.state.isPetalsPaused) this.updatePhysics(dt);
+            this.updateBackgroundShapesFade(now);
         };
         requestAnimationFrame(loop);
     }

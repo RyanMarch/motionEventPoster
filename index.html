@@ -13,7 +13,7 @@
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Alfa+Slab+One&family=Archivo+Black&family=Archivo+Narrow:wght@400..700&family=Audiowide&family=Bebas+Neue&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Bungee+Inline&family=Bungee+Outline&family=Bungee+Shade&family=Cabin&family=Chewy&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fredoka:wght@300..700&family=Inter:wght@100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Jost:wght@100..900&family=Lilita+One&family=Limelight&family=Nunito:ital,wght@0,300..900;1,300..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=PT+Sans&family=Pacifico&family=Quicksand:wght@300..700&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&family=Syne:wght@400..800&family=Yellowtail&family=Yesteryear&display=swap"
         rel="stylesheet">
 
     <!-- Local fonts -->
@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="css/themes/theme-alpine-winter.css">
     <link rel="stylesheet" href="css/themes/theme-vintage-radio.css">
     <link rel="stylesheet" href="css/themes/theme-corporate.css">
+    <link rel="stylesheet" href="css/themes/theme-retro-wave.css">
+    <link rel="stylesheet" href="css/themes/theme-electric-pulse.css">
+    <link rel="stylesheet" href="css/themes/theme-cinema.css">
+    <link rel="stylesheet" href="css/themes/theme-celebration.css">
+    <link rel="stylesheet" href="css/themes/theme-summer-cookout.css">
+    <link rel="stylesheet" href="css/themes/theme-tropical-oasis.css?v=1.0.4">
+    <link rel="stylesheet" href="css/themes/theme-disco-fever.css">
+    <link rel="stylesheet" href="css/themes/theme-mardi-gras.css">
+    <link rel="stylesheet" href="css/themes/theme-art-deco-gala.css?v=1.6.0">
+    <link rel="stylesheet" href="css/themes/theme-minimal-elegance.css">
     <style>
         .is-loading #controls-panel,
         .is-loading .keyboard-hint {
@@ -212,21 +222,25 @@
                     <div class="panel-sub-section-title">Visual Theme</div>
                     <div class="control">
                         <div class="custom-select" id="theme-custom-select">
-                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                            <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0" role="combobox"
+                                aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-select-options"
+                                aria-autocomplete="none">
                                 <div class="trigger-content">
                                     <span class="custom-select-icon" id="theme-select-icon">🌸</span>
                                     <span class="custom-select-label" id="theme-select-label">Spring Blossom</span>
                                 </div>
                                 <div class="trigger-arrow"></div>
                             </div>
-                            <div class="custom-select-options" id="theme-select-options">
+                            <div class="custom-select-options" id="theme-select-options" role="listbox"
+                                aria-label="Visual Theme">
                                 <!-- Dynamically populated from themes.js -->
                             </div>
                         </div>
                     </div>
 
                     <div class="control">
-                        <label>Background <span id="val-bg-color">#032858</span></label>
+                        <label class="background-color-label">Color Scheme: <span
+                                id="val-bg-color">#032858</span></label>
                         <div class="swatch-grid" id="bg-swatch-grid">
                             <!-- Swatches injected by JS -->
                             <label class="swatch swatch--custom" id="btn-custom-color" for="picker-bg-color"
@@ -583,7 +597,8 @@
     </div>
 
     <!-- Wake Lock Fallback Video -->
-    <video id="wake-lock-video" class="wake-lock-video" loop muted playsinline></video>
+    <video id="wake-lock-video" class="wake-lock-video" loop muted playsinline preload="none" tabindex="-1"
+        aria-hidden="true" disablepictureinpicture></video>
     <!-- Engine Scripts -->
     <script src="js/themes.js"></script>
     <script src="js/modules/Constants.js"></script>

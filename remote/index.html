@@ -8,7 +8,7 @@
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Alfa+Slab+One&family=Archivo+Black&family=Archivo+Narrow:wght@400..700&family=Audiowide&family=Bebas+Neue&family=Bungee+Inline&family=Bungee+Outline&family=Bungee+Shade&family=Cabin&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fredoka:wght@300..700&family=Inter:wght@100..900&family=Jost:wght@100..900&family=Lilita+One&family=Limelight&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=PT+Sans&family=Quicksand:wght@300..700&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&family=Syne:wght@400..800&family=Yellowtail&family=Yesteryear&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="../css/themes/theme-alpine-winter.css">
     <link rel="stylesheet" href="../css/themes/theme-vintage-radio.css">
     <link rel="stylesheet" href="../css/themes/theme-corporate.css">
+    <link rel="stylesheet" href="../css/themes/theme-retro-wave.css">
+    <link rel="stylesheet" href="../css/themes/theme-electric-pulse.css">
+    <link rel="stylesheet" href="../css/themes/theme-cinema.css">
+    <link rel="stylesheet" href="../css/themes/theme-celebration.css">
+    <link rel="stylesheet" href="../css/themes/theme-summer-cookout.css">
+    <link rel="stylesheet" href="../css/themes/theme-tropical-oasis.css?v=1.0.4">
 
     <style>
         /* ── CSS variable fallbacks (normally defined in styles.css which remote doesn't import) */
@@ -634,15 +640,14 @@
                             <div class="panel-sub-section-title">Visual Theme</div>
                             <div class="control">
                                 <div class="custom-select" id="theme-custom-select">
-                                    <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0">
+                                    <div class="custom-select-trigger" id="theme-select-trigger" tabindex="0" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-select-options" aria-autocomplete="none">
                                         <div class="trigger-content">
                                             <span class="custom-select-icon" id="theme-select-icon">🌸</span>
-                                            <span class="custom-select-label" id="theme-select-label">Spring
-                                                Blossom</span>
+                                            <span class="custom-select-label" id="theme-select-label">Spring Blossom</span>
                                         </div>
                                         <div class="trigger-arrow"></div>
                                     </div>
-                                    <div class="custom-select-options" id="theme-select-options"></div>
+                                    <div class="custom-select-options" id="theme-select-options" role="listbox" aria-label="Visual Theme"></div>
                                 </div>
                             </div>
 

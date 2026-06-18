@@ -36,6 +36,7 @@ window.DEFAULTS = {
     isAppRunning: false,
     bgColor: null,
     accentColor: null,
+    secondaryColor: null,
     activeTheme: 'spring',
     fpsCap: 90
 };
@@ -94,8 +95,8 @@ window.SHORTCUT_CONFIGS = [
 
 window.SLIDER_CONFIGS = [
     { id: 'backdrop-opacity', label: 'Text Backdrop Strength', min: 0, max: 100, step: 1, stateKey: 'backdropOpacity', suffix: '%', sectionId: 'backdrop-ribbon-row' },
-    { id: 'max-petals', label: 'Count', min: 0, max: 1000, step: 1, stateKey: 'maxPetals', sectionId: 'appearance-particles', isHalf: true },
-    { id: 'gust-freq', label: 'Windiness', min: 0, max: 1000, step: 1, stateKey: 'windiness', sectionId: 'appearance-particles', isHalf: true },
+    { id: 'max-petals', label: 'Count', min: 0, max: 500, step: 1, stateKey: 'maxPetals', sectionId: 'appearance-particles', isHalf: true },
+    { id: 'gust-freq', label: 'Windiness', min: 0, max: 500, step: 1, stateKey: 'windiness', sectionId: 'appearance-particles', isHalf: true },
     { id: 'fall-speed', label: 'Fall Speed', min: 0, max: 5, step: 0.1, stateKey: 'fallSpeed', suffix: 'x', sectionId: 'appearance-particles', isHalf: true },
     { id: 'tumble-speed', label: 'Tumble Speed', min: 0, max: 10, step: 0.5, stateKey: 'tumbleSpeed', suffix: 'x', sectionId: 'appearance-particles', isHalf: true },
     { id: 'gust-strength', label: 'Intensity', min: 0, max: 100, step: 1, stateKey: 'gustStrength', sectionId: 'appearance-intensity' },

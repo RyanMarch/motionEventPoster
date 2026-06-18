@@ -344,7 +344,7 @@ window.RemoteManager = class RemoteManager {
                 isPetalsPaused: s.isPetalsPaused, isBgPaused: s.isBgPaused,
                 // Selects
                 activeTheme: s.activeTheme, hostLayout: s.hostLayout, fpsCap: s.fpsCap,
-                bgColor: s.bgColor, accentColor: s.accentColor,
+                bgColor: s.bgColor, accentColor: s.accentColor, secondaryColor: s.secondaryColor,
                 // Text
                 posterText: { ...pt },
                 // Hosts
@@ -425,17 +425,18 @@ window.RemoteManager = class RemoteManager {
         picker.dispatchEvent(new Event('change', { bubbles: false }));
     }
 
-    _applySwatch({ color, accent }) {
+    _applySwatch({ color, accent, secondary }) {
         const s = this.poster.state;
         s.bgColor = color;
         s.accentColor = accent;
+        s.secondaryColor = secondary;
         this.poster.themeManager?.syncBackdrop?.();
         this.poster.themeManager?.updateSwatchActiveState?.();
         this.poster.saveSettings?.();
         const picker = document.getElementById('picker-bg-color');
         if (picker) picker.value = color;
         const val = document.getElementById('val-bg-color');
-        if (val) val.textContent = color.toUpperCase();
+        if (val) val.textContent = this.poster.themeManager?.resolveColorLabel() ?? color.toUpperCase();
     }
 
     _applyTheme({ id }) {

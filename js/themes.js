@@ -4,24 +4,30 @@
  * This file contains all visual identities for the Motion Backdrop Engine.
  */
 
-(function() {
+(function () {
+    window.THEME_PACKS = {
+        standard: { name: 'Standard Pack', icon: '📦' },
+    };
+
     /**
      * Helper to define a theme and minimize color repetition.
      * Only requires 'primary' and 'accent' to be defined once.
      */
     const defineTheme = (config) => {
-        const { primary, accent, swatchName, ...rest } = config;
-        
+        const { primary, accent, secondary, swatchName, pack, ...rest } = config;
+
         return {
             ...rest,
+            pack: pack || 'standard',
             colors: {
                 primary,
                 accent,
+                secondary,
                 text: rest.colors?.text || '#ffffff',
                 darkText: rest.colors?.darkText || '#1a1c1e'
             },
             swatches: [
-                { hex: primary, name: swatchName || 'Original', accent },
+                { hex: primary, name: swatchName || 'Original', accent, secondary },
                 ...(rest.swatches || [])
             ],
             overrides: {
@@ -33,22 +39,25 @@
     };
 
     window.THEMES = {
+
+        // STANDARD PACK
         spring: defineTheme({
             id: 'spring',
             name: 'Spring Blossom',
+            pack: 'standard',
             icon: '🌸',
             primary: '#032858',
             accent: '#f9d783',
-            swatchName: 'Original Navy',
+            swatchName: 'Navy',
             colors: {
                 darkText: '#1a1c1e'
             },
             swatches: [
-                { hex: '#1B363C', name: 'Deep Teal', accent: '#81D4FA' },
-                { hex: '#3B4D35', name: 'Deep Moss', accent: '#C5E1A5' },
-                { hex: '#4E3541', name: 'Deep Plum', accent: '#CE93D8' },
+                { hex: '#1B363C', name: 'Teal', accent: '#81D4FA' },
+                { hex: '#3B4D35', name: 'Moss', accent: '#C5E1A5' },
+                { hex: '#4E3541', name: 'Plum', accent: '#CE93D8' },
                 { hex: '#2B2D31', name: 'Charcoal', accent: '#90CAF9' },
-                { hex: '#8FA382', name: 'Sage Green', accent: '#ffffff' },
+                { hex: '#8FA382', name: 'Sage', accent: '#ffffff' },
                 { hex: '#F5F2EB', name: 'Warm Cream', accent: '#3b58a8' }
             ],
             fonts: {
@@ -95,10 +104,10 @@
                 frameName: 'Floral Sway'
             }
         }),
-
         'digital-grid': defineTheme({
             id: 'digital-grid',
             name: 'Digital Grid',
+            pack: 'standard',
             icon: '⚡',
             primary: '#001D39',
             accent: '#7ff9ff',
@@ -108,7 +117,7 @@
                 darkText: '#001a1a'
             },
             swatches: [
-                { hex: '#250e3d', name: 'Deep Purple', accent: '#ff00ff' },
+                { hex: '#250e3d', name: 'Purple', accent: '#ff00ff' },
                 { hex: '#2a0a1a', name: 'Cosmic Red', accent: '#ff4d4d' },
                 { hex: '#000000', name: 'True Black', accent: '#ffffff' },
                 { hex: '#0a2a1a', name: 'Deep Emerald', accent: '#00ff9f' },
@@ -161,14 +170,14 @@
                 frameName: 'Frame'
             }
         }),
-
         'alpine-winter': defineTheme({
             id: 'alpine-winter',
             name: 'Alpine Winter',
+            pack: 'standard',
             icon: '❄️',
             primary: '#1B3B57',
             accent: '#AADDFF',
-            swatchName: 'Glacier Deep',
+            swatchName: 'Glacier',
             colors: {
                 darkText: '#0A1520'
             },
@@ -203,12 +212,12 @@
             overrides: {
                 insetV: 50,
                 insetH: 60,
-                hostTextSize: 1.0,
+                hostTextSize: 0.95,
                 gustStrength: 15,
                 fallSpeed: 0.4,
                 maxPetals: 80,
                 windiness: 5,
-                hostMaxWidth: 120,
+                hostMaxWidth: 112,
                 backdropOpacity: 65
             },
             defaults: {
@@ -225,10 +234,10 @@
                 frameName: 'Frost'
             }
         }),
-
         'vintage-radio': defineTheme({
             id: 'vintage-radio',
             name: 'Vintage Radio',
+            pack: 'standard',
             icon: '📻',
             primary: '#ffcc66',
             accent: '#ff0000',
@@ -289,10 +298,10 @@
                 frameName: 'Signal'
             }
         }),
-
         'corporate': defineTheme({
             id: 'corporate',
             name: 'Corporate Pro',
+            pack: 'standard',
             icon: '🏢',
             primary: '#005FB8',
             accent: '#F0F4F8',
@@ -302,23 +311,23 @@
                 darkText: '#05021e'
             },
             swatches: [
-                { hex: '#56CCF2', name: 'Sky Blue',      accent: '#e3f0fdff' },
+                { hex: '#56CCF2', name: 'Sky Blue', accent: '#e3f0fdff' },
                 { hex: '#192b57ff', name: 'Onyx & Lime', accent: '#BCE29E' },
-                { hex: '#111827', name: 'Tech Teal',     accent: '#41baacff' },
-                { hex: '#171717', name: 'Carbon Cyan',   accent: '#A5F3FC' },
-                { hex: '#064E3B', name: 'Deep Forest',   accent: '#D9F99D' },
-                { hex: '#18181B', name: 'Onyx Gold',     accent: '#FDE68A' },
+                { hex: '#111827', name: 'Tech Teal', accent: '#41baacff' },
+                { hex: '#171717', name: 'Carbon Cyan', accent: '#A5F3FC' },
+                { hex: '#064E3B', name: 'Deep Forest', accent: '#D9F99D' },
+                { hex: '#18181B', name: 'Onyx Gold', accent: '#FDE68A' },
                 { hex: '#1E1B4B', name: 'Midnight Rose', accent: '#FFE4E6' },
                 { hex: '#451A03', name: 'Warm Espresso', accent: '#FFEDD5' },
-                { hex: '#F0F4F8', name: 'Business Blue Rev', accent: '#005FB8' },
-                { hex: '#e3f0fdff', name: 'Sky Blue Rev',      accent: '#56CCF2' },
-                { hex: '#BCE29E', name: 'Onyx & Lime Rev', accent: '#192b57ff' },
-                { hex: '#41baacff', name: 'Tech Teal Rev',   accent: '#111827' },
-                { hex: '#A5F3FC', name: 'Carbon Cyan Rev',   accent: '#171717' },
-                { hex: '#D9F99D', name: 'Deep Forest Rev',   accent: '#064E3B' },
-                { hex: '#FDE68A', name: 'Onyx Gold Rev',     accent: '#18181B' },
-            // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
-                { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
+                { hex: '#F0F4F8', name: 'Business Blue Reverse', accent: '#005FB8' },
+                { hex: '#e3f0fdff', name: 'Sky Blue Reverse', accent: '#56CCF2' },
+                { hex: '#BCE29E', name: 'Onyx & Lime Reverse', accent: '#192b57ff' },
+                { hex: '#41baacff', name: 'Tech Teal Reverse', accent: '#111827' },
+                { hex: '#A5F3FC', name: 'Carbon Cyan Reverse', accent: '#171717' },
+                { hex: '#D9F99D', name: 'Deep Forest Reverse', accent: '#064E3B' },
+                { hex: '#FDE68A', name: 'Onyx Gold Reverse', accent: '#18181B' },
+                // { hex: '#FFEDD5', name: 'Warm Espresso Reverse', accent: '#451A03' },
+                { hex: '#FFE4E6', name: 'Midnight Rose Reverse', accent: '#1E1B4B' }
             ],
             fonts: {
                 primary: "'Inter', sans-serif",
@@ -362,6 +371,76 @@
                 borderToggle: 'Hide Background Shapes',
                 gustStrength: 'Shape Movement Intensity',
                 frameName: 'Shapes'
+            }
+        }),
+        'minimal-elegance': defineTheme({
+            id: 'minimal-elegance',
+            name: 'Minimal Elegance',
+            pack: 'standard',
+            icon: '🖼️',
+            primary: '#F5F5F7',
+            accent: '#D4AF37',
+            secondary: '#111111',
+            swatchName: 'Gallery White',
+            colors: {
+                text: '#ffffff',
+                darkText: '#111111'
+            },
+            swatches: [
+                { hex: '#EBEBEB', name: 'Cool Marble', accent: '#78909C', secondary: '#263238' },
+                { hex: '#FAF9F6', name: 'Warm Alabaster', accent: '#A1887F', secondary: '#3E2723' },
+                { hex: '#F5F5F5', name: 'White', accent: '#050505', secondary: '#050505' },
+                { hex: '#F7F4EB', name: 'Champagne Toast', accent: '#D4AF37', secondary: '#3D352E' },
+                { hex: '#E8ECE9', name: 'Sage Studio', accent: '#5A6B5C', secondary: '#2B332D' },
+                { hex: '#2C2226', name: 'Plum Gallery', accent: '#D3C2B0', secondary: '#FAF8F5' },
+                { hex: '#1F1A17', name: 'Espresso Matte', accent: '#C6B3A1', secondary: '#FDFBF7' },
+                { hex: '#212529', name: 'Midnight Navy', accent: '#1A73E8', secondary: '#F8F9FA' },
+                { hex: '#111111', name: 'Onyx Black', accent: '#E5C158', secondary: '#F5F5F7' },
+                { hex: '#161616', name: 'Black', accent: '#ffffff', secondary: '#ffffff' },
+            ],
+            fonts: {
+                primary: "'Montserrat', sans-serif",
+                display: "'Bodoni Moda', serif",
+                heading: "'Bodoni Moda', serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { useThemeAccent: true, type: 'dust', weight: 65, speedMultiplier: 0.18, sizeMultiplier: 0.7, massMultiplier: 0.4 },
+                { useThemeSecondary: true, type: 'dust', weight: 45, speedMultiplier: 0.12, sizeMultiplier: 0.5, massMultiplier: 0.3 },
+                // { useThemeAccent: true, type: 'bokeh', weight: 15, speedMultiplier: 0.08, sizeMultiplier: 2.2, massMultiplier: 0.2 }
+            ],
+            frameClass: 'theme-frame--minimal-elegance',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 70,
+                insetH: 90,
+                hostTextSize: 1,
+                gustStrength: 10,
+                fallSpeed: 0.2,
+                maxPetals: 15,
+                windiness: 3,
+                hostMaxWidth: 150,
+                backdropOpacity: 60
+            },
+            defaults: {
+                hostsTitle: "Featured Artists",
+                eventTitle: "Gallery Opening",
+                eventSubtitle: "Modern Art Exhibition",
+                eventTopLabel: "Exclusive"
+            },
+            uiLabels: {
+                particlesPlural: 'Particles',
+                particlesSingular: 'Particle',
+                borderToggle: 'Hide architectural frame',
+                gustStrength: 'Animation Intensity',
+                frameName: 'Gallery Frame'
             }
         })
     };

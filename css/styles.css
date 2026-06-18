@@ -15,7 +15,7 @@
     --color-ui-brand: #032858;
     --color-ui-text: #ffffff;
     --color-ui-text-dim: rgba(255, 255, 255, 0.7);
-    --color-ui-bg-panel: rgba(13, 17, 23, 0.95);
+    --color-ui-bg-panel: rgba(13, 17, 23, 0.97);
 
     /* Theme Intensity (Controlled by JS) */
     --frame-intensity: 0.1;
@@ -79,7 +79,8 @@ body {
     height: 100%;
     height: -webkit-fill-available;
     overflow: hidden;
-    background-color: #032858; /* Fallback for initial load */
+    background-color: #032858;
+    /* Fallback for initial load */
     background-color: var(--color-primary);
     font-family: var(--font-primary);
     color: var(--color-text);
@@ -88,7 +89,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -webkit-backface-visibility: hidden; /* Safari edge rendering fix */
+    -webkit-backface-visibility: hidden;
+    /* Safari edge rendering fix */
 }
 
 body {
@@ -96,12 +98,14 @@ body {
     box-shadow: 0 0 0 100vmax var(--color-primary);
 }
 
-/* Fullscreen & Backdrop Normalization */
-:fullscreen, 
+/* Fullscreen & Backdrop Normalization (disabled to prevent iframe layout/rendering bugs) */
+/*
+:fullscreen,
 ::backdrop,
 :-webkit-full-screen {
     background-color: var(--color-primary) !important;
 }
+*/
 
 @media (min-width: 1900px) {
     body {
@@ -115,9 +119,9 @@ body {
 html::before {
     content: '';
     position: fixed;
-    top: -5vh; 
+    top: -5vh;
     left: -5vw;
-    width: 110vw; 
+    width: 110vw;
     height: 110vh;
     background-color: var(--color-primary);
     z-index: -10000;
@@ -152,7 +156,8 @@ PARTICLE SYSTEMS
     contain: layout style;
     opacity: 0;
     transition: opacity 2s ease-in-out;
-    overflow: hidden; /* Prevent 1px leaks at the viewport edges */
+    overflow: hidden;
+    /* Prevent 1px leaks at the viewport edges */
 }
 
 body:not(.is-loading) .particle-layer {
@@ -215,7 +220,10 @@ body:not(.is-loading) .content-wrapper {
 /* Global Vignette Overlay — Moved inside content-wrapper */
 #vignette-overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: radial-gradient(ellipse at center, var(--overlay-dark), var(--overlay-mid) 39.92%, var(--overlay-clear) 77.73%);
     z-index: 1;
     pointer-events: none;
@@ -235,7 +243,8 @@ body:not(.is-loading) #vignette-overlay {
     right: 25px;
     bottom: 25px;
     pointer-events: none;
-    z-index: 50; /* Bring it in front of the background */
+    z-index: 50;
+    /* Bring it in front of the background */
     transition: all 1s ease-in-out;
     opacity: 0;
 }
@@ -359,6 +368,13 @@ body:not(.is-sliding) .main-content::after {
     }
 }
 
+@media (width: 1512px) {
+    .hosts-container {
+        transform: translateY(3.5rem);
+    }
+}
+
+
 @media (min-width: 1900px) {
     .hosts-container {
         transform: translateY(55px);
@@ -414,10 +430,7 @@ body:not(.is-sliding) .main-content::after {
 }
 
 .hosts-empty-hint.is-hidden {
-    display: block !important;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
+    display: none !important;
 }
 
 .hosts-list {
@@ -426,9 +439,12 @@ body:not(.is-sliding) .main-content::after {
     max-width: calc(var(--host-max-width) * var(--host-width-base));
     margin-bottom: 0;
     /* Handled by spacers now */
-    padding: 0 40px;
+    /* padding: 0 40px; */
     pointer-events: none;
     transition: all 0.5s ease;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Centered (Default) */
@@ -438,6 +454,7 @@ body:not(.is-sliding) .main-content::after {
     justify-content: center;
     align-items: center;
     gap: calc(20px * var(--dynamic-scale)) calc(60px * var(--dynamic-scale));
+    width: 100%;
 }
 
 /* Justify */
@@ -533,6 +550,7 @@ body:not(.is-sliding) .main-content::after {
 }
 
 .event-date {
+    display: inline-block;
     font-size: 1.3rem;
     letter-spacing: 3px;
     font-family: var(--font-heading);
@@ -615,36 +633,33 @@ body:not(.is-sliding) .event-date {
 
 /* Hide Date State */
 .date-hidden .event-date {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
-    max-height: 0;
-    margin: 0;
-    pointer-events: none;
-    overflow: hidden;
+    opacity: 0 !important;
+    transform: translateY(20px) scale(0.8) !important;
+    max-height: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
 }
 
 .date-hidden .event-subtitle {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .date-hidden .logo-banner {
     transform: translateY(1vh) scale(1.06);
 }
 
-.date-hidden .hosts-title {
-
-}
+.date-hidden .hosts-title {}
 
 .date-hidden .hosts-container {
     transform: translateY(6.5vh);
 }
 
-.date-hidden .hosts-list {
-    transform: scale(1.05);
-}
+
 
 .date-hidden .event-footer {
-    transform: translateY(6vh) scale(1.1);
+    transform: translateY(1.5vh) scale(1.1);
 }
 
 /* Hide Title State */
@@ -664,7 +679,7 @@ body:not(.is-sliding) .event-date {
 }
 
 .title-hidden .hosts-container {
-    transform: translateY(8vh) scale(1.05);
+    transform: translateY(8vh);
     transform-origin: center center;
 }
 
@@ -689,19 +704,18 @@ body:not(.is-sliding) .event-date {
 }
 
 .logo-hidden .hosts-container {
-    transform: scale(1.1);
     transform-origin: bottom center;
 }
 
 @media (min-width: 1400px) and (max-width: 1900px) {
     .logo-hidden .hosts-container {
-        transform: translateY(2.3rem) scale(1.1);
+        transform: translateY(2.3rem);
     }
 }
 
 @media (min-width: 1900px) {
     .logo-hidden .hosts-container {
-        transform: translateY(10px) scale(1.05);
+        transform: translateY(10px);
     }
 }
 
@@ -721,20 +735,20 @@ body:not(.is-sliding) .event-date {
 }
 
 .host-hidden .event-footer {
-    transform: translateY(-7rem) scale(1.45)
+    transform: translateY(-3.5rem) scale(1.45)
 }
 
 .host-hidden .logo-banner {
-    transform: translateY(7rem) scale(1.7);
+    transform: translateY(3rem) scale(1.7);
 }
 
 /* Combined States */
 .host-hidden.date-hidden .event-footer {
-    transform: translateY(-6rem) scale(1.7);
+    transform: translateY(-2.5rem) scale(1.7);
 }
 
 .host-hidden.date-hidden .logo-banner {
-    transform: translateY(9rem) scale(2);
+    transform: translateY(4.5rem) scale(2);
 }
 
 .host-hidden.date-hidden.title-hidden .main-content::before,
@@ -767,7 +781,7 @@ body:not(.is-sliding) .event-date {
 }
 
 .logo-hidden.date-hidden.title-hidden .hosts-container {
-    transform: translateY(7.5rem) scale(1.1);
+    transform: translateY(7.5rem);
 }
 
 /* 
@@ -781,9 +795,7 @@ body:not(.is-fullscreen) .main-content {
     top: -2rem;
 }
 
-body:not(.is-fullscreen) .event-footer {
-
-}
+body:not(.is-fullscreen) .event-footer {}
 
 @media (min-width: 2500px) {
     body:not(.is-fullscreen) .main-content {
