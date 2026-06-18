@@ -32,6 +32,8 @@ body.theme-minimal-elegance {
     --z-particles-front: 250;
     --elegance-dark-text: rgba(var(--color-dark-text-rgb, 17, 17, 17), 0.95);
     --elegance-light-text: rgba(var(--color-text-rgb, 255, 255, 255), 0.95);
+    font-optical-sizing: auto;
+    font-variation-settings: 'opsz' 12;
 }
 
 body.theme-minimal-elegance #bg-swatch-grid {
@@ -446,8 +448,6 @@ body.theme-minimal-elegance:not(.is-light-bg) .event-top-label {
 
 body.theme-minimal-elegance .event-title {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
-    font-variation-settings: 'opsz' 30;
     font-size: 6rem;
     font-weight: 400;
     color: var(--elegance-dark-text);

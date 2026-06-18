@@ -417,7 +417,7 @@
                 // { useThemeAccent: true, type: 'bokeh', weight: 15, speedMultiplier: 0.08, sizeMultiplier: 2.2, massMultiplier: 0.2 }
             ],
             frameClass: 'theme-frame--minimal-elegance',
-            flags: { syncParticleColors: true },
+            flags: { syncParticleColors: true, enableBackgroundFade: true },
             overrides: {
                 insetV: 70,
                 insetH: 90,
