@@ -19,7 +19,7 @@
 ## Overview
 [Motion Poster](https://motionposter.ryanmarch.me) is a professional-grade, browser-based display tool designed for gala fundraisers, non-profit events, and high-end venue kiosks. It replaces static slides and paper posters with a living, breathing digital poster that captures attention and elevates the atmosphere of any physical space.
 
-Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect without needing a developer.
+Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect.
 
 **Quick start:** Open **[Motion Poster](https://motionposter.ryanmarch.me)**, make your customizations, and you're ready to go!
 
@@ -60,7 +60,7 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
 ## Key Benefits
 *   **Easy To Use:** Choose your theme, add content, and you're ready to go.
 *   **Your Branding, Your Customization:** All customizations, including uploaded logos and QR codes, are saved directly into your browser. They persist through refreshes and restarts, so your work is never lost.
-*   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly without having to edit code.
+*   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly.
 *   **Untethered Remote Control:** Easily pair a secondary device to control all layouts, text, and styling in real-time from anywhere.
 *   **Event Reliability:** Built-in features prevent the screen from sleeping and ensure the poster automatically recovers if the power blinks or the page refreshes.
 
@@ -85,7 +85,7 @@ Remote pairing requires the remote device to be on the same network as the host 
 *More: [Using the Remote Control](#using-the-remote-control)*
 
 ## Themes
-Choose from curated visual identity packs, each with its own unique particle engine, decorative frame, and color palette.
+Choose from multiple themes, each with its own unique particle engine, decorative frame, and color palette.
 
 ### 📦 Standard Pack
 *   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral framing.
@@ -95,12 +95,7 @@ Choose from curated visual identity packs, each with its own unique particle eng
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
 *   **[Minimal Elegance][demo-minimal-elegance]**: A sophisticated and high-fashion design perfect for art galleries, museums, and brand showcases.
 
-### 🥳 Party Pack
-*   **[Electric Pulse][demo-electric-pulse]:** Energetic atmosphere with dynamic light beams and pulsing stage, perfect for a music festival.
-*   **[Celebration][demo-celebration]:** Colorful confetti and balloons, perfect for birthdays, grand openings, and milestone events.
-*   **[Summer Cookout][demo-summer-cookout]:** Warm, festive summer barbecue atmosphere with floating embers and string lights, perfect for outdoor gatherings.
-*   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing turquoise water ripples with floating bubbles, beach balls, and lemon, orange, and lime fruit slices.
-*   **[Mardi Gras][demo-mardi-gras]:** Festive and mysterious carnival with ornate Venetian masks, sweeping spotlights, and a parade of falling beads, feathers, and gold confetti.
+### Screenshots
 
 ### 🪩 Decades Pack
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
@@ -317,6 +312,8 @@ The remote control feature is designed to be completely zero-config and infrastr
 - **Optimized for:** 1920×1080 and 2550×1440 displays. The layout includes resolution-aware CSS scaling for 1440p.
 - **Wake Lock:** Uses the Screen Wake Lock API where available. Falls back to a silent looping video element to keep the screen awake on unsupported browsers.
 - **Auto-fullscreen:** After a refresh while fullscreen was active, the poster will re-enter fullscreen automatically. This can be turned off.
+
+---
 
 ## Version History
 

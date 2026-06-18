@@ -2,12 +2,116 @@
  * EventPoster is the main orchestrator for the motion poster application.
  * It manages state, coordinate modules, and handles core lifecycle events.
  */
+class WakeLockStrategy {
+    constructor(app) {
+        this.app = app;
+    }
+
+    init() {
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        document.addEventListener('visibilitychange', () => this.onVisibility());
+        window.addEventListener('focus', () => this.onFocus());
+        window.addEventListener('pageshow', () => this.onPageshow());
+    }
+
+    onVisibility() {
+        if (!this.app.state.wakeLockIntent) return;
+        this.app.state.wakeLockState =
+            document.visibilityState === 'visible' ? 'visible' : 'suspended';
+    }
+
+    onFocus() {
+        if (!this.app.state.wakeLockIntent) return;
+        this.app.state.wakeLockState = 'visible';
+    }
+
+    onPageshow() {
+        if (!this.app.state.wakeLockIntent) return;
+        this.app.state.wakeLockState = 'visible';
+    }
+
+    async request() {
+        if (!this.app.state.wakeLockIntent || !this.app.state.wakeLockUserGestureAllowed) return;
+
+        const mode = this.app.state.wakeLockMode;
+
+        if (mode === 'native' && navigator.wakeLock?.request) {
+            try {
+                if (document.visibilityState !== 'visible') return;
+
+                const lock = await navigator.wakeLock.request('screen');
+                this.app.state.wakeLock = lock;
+                this.app.state.wakeLockState = 'active';
+                this.app.state.wakeLockActive = true;
+
+                lock.addEventListener('release', () => {
+                    this.app.state.wakeLock = null;
+                    this.app.state.wakeLockActive = false;
+                    this.app.state.wakeLockState = 'idle';
+                    this.app.updateSleepStatus('off');
+                });
+
+                this.app.updateSleepStatus('on');
+            } catch (err) {
+                console.warn('WakeLock native failed, falling back to video');
+                this.activateVideo();
+            }
+        } else {
+            this.activateVideo();
+        }
+    }
+
+    activateVideo() {
+        const video = this.app.elements.wakeLockVideo;
+        if (!video) return;
+
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+
+        video.play().catch(() => { });
+        this.app.state.wakeLockActive = true;
+        this.app.state.wakeLockState = 'active';
+        this.app.updateSleepStatus('on');
+    }
+
+    release() {
+        this.app.state.wakeLockIntent = false;
+        this.app.state.wakeLockActive = false;
+        this.app.state.wakeLockState = 'idle';
+
+        if (this.app.state.wakeLock?.release) {
+            this.app.state.wakeLock.release().catch(() => { });
+            this.app.state.wakeLock = null;
+        }
+
+        const video = this.app.elements.wakeLockVideo;
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        this.app.updateSleepStatus('off');
+    }
+
+    enableFromGesture() {
+        this.app.state.wakeLockIntent = true;
+        this.app.state.wakeLockUserGestureAllowed = true;
+        this.request();
+    }
+}
+
 window.EventPoster = class EventPoster {
     constructor() {
         // Initialize Modules
         this.themeManager = new window.ThemeManager(this);
         this.particleEngine = new window.ParticleEngine(this);
         this.ui = new window.UIController(this);
+
+        this.wakeLockStrategy = new WakeLockStrategy(this);
 
         this.cacheElements();
         this.createSwayLayers();
@@ -247,6 +351,9 @@ window.EventPoster = class EventPoster {
         this.state.posterText = this.loadPosterText();
         this.state.wakeLock = null;
         this.state.wakeLockActive = false;
+        this.state.wakeLockState = 'idle';
+        this.state.wakeLockIntent = false;
+        this.state.wakeLockUserGestureAllowed = false;
         this.state.lastFrameTime = performance.now();
         this.state.lastPhysicsTime = performance.now();
         this.state.frameCount = 0;
@@ -309,12 +416,12 @@ window.EventPoster = class EventPoster {
         this.particleEngine.startAnimationLoop();
 
         this.checkWakeLockSupport();
+        this.initWakeLockController();
         this.checkPersistentFullscreen();
         this.renderHosts();
         this.updateSleepStatus('off');
         this.updateScreenSize();
         this.updateTimerDisplay();
-        this.startWakeLockHeartbeat();
         this.showKeyboardHint();
 
         // Inject the Remote button into the controls panel header
@@ -738,15 +845,42 @@ window.EventPoster = class EventPoster {
         this.particleEngine?.adjustAmbientPetals();
     }
 
-    // Wake Lock & Fullscreen helpers
-    async checkWakeLockSupport() { if ('wakeLock' in navigator) this.state.wakeLockMode = 'native'; else if (this.elements.wakeLockVideo) this.state.wakeLockMode = 'video'; }
-    async requestWakeLock() {
-        if (this.state.wakeLockMode === 'native') { try { this.state.wakeLock = await navigator.wakeLock.request('screen'); this.updateSleepStatus('on'); } catch { this.updateSleepStatus('error'); } }
-        else if (this.state.wakeLockMode === 'video') { this.elements.wakeLockVideo.play(); this.updateSleepStatus('on'); }
+    enableWakeLockFromGesture() {
+        this.wakeLockStrategy.enableFromGesture();
     }
+
+    checkWakeLockSupport() {
+        const isSecureContext = window.isSecureContext;
+
+        const hasNativeSupport =
+            isSecureContext &&
+            navigator.wakeLock &&
+            typeof navigator.wakeLock.request === 'function';
+
+        const isChromium =
+            /Chrome|Chromium|Edg/.test(navigator.userAgent);
+
+        this.state.wakeLockMode =
+            (hasNativeSupport && isChromium) ? 'native' : 'video';
+
+        // Ensure fallback video is available if native is not supported
+        if (this.state.wakeLockMode !== 'native') {
+            this.state.wakeLockIntent = true; // video mode still needs intent
+            this.state.wakeLockUserGestureAllowed = true;
+        }
+    }
+
+    // Wake Lock & Fullscreen helpers
+    initWakeLockController() {
+        this.wakeLockStrategy.init();
+    }
+
+    async requestWakeLock() {
+        return this.wakeLockStrategy.request();
+    }
+
     releaseWakeLock() {
-        if (this.state.wakeLock) { this.state.wakeLock.release().then(() => { this.state.wakeLock = null; this.updateSleepStatus('off'); }); }
-        else if (this.state.wakeLockMode === 'video') { this.elements.wakeLockVideo.pause(); this.updateSleepStatus('off'); }
+        return this.wakeLockStrategy.release();
     }
     updateSleepStatus(status) {
         if (this.elements.sleepStatus) {
@@ -754,7 +888,7 @@ window.EventPoster = class EventPoster {
             this.elements.sleepStatus.textContent = status === 'on' ? 'Active' : status === 'error' ? 'Error' : 'Off';
         }
     }
-    startWakeLockHeartbeat() { setInterval(() => { if (this.state.wakeLockActive && !this.state.wakeLock && this.state.wakeLockMode === 'native') this.requestWakeLock(); }, 15000); }
+
 
     requestFullscreenMode() { if (!document.fullscreenElement) this.root.requestFullscreen().catch(() => { this.elements.fullscreenToggle.checked = false; }); }
     exitFullscreenMode() { if (document.fullscreenElement) document.exitFullscreen(); }

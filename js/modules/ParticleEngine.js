@@ -215,6 +215,7 @@ window.ParticleEngine = class ParticleEngine {
 
     updateBackgroundShapesFade(now) {
         if (!this.poster.swayLayers || !this.poster.swayLayerBases) return;
+        if (!this.poster.theme?.flags?.enableBackgroundFade) return;
 
         const strength = this.state.gustStrength; // 0 to 100
         
