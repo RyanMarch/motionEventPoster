@@ -6,62 +6,127 @@
 
   <br>
 
-  [<img src=".github/assets/eventPoster.png" alt="Event Poster Preview" width="100%">][demo]
+  [<img src=".github/assets/eventPoster.avif" alt="Event Poster Preview" width="100%">][demo]
 
   <!-- <video src="https://github-production-user-asset-6210df.s3.amazonaws.com/6699010/584341152-c1e34246-41ab-4b53-bd2d-faef1478f243.mp4" 
-         poster=".github/assets/eventPoster.png" 
+         poster=".github/assets/eventPoster.avif" 
          width="100%" controls muted autoplay loop disablepictureinpicture playsinline>
-    <img src=".github/assets/eventPoster.png" alt="Event Poster Preview">
+    <img src=".github/assets/eventPoster.avif" alt="Event Poster Preview">
   </video> -->
 </div>
 
 
 ## Overview
-The **Interactive Event Poster** is a professional-grade, browser-based display tool designed for gala fundraisers, non-profit events, and high-end venue kiosks. It replaces static slides and paper posters with a living, breathing digital poster that captures attention and elevates the atmosphere of any physical space.
+[Motion Poster](https://motionposter.ryanmarch.me) is a professional-grade, browser-based display tool designed for gala fundraisers, non-profit events, and high-end venue kiosks. It replaces static slides and paper posters with a living, breathing digital poster that captures attention and elevates the atmosphere of any physical space.
 
 Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect without needing a developer.
 
+**Quick start:** Simply open **[Motion Poster](https://motionposter.ryanmarch.me)**, make your customizations, and you're ready to go!
+
+## Contents
+  - [Key Benefits](#key-benefits)
+  - [Features](#features)
+    - [Atmospheric Elegance](#atmospheric-elegance)
+    - [Remote Control](#remote-control)
+  - [Themes](#themes)
+    - [Screenshots](#screenshots)
+  - [Getting Started](#getting-started)
+    - [Keyboard Shortcuts](#keyboard-shortcuts)
+    - [Other Triggers](#other-triggers)
+  - [Easy Customization](#easy-customization)
+    - [Content Editor](#content-editor)
+    - [Name Management](#name-management)
+    - [Appearance & Performance Settings](#appearance-performance-settings)
+  - [Quick Controls](#quick-controls)
+    - [Status](#status)
+    - [Customize Appearance](#customize-appearance)
+    - [Add and Remove Hosts](#add-and-remove-hosts)
+    - [Edit Poster Content](#edit-poster-content)
+    - [Controls Screenshots](#controls-screenshots)
+  - [Using the Remote Control](#using-the-remote-control)
+  - [Project Architechture and Technical Specs](#project-architechture-and-technical-specs)
+    - [File Structure](#file-structure)
+    - [Persistence Strategy](#persistence-strategy)
+    - [Technical Specifications](#technical-specifications)
+    - [Technical Architecture: Remote Syncing](#technical-architecture-remote-syncing)
+    - [Display Notes](#display-notes)
+  - [Version History](#version-history)
+
 ## Key Benefits
-*   **Easy To Use:** Simply open the file and you're ready to go.
-*   **Event Reliability:** Built-in features prevent the screen from sleeping and ensure the poster automatically recovers if the power blinks or the page refreshes.
+*   **Easy To Use:** Simply open, customize, and you're ready to go.
 *   **Your Branding, Your Customization:** All customizations, including uploaded logos and QR codes, are saved directly into your browser. They persist through refreshes and restarts, so your work is never lost.
 *   **Live Edits, No Disruptions:** A management panel allows you to update text and settings on the fly without having to edit code.
 *   **Untethered Remote Control:** Easily pair a secondary device to control all layouts, text, and styling in real-time from anywhere.
+*   **Event Reliability:** Built-in features prevent the screen from sleeping and ensure the poster automatically recovers if the power blinks or the page refreshes.
 
 ## Features
 
 ### Atmospheric Elegance
+*   **Dynamic Visual Identity:** Instantly swap between professional, seasonal, or high-energy themes to match the tone of your gathering.
+*   **Theme-Specific Frames:** From elegant floral borders to rustic wood cabinets and frosted glass, each theme provides a unique window into your event.
 *   **Multi-Atmosphere Particle Engine:** Depending on your theme, experience falling cherry blossoms, snowflakes, dust motes, or celebratory geometric particles subtly drifting through the display.
 *   **Adjustable Physics:** Fine-tune wind frequency, fall speed, and tumble rotation to create a natural environment that fits your needs.
-*   **Theme-Specific Frames:** From elegant floral borders to rustic wood cabinets and frosted glass, each theme provides a unique window into your event.
-*   **Dynamic Visual Identity:** Instantly swap between professional, seasonal, or high-energy themes to match the tone of your gathering.
 
-> [!TIP]
-> ### Remote Control
-> *   Access controls from a remote device (e.g. iPhone, iPad, etc.) for easy, flexible management.
-> *   Simply generate a code to start access from another device. 
-> *   Cutomize appearance, choose themes, add event details.
-> *   Add or remove names from the host list, all from the comfort of your seat. No need to go back to the presentation display.
+### Remote Control
+*   **No App Required:** Access controls from any web browser on any device (e.g. iPhone, iPad, etc.) - no app download needed.
+*   **Easy Pairing:** Simply generate a code to start access from another device. 
+*   **Cutomize appearance**: Choose themes, pick colors, tweak the layout, and add event details.
+*   **Name Management**: Add or remove names from the host list.
 
-Remote access requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
+Remote control allows for full poster control, all from the comfort of your seat. No need to go back to the presentation display.
+
+Remote pairing requires the remote device to be on the same network as the host device. Note that cellular hotspots work well for this purpose if you're not on a local Wi-Fi network.
+
+*More: [Using the Remote Control](#using-the-remote-control)*
 
 ## Themes
-Choose from curated visual identity packs, each with its own unique particle engine, decorative frame, and color palette.
+Choose from multiple themes, each with its own unique particle engine, decorative frame, and color palette.
 
-*   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral frames.
+*   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral framing.
 *   **[Digital Grid][demo-digital]:** High-tech accents and techy-glass with striking light beams.
 *   **[Alpine Winter][demo-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
 *   **[Vintage Radio][demo-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
 *   **[Minimal Elegance][demo-minimal-elegance]**: A sophisticated and high-fashion design perfect for art galleries, museums, and brand showcases.
 
-## Screenshots
+### Screenshots
 
 | | |
 | :---: | :---: |
-| **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.png)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.png)][demo-digital] |
-| **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.png)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.png)][demo-radio] |
-| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.png)][demo-corporate] | **Minimal Elegance** – *Sophisticated & Fashion-Forward* <br> [![Minimal Elegance](.github/assets/poster-minimal.png)][demo-minimal-elegance] |
+| **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.avif)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.avif)][demo-digital] |
+| **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.avif)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.avif)][demo-radio] |
+| **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.avif)][demo-corporate] | **Minimal Elegance** – *Sophisticated & Fashion-Forward* <br> [![Minimal Elegance](.github/assets/poster-minimal.avif)][demo-minimal-elegance] |
+
+## Getting Started
+1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
+2.  **Enter Fullscreen:** Press **'F'** on your keyboard to enter presentation mode.
+3.  **Open Options:** Press **'Q'** (Quick Controls) to start customizing your poster.
+4.  **Set Your Branding:** Choose your theme, upload your logo and QR codes, and add your host names.
+5.  **Display:** Plug your computer into a large display or projector and let it run!
+6. **Wireless Remote:** Optionally, [pair a wireless remote](#using-the-remote-control) by pressing **'W'** on your keyboard.
+
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `F` | Toggle fullscreen |
+| `Q` | Toggle the Options panel |
+| `C` | Toggle the Customize Appearance section |
+| `E` | Edit Poster Text |
+| `A` | Toggle the Add/Remove Names section |
+| `R` | Reset appearance to defaults (while in Customize section) |
+| `?` | Show Help Menu |
+| `W` | Open Wireless Remote panel |
+| `Esc` | Close panel or dismiss forms |
+| Hold `\` | **Factory Reset:** Wipe all local data and restore defaults |
+
+
+### Other Triggers
+*   **Open Menu:** Tap and hold the top-right corner of the screen to open the settings panel without a keyboard.
+*   **Remove Host:** Tap and hold any name in the Host Committee list to remove it from the display.
+
+## Easy Customization
 
 ### Content Editor
 *   **Custom-To-You Branding:** Add your organization name and upload custom logos directly in the browser.
@@ -70,7 +135,7 @@ Choose from curated visual identity packs, each with its own unique particle eng
 *   **Visual Layout Control:** Independently toggle the visibility of every element, including the logo, title, date, the host list, and even the background animations.
 
 ### Name Management
-*   **Seamless Entry:** Easily add or remove names one at a time via a clean, simple form.
+*   **Seamless Entry:** Easily add or remove names one at a time via a simple form.
 *   **Interactive Removal:** Remove a name quickly by simply holding down on a name, or choose it from the list to remove it.
 *   **Smart Font Scaling:** The names list automatically adjusts its font size and layout to fit your screen perfectly, whether you have 5 names or 50.
 *   **Flexible Layout Modes:** Choose between Justified, Centered, or Column-based layouts to suit your aesthetic preferences.
@@ -81,69 +146,18 @@ Choose from curated visual identity packs, each with its own unique particle eng
 *   **Auto-Fullscreen Recovery:** Remembers your fullscreen state. If the browser reloads, it's easy to jump back into presentation mode.
 *   **Touch-Friendly Hotspot:** No keyboard? No problem. A hidden "hold" zone in the top-right corner allows you to open settings with a simple touch or tap-and-hold.
 *   **Performance Engineering:**
-    *   **Frame Rate Limiter:** Cap performance at 30, 60, 90, or 120 FPS to save battery or ensure buttery-smooth motion on high-refresh displays.
+    *   **Frame Rate Limiter:** Cap performance at 30, 60, 90, or 120 FPS to save battery or ensure smooth motion on high-refresh displays.
     *   **Smooth Transitions:** Toggle UI animations for a snappier feel or a more cinematic experience.
-*   **Precision Styling Lab:**
+*   **Styling Lab:**
     *   **Text Backdrop Strength:** Control the legibility of names against complex backgrounds.
-    *   **Layout Control:** Fine-tune the **Max Width**, **Vertical Spacing**, and **Horizontal Spacing** to fit any screen bezel.
+    *   **Layout Control:** Fine-tune the **Max Width**, **Vertical Spacing**, and **Horizontal Spacing** to fit any screen.
     *   **Live Color Picker:** Match the background and accent colors to your brand's specific palette.
-*   **Adjustable Text Backdrop:** Control the opacity of the host list background to balance readability with the beauty of the animations.
-*   **Layout Control:** Adjust vertical and horizontal insets to ensure content is perfectly framed, regardless of your screen's bezel or resolution.
 
+## Quick Controls
 
-## Management Interface
-*Everything you see on the poster is controlled via an intuitive management interface in the app. No code required.*
+Everything you see on the poster is controlled via an intuitive management interface in the app. No code required.
 
-| **Main Controls** | **Name Management** |
-|:---:|:---:|
-| [![Main Options](.github/assets/mgmt-main.png)][demo] | [![Hosts](.github/assets/mgmt-hosts.png)][demo] |
-| *Live stats & toggles.* | *Real-time list editing.* |
-
-| **Content Editor** | **Appearance Settings** | **Help & Guidelines** |
-|:---:|:---:|:---:|
-| [![Content](.github/assets/mgmt-content.png)][demo] | [![Appearance](.github/assets/mgmt-appearance.png)][demo] | [![Help](.github/assets/mgmt-help.png)][demo] |
-| *Logos, titles, and QRs.* | *Physics & layout sliders.* | *Hotkeys & asset specs.* |
-
-
-## Getting Started
-1.  **Launch:** Open the `index.html` file in any modern web browser.
-2.  **Enter Fullscreen:** Press **'F'** on your keyboard to enter presentation mode.
-3.  **Open Options:** Press **'Q'** (Quick Controls) to start customizing your poster.
-4.  **Set Your Branding:** Upload your logo and QR codes, set your colors, and add your host names.
-5.  **Display:** Plug your computer into a large display or projector and let it run!
-
-### Using the Remote Control
-1. Launch the motion poster on your primary device.
-2. Open the control panel and click **Start Pairing**.
-3. On your secondary device (e.g., an iPhone or iPad), connect using one of three methods:
-   - Scan the on-screen **QR Code**.
-   - Navigate to the displayed URL and enter the temporary **Pairing Code**.
-   - Copy and share the direct link.
-4. Once connected, use the mobile-optimized interface to update names, layouts, and appearance on the fly. 
-
-## Keyboard Shortcuts
-
-### Quick Access Hotkeys
-| Key | Action |
-|-----|--------|
-| `F` | Toggle fullscreen |
-| `Q` | Toggle the Options panel |
-| `E` | Edit Poster Text |
-| `C` | Toggle the Customize Appearance section |
-| `A` | Toggle the Add/Remove Names section |
-| `R` | Reset appearance to defaults (in Customize section) |
-| `?` | Show Help Menu |
-| `Esc` | Close panel or dismiss forms |
-| Hold `\` | **Factory Reset:** Wipe all local data and restore defaults |
-
-
-### Other Triggers
-*   **Open Menu:** Tap and hold the top-right corner of the screen to open the settings panel without a keyboard.
-*   **Remove Host:** Tap and hold any name in the Host Committee list to remove it from the display.
-
-## Options Panel Features
-
-### Quick Controls
+### Status
 - **Fullscreen toggle** — puts the browser into fullscreen mode and activates Wake Lock to prevent the screen from sleeping
 - **Performance stats** — live FPS counter, screen resolution, fullscreen session timer, and Wake Lock status
 
@@ -166,14 +180,42 @@ Choose from curated visual identity packs, each with its own unique particle eng
 - Once any host is added by the user, the default/sample names get replaced
 - Remove individual hosts; recently removed hosts can be put back
 
-### Asset Guidelines
+### Edit Poster Content
 
--   **Logos:** PNG files are recommended. Ensure transparency is preserved for best results.
--   **QR Codes:** Any standard QR code image format (PNG, JPG, SVG) will work. Ensure the image is clear and high resolution for best readability.
+-   **All Text:** Change organization name, event title, subtitle, date, and top label. Or choose your own content for these fields.
+-   **Logos:** PNG files with transparency are recommended.
+-   **QR Codes:** Upload your own QR codes for event registration or donation pages. Use any standard QR code image format (PNG, JPG, etc) and ensure the image is clear and high resolution for best readability.
 
----
+### Controls Screenshots
 
-## Project Architecture
+| **Main Controls** | **Name Management** |
+|:---:|:---:|
+| [![Main Options](.github/assets/mgmt-main.avif)][demo] <br> *Live stats & toggles.* | [![Hosts](.github/assets/mgmt-hosts.avif)][demo] <br> *Real-time list editing.* |
+
+| **Content Editor** | **Appearance Settings** | **Help & Guidelines** |
+|:---:|:---:|:---:|
+| [![Content](.github/assets/mgmt-content.avif)][demo] <br> *Logos, titles, and QRs.* | [![Appearance](.github/assets/mgmt-appearance.avif)][demo] <br> *Physics & layout sliders.* | [![Help](.github/assets/mgmt-help.avif)][demo] <br> *Hotkeys & asset specs.* |
+
+## Using the Remote Control
+1. Launch the motion poster on your primary device.
+2. Open the control panel and click **Wireless Remote** - or press the **W** key.
+3. Using a secondary device (e.g., an iPhone or iPad), connect using one of three methods:
+   - Scan the on-screen **QR Code**.
+   - Navigate to the displayed URL and enter the **Pairing Code**.
+   - Copy and share the direct link.
+4. Once connected, use the mobile-optimized interface to update names, layouts, and appearance on the fly. 
+
+| Remote Pairing |
+|:---:|
+![Remote Pairing](.github/assets/motion-poster-one-step-pairing.avif) <br> *Easy, one-step remote control pairing.* |
+
+<br>
+
+| **Theme Control** | **Update Labels** | **Add Hosts** |
+| :---: | :---: | :---: |
+| ![Theme Control](.github/assets/motion-poster-remote-ipad.avif) <br> *Choose a theme and customize it.* | ![Update Labels](.github/assets/motion-poster-remote-update-labels.avif) <br> *Update labels on the fly.* | ![Add Hosts](.github/assets/motion-poster-remote-add-names.avif) <br> *Add or remove names.* |
+
+## Project Architechture and Technical Specs
 
 This project is built as a lightweight, zero-dependency "Vanilla" web application. It is designed for maximum performance and easy hosting on services like GitHub Pages.
 
@@ -201,13 +243,13 @@ The application uses the browser's `localStorage` API to store all user configur
 
 This architecture allows the project to remain entirely client-side, requiring no backend or database to function.
 
-## Technical Specifications
+### Technical Specifications
 *   **Language:** HTML5, CSS3, ES6+ JavaScript.
 *   **Compatibility:** Chrome, Edge, Safari, Firefox.
 *   **Optimized For:** 1080p (FHD) and 1440p (QHD) displays.
 *   **Reliability:** Includes a silent video fallback for the Wake Lock API on older browsers.
 
-## Technical Architecture: Remote Syncing
+### Technical Architecture: Remote Syncing
 
 The remote control feature is designed to be completely zero-config and infrastructure-free for event environments with unpredictable internet access. 
 
@@ -217,8 +259,6 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 *Note: Due to standard browser security specifications, entering or exiting full-screen mode must be done directly on the primary device and cannot be triggered via the remote.*
 
----
-
 ### Display Notes
 
 - **Recommended viewport:** 1280×800px or larger. A "Larger Display Recommended" screen is shown on smaller devices, with an option to bypass.
@@ -226,11 +266,13 @@ The remote control feature is designed to be completely zero-config and infrastr
 - **Wake Lock:** Uses the Screen Wake Lock API where available. Falls back to a silent looping video element to keep the screen awake on unsupported browsers.
 - **Auto-fullscreen:** After a refresh while fullscreen was active, the poster will re-enter fullscreen automatically. This can be turned off.
 
+---
+
 ## Version History
 
 | Version | Notes |
 |---------|-------|
-| v7.1 | The Minimal Elegance Theme: Added a new theme for art galleries, museums, and brand showcases with a sophisticated and fashion-forward design. |
+| v7.1 | **Minimal Elegance Theme:** Added a new theme for art galleries, museums, and brand showcases with a sophisticated and fashion-forward design. |
 | v7 | **The Remote Update:** Remote control for managing and customizing the poster from a different device. |
 | v6 | **The Themes Update:** Theme Engine with 5 curated themes: *Spring Blossom*, *Digital Grid*, *Alpine Winter*, *Vintage Radio*, *Corporate Pro*. Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |
 | v5 | Adds host management, content editing, color picker, local font hosting, auto-fullscreen option, high-res display optimizations, responsive font scaling, and small-screen handler. |
@@ -239,10 +281,10 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 ---
 
-[demo]: https://motionEventPoster.ryanmarch.me/
-[demo-spring]: https://motionEventPoster.ryanmarch.me/?theme=spring
-[demo-digital]: https://motionEventPoster.ryanmarch.me/?theme=digital-grid
-[demo-winter]: https://motionEventPoster.ryanmarch.me/?theme=alpine-winter
-[demo-radio]: https://motionEventPoster.ryanmarch.me/?theme=vintage-radio
-[demo-corporate]: https://motionEventPoster.ryanmarch.me/?theme=corporate
-[demo-minimal-elegance]: https://motionEventPoster.ryanmarch.me/?theme=minimal-elegance
+[demo]: https://motionposter.ryanmarch.me/
+[demo-spring]: https://motionposter.ryanmarch.me/?theme=spring
+[demo-digital]: https://motionposter.ryanmarch.me/?theme=digital-grid
+[demo-winter]: https://motionposter.ryanmarch.me/?theme=alpine-winter
+[demo-radio]: https://motionposter.ryanmarch.me/?theme=vintage-radio
+[demo-corporate]: https://motionposter.ryanmarch.me/?theme=corporate
+[demo-minimal-elegance]: https://motionposter.ryanmarch.me/?theme=minimal-elegance
