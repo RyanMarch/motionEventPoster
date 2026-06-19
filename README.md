@@ -101,7 +101,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Summer Cookout][demo-summer-cookout]:** Warm and inviting with a summer cookout theme.
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing and vibrant with a tropical oasis theme.
 *   **[Mardi Gras][demo-mardi-gras]:** Festive masquerade carnival with beads, masks, and a celebratory atmosphere.
-*   **[Casino Night][demo-casino-night]:** Glamorous casino table with felt textures, gold borders, and floating card suit particles.
+*   **[Casino Night][demo-casino-night]:** Glamorous casino table with felt textures, gold borders, corner card fans, clicky poker chip stacks, and floating card suit particles.
 
 ### 🪩 Decades Pack
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.

@@ -271,7 +271,8 @@ window.EventPoster = class EventPoster {
         const layers = [
             'sway-top-right', 'sway-top-left', 'sway-bottom-left', 'sway-bottom-right',
             'sway-left-side', 'sway-right-side', 'sway-top-1', 'sway-top-2', 'sway-top-3',
-            'sway-bottom-3', 'sway-bottom-4', 'sway-bottom-5', 'sway-bottom-6'
+            'sway-bottom-3', 'sway-bottom-4', 'sway-bottom-5', 'sway-bottom-6',
+            'sway-bottom-7', 'sway-bottom-8', 'sway-bottom-9', 'sway-bottom-10'
         ];
         layers.forEach(cls => {
             const div = document.createElement('div');
