@@ -311,6 +311,20 @@ class RemoteController {
         if (wLabel && wLabel.firstChild) {
             wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
         }
+
+        const fLabel = document.querySelector('label[for="slider-fall-speed"]') || document.querySelector('#slider-fall-speed')?.parentElement?.querySelector('label');
+        if (fLabel && fLabel.firstChild) {
+            fLabel.firstChild.textContent = `${uiLabels.fallSpeed || 'Fall Speed'} `;
+        }
+         const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
+        if (windinessControl) {
+            windinessControl.style.display = themeId === 'space-odyssey' ? 'none' : '';
+        }
+
+        const tumbleControl = document.getElementById('slider-tumble-speed')?.closest('.control');
+        if (tumbleControl) {
+            tumbleControl.style.display = themeId === 'space-odyssey' ? 'none' : '';
+        }
     }
 
     // ─── Connect Screen ─────────────────────────────────────────────────────

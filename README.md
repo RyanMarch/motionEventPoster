@@ -111,6 +111,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🌌 Specialty Pack
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
+*   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
 
 ### 🎃 Holiday Pack
 *   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
@@ -141,6 +142,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | **Game Console** – *Video Gaming Fun* <br> [![Game Console](.github/assets/poster-game-console.avif)][demo-game-console] |
+| **Space Odyssey** – *Futuristic Deep Space* <br> [![Space Odyssey](.github/assets/poster-space-odyssey.avif)][demo-space-odyssey] | |
 
 ### 🎃 Holiday Pack
 | | |
@@ -355,3 +357,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-art-deco-gala]: https://motionposter.ryanmarch.me/?theme=art-deco-gala
 [demo-cinema]: https://motionposter.ryanmarch.me/?theme=cinema
 [demo-halloween]: https://motionposter.ryanmarch.me/?theme=halloween
+[demo-space-odyssey]: https://motionposter.ryanmarch.me/?theme=space-odyssey

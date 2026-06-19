@@ -89,6 +89,9 @@ window.ParticleEngine = class ParticleEngine {
             element.classList.add('is-blurred');
             element.style.opacity = '0.6';
         }
+        if (type.type && type.type.includes('star')) {
+            element.style.setProperty('--star-delay', `${Math.random() * -5}s`);
+        }
         container.appendChild(element);
         return {
             element,
@@ -149,25 +152,79 @@ window.ParticleEngine = class ParticleEngine {
         this.state.gustForce *= 0.95;
         this.state.currentWind += (targetWindSpeed - this.state.currentWind) * (1 - Math.exp(-dt * 2));
         this.state.windDirection += (this.state.targetWindDirection - this.state.windDirection) * (1 - Math.exp(-dt * 0.5));
-        const totalWind = (this.state.currentWind + this.state.gustForce) * this.state.windDirection;
+        const isSpace = this.poster.theme?.id === 'space-odyssey';
+        const totalWind = isSpace ? 0 : (this.state.currentWind + this.state.gustForce) * this.state.windDirection;
         this.state.petals.forEach(p => {
             if (p.type && p.type.includes('reflection')) {
                 // Reflections sweep horizontally without gravity, wind, or tumbling
                 p.x += p.horizontalSpeed * dt;
                 p.y += p.verticalDrift * dt;
+            } else if (p.type === 'shooting-star') {
+                // Shooting stars move fast diagonally in randomized angles/directions
+                if (p.horizontalSpeed === undefined || p.horizontalSpeed === 0) {
+                    const goLeft = Math.random() > 0.5;
+                    const angleDeg = goLeft ? (120 + Math.random() * 30) : (30 + Math.random() * 30);
+                    const angleRad = angleDeg * Math.PI / 180;
+                    const speed = p.baseFallSpeed * 2.0;
+                    p.horizontalSpeed = speed * Math.cos(angleRad);
+                    p.verticalSpeed = speed * Math.sin(angleRad);
+                    p.rotation = angleDeg + 180;
+                    p.rotSpeed = 0;
+                    // Distribute initially across screen
+                    p.y = Math.random() * 80 - 20;
+                    p.x = Math.random() * 120 - 10;
+                    p.spawnDelay = Math.random() * 12;
+                }
+                
+                if (p.spawnDelay > 0) {
+                    p.spawnDelay -= dt;
+                    p.element.style.display = 'none';
+                } else {
+                    p.element.style.display = '';
+                    p.x += p.horizontalSpeed * dt * this.state.fallSpeed;
+                    p.y += p.verticalSpeed * dt * this.state.fallSpeed;
+                }
             } else {
                 const gravityEffect = p.baseFallSpeed * p.mass * this.state.fallSpeed;
                 const windEffect = totalWind * (p.aero / p.mass);
                 p.x += (windEffect + p.naturalDrift) * dt;
                 p.y += gravityEffect * dt;
-                const speedFactor = Math.abs(windEffect) / 10 + 1;
-                p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+                
+                // Skip rotation calculations for circular particles (stars and dust)
+                if (p.type !== 'space-star' && p.type !== 'space-dust-accent' && p.type !== 'space-dust-secondary' && p.type !== 'dust') {
+                    const speedFactor = Math.abs(windEffect) / 10 + 1;
+                    p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
+                }
             }
-            if (p.y > 110) { p.y = -10; p.x = Math.random() * 120 - 10; }
-            else if (p.y < -20) p.y = 110;
-            if (p.x > 110) p.x = -10;
-            else if (p.x < -20) p.x = 110;
-            p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0) rotate(${p.rotation}deg)`;
+
+            // Boundary wrapping
+            if (p.type === 'shooting-star') {
+                if (p.y > 110 || p.x < -25 || p.x > 125) {
+                    const goLeft = Math.random() > 0.5;
+                    const angleDeg = goLeft ? (120 + Math.random() * 30) : (30 + Math.random() * 30);
+                    const angleRad = angleDeg * Math.PI / 180;
+                    const speed = p.baseFallSpeed * 2.0;
+                    p.horizontalSpeed = speed * Math.cos(angleRad);
+                    p.verticalSpeed = speed * Math.sin(angleRad);
+                    p.rotation = angleDeg + 180;
+                    p.y = -20;
+                    p.x = goLeft ? (Math.random() * 60 + 50) : (Math.random() * 60 - 10);
+                    p.spawnDelay = 6 + Math.random() * 14;
+                    p.element.style.display = 'none';
+                }
+            } else {
+                if (p.y > 110) { p.y = -10; p.x = Math.random() * 120 - 10; }
+                else if (p.y < -20) p.y = 110;
+                if (p.x > 110) p.x = -10;
+                else if (p.x < -20) p.x = 110;
+            }
+
+            // Skip rotation transform for circular particles to optimize GPU matrix operations
+            if (p.type === 'space-star' || p.type === 'space-dust-accent' || p.type === 'space-dust-secondary' || p.type === 'dust') {
+                p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0)`;
+            } else {
+                p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0) rotate(${p.rotation}deg)`;
+            }
         });
     }
 

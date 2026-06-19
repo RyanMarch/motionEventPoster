@@ -1328,7 +1328,7 @@
 
         'space-odyssey': defineTheme({
             id: 'space-odyssey',
-            name: 'Space Odyssey*',
+            name: 'Space Odyssey',
             pack: 'specialty',
             icon: '🌌',
             primary: '#050510',
@@ -1338,18 +1338,30 @@
             colors: { text: '#ffffff', darkText: '#050510' },
             swatches: [
                 { hex: '#000000', name: 'Event Horizon', accent: '#FF0055', secondary: '#FFAA00' },
-                { hex: '#0B1021', name: 'Nebula', accent: '#FF00FF', secondary: '#00FFFF' }
+                { hex: '#0B1021', name: 'Nebula', accent: '#FF00FF', secondary: '#00FFFF' },
+                { hex: '#0f051d', name: 'Andromeda', accent: '#ff007f', secondary: '#00e5ff' },
+                { hex: '#150505', name: 'Solar Flare', accent: '#ff5500', secondary: '#ffcc00' },
+                { hex: '#030b1e', name: 'Hyperdrive', accent: '#39ff14', secondary: '#00f0ff' },
+                { hex: '#12001a', name: 'Pulsar', accent: '#bd00ff', secondary: '#ff00aa' },
+                { hex: '#06001a', name: 'Supernova', accent: '#ffaa00', secondary: '#00ffcc' },
+                { hex: '#051008', name: 'Alien Skies', accent: '#00ff88', secondary: '#7cfc00' },
+                // { hex: '#0a0705', name: 'Cosmic Dust', accent: '#f4c430', secondary: '#ff6b35' },q
+                { hex: '#020202', name: 'Quantum Void', accent: '#ffffff', secondary: '#555555' },
+                { hex: '#070b12', name: 'Frozen Comet', accent: '#a5ffd6', secondary: '#3a86c8' }
             ],
             fonts: { primary: "'Exo 2', sans-serif", display: "'Orbitron', sans-serif", heading: "'Orbitron', sans-serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#ffffff', gradient: '#cccccc', type: 'star', weight: 70, speedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3, isWhite: true },
-                { color: '#00E5FF', gradient: '#008899', type: 'dust', weight: 30, speedMultiplier: 0.2, sizeMultiplier: 0.8, massMultiplier: 0.4 }
+                { color: '#ffffff', gradient: '#e0e0e0', type: 'space-star', weight: 65, speedMultiplier: 0.05, sizeMultiplier: 0.4, massMultiplier: 0.2, isWhite: true },
+                { useThemeAccent: true, type: 'space-dust-accent', weight: 20, speedMultiplier: 0.08, sizeMultiplier: 0.7, massMultiplier: 0.3 },
+                { useThemeSecondary: true, type: 'space-dust-secondary', weight: 10, speedMultiplier: 0.06, sizeMultiplier: 0.9, massMultiplier: 0.4 },
+                { useThemeAccent: true, type: 'shooting-star', weight: 2, speedMultiplier: 3.5, sizeMultiplier: 1.5, massMultiplier: 1.2 }
             ],
             frameClass: 'theme-frame--space',
-            overrides: { insetV: 50, insetH: 60, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.15, maxPetals: 60, windiness: 2, hostMaxWidth: 130, backdropOpacity: 20 },
+            flags: { syncParticleColors: true, showSecondaryAsSwatch: true },
+            overrides: { insetV: 50, insetH: 60, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.15, maxPetals: 95, windiness: 2, hostMaxWidth: 130, backdropOpacity: 45 },
             defaults: { hostsTitle: "Space Commanders", eventTitle: "Tech Launch", eventSubtitle: "Next Generation", eventTopLabel: "Mission" },
-            uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', frameName: 'Sci-Fi HUD' }
+            uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
         }),
 
         'zen-garden': defineTheme({

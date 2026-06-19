@@ -1,1 +1,927 @@
-/* Stub theme for Space Odyssey */
+/**
+ * SPACE ODYSSEY (SCI-FI / TECH) THEME STYLES
+ */
+
+/* 1. Deep Space Backdrop with Seamless Starfield & Shifting Nebula */
+body.theme-space-odyssey {
+    background-color: var(--color-primary);
+    overflow: hidden;
+}
+
+body.theme-space-odyssey .floral-bg {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    /* Seamless starfield background */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='none'/><circle cx='45' cy='75' r='1' fill='%23ffffff' opacity='0.7'/><circle cx='120' cy='30' r='1.5' fill='%23ffffff' opacity='0.9'/><circle cx='210' cy='95' r='0.8' fill='%23ffffff' opacity='0.5'/><circle cx='270' cy='45' r='2' fill='%23ffffff' opacity='0.6'/><circle cx='80' cy='180' r='1.2' fill='%23aae0ff' opacity='0.8'/><circle cx='170' cy='130' r='0.8' fill='%23ffffff' opacity='0.4'/><circle cx='240' cy='210' r='1.5' fill='%23ffffff' opacity='0.75'/><circle cx='30' cy='250' r='1' fill='%23ffccd0' opacity='0.65'/><circle cx='110' cy='260' r='2' fill='%23ffffff' opacity='0.5'/><circle cx='190' cy='230' r='1.2' fill='%23ffffff' opacity='0.85'/><circle cx='280' cy='280' r='0.8' fill='%23ffffff' opacity='0.5'/><circle cx='150' cy='200' r='1.8' fill='%23aae0ff' opacity='0.9'/><circle cx='220' cy='20' r='1' fill='%23ffffff' opacity='0.7'/><circle cx='60' cy='120' r='1.5' fill='%23ffffff' opacity='0.8'/></svg>");
+    background-repeat: repeat;
+    z-index: var(--z-bg);
+    overflow: hidden;
+}
+
+body.theme-space-odyssey #bg-swatch-grid {
+    max-width: 240px !important;
+}
+
+/* Nebula Layer 1 (Clockwise Rotation & Swirling Cosmic Arms - Sharper & with Golden Accents) */
+body.theme-space-odyssey .floral-bg::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 60vmax);
+    left: calc(50% - 60vmax);
+    width: 120vmax;
+    height: 120vmax;
+    background: conic-gradient(from 0deg at 50% 50%,
+            transparent 0%,
+            rgba(var(--color-secondary-rgb), 0.7) 12%,
+            rgba(255, 204, 0, 0.35) 22%,
+            transparent 35%,
+            rgba(var(--color-accent-rgb), 0.55) 48%,
+            transparent 65%,
+            rgba(var(--color-secondary-rgb), 0.7) 78%,
+            rgba(255, 204, 0, 0.35) 88%,
+            transparent 100%);
+    filter: blur(25px);
+    animation:
+        space-nebula-spin-1 55s linear infinite,
+        space-nebula-fade-1 calc(25s / var(--gust-speed, 1)) ease-in-out infinite;
+    transform-origin: center center;
+    mix-blend-mode: screen;
+    opacity: calc(0.85 * var(--backdrop-opacity, 1));
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* Nebula Layer 2 (Counter-Clockwise Rotation & Intense Golden Galactic Core) */
+body.theme-space-odyssey .floral-bg::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 60vmax);
+    left: calc(50% - 60vmax);
+    width: 120vmax;
+    height: 120vmax;
+    background:
+        radial-gradient(circle at 50% 50%, #ffffff 0%, #ffcc00 8%, rgba(var(--color-accent-rgb), 0.7) 18%, rgba(var(--color-secondary-rgb), 0.4) 35%, transparent 60%),
+        radial-gradient(circle at 42% 42%, rgba(var(--color-accent-rgb), 0.5), transparent 45%),
+        radial-gradient(circle at 58% 58%, rgba(var(--color-secondary-rgb), 0.5), transparent 45%);
+    filter: blur(20px);
+    animation:
+        space-space-spin-adjust 65s linear infinite,
+        space-nebula-fade-2 calc(30s / var(--gust-speed, 1)) ease-in-out infinite;
+    transform-origin: center center;
+    mix-blend-mode: screen;
+    opacity: calc(0.75 * var(--backdrop-opacity, 1));
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes space-nebula-spin-1 {
+    0% {
+        transform: rotate(0deg) scale(0.9);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(0.9);
+    }
+}
+
+@keyframes space-space-spin-adjust {
+    0% {
+        transform: rotate(360deg) scale(1.2);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(0.85);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1.2);
+    }
+}
+
+@keyframes space-nebula-fade-1 {
+
+    0%,
+    100% {
+        opacity: calc(0.85 * var(--backdrop-opacity, 1));
+    }
+
+    50% {
+        opacity: calc(0.25 * var(--backdrop-opacity, 1));
+    }
+}
+
+@keyframes space-nebula-fade-2 {
+
+    0%,
+    100% {
+        opacity: calc(0.75 * var(--backdrop-opacity, 1));
+    }
+
+    50% {
+        opacity: calc(0.15 * var(--backdrop-opacity, 1));
+    }
+}
+
+/* Hide Frame Logic */
+body.border-hidden.theme-space-odyssey .theme-frame,
+body.border-hidden.theme-space-odyssey .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* 2. Futuristic HUD Cockpit Frame */
+body.theme-space-odyssey .theme-frame {
+    opacity: 1;
+    border: 2px solid rgba(var(--color-accent-rgb), calc(0.5 + 0.5 * var(--frame-intensity)));
+    outline: 1.5px dashed rgba(var(--color-accent-rgb), calc(0.3 + 0.5 * var(--frame-intensity)));
+    outline-offset: -8px;
+    box-shadow:
+        0 0 calc(45px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.25 * var(--frame-intensity))),
+        inset 0 0 calc(45px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.25 * var(--frame-intensity)));
+    border-radius: 12px;
+    overflow: visible;
+    background: transparent;
+    z-index: 5;
+    animation: space-hud-pulse 4s ease-in-out infinite;
+}
+
+@keyframes space-hud-pulse {
+
+    0%,
+    100% {
+        border-color: rgba(var(--color-accent-rgb), calc(0.4 + 0.5 * var(--frame-intensity)));
+        box-shadow:
+            0 0 calc(35px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.2 * var(--frame-intensity))),
+            inset 0 0 calc(35px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.2 * var(--frame-intensity)));
+    }
+
+    50% {
+        border-color: rgba(var(--color-accent-rgb), calc(0.75 + 0.25 * var(--frame-intensity)));
+        box-shadow:
+            0 0 calc(55px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.4 * var(--frame-intensity))),
+            inset 0 0 calc(55px * var(--frame-intensity)) rgba(var(--color-accent-rgb), calc(0.4 * var(--frame-intensity)));
+    }
+}
+
+/* Texture Layer: Scope Markings (Grid Removed) */
+body.theme-space-odyssey .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    background: transparent;
+    opacity: calc(0.5 + 0.5 * var(--frame-intensity));
+    transition: opacity 0.3s ease;
+}
+
+/* Angled Inner Telemetry Border */
+body.theme-space-odyssey .theme-texture::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1.5px solid rgba(var(--color-accent-rgb), calc(0.15 + 0.35 * var(--frame-intensity)));
+    pointer-events: none;
+    clip-path: polygon(0 30px, 30px 0,
+            calc(100% - 30px) 0, 100% 30px,
+            100% calc(100% - 30px), calc(100% - 30px) 100%,
+            30px 100%, 0 calc(100% - 30px));
+    -webkit-clip-path: polygon(0 30px, 30px 0,
+            calc(100% - 30px) 0, 100% 30px,
+            100% calc(100% - 30px), calc(100% - 30px) 100%,
+            30px 100%, 0 calc(100% - 30px));
+    opacity: 0.9;
+}
+
+
+/* HUD Corner Telemetry Readout with Real-Time Cycling Status */
+body.theme-space-odyssey .theme-texture::after {
+    content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE ';
+    position: absolute;
+    top: 25px;
+    left: 45px;
+    font-family: var(--font-display) !important;
+    font-size: 0.7rem;
+    letter-spacing: 2.5px;
+    color: rgba(var(--color-accent-rgb), 0.95);
+    text-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.65);
+    opacity: 0;
+    animation: space-telemetry-scroll 1250s infinite;
+}
+
+@keyframes space-telemetry-scroll {
+
+    /* Page 1 (0% to 20%): SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE */
+    0.0% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 0;
+    }
+
+    2.4% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    3.2% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    4.0% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    4.8% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    5.6% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    6.4% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    7.2% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    8.0% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    8.8% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    9.6% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    10.4% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    11.2% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 1;
+    }
+
+    12.0% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE █';
+        opacity: 1;
+    }
+
+    12.8% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 0;
+    }
+
+    20.0% {
+        content: 'SYS_LOCK // HD-LOCK: SEC_09 // RADAR: ACTIVE  ';
+        opacity: 0;
+    }
+
+    /* Page 2 (20% to 40%): SCANNING SECTOR // COORD: 45.98 // COMP: OK */
+    20.0% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 0;
+    }
+
+    22.4% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    23.2% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    24.0% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    24.8% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    25.6% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    26.4% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    27.2% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    28.0% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    28.8% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    29.6% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    30.4% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    31.2% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 1;
+    }
+
+    32.0% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK █';
+        opacity: 1;
+    }
+
+    32.8% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 0;
+    }
+
+    40.0% {
+        content: 'SCANNING SECTOR // COORD: 45.98 // COMP: OK  ';
+        opacity: 0;
+    }
+
+    /* Page 3 (40% to 60%): SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM */
+    40.0% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 0;
+    }
+
+    42.4% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    43.2% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    44.0% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    44.8% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    45.6% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    46.4% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    47.2% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    48.0% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    48.8% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    49.6% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    50.4% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    51.2% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 1;
+    }
+
+    52.0% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM █';
+        opacity: 1;
+    }
+
+    52.8% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 0;
+    }
+
+    60.0% {
+        content: 'SYS_STATUS: OK // TELEMETRY: SYNC // FLT: NOM  ';
+        opacity: 0;
+    }
+
+    /* Page 4 (60% to 80%): ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE */
+    60.0% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 0;
+    }
+
+    62.4% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    63.2% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    64.0% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    64.8% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    65.6% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    66.4% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    67.2% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    68.0% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    68.8% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    69.6% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    70.4% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    71.2% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 1;
+    }
+
+    72.0% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE █';
+        opacity: 1;
+    }
+
+    72.8% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 0;
+    }
+
+    80.0% {
+        content: 'ENERGY_CORE: 98.4% // THRUSTERS: ACTIVE  ';
+        opacity: 0;
+    }
+
+    /* Page 5 (80% to 100%): WARP_DRIVE: STABLE // TARGET: CHRONOS */
+    80.0% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 0;
+    }
+
+    82.4% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    83.2% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    84.0% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    84.8% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    85.6% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    86.4% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    87.2% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    88.0% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    88.8% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    89.6% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    90.4% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    91.2% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 1;
+    }
+
+    92.0% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS █';
+        opacity: 1;
+    }
+
+    92.8% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 0;
+    }
+
+    100.0% {
+        content: 'WARP_DRIVE: STABLE // TARGET: CHRONOS  ';
+        opacity: 0;
+    }
+}
+
+/* 3. Starfield & Particle Styling */
+
+/* Background Stars: Twinkling White Points */
+body.theme-space-odyssey .petal.petal--space-star {
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    width: 3px !important;
+    height: 3px !important;
+    box-shadow: 0 0 4px rgba(var(--color-accent-rgb), 0.85);
+    animation: space-star-twinkle 3s ease-in-out infinite alternate;
+    animation-delay: var(--star-delay, 0s);
+}
+
+@keyframes space-star-twinkle {
+    0% {
+        opacity: 0.25;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+/* Glowing Nebular Dust: Simulated blur via radial-gradient for performance */
+body.theme-space-odyssey .petal.petal--space-dust-accent {
+    background: radial-gradient(circle, var(--color-accent) 0%, rgba(var(--color-accent-rgb), 0) 70%) !important;
+    border-radius: 50% !important;
+    opacity: 0.55;
+}
+body.theme-space-odyssey .petal.petal--space-dust-secondary {
+    background: radial-gradient(circle, var(--color-secondary) 0%, rgba(var(--color-secondary-rgb), 0) 70%) !important;
+    border-radius: 50% !important;
+    opacity: 0.55;
+}
+
+/* Diagonal Shooting Star Streaks */
+body.theme-space-odyssey .petal.petal--shooting-star {
+    width: 90px !important;
+    height: 2px !important;
+    border-radius: 0px !important;
+    background: linear-gradient(90deg, var(--color-accent) 0%, rgba(var(--color-accent-rgb), 0) 100%) !important;
+    box-shadow:
+        0 0 6px var(--color-accent),
+        0 0 12px rgba(var(--color-accent-rgb), 0.4);
+    opacity: 0.95 !important;
+}
+
+/* 4. Glowing Sci-Fi Typography Overrides */
+body.theme-space-odyssey .event-title {
+    color: #ffffff;
+    font-family: var(--font-display) !important;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-shadow:
+        0 0 4px #ffffff,
+        0 0 12px var(--color-accent),
+        0 0 24px var(--color-accent);
+}
+
+body.theme-space-odyssey .event-top-label,
+body.theme-space-odyssey .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    letter-spacing: 6px;
+    text-shadow:
+        0 0 3px var(--color-secondary),
+        0 0 8px var(--color-secondary);
+}
+
+/* Subtitle cursor animation removed */
+
+body.theme-space-odyssey .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.25rem;
+    color: #ffffff;
+    opacity: 0.85;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(var(--color-accent-rgb), 0.3);
+}
+
+body.theme-space-odyssey .hosts-title {
+    font-family: var(--font-display) !important;
+    color: var(--color-accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.5);
+}
+
+body.theme-space-odyssey .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 0 4px rgba(var(--color-accent-rgb), 0.45);
+}
+
+/* Circular Tactical Radar/Scope reticle behind hosts - Rotating & Pulsing */
+body.theme-space-odyssey .hosts-container::after {
+    content: '';
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: 650px;
+    height: 650px;
+    transform: translate(-50%, -50%);
+    background-image:
+        radial-gradient(circle, transparent 25%, rgba(var(--color-accent-rgb), 0.16) 26%, rgba(var(--color-accent-rgb), 0.16) 27%, transparent 28%),
+        radial-gradient(circle, transparent 48%, rgba(var(--color-accent-rgb), 0.08) 49%, rgba(var(--color-accent-rgb), 0.08) 50%, transparent 51%),
+        linear-gradient(90deg, transparent 49.5%, rgba(var(--color-accent-rgb), 0.12) 50%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, rgba(var(--color-accent-rgb), 0.12) 50%, transparent 50.5%);
+    z-index: -1;
+    pointer-events: none;
+    opacity: calc((0.45 + 0.55 * var(--frame-intensity)) * var(--space-swirl-opacity-factor, 1));
+    display: var(--space-swirl-display, block);
+    animation-play-state: var(--space-swirl-play-state, running);
+    transition: opacity 0.3s ease;
+    animation: space-radar-spin 25s linear infinite, space-radar-pulse 6s ease-in-out infinite;
+}
+
+@keyframes space-radar-spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes space-radar-pulse {
+
+    0%,
+    100% {
+        opacity: calc((0.4 + 0.6 * var(--frame-intensity)) * var(--space-swirl-opacity-factor, 1));
+    }
+
+    50% {
+        opacity: calc((0.75 + 0.25 * var(--frame-intensity)) * var(--space-swirl-opacity-factor, 1));
+    }
+}
+
+/* Readability overlay behind text */
+body.theme-space-odyssey .hosts-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 108%;
+    height: 118%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(5, 5, 20, 0.85), rgba(5, 5, 20, 0.2) 75%, transparent 100%);
+    opacity: var(--backdrop-opacity, 0);
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* 5. Cockpit-Style Redesigned Logo Banner */
+body.theme-space-odyssey .logo-banner {
+    position: relative;
+    background: rgba(var(--color-primary-rgb), 0.82);
+    border-left: 4px solid var(--color-accent);
+    border-right: 4px solid var(--color-accent);
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0px;
+    padding: 16px 54px;
+    box-shadow:
+        0 0 20px rgba(var(--color-accent-rgb), 0.15),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.1);
+    margin: 2.5rem 0 -1rem 0;
+}
+
+/* Cockpit Corner Ticks (Top Brackets) */
+body.theme-space-odyssey .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -4px;
+    right: -4px;
+    height: 4px;
+    border-left: 16px solid var(--color-accent);
+    border-right: 16px solid var(--color-accent);
+    box-shadow: 0 -2px 6px rgba(var(--color-accent-rgb), 0.3);
+    background: transparent;
+    z-index: 2;
+}
+
+/* Cockpit Corner Ticks (Bottom Brackets) */
+body.theme-space-odyssey .logo-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -4px;
+    right: -4px;
+    height: 4px;
+    border-left: 16px solid var(--color-accent);
+    border-right: 16px solid var(--color-accent);
+    box-shadow: 0 2px 6px rgba(var(--color-accent-rgb), 0.3);
+    background: transparent;
+    z-index: 2;
+}
+
+body.theme-space-odyssey .logo-text-custom {
+    font-family: var(--font-display) !important;
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 6px var(--color-accent) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* Swatch / Light Mode Overrides */
+body.theme-space-odyssey.is-light-bg .event-title,
+body.theme-space-odyssey.is-light-bg .event-subtitle,
+body.theme-space-odyssey.is-light-bg .event-top-label,
+body.theme-space-odyssey.is-light-bg .event-date,
+body.theme-space-odyssey.is-light-bg .hosts-title,
+body.theme-space-odyssey.is-light-bg .hosts-list span {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-space-odyssey.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: var(--color-dark-text);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+body.theme-space-odyssey.is-light-bg .logo-banner::before,
+body.theme-space-odyssey.is-light-bg .logo-banner::after {
+    border-color: var(--color-dark-text);
+    box-shadow: none;
+}
+
+body.theme-space-odyssey.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+/* 6. Layout adjustments */
+body.theme-space-odyssey .main-content {
+    max-width: 1750px;
+}
+
+@media (max-width: 1800px) {
+    body.theme-space-odyssey .hosts-list span {
+        font-size: calc(1.35em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-space-odyssey .hosts-container {
+        margin: 4vh 0 -4vh 0;
+    }
+
+    body.theme-space-odyssey .event-footer {
+        margin-bottom: 2.5vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-space-odyssey .logo-banner {
+        scale: 1.15;
+        margin-top: 3rem;
+    }
+
+    body.theme-space-odyssey .hosts-list span {
+        font-size: calc(1.8em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-space-odyssey .hosts-container {
+        margin-top: 3vh;
+        margin-bottom: -2vh;
+    }
+
+    body.theme-space-odyssey .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Pause animations when particles or frame are paused */
+body.theme-space-odyssey .floral-bg,
+body.theme-space-odyssey .floral-bg::before,
+body.theme-space-odyssey .floral-bg::after,
+body.theme-space-odyssey .theme-texture,
+body.theme-space-odyssey .petal.petal--space-star {
+    animation-play-state: var(--grid-play-state, running);
+}
