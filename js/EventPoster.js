@@ -561,8 +561,17 @@ window.EventPoster = class EventPoster {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
         const MIN_SCALE = 0.35;
 
+        // Temporarily disable transitions to measure natural sizes accurately
+        const hadIsSliding = this.body.classList.contains('is-sliding');
+        if (!hadIsSliding) {
+            this.body.classList.add('is-sliding');
+        }
+
         // Reset scale temporarily to measure natural sizes
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
+
+        // Force reflow so transition is disabled and scale: 1 is computed
+        this.containers.hosts.offsetHeight;
 
         // Measure element dimensions (including transforms like scale)
         const logoH = this.elements.logoBanner.getBoundingClientRect().height;
@@ -599,6 +608,12 @@ window.EventPoster = class EventPoster {
 
         scale = Math.max(MIN_SCALE, Math.min(1.0, scale));
         this.containers.hosts.style.setProperty('--dynamic-scale', scale.toFixed(3));
+
+        // Restore transitions
+        if (!hadIsSliding) {
+            this.containers.hosts.offsetHeight; // force reflow with new scale
+            this.body.classList.remove('is-sliding');
+        }
     }
 
     applyPosterText() {
