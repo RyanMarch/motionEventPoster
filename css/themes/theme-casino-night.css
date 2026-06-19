@@ -6,6 +6,9 @@ body.theme-casino-night {
     background-color: var(--color-primary);
     text-rendering: optimizeLegibility;
 
+    --chip-left-offset: 0px;
+    --chip-right-offset: 0px;
+
     /* Card & Chip SVG Assets */
     /* Left Fan: Pivot shifted to (35,35) and rotated counter-clockwise (negative angles) to fan out down-right */
     --img-cards-left: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><defs><filter id='s' x='-30%' y='-30%' width='160%' height='160%'><feDropShadow dx='1' dy='3' stdDeviation='3' flood-opacity='0.35'/></filter></defs><g transform='translate(35, 35) rotate(-18)'><rect x='-30' y='15' width='60' height='90' rx='5' fill='%23ffffff' stroke='%23D4AF37' stroke-width='1.2' filter='url(%23s)'/><text x='-25' y='30' font-family='Georgia,serif' font-size='11' font-weight='bold' fill='%23E31B23'>J</text><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23E31B23' transform='translate(-25, 34) scale(0.35) translate(-12, -12)'/><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23E31B23' transform='translate(0, 60) scale(0.7) translate(-12, -12)'/><path d='M 2,16 L 4,8 L 9,12 L 12,6 L 15,12 L 20,8 L 22,16 L 22,18 L 2,18 Z' fill='%23D4AF37' transform='translate(0, 44) scale(0.65) translate(-12, -12)'/></g><g transform='translate(35, 35) rotate(-45)'><rect x='-30' y='15' width='60' height='90' rx='5' fill='%23ffffff' stroke='%23D4AF37' stroke-width='1.2' filter='url(%23s)'/><text x='-25' y='30' font-family='Georgia,serif' font-size='11' font-weight='bold' fill='%23111111'>A</text><path d='M12 2C11.5 2 6 9 6 13C6 16.5 8.5 19 12 19C15.5 19 18 16.5 18 13C18 9 12.5 2 12 2ZM10.5 19L9.5 22.5H14.5L13.5 19H10.5Z' fill='%23111111' transform='translate(-25, 34) scale(0.35) translate(-12, -12)'/><path d='M12 2C11.5 2 6 9 6 13C6 16.5 8.5 19 12 19C15.5 19 18 16.5 18 13C18 9 12.5 2 12 2ZM10.5 19L9.5 22.5H14.5L13.5 19H10.5Z' fill='%23111111' transform='translate(0, 60) scale(0.8) translate(-12, -12)'/><path d='M 2,16 L 4,8 L 9,12 L 12,6 L 15,12 L 20,8 L 22,16 L 22,18 L 2,18 Z' fill='%23D4AF37' transform='translate(0, 44) scale(0.65) translate(-12, -12)'/></g><g transform='translate(35, 35) rotate(-72)'><rect x='-30' y='15' width='60' height='90' rx='5' fill='%23ffffff' stroke='%23D4AF37' stroke-width='1.2' filter='url(%23s)'/><text x='-25' y='30' font-family='Georgia,serif' font-size='11' font-weight='bold' fill='%23E31B23'>K</text><path d='M12 2L2 12l10 10 10-10L12 2z' fill='%23E31B23' transform='translate(-25, 34) scale(0.35) translate(-12, -12)'/><path d='M12 2L2 12l10 10 10-10L12 2z' fill='%23E31B23' transform='translate(0, 60) scale(0.7) translate(-12, -12)'/><path d='M 2,16 L 4,8 L 9,12 L 12,6 L 15,12 L 20,8 L 22,16 L 22,18 L 2,18 Z' fill='%23D4AF37' transform='translate(0, 44) scale(0.65) translate(-12, -12)'/></g></svg>");
@@ -22,32 +25,38 @@ body.theme-casino-night {
 
 /* Subtle, soft card-table felt fabric background texture */
 body.theme-casino-night .theme-texture {
-    background-image: 
+    background-image:
         radial-gradient(rgba(255, 255, 255, 0.03) 15%, transparent 50%),
         radial-gradient(rgba(0, 0, 0, 0.06) 15%, transparent 50%);
     background-size: 12px 12px;
     background-position: 0 0, 6px 6px;
     opacity: calc(0.35 + 0.45 * var(--frame-intensity));
-    z-index: -2 !important; /* Force texture behind everything inside the frame */
+    z-index: -2 !important;
+    /* Force texture behind everything inside the frame */
     pointer-events: none;
 }
 
 /* Force Casino Frame to render BEHIND all poster text, banner, QR codes, and sway-layer cards/chips */
 body.theme-casino-night .theme-frame {
     opacity: 1;
-    border: 10px solid #8B6508; /* Dark gold base */
-    box-shadow: 
-        inset 0 0 0 2px #FFD700, /* Gold line */
-        inset 0 0 30px rgba(0, 0, 0, 0.6), /* Inner shadow */
+    border: 10px solid #8B6508;
+    /* Dark gold base */
+    box-shadow:
+        inset 0 0 0 2px #FFD700,
+        /* Gold line */
+        inset 0 0 30px rgba(0, 0, 0, 0.6),
+        /* Inner shadow */
         0 0 20px rgba(0, 0, 0, 0.8),
         0 0 calc(20px * var(--frame-intensity)) rgba(212, 175, 55, 0.3);
     border-radius: 6px;
-    z-index: -10 !important; /* Forces frame and its texture behind main-content (z-index 10) and QR codes (z-index 30) */
+    z-index: -10 !important;
+    /* Forces frame and its texture behind main-content (z-index 10) and QR codes (z-index 30) */
 }
 
 /* Inner velvet edge for the frame */
 body.theme-casino-night .theme-frame-inner {
-    border: 4px solid #E31B23; /* Classic red card table trim */
+    border: 4px solid #E31B23;
+    /* Classic red card table trim */
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
     border-radius: 2px;
 }
@@ -66,16 +75,18 @@ DECORATIVE CORNER SWAY LAYERS
 */
 
 body.theme-casino-night .sway-layer {
-    display: none !important; /* Hide other unused layers */
+    display: none !important;
+    /* Hide other unused layers */
     position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     transform-origin: center;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
-    z-index: 60; /* Render in front of the content-wrapper and frame */
+    z-index: 60;
+    /* Render in front of the content-wrapper and frame */
     will-change: transform;
 }
 
@@ -121,7 +132,7 @@ body.theme-casino-night .sway-top-right {
 body.theme-casino-night .sway-bottom-left {
     display: block !important;
     bottom: 45px;
-    left: 55px;
+    left: calc(55px + var(--chip-left-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -135,7 +146,7 @@ body.theme-casino-night .sway-bottom-left {
 body.theme-casino-night .sway-bottom-3 {
     display: block !important;
     bottom: 35px;
-    left: 95px;
+    left: calc(95px + var(--chip-left-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -143,13 +154,14 @@ body.theme-casino-night .sway-bottom-3 {
     background-image: var(--img-chip-gold);
     transform-origin: center bottom;
     animation: chip-stack-left-2 calc(10.0s / var(--gust-speed)) ease-in-out infinite;
-    z-index: 65; /* overlaps others in the stack */
+    z-index: 65;
+    /* overlaps others in the stack */
 }
 
 body.theme-casino-night .sway-bottom-4 {
     display: block !important;
     bottom: 50px;
-    left: 135px;
+    left: calc(135px + var(--chip-left-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -164,7 +176,7 @@ body.theme-casino-night .sway-bottom-4 {
 body.theme-casino-night .sway-bottom-right {
     display: block !important;
     bottom: 45px;
-    right: 55px;
+    right: calc(55px + var(--chip-right-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -178,7 +190,7 @@ body.theme-casino-night .sway-bottom-right {
 body.theme-casino-night .sway-bottom-5 {
     display: block !important;
     bottom: 50px;
-    right: 95px;
+    right: calc(95px + var(--chip-right-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -186,13 +198,14 @@ body.theme-casino-night .sway-bottom-5 {
     background-image: var(--img-chip-red);
     transform-origin: center bottom;
     animation: chip-stack-right-2 calc(12.0s / var(--gust-speed)) ease-in-out infinite;
-    z-index: 65; /* overlaps others */
+    z-index: 65;
+    /* overlaps others */
 }
 
 body.theme-casino-night .sway-bottom-6 {
     display: block !important;
     bottom: 35px;
-    right: 135px;
+    right: calc(135px + var(--chip-right-offset, 0px));
     width: 6.5vw;
     height: 8vw;
     min-width: 65px;
@@ -207,7 +220,7 @@ body.theme-casino-night .sway-bottom-6 {
 body.theme-casino-night .sway-bottom-7 {
     display: block !important;
     bottom: 55px;
-    left: 20px;
+    left: calc(20px + var(--chip-left-offset, 0px));
     width: 5.5vw;
     height: 6.8vw;
     min-width: 55px;
@@ -220,7 +233,7 @@ body.theme-casino-night .sway-bottom-7 {
 body.theme-casino-night .sway-bottom-8 {
     display: block !important;
     bottom: 60px;
-    left: 175px;
+    left: calc(175px + var(--chip-left-offset, 0px));
     width: 5.5vw;
     height: 6.8vw;
     min-width: 55px;
@@ -233,7 +246,7 @@ body.theme-casino-night .sway-bottom-8 {
 body.theme-casino-night .sway-bottom-9 {
     display: block !important;
     bottom: 55px;
-    right: 20px;
+    right: calc(20px + var(--chip-right-offset, 0px));
     width: 5.5vw;
     height: 6.8vw;
     min-width: 55px;
@@ -246,7 +259,7 @@ body.theme-casino-night .sway-bottom-9 {
 body.theme-casino-night .sway-bottom-10 {
     display: block !important;
     bottom: 60px;
-    right: 175px;
+    right: calc(175px + var(--chip-right-offset, 0px));
     width: 5.5vw;
     height: 6.8vw;
     min-width: 55px;
@@ -256,6 +269,38 @@ body.theme-casino-night .sway-bottom-10 {
     z-index: 62;
 }
 
+body.theme-casino-night .qr-left,
+body.theme-casino-night .qr-right {
+    bottom: 50px !important;
+}
+
+body.theme-casino-night .qr-left {
+    left: 50px !important;
+}
+
+body.theme-casino-night .qr-right {
+    right: 50px !important;
+}
+
+/* Offset chips when QR codes are visible */
+body.theme-casino-night:has(#qr-soiree:not(.qr-hidden)) {
+    --chip-left-offset: 230px;
+}
+
+body.theme-casino-night:has(#qr-membership:not(.qr-hidden)) {
+    --chip-right-offset: 230px;
+}
+
+@media (max-width: 1400px) {
+    body.theme-casino-night:has(#qr-soiree:not(.qr-hidden)) {
+        --chip-left-offset: 140px;
+    }
+
+    body.theme-casino-night:has(#qr-membership:not(.qr-hidden)) {
+        --chip-right-offset: 140px;
+    }
+}
+
 /* 
 ========================================
 ANIMATION KEYFRAMES
@@ -263,102 +308,302 @@ ANIMATION KEYFRAMES
 */
 
 @keyframes cards-sway-left {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(4deg) scale(1.02); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(4deg) scale(1.02);
+    }
 }
 
 @keyframes cards-sway-right {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-4deg) scale(1.02); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-4deg) scale(1.02);
+    }
 }
 
 /* Snappy clacking/shuffling chip stack animations (Left Corner) */
 @keyframes chip-stack-left-1 {
-    0% { transform: translateX(0) rotate(0deg); }
-    2% { transform: translateX(12px) rotate(1deg); }
-    4% { transform: translateX(12px) rotate(1deg); }
-    6% { transform: translateX(12px) rotate(-0.5deg); }
-    8% { transform: translateX(12px) rotate(0.5deg); }
-    10% { transform: translateX(12px) rotate(-1deg); }
-    12% { transform: translateX(12px) rotate(0deg); }
-    15%, 100% { transform: translateX(0) rotate(0deg); }
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    2% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    4% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    6% {
+        transform: translateX(12px) rotate(-0.5deg);
+    }
+
+    8% {
+        transform: translateX(12px) rotate(0.5deg);
+    }
+
+    10% {
+        transform: translateX(12px) rotate(-1deg);
+    }
+
+    12% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    15%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 @keyframes chip-stack-left-2 {
-    0% { transform: translateX(0) rotate(0deg); }
-    2% { transform: translateX(-12px) rotate(-1deg); }
-    4% { transform: translateX(-12px) rotate(-1.5deg); }
-    6% { transform: translateX(-12px) rotate(0deg); }
-    8% { transform: translateX(-12px) rotate(-1deg); }
-    10% { transform: translateX(-12px) rotate(0.5deg); }
-    12% { transform: translateX(-12px) rotate(0deg); }
-    15% { transform: translateX(0) rotate(0deg); }
-    22% { transform: translateX(12px) rotate(1deg); }
-    24% { transform: translateX(12px) rotate(1.5deg); }
-    26% { transform: translateX(12px) rotate(0deg); }
-    28% { transform: translateX(12px) rotate(-1deg); }
-    30% { transform: translateX(12px) rotate(0.5deg); }
-    32% { transform: translateX(12px) rotate(0deg); }
-    35%, 100% { transform: translateX(0) rotate(0deg); }
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    2% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    4% {
+        transform: translateX(-12px) rotate(-1.5deg);
+    }
+
+    6% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    8% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    10% {
+        transform: translateX(-12px) rotate(0.5deg);
+    }
+
+    12% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    15% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    22% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    24% {
+        transform: translateX(12px) rotate(1.5deg);
+    }
+
+    26% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    28% {
+        transform: translateX(12px) rotate(-1deg);
+    }
+
+    30% {
+        transform: translateX(12px) rotate(0.5deg);
+    }
+
+    32% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    35%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 @keyframes chip-stack-left-3 {
-    0%, 20% { transform: translateX(0) rotate(0deg); }
-    22% { transform: translateX(-12px) rotate(-1deg); }
-    24% { transform: translateX(-12px) rotate(1deg); }
-    26% { transform: translateX(-12px) rotate(-0.5deg); }
-    28% { transform: translateX(-12px) rotate(0.5deg); }
-    30% { transform: translateX(-12px) rotate(-1deg); }
-    32% { transform: translateX(-12px) rotate(0deg); }
-    35%, 100% { transform: translateX(0) rotate(0deg); }
+
+    0%,
+    20% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    22% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    24% {
+        transform: translateX(-12px) rotate(1deg);
+    }
+
+    26% {
+        transform: translateX(-12px) rotate(-0.5deg);
+    }
+
+    28% {
+        transform: translateX(-12px) rotate(0.5deg);
+    }
+
+    30% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    32% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    35%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 /* Snappy clacking/shuffling chip stack animations (Right Corner) */
 @keyframes chip-stack-right-1 {
-    0% { transform: translateX(0) rotate(0deg); }
-    2% { transform: translateX(-12px) rotate(-1deg); }
-    4% { transform: translateX(-12px) rotate(-1deg); }
-    6% { transform: translateX(-12px) rotate(0.5deg); }
-    8% { transform: translateX(-12px) rotate(-0.5deg); }
-    10% { transform: translateX(-12px) rotate(1deg); }
-    12% { transform: translateX(-12px) rotate(0deg); }
-    15%, 100% { transform: translateX(0) rotate(0deg); }
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    2% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    4% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    6% {
+        transform: translateX(-12px) rotate(0.5deg);
+    }
+
+    8% {
+        transform: translateX(-12px) rotate(-0.5deg);
+    }
+
+    10% {
+        transform: translateX(-12px) rotate(1deg);
+    }
+
+    12% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    15%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 @keyframes chip-stack-right-2 {
-    0% { transform: translateX(0) rotate(0deg); }
-    2% { transform: translateX(12px) rotate(1deg); }
-    4% { transform: translateX(12px) rotate(1.5deg); }
-    6% { transform: translateX(12px) rotate(0deg); }
-    8% { transform: translateX(12px) rotate(1deg); }
-    10% { transform: translateX(12px) rotate(-0.5deg); }
-    12% { transform: translateX(12px) rotate(0deg); }
-    15% { transform: translateX(0) rotate(0deg); }
-    22% { transform: translateX(-12px) rotate(-1deg); }
-    24% { transform: translateX(-12px) rotate(-1.5deg); }
-    26% { transform: translateX(-12px) rotate(0deg); }
-    28% { transform: translateX(-12px) rotate(1deg); }
-    30% { transform: translateX(-12px) rotate(-0.5deg); }
-    32% { transform: translateX(-12px) rotate(0deg); }
-    35%, 100% { transform: translateX(0) rotate(0deg); }
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    2% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    4% {
+        transform: translateX(12px) rotate(1.5deg);
+    }
+
+    6% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    8% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    10% {
+        transform: translateX(12px) rotate(-0.5deg);
+    }
+
+    12% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    15% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    22% {
+        transform: translateX(-12px) rotate(-1deg);
+    }
+
+    24% {
+        transform: translateX(-12px) rotate(-1.5deg);
+    }
+
+    26% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    28% {
+        transform: translateX(-12px) rotate(1deg);
+    }
+
+    30% {
+        transform: translateX(-12px) rotate(-0.5deg);
+    }
+
+    32% {
+        transform: translateX(-12px) rotate(0deg);
+    }
+
+    35%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 @keyframes chip-stack-right-3 {
-    0%, 20% { transform: translateX(0) rotate(0deg); }
-    22% { transform: translateX(12px) rotate(1deg); }
-    24% { transform: translateX(12px) rotate(-1deg); }
-    26% { transform: translateX(12px) rotate(0.5deg); }
-    28% { transform: translateX(12px) rotate(-0.5deg); }
-    30% { transform: translateX(12px) rotate(1deg); }
-    32% { transform: translateX(12px) rotate(0deg); }
-    35%, 100% { transform: translateX(0) rotate(0deg); }
+
+    0%,
+    20% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    22% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    24% {
+        transform: translateX(12px) rotate(-1deg);
+    }
+
+    26% {
+        transform: translateX(12px) rotate(0.5deg);
+    }
+
+    28% {
+        transform: translateX(12px) rotate(-0.5deg);
+    }
+
+    30% {
+        transform: translateX(12px) rotate(1deg);
+    }
+
+    32% {
+        transform: translateX(12px) rotate(0deg);
+    }
+
+    35%,
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
 }
 
 /* Logo Banner styling */
 body.theme-casino-night .logo-banner {
     background: #111111 !important;
     border: 3px solid #FFD700 !important;
-    box-shadow: 
+    box-shadow:
         inset 0 0 10px rgba(212, 175, 55, 0.4),
         0 8px 16px rgba(0, 0, 0, 0.5) !important;
     padding: 12px 36px !important;
@@ -389,7 +634,7 @@ body.theme-casino-night .event-title {
     font-family: var(--font-display) !important;
     font-size: 3.4rem !important;
     color: #ffffff !important;
-    text-shadow: 
+    text-shadow:
         0 2px 10px rgba(0, 0, 0, 0.8),
         0 0 20px rgba(212, 175, 55, 0.4) !important;
     letter-spacing: 1px;
@@ -401,13 +646,14 @@ body.theme-casino-night .event-title {
 body.theme-casino-night .event-subtitle {
     font-family: var(--font-primary) !important;
     font-size: 1.35rem !important;
-    color: #FF5252 !important; /* Brighter, high-contrast red */
+    color: #FF5252 !important;
+    /* Brighter, high-contrast red */
     letter-spacing: 4px !important;
     text-transform: uppercase;
     margin-top: 4px !important;
     margin-bottom: 20px !important;
     /* High-contrast outline effect for readability on felt green */
-    text-shadow: 
+    text-shadow:
         1px 1px 0 #000,
         -1px -1px 0 #000,
         1px -1px 0 #000,
@@ -439,7 +685,8 @@ body.theme-casino-night .hosts-list span {
     color: #ffffff !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
     background: rgba(0, 0, 0, 0.55);
-    border-left: none !important; /* Remove the vertical line */
+    border-left: none !important;
+    /* Remove the vertical line */
     padding: 6px 16px;
     border-radius: 4px;
     display: inline-flex;
@@ -510,12 +757,15 @@ body.theme-casino-night.is-light-bg .hosts-list span {
 body.theme-casino-night.is-light-bg .hosts-list span:nth-child(4n+1)::before {
     color: #111111;
 }
+
 body.theme-casino-night.is-light-bg .hosts-list span:nth-child(4n+2)::before {
     color: #E31B23;
 }
+
 body.theme-casino-night.is-light-bg .hosts-list span:nth-child(4n+3)::before {
     color: #E31B23;
 }
+
 body.theme-casino-night.is-light-bg .hosts-list span:nth-child(4n+4)::before {
     color: #111111;
 }
@@ -564,6 +814,7 @@ body.theme-casino-night .petal--club {
     body.theme-casino-night .hosts-list span {
         font-size: calc(1.35rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
+
     body.theme-casino-night .hosts-container {
         margin-top: 3vh;
         margin-bottom: -1vh;
@@ -574,26 +825,32 @@ body.theme-casino-night .petal--club {
     body.theme-casino-night .hosts-list span {
         font-size: calc(1.85rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
     }
+
     body.theme-casino-night .hosts-container {
         margin-top: 5vh;
         margin-bottom: -2vh;
     }
+
     body.theme-casino-night .logo-banner {
         margin: 4rem 0 -4rem 0;
         scale: 1.25;
     }
+
     body.theme-casino-night .event-top-label {
         font-size: 2.6rem !important;
         margin-bottom: 10px !important;
     }
+
     body.theme-casino-night .event-title {
         font-size: 4.6rem !important;
         margin-top: 15px !important;
         margin-bottom: 18px !important;
     }
+
     body.theme-casino-night .event-subtitle {
         font-size: 1.7rem !important;
     }
+
     body.theme-casino-night .event-date {
         font-size: 1.4rem !important;
         margin-top: 18px !important;

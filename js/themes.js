@@ -971,8 +971,13 @@
                 darkText: '#0F4C2A'
             },
             swatches: [
-                { hex: '#0a0a0a', name: 'High Roller Black', accent: '#D4AF37', secondary: '#E31B23' },
-                { hex: '#1C3144', name: 'Atlantic Blue', accent: '#F0F4F8', secondary: '#D4AF37' }
+                { hex: '#222121', name: 'High Roller Black', accent: '#D4AF37', secondary: '#E31B23' },
+                { hex: '#1C3144', name: 'Atlantic Blue', accent: '#F0F4F8', secondary: '#D4AF37' },
+                { hex: '#4A0D17', name: 'Monte Carlo Burgundy', accent: '#D4AF37', secondary: '#FFFFFF' },
+                { hex: '#140A26', name: 'Neon Strip', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#2A082C', name: 'Royal Plum', accent: '#D4AF37', secondary: '#E31B23' },
+                { hex: '#D4AF37', name: 'Golden Jackpot', accent: '#1A1A1A', secondary: '#E31B23' },
+                { hex: '#F4F1EA', name: 'Vintage Cardroom', accent: '#0F4C2A', secondary: '#A81116' }
             ],
             fonts: {
                 primary: "'Jost', sans-serif",
