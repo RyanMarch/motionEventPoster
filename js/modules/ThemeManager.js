@@ -176,6 +176,18 @@ window.ThemeManager = class ThemeManager {
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
         if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
+
+        const fLabel = document.querySelector('label[for="slider-fall-speed"]') || document.querySelector('#slider-fall-speed')?.parentElement.querySelector('label');
+        if (fLabel) fLabel.firstChild.textContent = `${uiLabels.fallSpeed || 'Fall Speed'} `;
+         const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
+        if (windinessControl) {
+            windinessControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
+        }
+
+        const tumbleControl = document.getElementById('slider-tumble-speed')?.closest('.control');
+        if (tumbleControl) {
+            tumbleControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
+        }
         
         // Update Theme Selector Trigger
         if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
@@ -527,5 +539,17 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--gust-speed', speed.toFixed(3));
         this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
         this.root.style.setProperty('--grid-play-state', strength === 0 ? 'paused' : 'running');
+
+        // Space Odyssey Swirl visibility & resource controls
+        if (strength < 47) {
+            this.root.style.setProperty('--space-swirl-opacity-factor', '0');
+            this.root.style.setProperty('--space-swirl-display', 'none');
+            this.root.style.setProperty('--space-swirl-play-state', 'paused');
+        } else {
+            const factor = (strength - 47) / (100 - 47);
+            this.root.style.setProperty('--space-swirl-opacity-factor', factor.toFixed(4));
+            this.root.style.setProperty('--space-swirl-display', 'block');
+            this.root.style.setProperty('--space-swirl-play-state', 'running');
+        }
     }
 };
