@@ -1,0 +1,483 @@
+/**
+ * MARDI GRAS / MASQUERADE CARNIVAL THEME STYLES
+ * Color palette: Deep Royal Purple · Emerald Green · Radiant Gold
+ */
+
+/* ============================================================
+   1. Background – Deep Night Carnival Sky
+   ============================================================ */
+body.theme-mardi-gras {
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(var(--color-secondary-rgb), 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 15%, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 50%),
+        linear-gradient(170deg,
+            #0d0020 0%,
+            var(--color-primary) 35%,
+            #0a1a08 70%,
+            #18000e 100%) !important;
+}
+
+/* ============================================================
+   2. Texture – Slow-rotating conic burst (carnival wheel effect)
+   ============================================================ */
+body.theme-mardi-gras .theme-texture {
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 220%;
+    height: 220%;
+    background-image: repeating-conic-gradient(from 0deg at 50% 50%,
+            transparent 0%,
+            transparent 5%,
+            rgba(var(--color-accent-rgb), 0.025) 5%,
+            rgba(var(--color-accent-rgb), 0.05) 10%);
+    animation: mardi-gras-burst-rotate calc(90s / var(--gust-speed, 1)) linear infinite;
+    transform-origin: center center;
+    mix-blend-mode: screen;
+    opacity: calc(0.4 + 0.6 * var(--frame-intensity));
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes mardi-gras-burst-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================================
+   3. Theme Frame – Ornate Gold Border
+   ============================================================ */
+body.theme-mardi-gras .theme-frame {
+    opacity: 1;
+    border: 4px solid var(--color-accent);
+    border-radius: 20px;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 0 2px rgba(var(--color-primary-rgb), 0.8),
+        0 0 0 7px rgba(var(--color-secondary-rgb), 0.55),
+        0 0 0 9px rgba(var(--color-accent-rgb), 0.4),
+        0 0 0 13px rgba(var(--color-primary-rgb), 0.7),
+        0 0 0 17px rgba(var(--color-accent-rgb), 0.25),
+        0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+body.theme-mardi-gras .frame-rail {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Spotlight Beams (::before / ::after on .theme-frame)
+   ============================================================ */
+body.theme-mardi-gras .theme-frame-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+body.theme-mardi-gras .theme-frame::before,
+body.theme-mardi-gras .theme-frame::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    width: 55%;
+    height: 200%;
+    transform-origin: top center;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 2;
+    will-change: transform;
+    transition: opacity 1.2s ease;
+}
+
+body.theme-mardi-gras .theme-frame::before {
+    left: 5%;
+    background: radial-gradient(ellipse at top,
+            rgba(var(--color-accent-rgb), 0.28) 0%,
+            rgba(var(--color-accent-rgb), 0.05) 45%,
+            transparent 75%);
+    animation: mardi-gras-spot-left calc(14s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+body.theme-mardi-gras .theme-frame::after {
+    right: 5%;
+    background: radial-gradient(ellipse at top,
+            rgba(var(--color-secondary-rgb), 0.28) 0%,
+            rgba(var(--color-secondary-rgb), 0.05) 45%,
+            transparent 75%);
+    animation: mardi-gras-spot-right calc(11s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes mardi-gras-spot-left {
+    0% {
+        transform: rotate(-22deg);
+    }
+
+    100% {
+        transform: rotate(14deg);
+    }
+}
+
+@keyframes mardi-gras-spot-right {
+    0% {
+        transform: rotate(-14deg);
+    }
+
+    100% {
+        transform: rotate(22deg);
+    }
+}
+
+/* ============================================================
+   7. Hide all other unused sway layers
+   ============================================================ */
+body.theme-mardi-gras .floral-bg {
+    display: none !important;
+}
+
+body.theme-mardi-gras .sway-top-1,
+body.theme-mardi-gras .sway-top-2,
+body.theme-mardi-gras .sway-top-3,
+body.theme-mardi-gras .sway-top-4,
+body.theme-mardi-gras .sway-top-left,
+body.theme-mardi-gras .sway-top-right,
+body.theme-mardi-gras .sway-bottom-left,
+body.theme-mardi-gras .sway-bottom-right,
+body.theme-mardi-gras .sway-bottom-3,
+body.theme-mardi-gras .sway-bottom-4,
+body.theme-mardi-gras .sway-bottom-5,
+body.theme-mardi-gras .sway-bottom-6,
+body.theme-mardi-gras .sway-left-side,
+body.theme-mardi-gras .sway-right-side {
+    display: none !important;
+}
+
+/* ============================================================
+   8. Logo Banner – Ornate Gold Frame with Deep Purple Center
+   ============================================================ */
+body.theme-mardi-gras .logo-banner {
+    position: relative;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 215, 0, 0.08) 0%,
+            rgba(60, 0, 100, 0.85) 15%,
+            rgba(30, 0, 55, 0.95) 50%,
+            rgba(60, 0, 100, 0.85) 85%,
+            rgba(255, 215, 0, 0.08) 100%) !important;
+    border-top: 2px solid rgba(255, 215, 0, 0.7) !important;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.7) !important;
+    border-left: 4px solid var(--color-accent) !important;
+    border-right: 4px solid var(--color-accent) !important;
+    border-radius: 6px !important;
+    padding: 14px 56px !important;
+    box-shadow:
+        0 0 0 1px rgba(var(--color-secondary-rgb), 0.45),
+        0 0 0 3px rgba(var(--color-accent-rgb), 0.2),
+        0 -1px 12px rgba(var(--color-accent-rgb), 0.25),
+        0 1px 12px rgba(var(--color-accent-rgb), 0.25),
+        0 8px 40px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 215, 0, 0.15),
+        inset 0 -1px 0 rgba(255, 215, 0, 0.15) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    margin-bottom: -12px !important;
+}
+
+/* Ornate corner flourishes on the banner */
+body.theme-mardi-gras .logo-banner::before,
+body.theme-mardi-gras .logo-banner::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-accent);
+    font-size: 1.4rem;
+    opacity: 0.75;
+    line-height: 1;
+}
+
+body.theme-mardi-gras .logo-banner::before {
+    left: 14px;
+}
+
+body.theme-mardi-gras .logo-banner::after {
+    right: 14px;
+}
+
+
+body.theme-mardi-gras .logo-text-custom {
+    font-family: var(--font-display);
+    color: var(--color-accent) !important;
+    text-shadow:
+        0 0 12px rgba(var(--color-accent-rgb), 0.8),
+        2px 2px 0px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+/* ============================================================
+   9. Typography – Dramatic Carnival Serif
+   ============================================================ */
+body.theme-mardi-gras .event-title {
+    font-family: var(--font-display);
+    color: var(--color-accent);
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 20px rgba(var(--color-accent-rgb), 0.6),
+        3px 3px 0px rgba(var(--color-secondary-rgb), 0.8),
+        6px 6px 0px rgba(var(--color-primary-rgb), 0.9),
+        9px 9px 20px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-mardi-gras .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.8rem;
+    color: var(--color-secondary);
+    text-shadow:
+        0 0 10px rgba(var(--color-secondary-rgb), 0.5),
+        2px 2px 0px rgba(0, 0, 0, 0.4);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+body.theme-mardi-gras .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 2rem;
+    color: var(--color-secondary);
+    text-shadow:
+        0 0 10px rgba(var(--color-secondary-rgb), 0.5),
+        2px 2px 0px rgba(0, 0, 0, 0.4);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-top: 12px;
+}
+
+body.theme-mardi-gras .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.4rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    letter-spacing: 3px;
+    margin-top: 10px;
+}
+
+body.theme-mardi-gras .event-date {
+    margin-top: -5px;
+}
+
+body.theme-mardi-gras .hosts-title {
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.4), 2px 2px 0px rgba(0, 0, 0, 0.4);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+body.theme-mardi-gras .hosts-list span {
+    font-family: var(--font-primary);
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5), 0 0 8px rgba(var(--color-accent-rgb), 0.2);
+}
+
+body.theme-mardi-gras .hosts-list {
+    padding: 0;
+}
+
+body.theme-mardi-gras .hosts-container {
+    position: relative;
+    z-index: 100;
+}
+
+/* ============================================================
+   10. Particles – Beads, Feathers & Gold Confetti
+   ============================================================ */
+
+/* Gold confetti squares */
+body.theme-mardi-gras .petal[class*="mardi-gras-confetti-"] {
+    border-radius: 2px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Carnival Bead particles (circles with shimmer) */
+body.theme-mardi-gras .petal[class*="mardi-gras-bead-"] {
+    border-radius: 50% !important;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.45);
+    animation: mardi-gras-bead-glimmer 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes mardi-gras-bead-glimmer {
+    0% {
+        filter: brightness(0.85) saturate(1.0);
+    }
+
+    100% {
+        filter: brightness(1.25) saturate(1.4);
+    }
+}
+
+/* Feather particles – long, wispy ovals */
+body.theme-mardi-gras .petal[class*="mardi-gras-feather-"] {
+    border-radius: 50% 50% 50% 50% / 80% 80% 20% 20% !important;
+    opacity: 0.82 !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+body.theme-mardi-gras .petal--mardi-gras-feather-purple {
+    background: linear-gradient(160deg, #a040d0 0%, #6a0090 50%, #3a004a 100%) !important;
+}
+
+body.theme-mardi-gras .petal--mardi-gras-feather-green {
+    background: linear-gradient(160deg, #40c060 0%, #1a7a30 50%, #0a3515 100%) !important;
+}
+
+body.theme-mardi-gras .petal--mardi-gras-feather-gold {
+    background: linear-gradient(160deg, #ffe566 0%, #d4a000 50%, #8a6200 100%) !important;
+}
+
+/* Gold dust sparkle */
+body.theme-mardi-gras .petal[class*="mardi-gras-dust-"] {
+    border-radius: 50% !important;
+    box-shadow:
+        0 0 8px rgba(var(--color-accent-rgb), 0.7),
+        0 0 3px rgba(255, 255, 255, 0.6);
+    animation: mardi-gras-sparkle 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes mardi-gras-sparkle {
+    0% {
+        opacity: 0.3;
+        filter: brightness(0.7);
+    }
+
+    100% {
+        opacity: 0.95;
+        filter: brightness(1.6);
+    }
+}
+
+/* ============================================================
+   11. Border-hidden override
+   ============================================================ */
+body.border-hidden.theme-mardi-gras .theme-frame,
+body.border-hidden.theme-mardi-gras .theme-texture,
+body.border-hidden.theme-mardi-gras .theme-frame-inner {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* ============================================================
+   12. Countdown Overlay Override
+   ============================================================ */
+body.theme-mardi-gras .fullscreen-countdown .countdown-content {
+    background: rgba(13, 0, 32, 0.97) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 28px rgba(var(--color-accent-rgb), 0.45),
+        inset 0 0 16px rgba(var(--color-accent-rgb), 0.15) !important;
+    border-radius: 12px !important;
+}
+
+body.theme-mardi-gras .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+}
+
+body.theme-mardi-gras .fullscreen-countdown #countdown-number {
+    color: var(--color-secondary) !important;
+    text-shadow: 0 0 14px rgba(var(--color-secondary-rgb), 0.85) !important;
+}
+
+/* ============================================================
+   13. Layout / Responsive
+   ============================================================ */
+body.theme-mardi-gras .main-content {
+    max-width: 1700px;
+}
+
+@media (max-width: 1800px) {
+    body.theme-mardi-gras .hosts-list span {
+        font-size: calc(1.4em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-mardi-gras .hosts-container {
+        margin: 2vh 0 -3.5vh 0;
+    }
+
+    body.theme-mardi-gras .event-footer {
+        margin-bottom: 1.5vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-mardi-gras .logo-banner {
+        scale: 1.12;
+        margin-top: 2rem;
+    }
+
+    body.theme-mardi-gras .hosts-list span {
+        font-size: calc(1.75em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-mardi-gras .hosts-container {
+        margin-top: 1.5vh;
+        margin-bottom: -2.5vh;
+    }
+
+    body.theme-mardi-gras .event-footer {
+        scale: 1.12;
+        margin-bottom: 1.5vh;
+    }
+}
+
+/* ============================================================
+   14. Animate play/pause state binding
+   ============================================================ */
+body.theme-mardi-gras .theme-texture {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+/* ============================================================
+   15. Light Background Adaptations
+   ============================================================ */
+body.theme-mardi-gras.is-light-bg .event-title {
+    color: var(--color-primary) !important;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-mardi-gras.is-light-bg .hosts-title,
+body.theme-mardi-gras.is-light-bg .hosts-list span,
+body.theme-mardi-gras.is-light-bg .event-subtitle,
+body.theme-mardi-gras.is-light-bg .event-top-label,
+body.theme-mardi-gras.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-mardi-gras.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-mardi-gras.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
