@@ -1079,7 +1079,7 @@
 
         'atomic-mid-century': defineTheme({
             id: 'atomic-mid-century',
-            name: 'Atomic Mid-Century',
+            name: 'Atomic Mid-Century*',
             pack: 'decades',
             icon: '🚀',
             primary: '#F3E5AB',
@@ -1113,7 +1113,7 @@
 
         'memphis-pop': defineTheme({
             id: 'memphis-pop',
-            name: 'Memphis Pop',
+            name: 'Memphis Pop*',
             pack: 'decades',
             icon: '📺',
             primary: '#FCEEB5',
@@ -1149,7 +1149,7 @@
 
         'millennium-web': defineTheme({
             id: 'millennium-web',
-            name: 'Millennium Web',
+            name: 'Millennium Web*',
             pack: 'decades',
             icon: '🌐',
             primary: '#E0F7FA',
@@ -1328,7 +1328,7 @@
 
         'space-odyssey': defineTheme({
             id: 'space-odyssey',
-            name: 'Space Odyssey',
+            name: 'Space Odyssey*',
             pack: 'specialty',
             icon: '🌌',
             primary: '#050510',
@@ -1348,13 +1348,13 @@
             ],
             frameClass: 'theme-frame--space',
             overrides: { insetV: 50, insetH: 60, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.15, maxPetals: 60, windiness: 2, hostMaxWidth: 130, backdropOpacity: 20 },
-            defaults: { hostsTitle: "Commanders", eventTitle: "Tech Launch", eventSubtitle: "Next Generation", eventTopLabel: "Mission" },
+            defaults: { hostsTitle: "Space Commanders", eventTitle: "Tech Launch", eventSubtitle: "Next Generation", eventTopLabel: "Mission" },
             uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', frameName: 'Sci-Fi HUD' }
         }),
 
         'zen-garden': defineTheme({
             id: 'zen-garden',
-            name: 'Zen Garden',
+            name: 'Zen Garden*',
             pack: 'specialty',
             icon: '🪴',
             primary: '#EBE5D9',
@@ -1379,7 +1379,7 @@
 
         'deep-blue': defineTheme({
             id: 'deep-blue',
-            name: 'Deep Blue',
+            name: 'Deep Blue*',
             pack: 'specialty',
             icon: '🐟',
             primary: '#011627',
@@ -1404,7 +1404,7 @@
 
         'cafe-noir': defineTheme({
             id: 'cafe-noir',
-            name: 'Café Noir',
+            name: 'Café Noir*',
             pack: 'specialty',
             icon: '☕',
             primary: '#2B1B17',
@@ -1428,7 +1428,7 @@
 
         'steampunk-gears': defineTheme({
             id: 'steampunk-gears',
-            name: 'Steampunk Gears',
+            name: 'Steampunk Gears*',
             pack: 'specialty',
             icon: '⚙️',
             primary: '#2A1A12',
@@ -1454,7 +1454,7 @@
         // --- HOLIDAY PACK ---
         'halloween': defineTheme({
             id: 'halloween',
-            name: 'Halloween',
+            name: 'Halloween*',
             pack: 'holiday',
             icon: '🎃',
             primary: '#1A0B0C',
@@ -1516,7 +1516,7 @@
 
         'autumn-harvest': defineTheme({
             id: 'autumn-harvest',
-            name: 'Autumn Harvest',
+            name: 'Autumn Harvest*',
             pack: 'holiday',
             icon: '🍂',
             primary: '#3E1C00',
@@ -1541,7 +1541,7 @@
 
         'valentines-romance': defineTheme({
             id: 'valentines-romance',
-            name: 'Valentine\'s Romance',
+            name: 'Valentine\'s Romance*',
             pack: 'holiday',
             icon: '💝',
             primary: '#4A001F',
@@ -1566,7 +1566,7 @@
 
         'lunar-new-year': defineTheme({
             id: 'lunar-new-year',
-            name: 'Lunar New Year',
+            name: 'Lunar New Year*',
             pack: 'holiday',
             icon: '🏮',
             primary: '#8B0000',
@@ -1591,7 +1591,7 @@
 
         'festive-holiday': defineTheme({
             id: 'festive-holiday',
-            name: 'Festive Holiday',
+            name: 'Festive Holiday*',
             pack: 'holiday',
             icon: '🎄',
             primary: '#0B3B24',
@@ -1617,7 +1617,7 @@
 
         'new-years-eve': defineTheme({
             id: 'new-years-eve',
-            name: 'New Year\'s Eve',
+            name: 'New Year\'s Eve*',
             pack: 'holiday',
             icon: '🎆',
             primary: '#050510',
