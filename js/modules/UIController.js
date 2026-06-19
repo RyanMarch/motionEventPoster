@@ -195,8 +195,10 @@ window.UIController = class UIController {
 
     isTextInput(target) {
         if (!target) return false;
-        return (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search')) || 
-               target.tagName === 'TEXTAREA' || target.isContentEditable;
+        return Boolean(
+            (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search')) ||
+            target.tagName === 'TEXTAREA' || target.isContentEditable
+        );
     }
 
     bindSliders() {
