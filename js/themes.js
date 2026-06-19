@@ -989,7 +989,7 @@
             frameClass: 'theme-frame--casino',
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 25, fallSpeed: 0.45, maxPetals: 30, windiness: 8, hostMaxWidth: 125, backdropOpacity: 75 },
             defaults: { hostsTitle: "VIP Guests", eventTitle: "Casino Royale", eventSubtitle: "Charity Gala & Games", eventTopLabel: "Welcome To" },
-            uiLabels: { particlesPlural: 'Card Suits', particlesSingular: 'Suit', borderToggle: 'Hide gold frame', gustStrength: 'Breeze', frameName: 'Gold Border' }
+            uiLabels: { particlesPlural: 'Card Suits', particlesSingular: 'Suit', borderToggle: 'Hide cards & chips', gustStrength: 'Shuffle Speed', frameName: 'Gold Border & Corner Art' }
         }),
 
         'art-deco-gala': defineTheme({
