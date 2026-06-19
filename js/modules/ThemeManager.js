@@ -57,15 +57,7 @@ window.ThemeManager = class ThemeManager {
             this.state.secondaryColor = null;
         }
         
-        if (theme.overrides && !skipOverrides) {
-            Object.keys(theme.overrides).forEach(key => {
-                if (key in this.state) this.state[key] = theme.overrides[key];
-            });
-            this.poster.applyStateToUI();
-            this.poster.syncLayout();
-            this.syncWind();
-        }
-        
+        // Set the body classes, frames, and assets so the DOM styles are correctly loaded first
         Object.values(THEMES).forEach(t => {
             this.body.classList.remove(`theme-${t.id}`);
         });
@@ -90,11 +82,38 @@ window.ThemeManager = class ThemeManager {
         this.syncUI(); // Handle expensive label/font updates once
         this.syncBackdrop(); // Handle color/opacity sync
 
+        // Apply state overrides and sync layout measurements with correct fonts/classes active
+        if (theme.overrides && !skipOverrides) {
+            Object.keys(theme.overrides).forEach(key => {
+                if (key in this.state) this.state[key] = theme.overrides[key];
+            });
+            this.poster.applyStateToUI();
+            this.poster.syncLayout();
+            this.syncWind();
+        }
+
         this.initSwatches();
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
         this.poster.cacheSwayLayers();
+
+        // Defer font ready listener by a frame so browser registers the style changes first
+        requestAnimationFrame(() => {
+            if (document.fonts) {
+                document.fonts.ready.then(() => {
+                    requestAnimationFrame(() => {
+                        this.poster.optimizeLayouts();
+                    });
+                });
+            }
+        });
+
+        // Progressive fail-safe reflows to handle fonts/images loading asynchronously
+        setTimeout(() => this.poster.optimizeLayouts(), 50);
+        setTimeout(() => this.poster.optimizeLayouts(), 250);
+        setTimeout(() => this.poster.optimizeLayouts(), 600);
+
         // Remote sync
         if (!window.remoteManager?._applying) {
             window.remoteManager?.send({ type: 'theme', id: themeId });

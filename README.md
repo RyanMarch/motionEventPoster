@@ -95,7 +95,13 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
 *   **[Minimal Elegance][demo-minimal-elegance]**: A sophisticated and high-fashion design perfect for art galleries, museums, and brand showcases.
 
-### Screenshots
+### 🥳 Party Pack
+*   **[Electric Pulse][demo-electric-pulse]:** High-energy music festival with neon lights, geometric patterns, and drifting light particles.
+*   **[Celebration][demo-celebration]:** Festive and fun with confetti, balloons, and a celebratory atmosphere.
+*   **[Summer Cookout][demo-summer-cookout]:** Warm and inviting with a summer cookout theme.
+*   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing and vibrant with a tropical oasis theme.
+*   **[Mardi Gras][demo-mardi-gras]:** Festive masquerade carnival with beads, masks, and a celebratory atmosphere.
+*   **[Casino Night][demo-casino-night]:** Glamorous casino table with felt textures, gold borders, and floating card suit particles.
 
 ### 🪩 Decades Pack
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
@@ -104,6 +110,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 
 ### 🌌 Specialty Pack
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
+*   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 
 ### 🎃 Holiday Pack
 *   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
@@ -122,7 +129,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.avif)][demo-electric-pulse] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.avif)][demo-celebration] |
 | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.avif)][demo-summer-cookout] | **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.avif)][demo-tropical-oasis] |
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | |
+| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | **Casino Night** – *Gala Games & Fun* <br> [![Casino Night](.github/assets/poster-casino-night.avif)][demo-casino-night] |
 
 ### 🪩 Decades Pack
 | | |
@@ -133,7 +140,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🌌 Specialty Pack
 | | |
 | :---: | :---: |
-| **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | |
+| **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | **Game Console** – *Video Gaming Fun* <br> [![Game Console](.github/assets/poster-game-console.avif)][demo-game-console] |
 
 ### 🎃 Holiday Pack
 | | |
@@ -340,6 +347,8 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-celebration]: https://motionposter.ryanmarch.me/?theme=celebration
 [demo-summer-cookout]: https://motionposter.ryanmarch.me/?theme=summer-cookout
 [demo-tropical-oasis]: https://motionposter.ryanmarch.me/?theme=tropical-oasis
+[demo-casino-night]: https://motionposter.ryanmarch.me/?theme=casino-night
+[demo-game-console]: https://motionposter.ryanmarch.me/?theme=game-console
 [demo-disco-fever]: https://motionposter.ryanmarch.me/?theme=disco-fever
 [demo-mardi-gras]: https://motionposter.ryanmarch.me/?theme=mardi-gras
 [demo-retro-wave]: https://motionposter.ryanmarch.me/?theme=retro-wave

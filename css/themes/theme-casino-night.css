@@ -1,0 +1,239 @@
+/**
+ * CASINO NIGHT THEME STYLES
+ */
+
+body.theme-casino-night {
+    background-color: var(--color-primary);
+    text-rendering: optimizeLegibility;
+}
+
+/* Casino Felt Texture Grid Overlay */
+body.theme-casino-night .theme-texture {
+    background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.08) 15%, transparent 20%),
+        radial-gradient(rgba(0, 0, 0, 0.2) 15%, transparent 20%);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+    opacity: calc(0.3 + 0.7 * var(--frame-intensity));
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Theme Frame (Casino Gold Trim) */
+body.theme-casino-night .theme-frame {
+    opacity: 1;
+    border: 10px solid #8B6508; /* Dark gold base */
+    box-shadow: 
+        inset 0 0 0 2px #FFD700, /* Gold line */
+        inset 0 0 30px rgba(0, 0, 0, 0.6), /* Inner shadow */
+        0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 calc(20px * var(--frame-intensity)) rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+}
+
+/* Inner velvet edge for the frame */
+body.theme-casino-night .theme-frame-inner {
+    border: 4px solid #E31B23; /* Classic red card table trim */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+    border-radius: 2px;
+}
+
+/* Hide Frame Logic */
+body.border-hidden.theme-casino-night .theme-frame,
+body.border-hidden.theme-casino-night .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* Logo Banner styling */
+body.theme-casino-night .logo-banner {
+    background: #111111 !important;
+    border: 3px solid #FFD700 !important;
+    box-shadow: 
+        inset 0 0 10px rgba(212, 175, 55, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.5) !important;
+    padding: 12px 36px !important;
+    border-radius: 4px !important;
+}
+
+body.theme-casino-night .logo-text-custom {
+    color: #FFD700 !important;
+    font-family: var(--font-display) !important;
+    font-size: 1.25rem !important;
+    letter-spacing: 3px !important;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8) !important;
+    text-transform: uppercase;
+}
+
+/* Text Stylings */
+body.theme-casino-night .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 2.0rem !important;
+    color: #FFD700 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6) !important;
+    letter-spacing: 5px !important;
+    text-transform: uppercase;
+    margin-bottom: 6px !important;
+}
+
+body.theme-casino-night .event-title {
+    font-family: var(--font-display) !important;
+    font-size: 3.4rem !important;
+    color: #ffffff !important;
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.4) !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
+}
+
+body.theme-casino-night .event-subtitle {
+    font-family: var(--font-primary) !important;
+    font-size: 1.35rem !important;
+    color: #E31B23 !important; /* Rich red */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    letter-spacing: 4px !important;
+    text-transform: uppercase;
+    margin-top: 4px !important;
+    margin-bottom: 20px !important;
+}
+
+body.theme-casino-night .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.15rem !important;
+    color: #FFD700 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9) !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 2px solid #FFD700 !important;
+    padding: 6px 20px !important;
+    letter-spacing: 1px !important;
+}
+
+body.theme-casino-night .hosts-title {
+    font-family: var(--font-heading) !important;
+    font-size: 2.4rem !important;
+    color: #FFD700 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+    letter-spacing: 2px !important;
+}
+
+body.theme-casino-night .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    background: rgba(0, 0, 0, 0.55);
+    border-left: 3px solid #E31B23;
+    padding: 4px 12px;
+    border-radius: 3px;
+}
+
+/* Light Background overrides */
+body.theme-casino-night.is-light-bg .logo-text-custom {
+    color: #B58A00 !important;
+    text-shadow: none !important;
+}
+
+body.theme-casino-night.is-light-bg .event-title {
+    color: var(--color-dark-text) !important;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+}
+
+body.theme-casino-night.is-light-bg .hosts-title,
+body.theme-casino-night.is-light-bg .event-top-label {
+    color: var(--color-dark-text) !important;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+body.theme-casino-night.is-light-bg .event-subtitle {
+    color: #A81116 !important;
+    text-shadow: none !important;
+}
+
+body.theme-casino-night.is-light-bg .hosts-list span {
+    color: var(--color-dark-text) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-left-color: #E31B23 !important;
+    text-shadow: none !important;
+}
+
+body.theme-casino-night.is-light-bg .event-date {
+    background: #ffffff !important;
+    color: var(--color-dark-text) !important;
+    border-color: #B58A00 !important;
+    text-shadow: none !important;
+}
+
+/* Card Suit Particles Styling */
+body.theme-casino-night .petal {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+body.theme-casino-night .petal.is-blurred {
+    opacity: 0.5 !important;
+}
+
+/* Suit Shapes (Inline SVG masks) */
+body.theme-casino-night .petal--heart {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center / contain;
+}
+
+body.theme-casino-night .petal--diamond {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2L2 12l10 10 10-10L12 2z'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2L2 12l10 10 10-10L12 2z'/></svg>") no-repeat center / contain;
+}
+
+body.theme-casino-night .petal--spade {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2C11.5 2 6 9 6 13C6 16.5 8.5 19 12 19C15.5 19 18 16.5 18 13C18 9 12.5 2 12 2ZM10.5 19L9.5 22.5H14.5L13.5 19H10.5Z'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2C11.5 2 6 9 6 13C6 16.5 8.5 19 12 19C15.5 19 18 16.5 18 13C18 9 12.5 2 12 2ZM10.5 19L9.5 22.5H14.5L13.5 19H10.5Z'/></svg>") no-repeat center / contain;
+}
+
+body.theme-casino-night .petal--club {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2C13.7 2 15 3.3 15 5C15 5.8 14.7 6.6 14.1 7.2C15.8 7.3 17 8.7 17 10.5C17 12.2 15.7 13.5 14 13.5C13.8 13.5 13.5 13.5 13.3 13.4C13.9 14.5 14.5 16 14.5 19H9.5C9.5 16 10.1 14.5 10.7 13.4C10.5 13.5 10.2 13.5 10 13.5C8.3 13.5 7 12.2 7 10.5C7 8.7 8.2 7.3 9.9 7.2C9.3 6.6 9 5.8 9 5C9 3.3 10.3 2 12 2Z'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2C13.7 2 15 3.3 15 5C15 5.8 14.7 6.6 14.1 7.2C15.8 7.3 17 8.7 17 10.5C17 12.2 15.7 13.5 14 13.5C13.8 13.5 13.5 13.5 13.3 13.4C13.9 14.5 14.5 16 14.5 19H9.5C9.5 16 10.1 14.5 10.7 13.4C10.5 13.5 10.2 13.5 10 13.5C8.3 13.5 7 12.2 7 10.5C7 8.7 8.2 7.3 9.9 7.2C9.3 6.6 9 5.8 9 5C9 3.3 10.3 2 12 2Z'/></svg>") no-repeat center / contain;
+}
+
+/* Responsive configurations */
+@media (max-width: 1800px) {
+    body.theme-casino-night .hosts-list span {
+        font-size: calc(1.35rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-casino-night .hosts-container {
+        margin-top: 3vh;
+        margin-bottom: -1vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-casino-night .hosts-list span {
+        font-size: calc(1.85rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+    body.theme-casino-night .hosts-container {
+        margin-top: 5vh;
+        margin-bottom: -2vh;
+    }
+    body.theme-casino-night .logo-banner {
+        margin: 4rem 0 -4rem 0;
+        scale: 1.25;
+    }
+    body.theme-casino-night .event-top-label {
+        font-size: 2.6rem !important;
+        margin-bottom: 10px !important;
+    }
+    body.theme-casino-night .event-title {
+        font-size: 4.6rem !important;
+        margin-top: 15px !important;
+        margin-bottom: 18px !important;
+    }
+    body.theme-casino-night .event-subtitle {
+        font-size: 1.7rem !important;
+    }
+    body.theme-casino-night .event-date {
+        font-size: 1.4rem !important;
+        margin-top: 18px !important;
+    }
+}
