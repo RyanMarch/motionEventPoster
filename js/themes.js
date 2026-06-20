@@ -1167,22 +1167,24 @@
             uiLabels: { particlesPlural: 'Shapes', particlesSingular: 'Shape', borderToggle: 'Hide squiggles', gustStrength: 'Wackiness', frameName: 'Memphis Grid' }
         }),
 
-        'millennium-web': defineTheme({
-            id: 'millennium-web',
-            name: 'Millennium Web*',
+        '00-glass': defineTheme({
+            id: '00-glass',
+            name: '00s Glass',
             pack: 'decades',
-            icon: '🌐',
+            icon: '💻',
             primary: '#E0F7FA',
             accent: '#00B4D8',
             secondary: '#81C784',
             swatchName: 'Frutiger Aero',
             colors: {
-                text: '#004D40',
-                darkText: '#E0F7FA'
+                text: '#E0F7FA',
+                darkText: '#004D40'
             },
             swatches: [
                 { hex: '#E8F5E9', name: 'Glossy Grass', accent: '#4CAF50', secondary: '#00B4D8' },
-                { hex: '#F3E5F5', name: 'Cyber Grape', accent: '#9C27B0', secondary: '#03A9F4' }
+                { hex: '#F3E5F5', name: 'Cyber Grape', accent: '#9C27B0', secondary: '#03A9F4' },
+                { hex: '#E0F2F1', name: 'Teal Aurora', accent: '#00897B', secondary: '#4DB6AC' },
+                { hex: '#FFF9C4', name: 'Sunlight Glaze', accent: '#FBC02D', secondary: '#81C784' }
             ],
             fonts: {
                 primary: "'Nunito', sans-serif",
@@ -1191,13 +1193,14 @@
             },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#ffffff', gradient: '#B2EBF2', type: 'tropical-oasis-bubble', weight: 60, speedMultiplier: -0.4, sizeMultiplier: 1.2, massMultiplier: 0.5, isWhite: true },
-                { color: '#ffffff', gradient: '#E0F7FA', type: 'tropical-oasis-bubble-large', weight: 40, speedMultiplier: -0.5, sizeMultiplier: 1.8, massMultiplier: 0.6, isWhite: true }
+                { color: '#ffffff', gradient: '#B2EBF2', type: 'aero-bubble', weight: 50, speedMultiplier: -0.4, sizeMultiplier: 1.2, massMultiplier: 0.5, isWhite: true },
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'aero-bubble-large', weight: 30, speedMultiplier: -0.5, sizeMultiplier: 1.8, massMultiplier: 0.6, isWhite: true },
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'aero-sparkle', weight: 10, speedMultiplier: -0.2, sizeMultiplier: 1.0, massMultiplier: 0.4, isWhite: true }
             ],
             frameClass: 'theme-frame--aero',
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 20, fallSpeed: 0.3, maxPetals: 40, windiness: 5, hostMaxWidth: 125, backdropOpacity: 60 },
-            defaults: { hostsTitle: "Webmasters", eventTitle: "Welcome to 2000", eventSubtitle: "Surfing the Web", eventTopLabel: "Y2K" },
-            uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide glossy frame', gustStrength: 'Bubble Speed', frameName: 'Aqua Glass' }
+            defaults: { hostsTitle: "Our Hosts", eventTitle: "Welcome to 2000", eventSubtitle: "The Wow Starts Now", eventTopLabel: "Clear. Comfortable. Pure." },
+            uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide glossy frame', gustStrength: 'Frame & Shine', frameName: 'Aqua Glass' }
         }),
 
         // --- SPECIALTY PACK ---

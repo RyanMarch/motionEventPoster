@@ -1,0 +1,601 @@
+/**
+ * MILLENNIUM WEB (Y2K / FRUTIGER AERO) THEME STYLES
+ * Optimistic sky blue, fresh teal, and vibrant lime green visual identity.
+ * Features glassy buttons, frosted glass panels, silver chrome text, and rising bubbles.
+ */
+
+/* ============================================================
+   1. Main Background Gradient & Dynamic Vector Waves
+   ============================================================ */
+body.theme-00-glass {
+    position: relative;
+    /* Soft optimistic Frutiger Aero gradient */
+    background: linear-gradient(135deg,
+            rgba(var(--color-primary-rgb), 1) 0%,
+            rgba(var(--color-secondary-rgb), 0.85) 60%,
+            rgba(var(--color-accent-rgb), 0.6) 100%) !important;
+    overflow: hidden;
+}
+
+/* Glossy, flowing vector waves characteristic of Y2K/Frutiger Aero */
+body.theme-00-glass .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Rich Vista-inspired vertical shafts, glowing vector wave bands, and curved accent ribbons */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600' preserveAspectRatio='none'><defs><linearGradient id='waveYellow' x1='0%' y1='100%' x2='100%' y2='0%'><stop offset='0%' stop-color='rgba(255, 241, 118, 0.28)'/><stop offset='50%' stop-color='rgba(139, 195, 74, 0.22)'/><stop offset='100%' stop-color='rgba(0, 188, 212, 0)'/></linearGradient><linearGradient id='waveCyan' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='rgba(0, 229, 255, 0.24)'/><stop offset='60%' stop-color='rgba(77, 208, 225, 0.16)'/><stop offset='100%' stop-color='rgba(255, 255, 255, 0)'/></linearGradient><linearGradient id='auroraRibbon' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='rgba(255, 255, 255, 0.55)'/><stop offset='25%' stop-color='rgba(128, 222, 234, 0.35)'/><stop offset='60%' stop-color='rgba(0, 172, 193, 0.15)'/><stop offset='100%' stop-color='rgba(0, 121, 107, 0)'/></linearGradient><linearGradient id='lightShafts' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='rgba(255, 255, 255, 0.2)'/><stop offset='40%' stop-color='rgba(255, 255, 255, 0.08)'/><stop offset='100%' stop-color='rgba(255, 255, 255, 0)'/></linearGradient></defs><path d='M80,-50 L180,-50 L130,650 L30,650 Z' fill='url(%23lightShafts)' opacity='0.45'/><path d='M300,-50 L420,-50 L350,650 L230,650 Z' fill='url(%23lightShafts)' opacity='0.6'/><path d='M580,-50 L710,-50 L630,650 L500,650 Z' fill='url(%23lightShafts)' opacity='0.35'/><path d='M780,-50 L900,-50 L820,650 L700,650 Z' fill='url(%23lightShafts)' opacity='0.55'/><path d='M0,300 C200,260 380,440 680,360 T1000,320 L1000,600 L0,600 Z' fill='url(%23waveYellow)'/><path d='M0,360 C320,400 520,260 770,370 T1000,340 L1000,600 L0,600 Z' fill='url(%23waveCyan)'/><path d='M0,330 Q260,200 510,310 T1000,260 L1000,272 T510,322 Q260,212 0,342 Z' fill='url(%23auroraRibbon)'/><path d='M0,360 Q310,270 610,390 T1000,300 L1000,308 T610,398 Q310,278 0,368 Z' fill='rgba(255, 255, 255, 0.12)'/></svg>") !important;
+    background-size: cover;
+    background-position: center;
+    mix-blend-mode: overlay;
+    opacity: calc(0.65 + 0.35 * var(--frame-intensity));
+    animation: aero-wave-float calc(24s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+}
+
+/* Aurora Lights background effect - soft optimistic teal/blue/green mesh */
+body.theme-00-glass .theme-texture::before {
+    content: '' !important;
+    position: absolute;
+    inset: -50%;
+    background:
+        radial-gradient(circle at 15% 25%, rgba(0, 180, 216, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(129, 199, 132, 0.28) 0%, transparent 60%),
+        radial-gradient(circle at 50% 35%, rgba(224, 247, 250, 0.38) 0%, transparent 45%),
+        radial-gradient(circle at 35% 85%, rgba(77, 182, 172, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(129, 199, 132, 0.2) 0%, transparent 45%);
+    filter: blur(50px);
+    opacity: calc(0.65 + 0.35 * var(--frame-intensity));
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: -1;
+    animation: aero-aurora-drift calc(24s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    will-change: transform;
+}
+
+/* Water Caustics / Ripple shimmer overlay */
+body.theme-00-glass .theme-texture::after {
+    content: '' !important;
+    position: absolute;
+    inset: -20%;
+    background-image:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.22) 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 20% 75%, rgba(255, 255, 255, 0.18) 0%, transparent 35%),
+        radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.22) 0%, transparent 35%);
+    background-size: 100% 100%;
+    opacity: calc(0.45 + 0.35 * var(--frame-intensity));
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+    animation: aero-water-caustics calc(16s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    will-change: transform;
+}
+
+@keyframes aero-wave-float {
+    0% {
+        transform: scale(1) translateY(0);
+    }
+
+    100% {
+        transform: scale(1.03) translateY(-10px);
+    }
+}
+
+/* ============================================================
+   2. Aqua Glass Window Frame (Frosted Glassmorphism)
+   ============================================================ */
+body.theme-00-glass .theme-frame {
+    display: block !important;
+    border: 3px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 24px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow:
+        0 8px 32px rgba(0, 77, 64, 0.08),
+        0 0 20px rgba(0, 180, 216, 0.18),
+        inset 0 0 16px rgba(255, 255, 255, 0.55) !important;
+    z-index: 50;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: min(1, calc(var(--frame-intensity) * 2)) !important;
+    /* Force clipping of absolute backdrop-filtered children to parent border-radius */
+    -webkit-clip-path: inset(0 round 24px) !important;
+    clip-path: inset(0 round 24px) !important;
+}
+
+/* 3D Glass refraction highlights restricted to top rail height */
+body.theme-00-glass .theme-frame::before {
+    content: '' !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35px !important;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.12) 80%, transparent 100%) !important;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Slow sweeping double glass shine glare across the outer frame */
+body.theme-00-glass .theme-frame::after {
+    content: '' !important;
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(105deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.03) 38%,
+            rgba(255, 255, 255, 0.22) 48%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0.1) 52%,
+            transparent 60%) !important;
+    pointer-events: none;
+    z-index: 21;
+    opacity: var(--frame-intensity) !important;
+    /* Render above rail highlights */
+    animation: aero-frame-glare calc(12s / var(--gust-speed, 1)) infinite ease-in-out;
+    will-change: left;
+}
+
+/* Silver/Chrome inner bezel */
+body.theme-00-glass .theme-frame-inner {
+    display: block !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 20px !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Bezel Rails (Frosted Glassmorphism for frame borders) */
+body.theme-00-glass .frame-rail {
+    display: block !important;
+    position: absolute !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Horizontal Rails */
+body.theme-00-glass .rail-top,
+body.theme-00-glass .rail-bottom {
+    height: 25px !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+body.theme-00-glass .rail-top {
+    top: 0 !important;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 25px) 100%, 25px 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: inset 0 8px 12px rgba(255, 255, 255, 0.45), inset 0 -4px 6px rgba(0, 0, 0, 0.02) !important;
+}
+
+body.theme-00-glass .rail-bottom {
+    bottom: 0 !important;
+    clip-path: polygon(25px 0, calc(100% - 25px) 0, 100% 100%, 0 100%) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: inset 0 -8px 12px rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Vertical Rails */
+body.theme-00-glass .rail-left,
+body.theme-00-glass .rail-right {
+    width: 25px !important;
+    top: 0 !important;
+    bottom: 0 !important;
+}
+
+body.theme-00-glass .rail-left {
+    left: 0 !important;
+    clip-path: polygon(0 0, 100% 25px, 100% calc(100% - 25px), 0 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+body.theme-00-glass .rail-right {
+    right: 0 !important;
+    clip-path: polygon(0 25px, 100% 0, 100% 100%, 0 calc(100% - 25px)) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Hide frame when toggled */
+body.border-hidden.theme-00-glass .theme-frame,
+body.border-hidden.theme-00-glass .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* Disable default floral branches */
+body.theme-00-glass .floral-bg {
+    display: none !important;
+}
+
+/* ============================================================
+   3. Glassy Logo Banner (Gel Capsule Button style)
+   ============================================================ */
+body.theme-00-glass .logo-banner {
+    position: relative !important;
+    /* Silver metal linear gradient with gel reflection overlay */
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.05) 50.1%, rgba(255, 255, 255, 0.2) 100%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(var(--color-accent-rgb), 0.12) 100%) !important;
+    background-color: rgba(var(--color-primary-rgb), 0.18) !important;
+    border: 2px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 30px !important;
+    box-shadow:
+        0 10px 20px rgba(0, 77, 64, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 0 12px rgba(var(--color-accent-rgb), 0.15) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    padding: 12px 45px !important;
+    margin: 2.2rem 0 -1.2rem 0 !important;
+    z-index: 60;
+    width: 100%;
+    max-width: 440px;
+    overflow: hidden !important;
+    /* contain glass glare reflection */
+}
+
+body.theme-00-glass .logo-text-custom {
+    font-family: var(--font-heading) !important;
+    /* Varela Round */
+    color: var(--color-dark-text) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ============================================================
+   4. Frosted Glass Hosts Card
+   ============================================================ */
+body.theme-00-glass .hosts-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.22) !important;
+    border: 2px solid rgba(255, 255, 255, 0.55) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        0 14px 28px rgba(0, 48, 73, 0.05),
+        inset 0 0 15px rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    padding: 28px 40px 38px 40px !important;
+    margin: 3.5vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 100px) !important;
+    z-index: 100;
+    overflow: hidden !important;
+    /* contain glass glare reflection */
+}
+
+/* Curved gel reflection overlay on top half of hosts card */
+body.theme-00-glass .hosts-container::before {
+    content: '' !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50% !important;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* (Hosts card glare animation removed per user preference) */
+
+body.theme-00-glass .hosts-title {
+    font-family: var(--font-heading) !important;
+    /* Varela Round */
+    color: var(--color-dark-text) !important;
+    font-size: calc(2.2rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* body.theme-00-glass .hosts-title::after {
+    content: '';
+    display: block;
+    width: 140px;
+    height: 4px;
+    margin: 12px auto 0 auto;
+    background: linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.5), transparent);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+} */
+
+body.theme-00-glass .hosts-list span {
+    font-family: var(--font-primary) !important;
+    /* Nunito */
+    color: var(--color-dark-text) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+}
+
+body.theme-00-glass .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   5. Event Details (Optimistic Chrome & Sky Typography)
+   ============================================================ */
+body.theme-00-glass .event-footer {
+    z-index: 60 !important;
+    /* Apply drop-shadow at container level to prevent WebKit clipping bugs on text */
+    filter: drop-shadow(0 2px 3px rgba(0, 77, 64, 0.12)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.45)) !important;
+}
+
+body.theme-00-glass .event-title {
+    font-family: var(--font-display) !important;
+    /* Righteous */
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    /* Chrome/silver gradient fill style */
+    background: linear-gradient(180deg, #ffffff 0%, #d4f2ea 42%, var(--color-accent) 46%, #ffffff 50%, #ffffff 62%, var(--color-accent) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: var(--color-accent) !important;
+    text-shadow: none !important;
+    /* Overrides default shadow to fix WebKit text clip smudge */
+    margin-top: -8px;
+    margin-bottom: 25px;
+}
+
+body.theme-00-glass .event-top-label {
+    font-family: var(--font-heading) !important;
+    /* Varela Round */
+    font-size: 1.6rem;
+    color: var(--color-dark-text) !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: -4px;
+}
+
+body.theme-00-glass .event-subtitle {
+    font-family: var(--font-heading) !important;
+    /* Varela Round */
+    font-size: 1.8rem;
+    color: var(--color-dark-text) !important;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+    margin-top: -6px;
+}
+
+body.theme-00-glass .event-date {
+    font-family: var(--font-primary) !important;
+    /* Nunito */
+    font-size: 1.25rem;
+    color: var(--color-dark-text) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+    margin-top: 8px;
+}
+
+/* ============================================================
+   6. Custom Particle Designs (Glassy Aqua Bubbles, Chrome Sparkles, and Glossy Leaves)
+   ============================================================ */
+
+/* 6a. Glassy Aqua Bubbles */
+body.theme-00-glass .petal--aero-bubble,
+body.theme-00-glass .petal--aero-bubble-large {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 50% !important;
+}
+
+body.theme-00-glass .petal--aero-bubble::before,
+body.theme-00-glass .petal--aero-bubble-large::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    /* Soft specular highlight & transparency gradient (keeps highlight in top-left) */
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.45) 100%) !important;
+    border: 1.2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 50% !important;
+    box-shadow:
+        0 0 6px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.2),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.4) !important;
+    filter: blur(0.2px) !important;
+    animation: aero-bubble-pulse 4s ease-in-out infinite alternate !important;
+    will-change: transform !important;
+}
+
+@keyframes aero-bubble-pulse {
+    0% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* 6b. Chrome Sparkles (Lens Flares / Twinkling Glints) */
+body.theme-00-glass .petal--aero-sparkle {
+    border-radius: 0 !important;
+    /* Glassy/chrome linear gradient with sky highlight */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(0, 180, 216, 0.75) 100%) !important;
+    clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%) !important;
+    -webkit-clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%) !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.75) !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 180, 216, 0.3)) !important;
+    animation: aero-sparkle-twinkle 4s ease-in-out infinite alternate !important;
+}
+
+@keyframes aero-sparkle-twinkle {
+    0% {
+        transform: scale(0.7) rotate(0deg);
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1.1) rotate(90deg);
+        opacity: 0.75;
+    }
+}
+
+
+/* ============================================================
+   7. QR Codes (Glassy panels)
+   ============================================================ */
+body.theme-00-glass .qr-code-container {
+    border: 2px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 8px 24px rgba(0, 48, 73, 0.06) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Fade QR codes overlap */
+body.theme-00-glass:has(#qr-soiree:not(.qr-hidden)) .sway-bottom-left,
+body.theme-00-glass:has(#qr-membership:not(.qr-hidden)) .sway-bottom-right {
+    opacity: 0.05 !important;
+    pointer-events: none;
+}
+
+/* ============================================================
+   8. Fullscreen Countdown Overlay
+   ============================================================ */
+body.theme-00-glass .fullscreen-countdown .countdown-content {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border: 2px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow:
+        0 16px 40px rgba(0, 48, 73, 0.08),
+        inset 0 0 15px rgba(255, 255, 255, 0.3) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body.theme-00-glass .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: var(--color-dark-text) !important;
+}
+
+body.theme-00-glass .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ============================================================
+   9. Play-State bindings & Layout Rules
+   ============================================================ */
+body.theme-00-glass .theme-texture,
+body.theme-00-glass .theme-texture::before,
+body.theme-00-glass .theme-texture::after,
+body.theme-00-glass .logo-banner,
+body.theme-00-glass .theme-frame::after {
+    animation-play-state: var(--grid-play-state, running) !important;
+}
+
+body.theme-00-glass .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+/* Glass & Aurora Animations Keyframes */
+@keyframes aero-frame-glare {
+
+    0%,
+    15% {
+        left: -150%;
+    }
+
+    65%,
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes aero-aurora-drift {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(5%, -4%) scale(1.08) rotate(3deg);
+    }
+
+    100% {
+        transform: translate(-3%, 3%) scale(0.96) rotate(-2deg);
+    }
+}
+
+@keyframes aero-water-caustics {
+    0% {
+        transform: scale(1) rotate(0deg) translate(0, 0);
+    }
+
+    50% {
+        transform: scale(1.06) rotate(1deg) translate(1.5%, -1.5%);
+    }
+
+    100% {
+        transform: scale(0.97) rotate(-1deg) translate(-1.5%, 1.5%);
+    }
+}
+
+/* Responsive constraints */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-00-glass .logo-banner {
+        margin-top: 25px !important;
+        margin-bottom: -10px !important;
+        padding: 8px 30px !important;
+    }
+
+    body.theme-00-glass .hosts-container {
+        margin: 2vh auto 0 auto !important;
+        padding: 20px 24px 30px 24px !important;
+        max-width: 82vw !important;
+    }
+
+    body.theme-00-glass .event-title {
+        font-size: 4.0rem;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-00-glass .logo-banner {
+        scale: 1.12;
+        margin-top: 2vh !important;
+    }
+
+    body.theme-00-glass .hosts-container {
+        margin: 6vh auto 0 auto !important;
+    }
+
+    body.theme-00-glass .event-footer {
+        scale: 1.12;
+        margin-bottom: 2vh;
+    }
+}
