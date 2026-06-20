@@ -1119,21 +1119,34 @@
 
         'memphis-pop': defineTheme({
             id: 'memphis-pop',
-            name: 'Memphis Pop*',
+            name: 'Memphis Pop',
             pack: 'decades',
             icon: '📺',
-            primary: '#FCEEB5',
+            primary: '#FFF275',
             accent: '#FF007F',
-            secondary: '#00E5FF',
-            swatchName: 'Saved By The Bell',
+            secondary: '#2A2AFF',
+            swatchName: 'Lemon Pop',
             colors: {
                 text: '#111111',
                 darkText: '#ffffff'
             },
             swatches: [
-                { hex: '#FFFFFF', name: 'White Grid', accent: '#000000', secondary: '#FF007F' },
                 { hex: '#FF007F', name: 'Hot Pink', accent: '#00E5FF', secondary: '#FCEEB5' },
-                { hex: '#00E5FF', name: 'Electric Cyan', accent: '#FF007F', secondary: '#FCEEB5' }
+                { hex: '#00E5FF', name: 'Electric Cyan', accent: '#FF007F', secondary: '#FCEEB5' },
+                { hex: '#111111', name: 'Midnight Arcade', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#2A2AFF', name: 'Retro Cobalt', accent: '#FFE600', secondary: '#FF007F' },
+                { hex: '#7B2CBF', name: 'Cyber Violet', accent: '#00F5D4', secondary: '#FF007F' },
+                { hex: '#2EC4B6', name: 'Teal Squiggle', accent: '#FF9F1C', secondary: '#E71D36' },
+                { hex: '#FF6B35', name: 'Sunburst Pop', accent: '#2EC4B6', secondary: '#1A1A1A' },
+                { hex: '#D6FF79', name: 'Acid Melon', accent: '#A06CD5', secondary: '#E05780' },
+                { hex: '#5C0D38', name: 'Plum Pop', accent: '#00FFCC', secondary: '#FFFF00' },
+                { hex: '#FFFFFF', name: 'White Grid', accent: '#000000', secondary: '#FF007F' },
+                { hex: '#EBEBFF', name: 'Lavender Sprinkles', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#FFE5D9', name: 'Peach Squiggle', accent: '#2A2AFF', secondary: '#FF007F' },
+                { hex: '#CBF3F0', name: 'Mint Confetti', accent: '#FF9F1C', secondary: '#FF007F' },
+                { hex: '#D7E3FC', name: 'Sky Grid', accent: '#E71D36', secondary: '#00E5FF' },
+                { hex: '#FCEEB5', name: 'Radical Pastel', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#FFE5D9', name: 'Apricot Fizz', accent: '#FF6B35', secondary: '#00E5FF' }
             ],
             fonts: {
                 primary: "'Space Grotesk', sans-serif",
@@ -1142,9 +1155,10 @@
             },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#FF007F', gradient: '#D00060', type: 'triangle', weight: 30, speedMultiplier: 0.7, sizeMultiplier: 1.5, massMultiplier: 1.0 },
-                { color: '#00E5FF', gradient: '#00B0D0', type: 'square', weight: 30, speedMultiplier: 0.8, sizeMultiplier: 1.3, massMultiplier: 1.1 },
-                { color: '#111111', gradient: '#000000', type: 'dust', weight: 40, speedMultiplier: 0.6, sizeMultiplier: 1.8, massMultiplier: 0.9 }
+                { useThemeAccent: true, type: 'memphis-triangle', weight: 30, speedMultiplier: 0.7, sizeMultiplier: 1.4, massMultiplier: 1.0 },
+                { useThemeSecondary: true, type: 'memphis-ring', weight: 30, speedMultiplier: 0.8, sizeMultiplier: 1.3, massMultiplier: 1.1 },
+                { type: 'memphis-zigzag', weight: 20, speedMultiplier: 0.65, sizeMultiplier: 1.5, massMultiplier: 1.0 },
+                { type: 'memphis-dot', weight: 20, speedMultiplier: 0.6, sizeMultiplier: 0.8, massMultiplier: 0.9 }
             ],
             frameClass: 'theme-frame--memphis',
             flags: { syncParticleColors: true },

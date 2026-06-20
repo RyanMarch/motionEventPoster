@@ -1,1 +1,557 @@
-/* Stub theme for Memphis Pop */
+/**
+ * MEMPHIS POP (1990S RETRO) THEME STYLES
+ * Inspired by the bold, graphic Memphis design movement.
+ */
+
+/* ============================================================
+   1. Background & Repeating Grid Drift
+   ============================================================ */
+body.theme-memphis-pop {
+    position: relative;
+    background-color: var(--color-primary) !important;
+    background-image: linear-gradient(180deg,
+            var(--color-primary) 0%,
+            rgba(var(--color-primary-rgb), 0.98) 50%,
+            var(--color-primary) 100%) !important;
+    overflow: hidden;
+}
+
+body.theme-memphis-pop .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--memphis-grid-image) !important;
+    background-repeat: repeat;
+    background-size: 80px 80px;
+    opacity: calc(0.4 + 0.4 * var(--frame-intensity));
+    animation: memphis-grid-drift calc(120s / var(--gust-speed, 1)) linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background-position;
+}
+
+@keyframes memphis-grid-drift {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 80px 80px;
+    }
+}
+
+/* ============================================================
+   2. Frame Customization: Border Fatigue Solution
+   ============================================================ */
+body.theme-memphis-pop .theme-frame {
+    display: block !important;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    /* Skip traditional box border entirely to resolve "frame fatigue" */
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    z-index: 50;
+    pointer-events: none;
+}
+
+body.theme-memphis-pop .frame-rail {
+    display: none !important;
+}
+
+/* Hide texture and overlays when hidden */
+body.border-hidden.theme-memphis-pop .theme-frame,
+body.border-hidden.theme-memphis-pop .theme-texture,
+body.border-hidden.theme-memphis-pop .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* ============================================================
+   3. Dynamic Asymmetrical Memphis Corner Layers
+   ============================================================ */
+body.theme-memphis-pop .sway-layer {
+    position: absolute;
+    z-index: 29;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.theme-memphis-pop:not(.is-loading) .sway-layer {
+    opacity: 0.95;
+}
+
+/* Top-Left Corner Piece */
+body.theme-memphis-pop .sway-top-left {
+    display: block !important;
+    top: 4rem;
+    left: 20px;
+    width: 15vw;
+    height: 15vh;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: var(--memphis-sway-top-left) !important;
+    transform-origin: left top;
+    animation: memphis-layer-sway calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Top-Right Corner Piece */
+body.theme-memphis-pop .sway-top-right {
+    display: block !important;
+    top: 4rem;
+    right: 20px;
+    width: 15vw;
+    height: 15vh;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: var(--memphis-sway-top-right) !important;
+    transform-origin: right top;
+    animation: memphis-layer-sway calc(10s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+/* Bottom-Left Corner Piece */
+body.theme-memphis-pop .sway-bottom-left {
+    display: block !important;
+    bottom: 4.5rem;
+    left: 40px;
+    width: 15vw;
+    height: 15vh;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: var(--memphis-sway-bottom-left) !important;
+    transform-origin: left bottom;
+    animation: memphis-layer-sway calc(11s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Bottom-Right Corner Piece */
+body.theme-memphis-pop .sway-bottom-right {
+    display: block !important;
+    bottom: 4.5rem;
+    right: 40px;
+    width: 15vw;
+    height: 15vh;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: var(--memphis-sway-bottom-right) !important;
+    transform-origin: right bottom;
+    animation: memphis-layer-sway calc(9s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes memphis-layer-sway {
+    0% {
+        transform: rotate(-3.5deg) scale(0.97);
+    }
+
+    100% {
+        transform: rotate(3.5deg) scale(1.03);
+    }
+}
+
+/* Overlap handling: fade corners when QR codes are active */
+body.theme-memphis-pop:has(#qr-soiree:not(.qr-hidden)) .sway-bottom-left,
+body.theme-memphis-pop:has(#qr-membership:not(.qr-hidden)) .sway-bottom-right {
+    opacity: 0.05 !important;
+    pointer-events: none;
+}
+
+/* Disable unused default layers */
+body.theme-memphis-pop .floral-bg {
+    display: none !important;
+}
+
+/* Left Side Piece */
+body.theme-memphis-pop .sway-left-side {
+    display: block !important;
+    top: 50%;
+    left: 4px;
+    width: 12vw;
+    height: 12vh;
+    min-width: 120px;
+    min-height: 120px;
+    background-image: var(--memphis-sway-left-side) !important;
+    transform-origin: left center;
+    animation: memphis-side-sway calc(13s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Right Side Piece */
+body.theme-memphis-pop .sway-right-side {
+    display: block !important;
+    top: 50%;
+    right: 4px;
+    width: 12vw;
+    height: 12vh;
+    min-width: 120px;
+    min-height: 120px;
+    background-image: var(--memphis-sway-right-side) !important;
+    transform-origin: right center;
+    animation: memphis-side-sway calc(14s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes memphis-side-sway {
+    0% {
+        transform: translateY(-50%) rotate(-3deg) scale(0.97);
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(3deg) scale(1.03);
+    }
+}
+
+body.theme-memphis-pop .sway-top-2,
+body.theme-memphis-pop .sway-top-3,
+body.theme-memphis-pop .sway-bottom-3,
+body.theme-memphis-pop .sway-bottom-4,
+body.theme-memphis-pop .sway-bottom-5,
+body.theme-memphis-pop .sway-bottom-6,
+body.theme-memphis-pop .sway-bottom-7,
+body.theme-memphis-pop .sway-bottom-8,
+body.theme-memphis-pop .sway-bottom-9,
+body.theme-memphis-pop .sway-bottom-10 {
+    display: none !important;
+}
+
+/* ============================================================
+   4. High-Contrast Rectangular Logo Banner
+   ============================================================ */
+body.theme-memphis-pop .logo-banner {
+    position: relative !important;
+    background: var(--color-secondary) !important;
+    /* Teal/Cyan */
+    border: 4px solid var(--color-text) !important;
+    border-radius: 0px !important;
+    transform: rotate(-2deg) !important;
+    margin: 2.5rem 0 -1.5rem 0 !important;
+    box-shadow: 8px 8px 0 var(--color-text) !important;
+    /* Solid offset shadow */
+    padding: 12px 40px;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    animation: memphis-banner-rock calc(7s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes memphis-banner-rock {
+    0% {
+        transform: rotate(-3deg) translateY(0);
+    }
+
+    100% {
+        transform: rotate(-1deg) translateY(-2px);
+    }
+}
+
+body.theme-memphis-pop .logo-text-custom {
+    font-family: var(--font-heading) !important;
+    /* Bungee */
+    color: var(--memphis-logo-text-color, var(--color-text)) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.25rem;
+}
+
+/* ============================================================
+   5. Hosts Container Card (Tilted opposing layout)
+   ============================================================ */
+body.theme-memphis-pop .hosts-container {
+    position: relative;
+    padding: 30px 40px 48px 40px !important;
+    margin: 2vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 100px) !important;
+    border-radius: 0px !important;
+    border: 4px solid var(--color-text) !important;
+    background-color: #ffffff !important;
+    /* Crisp high-contrast background */
+    box-shadow: 10px 10px 0 var(--color-text) !important;
+    transform: rotate(1.5deg) !important;
+    z-index: 100;
+}
+
+body.theme-memphis-pop .hosts-container>* {
+    transform: rotate(-1.5deg) !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .hosts-container {
+    background-color: #1a1c1e !important;
+    /* Keep card readable on dark arcade swatch */
+    border-color: #ffffff !important;
+    box-shadow: 10px 10px 0 #ffffff !important;
+}
+
+body.theme-memphis-pop .hosts-title {
+    font-family: var(--font-heading) !important;
+    /* Bungee */
+    color: var(--color-accent) !important;
+    /* Hot Pink */
+    font-size: calc(2.0rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+body.theme-memphis-pop .hosts-title::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 16px;
+    margin: 12px auto 0 auto;
+    background-image: var(--memphis-separator-image);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+body.theme-memphis-pop .hosts-list span {
+    font-family: var(--font-primary) !important;
+    /* Space Grotesk */
+    color: var(--color-text) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .hosts-list span {
+    color: #ffffff !important;
+}
+
+body.theme-memphis-pop .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   6. Event Details & Double Text Shadow
+   ============================================================ */
+body.theme-memphis-pop .event-title {
+    font-family: var(--font-display) !important;
+    /* Bungee */
+    color: var(--color-accent) !important;
+    /* Hot Pink */
+    font-weight: 900;
+    font-size: 5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    /* Classic Memphis Double Shadow (cyan then black) */
+    text-shadow:
+        4px 4px 0 var(--color-secondary),
+        8px 8px 0 var(--color-text) !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .event-title {
+    text-shadow:
+        4px 4px 0 var(--color-secondary),
+        8px 8px 0 #ffffff !important;
+}
+
+body.theme-memphis-pop .event-top-label {
+    font-family: var(--font-primary) !important;
+    /* Space Grotesk */
+    font-size: 1.5rem;
+    color: var(--color-text) !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .event-top-label,
+body.theme-memphis-pop:not(.is-light-bg) .event-subtitle,
+body.theme-memphis-pop:not(.is-light-bg) .event-date {
+    color: #ffffff !important;
+}
+
+body.theme-memphis-pop .event-subtitle {
+    font-family: var(--font-primary) !important;
+    /* Space Grotesk */
+    font-size: 1.6rem;
+    color: var(--color-text) !important;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+body.theme-memphis-pop .event-date {
+    font-family: var(--font-primary) !important;
+    /* Space Grotesk */
+    font-size: 1.2rem;
+    color: var(--color-text) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* ============================================================
+   7. Custom Particles (Triangles, Hollow Rings, Zig-Zags, Dots)
+   ============================================================ */
+
+/* Triangle Clip Path */
+body.theme-memphis-pop .petal--memphis-triangle {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important;
+    -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Donut (Hollow Ring) SVG Mask */
+body.theme-memphis-pop .petal--memphis-ring {
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='none' stroke='black' stroke-width='16'/></svg>") !important;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='none' stroke='black' stroke-width='16'/></svg>") !important;
+    -webkit-mask-size: contain !important;
+    mask-size: contain !important;
+    -webkit-mask-repeat: no-repeat !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-position: center !important;
+    mask-position: center !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Zig-Zag SVG Mask */
+body.theme-memphis-pop .petal--memphis-zigzag {
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 10 50 L 30 20 L 50 80 L 70 20 L 90 50' fill='none' stroke='black' stroke-width='14' stroke-linecap='round' stroke-linejoin='round'/></svg>") !important;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 10 50 L 30 20 L 50 80 L 70 20 L 90 50' fill='none' stroke='black' stroke-width='14' stroke-linecap='round' stroke-linejoin='round'/></svg>") !important;
+    -webkit-mask-size: contain !important;
+    mask-size: contain !important;
+    -webkit-mask-repeat: no-repeat !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-position: center !important;
+    mask-position: center !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Memphis Solid Dot */
+body.theme-memphis-pop .petal--memphis-dot {
+    border-radius: 50% !important;
+    box-shadow: none !important;
+}
+
+/* ============================================================
+   8. QR Codes (Bold flat layout)
+   ============================================================ */
+body.theme-memphis-pop .qr-code-container {
+    border: 4px solid var(--color-text) !important;
+    box-shadow: 6px 6px 0 var(--color-text) !important;
+    background: #ffffff !important;
+    padding: 8px !important;
+    border-radius: 0px !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .qr-code-container {
+    border-color: #ffffff !important;
+    box-shadow: 6px 6px 0 #ffffff !important;
+}
+
+/* ============================================================
+   9. Fullscreen Countdown Overlay
+   ============================================================ */
+body.theme-memphis-pop .fullscreen-countdown .countdown-content {
+    background: var(--color-primary) !important;
+    border: 4px solid var(--color-text) !important;
+    box-shadow: 8px 8px 0 var(--color-text) !important;
+    border-radius: 0px !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .fullscreen-countdown .countdown-content {
+    border-color: #ffffff !important;
+    box-shadow: 8px 8px 0 #ffffff !important;
+}
+
+body.theme-memphis-pop .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: var(--color-text) !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .fullscreen-countdown .countdown-text {
+    color: #ffffff !important;
+}
+
+body.theme-memphis-pop .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 2px 2px 0 var(--color-text) !important;
+}
+
+body.theme-memphis-pop:not(.is-light-bg) .fullscreen-countdown #countdown-number {
+    text-shadow: 2px 2px 0 #ffffff !important;
+}
+
+/* ============================================================
+   10. Play-State bindings & Layout Rules
+   ============================================================ */
+body.theme-memphis-pop .theme-texture,
+body.theme-memphis-pop .sway-top-left,
+body.theme-memphis-pop .sway-top-right,
+body.theme-memphis-pop .sway-bottom-left,
+body.theme-memphis-pop .sway-bottom-right,
+body.theme-memphis-pop .sway-left-side,
+body.theme-memphis-pop .sway-right-side,
+body.theme-memphis-pop .logo-banner {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+body.theme-memphis-pop .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+/* Laptops / Smaller Viewports */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-memphis-pop .logo-banner {
+        margin-top: 25px !important;
+        margin-bottom: -10px !important;
+        padding: 8px 30px !important;
+    }
+
+    body.theme-memphis-pop .hosts-container {
+        margin: 2vh auto 0 auto !important;
+        padding: 20px 24px 32px 24px !important;
+        max-width: 82vw !important;
+    }
+
+    body.theme-memphis-pop .hosts-title::after {
+        margin: 8px auto 0 auto;
+    }
+
+    body.theme-memphis-pop .event-title {
+        font-size: 4.0rem;
+    }
+
+    body.theme-memphis-pop .event-subtitle {
+        font-size: 1.4rem;
+        margin-top: 5px;
+    }
+
+    body.theme-memphis-pop .event-date {
+        font-size: 1.05rem;
+    }
+}
+
+/* Large presentation screens (1080p, 4K) */
+@media (min-width: 1801px) {
+    body.theme-memphis-pop .logo-banner {
+        scale: 1.15;
+        margin-top: 2vh !important;
+    }
+
+    body.theme-memphis-pop .hosts-list span {
+        font-size: calc(1.65em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-memphis-pop .hosts-container {
+        margin: 6vh auto 0 auto !important;
+    }
+
+    body.theme-memphis-pop .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+}

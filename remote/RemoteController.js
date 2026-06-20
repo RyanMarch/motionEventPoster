@@ -325,6 +325,11 @@ class RemoteController {
         if (tumbleControl) {
             tumbleControl.style.display = themeId === 'space-odyssey' ? 'none' : '';
         }
+
+        const backdropControl = document.getElementById('slider-backdrop-opacity')?.closest('.control');
+        if (backdropControl) {
+            backdropControl.style.display = themeId === 'memphis-pop' ? 'none' : '';
+        }
     }
 
     // ─── Connect Screen ─────────────────────────────────────────────────────

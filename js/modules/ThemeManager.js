@@ -188,6 +188,11 @@ window.ThemeManager = class ThemeManager {
         if (tumbleControl) {
             tumbleControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
         }
+
+        const backdropControl = document.getElementById('slider-backdrop-opacity')?.closest('.control');
+        if (backdropControl) {
+            backdropControl.style.display = theme.id === 'memphis-pop' ? 'none' : '';
+        }
         
         // Update Theme Selector Trigger
         if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
@@ -312,6 +317,53 @@ window.ThemeManager = class ThemeManager {
 
             this.root.style.setProperty('--atomic-logo-text-color', logoTextColor);
             this.root.style.setProperty('--atomic-logo-border-color', logoBorderColor);
+        }
+
+        // Memphis Pop Theme dynamic SVGs & contrast calculation
+        if (theme.id === 'memphis-pop') {
+            const textColor = isLight ? '#111111' : '#ffffff';
+            const escTextColor = encodeURIComponent(textColor);
+            const escAccentColor = encodeURIComponent(accentColor);
+            const escSecondaryColor = encodeURIComponent(secondaryColor);
+
+            // Calculate banner text contrast based on the background color of the logo banner (secondaryColor)
+            const secRgb = window.PosterUtils.hexToRgb(secondaryColor);
+            const secLuminance = secRgb ? (0.2126 * secRgb.r + 0.7152 * secRgb.g + 0.0722 * secRgb.b) / 255 : 0;
+            const logoTextColor = secLuminance > 0.5 ? '#111111' : '#ffffff';
+            this.root.style.setProperty('--memphis-logo-text-color', logoTextColor);
+
+            // 1. Dynamic SVG separator line (zigzag squiggle)
+            const separatorSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M 5 10 L 20 4 L 35 16 L 50 4 L 65 16 L 80 4 L 95 10' fill='none' stroke='${escAccentColor}' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/></svg>")`;
+            this.root.style.setProperty('--memphis-separator-image', separatorSvg);
+
+            // 2. Dynamic SVG background grid image
+            const gridColor = isLight ? 'rgba(17, 17, 17, 0.12)' : 'rgba(255, 255, 255, 0.12)';
+            const gridSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='none'/><path d='M 80 0 L 0 0 0 80' fill='none' stroke='${encodeURIComponent(gridColor)}' stroke-width='1.5'/></svg>")`;
+            this.root.style.setProperty('--memphis-grid-image', gridSvg);
+
+            // 3. Dynamic Sway Layers corners
+            // Top-Left corner SVG composition
+            const topLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><polygon points='30,30 110,30 70,110' fill='black' opacity='0.85'/><polygon points='20,20 100,20 60,100' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4' stroke-linejoin='bevel'/><polygon points='40,40 80,40 60,80' fill='none' stroke='${escTextColor}' stroke-width='3'/><circle cx='100' cy='70' r='30' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 120 20 L 120 60 M 130 20 L 130 60 M 140 20 L 140 60 M 110 30 L 150 30 M 110 40 L 150 40 M 110 50 L 150 50' stroke='${escTextColor}' stroke-width='2' opacity='0.7'/><path d='M 20 110 Q 40 90, 60 110 T 100 110 T 140 110' fill='none' stroke='${escTextColor}' stroke-width='6' stroke-linecap='round'/><circle cx='40' cy='60' r='4' fill='${escTextColor}'/><circle cx='55' cy='50' r='4' fill='${escTextColor}'/><circle cx='70' cy='65' r='4' fill='${escTextColor}'/><circle cx='30' cy='90' r='5' fill='${escAccentColor}'/><circle cx='130' cy='120' r='8' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='2'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-top-left', topLeftSvg);
+
+            // Top-Right corner SVG composition
+            const topRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><g fill='none' stroke='${escTextColor}' stroke-width='3'><line x1='60' y1='10' x2='140' y2='10'/><line x1='60' y1='20' x2='140' y2='20'/><line x1='60' y1='30' x2='140' y2='30'/><line x1='60' y1='40' x2='140' y2='40'/><line x1='60' y1='50' x2='140' y2='50'/></g><rect x='30' y='50' width='70' height='70' rx='5' fill='black' opacity='0.85'/><rect x='20' y='40' width='70' height='70' rx='5' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4'/><polygon points='90,80 130,120 70,120' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><circle cx='120' cy='90' r='18' fill='none' stroke='${escTextColor}' stroke-width='5'/><path d='M 20 130 Q 40 110, 60 130 T 100 130' fill='none' stroke='${escAccentColor}' stroke-width='4' stroke-linecap='round'/><circle cx='80' cy='25' r='5' fill='${escSecondaryColor}'/><circle cx='150' cy='70' r='3.5' fill='${escTextColor}'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-top-right', topRightSvg);
+
+            // Bottom-Left corner SVG composition
+            const bottomLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><circle cx='60' cy='90' r='35' fill='black' opacity='0.85'/><circle cx='50' cy='80' r='35' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><polygon points='80,30 130,70 90,110' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 10 50 L 30 30 L 50 70 L 70 30 L 90 70' fill='none' stroke='${escTextColor}' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><path d='M 10 60 L 30 40 L 50 80 L 70 40 L 90 80' fill='none' stroke='${escAccentColor}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.75'/><circle cx='130' cy='130' r='14' fill='none' stroke='${escTextColor}' stroke-width='4'/><g stroke='${escTextColor}' stroke-width='3'><line x1='120' y1='25' x2='130' y2='25'/><line x1='125' y1='20' x2='125' y2='30'/></g><g stroke='${escTextColor}' stroke-width='3'><line x1='20' y1='130' x2='30' y2='130'/><line x1='25' y1='125' x2='25' y2='135'/></g></svg>")`;
+            this.root.style.setProperty('--memphis-sway-bottom-left', bottomLeftSvg);
+
+            // Bottom-Right corner SVG composition
+            const bottomRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><circle cx='105' cy='85' r='30' fill='none' stroke='black' stroke-width='16' opacity='0.85'/><circle cx='95' cy='75' r='30' fill='none' stroke='${escSecondaryColor}' stroke-width='16'/><polygon points='30,30 70,10 50,50' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='3' stroke-linejoin='round'/><g fill='none' stroke='${escAccentColor}' stroke-width='4'><line x1='20' y1='60' x2='60' y2='20'/><line x1='30' y1='70' x2='70' y2='30'/><line x1='40' y1='80' x2='80' y2='40'/><line x1='50' y1='90' x2='90' y2='50'/></g><path d='M 30 110 Q 60 80, 90 120 T 150 100' fill='none' stroke='${escTextColor}' stroke-width='5' stroke-linecap='round'/><circle cx='120' cy='30' r='6' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='2'/><g stroke='${escTextColor}' stroke-width='2.5'><line x1='75' y1='115' x2='85' y2='115'/><line x1='80' y1='110' x2='80' y2='120'/></g></svg>")`;
+            this.root.style.setProperty('--memphis-sway-bottom-right', bottomRightSvg);
+
+            // Side layers SVG compositions
+            const leftSideSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><rect x='35' y='25' width='30' height='90' rx='15' fill='black' opacity='0.85'/><rect x='25' y='15' width='30' height='90' rx='15' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 70 30 L 70 80 M 80 30 L 80 80 M 90 30 L 90 80 M 60 40 L 100 40 M 60 50 L 100 50 M 60 60 L 100 60 M 60 70 L 100 70' stroke='${escTextColor}' stroke-width='1.5' opacity='0.6'/><path d='M 20 120 Q 45 100, 70 120 T 120 120' fill='none' stroke='${escSecondaryColor}' stroke-width='5' stroke-linecap='round'/><circle cx='110' cy='30' r='12' fill='none' stroke='${escTextColor}' stroke-width='3'/><circle cx='110' cy='70' r='4' fill='${escTextColor}'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-left-side', leftSideSvg);
+
+            const rightSideSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><polygon points='50,30 110,10 90,90 30,70' fill='black' opacity='0.85'/><polygon points='40,20 100,0 80,80 20,60' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4' stroke-linejoin='round'/><circle cx='110' cy='110' r='20' fill='none' stroke='${escAccentColor}' stroke-width='6'/><g fill='none' stroke='${escTextColor}' stroke-width='3'><line x1='20' y1='100' x2='60' y2='100'/><line x1='20' y1='110' x2='60' y2='110'/><line x1='20' y1='120' x2='60' y2='120'/></g><g stroke='${escTextColor}' stroke-width='2.5'><line x1='125' y1='45' x2='135' y2='45'/><line x1='130' y1='40' x2='130' y2='50'/></g><circle cx='130' cy='75' r='5' fill='${escTextColor}'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-right-side', rightSideSvg);
         }
     }
 

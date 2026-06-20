@@ -107,6 +107,8 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
 *   **[Disco Fever][demo-disco-fever]:** Funky retro dance experience with a spinning disco ball, pulsing spotlights, a dance floor grid, and drifting light reflections.
 *   **[Art Deco Gala][demo-art-deco-gala]:** Glamorous and geometric Roaring 20s style with a repeating gold Art Deco pattern, swaying crystal chandelier, corner champagne flutes, and a mix of gold dust, sparkles, and rising champagne bubble particles.
+*   *Atomic Mid-Century][demo-atomic-mid-century]:** A retro 1950s-1960s style with atomic shapes, geometric patterns, and bold colors.
+*   **[Memphis Pop][demo-memphis-pop]:** **(New)** Vibrant and bold 1980s-1990s Memphis design with geometric shapes, diagonal stripes, and high-contrast colors. A playful and energetic theme perfect for creative events.
 
 ### 🌌 Specialty Pack
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
@@ -136,7 +138,8 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.avif)][demo-retro-wave] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.avif)][demo-disco-fever] |
-| **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.avif)][demo-art-deco-gala] | |
+| **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.avif)][demo-art-deco-gala] | **Atomic Mid-Century** – *Mid-Century Modern Style* <br> [![Atomic Mid-Century](.github/assets/poster-mid-century.avif)][demo-atomic-mid-century] |
+| **Memphis Pop** – *Vibrant 80s-90s Style* <br> [![Memphis Pop](.github/assets/poster-memphis-pop.avif)][demo-memphis-pop] | | 
 
 ### 🌌 Specialty Pack
 | | |
@@ -358,3 +361,5 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-cinema]: https://motionposter.ryanmarch.me/?theme=cinema
 [demo-halloween]: https://motionposter.ryanmarch.me/?theme=halloween
 [demo-space-odyssey]: https://motionposter.ryanmarch.me/?theme=space-odyssey
+[demo-atomic-mid-century]: https://motionposter.ryanmarch.me/?theme=atomic-mid-century
+[demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop

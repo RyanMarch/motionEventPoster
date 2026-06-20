@@ -256,6 +256,18 @@ window.ParticleEngine = class ParticleEngine {
                 const { h: sH, s: sS, l: sL } = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
                 color = secondary;
                 gradient = window.PosterUtils.hslToHex(sH, sS, sL * 0.7);
+            } else if (theme.id === 'memphis-pop') {
+                const luminance = (0.2126 * pRgb.r + 0.7152 * pRgb.g + 0.0722 * pRgb.b) / 255;
+                const isLight = luminance > 0.5;
+                if (p.type === 'memphis-zigzag') {
+                    color = isLight ? '#111111' : '#FCEEB5';
+                    gradient = isLight ? '#333333' : '#D2C38C';
+                } else if (p.type === 'memphis-dot') {
+                    color = isLight ? '#111111' : '#ffffff';
+                    gradient = isLight ? '#000000' : '#e0e0e0';
+                } else {
+                    return;
+                }
             } else if (theme.id === 'digital-grid' && p.accentShift !== undefined) {
                 const h = (aH + p.accentShift) % 360;
                 const s = Math.max(aS, 0.8);
