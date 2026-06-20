@@ -192,6 +192,7 @@ describe('ParticleEngine.updatePhysics', () => {
         // Force a non-shooting-star, non-reflection type
         petal.type = 'petal';
         petal.horizontalSpeed = 0;
+        petal.y = 10;
         const initialY = petal.y;
 
         engine.updatePhysics(1.0); // 1 second dt
