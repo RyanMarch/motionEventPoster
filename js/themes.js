@@ -1079,21 +1079,26 @@
 
         'atomic-mid-century': defineTheme({
             id: 'atomic-mid-century',
-            name: 'Atomic Mid-Century*',
+            name: 'Atomic Mid-Century',
             pack: 'decades',
-            icon: '🚀',
-            primary: '#F3E5AB',
-            accent: '#FF7E67',
-            secondary: '#00A896',
-            swatchName: 'Vanilla Cream',
+            icon: '✨',
+            primary: '#C4ECE7',
+            accent: '#0D2D31',
+            secondary: '#FF8A75',
+            swatchName: 'Light Teal',
             colors: {
                 text: '#2A1B14',
                 darkText: '#F3E5AB'
             },
             swatches: [
-                { hex: '#00A896', name: 'Atomic Teal', accent: '#F3E5AB', secondary: '#FF7E67' },
-                { hex: '#E29578', name: 'Retro Coral', accent: '#006D77', secondary: '#FFDDD2' },
-                { hex: '#83C5BE', name: 'Mint Diner', accent: '#E29578', secondary: '#EDF6F9' }
+                { hex: '#0D2D31', name: 'Deep Teal', accent: '#F3E5AB', secondary: '#FFA085' },
+                { hex: '#f8f0cfff', name: 'Vanilla Cream', accent: '#004D40', secondary: '#FF7E67' },
+                { hex: '#E29578', name: 'Retro Coral', accent: '#0D2D31', secondary: '#FFDDD2' },
+                // { hex: '#83C5BE', name: 'Mint Diner', accent: '#7C2D12', secondary: '#EDF6F9' },
+                { hex: '#E2B13C', name: 'Harvest Gold', accent: '#1A2F2B', secondary: '#E76D53' },
+                { hex: '#A3B18A', name: 'Avocado Sage', accent: '#1B2A11', secondary: '#E3A857' },
+                { hex: '#2B2E33', name: 'Retro Charcoal', accent: '#D4E157', secondary: '#FF7E67' },
+                { hex: '#F28E2B', name: 'Tropicana Orange', accent: '#0B1D3A', secondary: '#FFF0C2' }
             ],
             fonts: {
                 primary: "'Jost', sans-serif",
@@ -1102,8 +1107,9 @@
             },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#FF7E67', gradient: '#E25B45', type: 'star', weight: 50, speedMultiplier: 0.4, sizeMultiplier: 1.2, massMultiplier: 0.8 },
-                { color: '#00A896', gradient: '#007A6D', type: 'star', weight: 30, speedMultiplier: 0.5, sizeMultiplier: 0.9, massMultiplier: 0.7 }
+                { color: '#FFA085', gradient: '#E2836B', type: 'atomic-starburst-8', weight: 35, speedMultiplier: 0.35, sizeMultiplier: 1.2, massMultiplier: 0.8 },
+                { color: '#0D2D31', gradient: '#071F22', type: 'atomic-boomerang', weight: 35, speedMultiplier: 0.3, sizeMultiplier: 1.4, massMultiplier: 0.9 },
+                { color: '#F3E5AB', gradient: '#D2C38C', type: 'atomic-starburst-4', weight: 30, speedMultiplier: 0.4, sizeMultiplier: 0.8, massMultiplier: 0.7 }
             ],
             frameClass: 'theme-frame--atomic',
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 25, fallSpeed: 0.4, maxPetals: 20, windiness: 8, hostMaxWidth: 120, backdropOpacity: 80 },
