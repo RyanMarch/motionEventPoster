@@ -340,19 +340,16 @@ body.theme-00-glass .event-footer {
 }
 
 body.theme-00-glass .event-title {
-    font-family: var(--font-display) !important;
-    /* Righteous */
-    font-weight: normal;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+    font-weight: 900 !important;
     font-size: 5rem;
-    letter-spacing: 1px;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
-    /* Chrome/silver gradient fill style */
-    background: linear-gradient(180deg, #ffffff 0%, #d4f2ea 42%, var(--color-accent) 46%, #ffffff 50%, #ffffff 62%, var(--color-accent) 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    color: var(--color-accent) !important;
-    text-shadow: none !important;
-    /* Overrides default shadow to fix WebKit text clip smudge */
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    color: var(--color-dark-text) !important;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8), 0 0 1px rgba(255, 255, 255, 0.9) !important;
     margin-top: -8px;
     margin-bottom: 25px;
 }
@@ -598,4 +595,22 @@ body.theme-00-glass .main-content {
         scale: 1.12;
         margin-bottom: 2vh;
     }
+}
+
+/* ============================================================
+   10. Dark Background Text Contrast Adjustments
+   ============================================================ */
+body.theme-00-glass:not(.is-light-bg) .logo-text-custom,
+body.theme-00-glass:not(.is-light-bg) .hosts-title,
+body.theme-00-glass:not(.is-light-bg) .hosts-list span,
+body.theme-00-glass:not(.is-light-bg) .event-top-label,
+body.theme-00-glass:not(.is-light-bg) .event-subtitle,
+body.theme-00-glass:not(.is-light-bg) .event-date {
+    color: var(--color-text) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.theme-00-glass:not(.is-light-bg) .event-title {
+    color: var(--color-text) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.9) !important;
 }

@@ -1171,7 +1171,7 @@
             id: '00-glass',
             name: '00s Glass',
             pack: 'decades',
-            icon: '💻',
+            icon: '🪟',
             primary: '#E0F7FA',
             accent: '#00B4D8',
             secondary: '#81C784',
@@ -1184,11 +1184,23 @@
                 { hex: '#E8F5E9', name: 'Glossy Grass', accent: '#4CAF50', secondary: '#00B4D8' },
                 { hex: '#F3E5F5', name: 'Cyber Grape', accent: '#9C27B0', secondary: '#03A9F4' },
                 { hex: '#E0F2F1', name: 'Teal Aurora', accent: '#00897B', secondary: '#4DB6AC' },
-                { hex: '#FFF9C4', name: 'Sunlight Glaze', accent: '#FBC02D', secondary: '#81C784' }
+                { hex: '#FFF9C4', name: 'Sunlight Glaze', accent: '#FBC02D', secondary: '#81C784' },
+                { hex: '#E1F5FE', name: 'Liquid Blue', accent: '#0288D1', secondary: '#26A69A' },
+                { hex: '#FCE4EC', name: 'Plum Frost', accent: '#EC407A', secondary: '#AB47BC' },
+                { hex: '#F1F8E9', name: 'Neon Mint', accent: '#7CB342', secondary: '#00E5FF' },
+                { hex: '#ECEFF1', name: 'Silver Aurora', accent: '#78909C', secondary: '#4FC3F7' },
+                { hex: '#202020', name: 'Energy Noir', accent: '#FF5722', secondary: '#424242' },
+                { hex: '#121212', name: 'Obsidian Teal', accent: '#00E5FF', secondary: '#00E676' },
+                { hex: '#1A1A24', name: 'Carbon Violet', accent: '#FF007F', secondary: '#2979FF' },
+                { hex: '#0F1A14', name: 'Midnight Forest', accent: '#00FF66', secondary: '#4DB6AC' },
+                { hex: '#0A0D1A', name: 'Deep Nebula', accent: '#E040FB', secondary: '#00B4D8' },
+                { hex: '#18181A', name: 'Sunset Charcoal', accent: '#FF3D00', secondary: '#FFC107' },
+                { hex: '#111625', name: 'Cyber Slate', accent: '#00E5FF', secondary: '#FF007F' },
+                { hex: '#180B20', name: 'Amethyst Glow', accent: '#D500F9', secondary: '#00E5FF' }
             ],
             fonts: {
                 primary: "'Nunito', sans-serif",
-                display: "'Righteous', sans-serif",
+                display: "'Segoe UI', system-ui, -apple-system, sans-serif",
                 heading: "'Varela Round', sans-serif"
             },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
@@ -1199,7 +1211,7 @@
             ],
             frameClass: 'theme-frame--aero',
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 20, fallSpeed: 0.3, maxPetals: 40, windiness: 5, hostMaxWidth: 125, backdropOpacity: 60 },
-            defaults: { hostsTitle: "Our Hosts", eventTitle: "Welcome to 2000", eventSubtitle: "The Wow Starts Now", eventTopLabel: "Clear. Comfortable. Pure." },
+            defaults: { hostsTitle: "Our Hosts", eventTitle: "A NEW HORIZON", eventSubtitle: "The Wow Starts Now", eventTopLabel: "CLEAR. CONFIDENT. CONNECTED." },
             uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide glossy frame', gustStrength: 'Frame & Shine', frameName: 'Aqua Glass' }
         }),
 
