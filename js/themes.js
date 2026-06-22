@@ -1399,29 +1399,36 @@
             uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
         }),
 
-        'zen-garden': defineTheme({
-            id: 'zen-garden',
-            name: 'Zen Garden*',
+        'wellness-spa': defineTheme({
+            id: 'wellness-spa',
+            name: 'Wellness Spa',
             pack: 'specialty',
-            icon: '🪴',
+            icon: '🧘',
             primary: '#EBE5D9',
-            accent: '#7A916F',
-            secondary: '#D4A373',
-            swatchName: 'Sand & Sage',
-            colors: { text: '#2F3E2C', darkText: '#EBE5D9' },
+            accent: '#6B7F72',
+            secondary: '#C3A995',
+            swatchName: 'Eucalyptus Sand',
+            colors: { text: '#FAF8F5', darkText: '#2F3E2C' },
             swatches: [
-                { hex: '#F4F1DE', name: 'Pale Bamboo', accent: '#81B29A', secondary: '#E07A5F' },
-                { hex: '#CCD5AE', name: 'Matcha', accent: '#FAEDCD', secondary: '#D4A373' }
+                { hex: '#EBE5D9', name: 'Eucalyptus Sand', accent: '#6B7F72', secondary: '#C3A995' },
+                { hex: '#F2EEF5', name: 'Lavender Steam', accent: '#7D6B7F', secondary: '#B5A9C3' },
+                { hex: '#EFECE8', name: 'Mineral Spring', accent: '#5A6766', secondary: '#A89F95' },
+                { hex: '#F8F6F0', name: 'Chamomile Calm', accent: '#8E9A86', secondary: '#D1C7BD' },
+                { hex: '#FDFBF7', name: 'Rosewater Mist', accent: '#C8A2C8', secondary: '#E6D3E6' },
+                { hex: '#1A2222', name: 'Deep Oasis', accent: '#E2ECE9', secondary: '#8BA39E' },
+                { hex: '#1D1726', name: 'Midnight Steam', accent: '#E4DFEB', secondary: '#A391B5' }
             ],
-            fonts: { primary: "'Lora', serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
+            fonts: { primary: "'Jost', sans-serif", display: "'Playfair Display', 'Lora', serif", heading: "'Playfair Display', 'Lora', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#F2D7D5', gradient: '#E6B0AA', type: 'petal', weight: 100, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
+                { color: '#ffffff', gradient: '#F0F4F1', type: 'spa-mist', weight: 65, speedMultiplier: -0.3, sizeMultiplier: 1.6, massMultiplier: 0.4, isWhite: true },
+                { color: '#ffffff', gradient: '#EAF0EC', type: 'spa-steam', weight: 20, speedMultiplier: -0.4, sizeMultiplier: 1.0, massMultiplier: 0.5, isWhite: true },
+                { color: '#E8D3C5', gradient: '#D4BFA7', type: 'spa-glow', weight: 15, speedMultiplier: -0.2, sizeMultiplier: 0.6, massMultiplier: 0.3 }
             ],
-            frameClass: 'theme-frame--zen',
-            overrides: { insetV: 60, insetH: 80, hostTextSize: 1.1, gustStrength: 15, fallSpeed: 0.25, maxPetals: 15, windiness: 5, hostMaxWidth: 120, backdropOpacity: 40 },
-            defaults: { hostsTitle: "Guides", eventTitle: "Wellness Retreat", eventSubtitle: "Mindfulness Session", eventTopLabel: "Peaceful" },
-            uiLabels: { particlesPlural: 'Petals', particlesSingular: 'Petal', borderToggle: 'Hide bamboo frame', gustStrength: 'Gentle Breeze', frameName: 'Bamboo' }
+            frameClass: 'theme-frame--spa',
+            overrides: { insetV: 60, insetH: 80, hostTextSize: 1.1, gustStrength: 10, fallSpeed: 0.2, maxPetals: 15, windiness: 2, hostMaxWidth: 120, backdropOpacity: 40 },
+            defaults: { hostsTitle: "Practitioners", eventTitle: "Wellness Retreat", eventSubtitle: "Restore & Renew", eventTopLabel: "Serene" },
+            uiLabels: { particlesPlural: 'Mist & Glow', particlesSingular: 'Mote', borderToggle: 'Hide spa frame', gustStrength: 'Steam Flow', frameName: 'Linen Frame' }
         }),
 
         'deep-blue': defineTheme({
