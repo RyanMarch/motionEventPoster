@@ -39,7 +39,8 @@ window.ParticleEngine = class ParticleEngine {
         }
         const size = (Math.random() * 12 + 10) * (type.sizeMultiplier || 1.0);
         element.style.width = `${size}px`;
-        element.style.height = `${size * (type.type === 'star' || type.type === 'dust' ? 1.0 : 1.25)}px`;
+        const isBubble = type.type && type.type.includes('bubble');
+        element.style.height = `${size * (type.type === 'star' || type.type === 'dust' || isBubble ? 1.0 : 1.25)}px`;
         
         let color = type.color;
         let gradient = type.gradient;
@@ -105,8 +106,8 @@ window.ParticleEngine = class ParticleEngine {
             y: Math.random() * 140 - 20,
             mass: (Math.random() * 0.8 + 0.4) * (type.massMultiplier !== undefined ? type.massMultiplier : 1.0),
             aero: Math.random() * 0.5 + 0.5,
-            rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (Math.random() * 360),
-            rotSpeed: (type.type && type.type.includes('reflection')) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
+            rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (type.type && type.type.includes('bubble')) ? 0 : (Math.random() * 360),
+            rotSpeed: (type.type && (type.type.includes('reflection') || type.type.includes('bubble'))) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
             baseFallSpeed: (Math.random() * 15 + 5) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0),
             naturalDrift: (Math.random() - 0.5) * 5 * (type.driftMultiplier !== undefined ? type.driftMultiplier : 1.0),
             horizontalSpeed: (type.type && type.type.includes('reflection')) ? -(Math.random() * 6 + 3) : 0,
@@ -190,8 +191,8 @@ window.ParticleEngine = class ParticleEngine {
                 p.x += (windEffect + p.naturalDrift) * dt;
                 p.y += gravityEffect * dt;
                 
-                // Skip rotation calculations for circular particles (stars and dust)
-                if (p.type !== 'space-star' && p.type !== 'space-dust-accent' && p.type !== 'space-dust-secondary' && p.type !== 'dust') {
+                // Skip rotation calculations for circular particles (stars, dust, and bubbles)
+                if (p.type !== 'space-star' && p.type !== 'space-dust-accent' && p.type !== 'space-dust-secondary' && p.type !== 'dust' && !(p.type && p.type.includes('bubble'))) {
                     const speedFactor = Math.abs(windEffect) / 10 + 1;
                     p.rotation += p.rotSpeed * this.state.tumbleSpeed * speedFactor * dt;
                 }

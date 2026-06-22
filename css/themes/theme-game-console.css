@@ -236,14 +236,6 @@ body.theme-game-console .hosts-list span {
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, text-shadow 0.2s ease;
 }
 
-/* body.theme-game-console .hosts-list span:hover {
-    background: var(--color-accent);
-    color: #000 !important;
-    text-shadow: none !important;
-    transform: scale(1.05);
-    border-left-color: var(--color-accent);
-} */
-
 /* Light background contrast overrides */
 body.theme-game-console.is-light-bg .logo-text-custom {
     color: #000 !important;
