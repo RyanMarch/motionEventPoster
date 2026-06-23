@@ -272,12 +272,14 @@ window.EventPoster = class EventPoster {
             'sway-top-right', 'sway-top-left', 'sway-bottom-left', 'sway-bottom-right',
             'sway-left-side', 'sway-right-side', 'sway-top-1', 'sway-top-2', 'sway-top-3',
             'sway-bottom-3', 'sway-bottom-4', 'sway-bottom-5', 'sway-bottom-6',
-            'sway-bottom-7', 'sway-bottom-8', 'sway-bottom-9', 'sway-bottom-10'
+            'sway-bottom-7', 'sway-bottom-8', 'sway-bottom-9', 'sway-bottom-10',
+            'sway-bottom-11', 'sway-bottom-12', 'sway-bottom-13', 'sway-bottom-14'
         ];
+        const wrapper = document.querySelector('.content-wrapper') || this.body;
         layers.forEach(cls => {
             const div = document.createElement('div');
             div.className = `sway-layer ${cls}`;
-            this.body.appendChild(div);
+            wrapper.appendChild(div);
         });
     }
 
