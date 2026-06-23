@@ -116,13 +116,12 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 *   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
 *   **[Bistro Lounge][demo-bistro-louge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
-<!-- *   **[Pirate Adventure][demo-pirate-adventure]:** A swashbuckling pirate adventure theme with weathered wood, nautical elements, and adventurous vibes. -->
-<!-- *   **[Medieval Fantasy][demo-medieval-fantasy]:** A medieval fantasy theme with old-world charm, rustic elements, and a touch of magic. -->
 *   **[Deep Blue Sea][demo-deep-blue]:** A serene aquarium theme with gentle underwater light rays and tranquil ocean colors.
 *   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
 
 ### 🎃 Holiday Pack
 *   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
+*   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
 
 ## Theme Screenshots
 
@@ -157,7 +156,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🎃 Holiday Pack
 | | |
 | :---: | :---: |
-| **Halloween** – *Spooky & Atmospheric* <br> [![Halloween](.github/assets/poster-halloween.avif)][demo-halloween] | |
+| **Halloween** – *Spooky & Atmospheric* <br> [![Halloween](.github/assets/poster-halloween.avif)][demo-halloween] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -374,3 +373,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
 [demo-deep-blue]: https://motionposter.ryanmarch.me/?theme=deep-blue
 [demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
+[demo-autumn-harvest]: https://motionposter.ryanmarch.me/?theme=autumn-harvest

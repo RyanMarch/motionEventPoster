@@ -1596,7 +1596,7 @@
 
         'autumn-harvest': defineTheme({
             id: 'autumn-harvest',
-            name: 'Autumn Harvest*',
+            name: 'Autumn Harvest',
             pack: 'holiday',
             icon: '🍂',
             primary: '#3E1C00',
@@ -1605,18 +1605,27 @@
             swatchName: 'Burnt Maple',
             colors: { text: '#FDF0D5', darkText: '#2B1400' },
             swatches: [
-                { hex: '#2C3A20', name: 'Olive Orchard', accent: '#D2691E', secondary: '#DAA520' }
+                { hex: '#3D0C11', name: 'Crimson Fall', accent: '#C0392B', secondary: '#F39C12' },
+                { hex: '#2D0F2C', name: 'Velvet Plum', accent: '#D35400', secondary: '#F4D03F' },
+                { hex: '#2C3A20', name: 'Olive Orchard', accent: '#D2691E', secondary: '#DAA520' },
+                { hex: '#5C2016', name: 'Cider Press', accent: '#D35400', secondary: '#F39C12' },
+                { hex: '#1E2522', name: 'Forest Moss', accent: '#8FA382', secondary: '#D4A373' },
+                { hex: '#1E1F38', name: 'October Twilight', accent: '#D05A3F', secondary: '#F2C14E' },
+                { hex: '#F4EADA', name: 'Misty Trail', accent: '#8C6239', secondary: '#C69C6D' }
             ],
             fonts: { primary: "'PT Sans', sans-serif", display: "'Rokkitt', serif", heading: "'Rokkitt', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#FF7F00', gradient: '#CC5500', type: 'leaf', weight: 50, speedMultiplier: 0.35, sizeMultiplier: 1.2, massMultiplier: 0.6 },
-                { color: '#FFC82A', gradient: '#DAA520', type: 'leaf', weight: 50, speedMultiplier: 0.3, sizeMultiplier: 1.1, massMultiplier: 0.5 }
+                { useThemeAccent: true, type: 'leaf-maple', weight: 40, speedMultiplier: 0.3, sizeMultiplier: 1.3, massMultiplier: 0.6 },
+                { useThemeSecondary: true, type: 'leaf-oak', weight: 40, speedMultiplier: 0.35, sizeMultiplier: 1.4, massMultiplier: 0.7 },
+                { color: '#c0392b', gradient: '#922b21', type: 'leaf-elm', weight: 20, speedMultiplier: 0.32, sizeMultiplier: 1.1, massMultiplier: 0.55 },
+                { color: '#ff9f1c', gradient: '#ff5500', type: 'autumn-ember', weight: 25, speedMultiplier: -0.22, sizeMultiplier: 0.5, massMultiplier: 0.35, driftMultiplier: 1.5 }
             ],
             frameClass: 'theme-frame--autumn',
-            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 30, fallSpeed: 0.35, maxPetals: 25, windiness: 12, hostMaxWidth: 110, backdropOpacity: 60 },
-            defaults: { hostsTitle: "Farm Owners", eventTitle: "Fall Festival", eventSubtitle: "Pumpkin Patch", eventTopLabel: "Annual" },
-            uiLabels: { particlesPlural: 'Leaves', particlesSingular: 'Leaf', borderToggle: 'Hide barn wood', gustStrength: 'Autumn Wind', frameName: 'Rustic Wood' }
+            flags: { syncParticleColors: true },
+            overrides: { insetV: 60, insetH: 91, hostTextSize: 1.15, gustStrength: 25, fallSpeed: 0.32, maxPetals: 30, windiness: 8, hostMaxWidth: 85, backdropOpacity: 65 },
+            defaults: { hostsTitle: "Thanks to our hosts", eventTitle: "Autumn Harvest", eventSubtitle: "Cozy Thanksgiving Soiree", eventTopLabel: "Celebrate the season" },
+            uiLabels: { particlesPlural: 'Leaves & Embers', particlesSingular: 'Leaf', borderToggle: 'Hide frame and trees', gustStrength: 'Autumn Wind', frameName: 'Rustic Wood' }
         }),
 
         'valentines-romance': defineTheme({
