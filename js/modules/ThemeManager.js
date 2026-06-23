@@ -372,6 +372,10 @@ window.ThemeManager = class ThemeManager {
         if (theme.id === 'steampunk-gears') {
             this.syncSteampunkGears();
         }
+
+        if (theme.id === 'deep-blue') {
+            this.syncDeepBlue();
+        }
     }
 
     syncSteampunkGears() {
@@ -412,6 +416,59 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--steampunk-sway-top-3', gearIron);
         this.root.style.setProperty('--steampunk-sway-left-side', gearCopper);
         this.root.style.setProperty('--steampunk-sway-right-side', gearIron);
+    }
+
+    syncDeepBlue() {
+        const theme = this.poster.theme;
+        const primary = this.state.bgColor || theme.colors.primary;
+        const accent = this.state.accentColor || theme.colors.accent;
+        const secondary = this.state.secondaryColor || theme.colors.secondary || '#FF9F1C';
+
+        const pRgb = window.PosterUtils.hexToRgb(primary);
+        const aRgb = window.PosterUtils.hexToRgb(accent);
+
+        if (!pRgb || !aRgb) return;
+
+        const pVal = window.PosterUtils.rgbToHsl(pRgb.r, pRgb.g, pRgb.b);
+        const aVal = window.PosterUtils.rgbToHsl(aRgb.r, aRgb.g, aRgb.b);
+
+        // Top of the water is lighter and shifted slightly toward the accent color
+        let topHue = pVal.h;
+        if (Math.abs(aVal.h - pVal.h) < 180) {
+            topHue = pVal.h + (aVal.h - pVal.h) * 0.35;
+        } else {
+            const adjustedValH = aVal.h > pVal.h ? aVal.h - 360 : aVal.h + 360;
+            topHue = (pVal.h + (adjustedValH - pVal.h) * 0.35 + 360) % 360;
+        }
+
+        // Keep light level high enough for dynamic lighting caustics visibility
+        const topL = Math.min(Math.max(pVal.l * 3.5, 0.18), 0.45);
+        const topS = Math.min(pVal.s * 1.1, 1.0);
+        const topColor = window.PosterUtils.hslToHex(topHue, topS, topL);
+
+        const midL = Math.min(Math.max(pVal.l * 2.0, 0.12), 0.25);
+        const midS = pVal.s;
+        const midColor = window.PosterUtils.hslToHex(pVal.h, midS, midL);
+
+        const bottomColor = primary;
+
+        this.root.style.setProperty('--deep-blue-bg-top', topColor);
+        this.root.style.setProperty('--deep-blue-bg-mid', midColor);
+        this.root.style.setProperty('--deep-blue-bg-bottom', bottomColor);
+
+        // Calculate Seaweed colors that coordinate perfectly with the scene and remain vibrant/alive
+        const kelpHue = aVal.h;
+        const kelpSat = 0.90; // Force high saturation to keep it vibrant and lush
+
+        const kelp1 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.13));
+        const kelp2 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.20));
+        const kelp3 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.27));
+
+        const kelpLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'><path d='M20,400 Q40,250 15,130 T45,10 Q50,15 25,135 T50,255 T30,400 Z' fill='${kelp1}' opacity='0.75'/><path d='M70,400 Q50,280 85,160 T60,20 Q65,22 90,162 T60,282 T80,400 Z' fill='${kelp2}' opacity='0.65'/><path d='M120,400 Q100,320 115,200 T95,40 Q100,42 125,202 T110,322 T130,400 Z' fill='${kelp3}' opacity='0.8'/></svg>")`;
+        const kelpRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'><path d='M30,400 Q50,300 25,180 T60,30 Q65,32 35,182 T60,302 T40,400 Z' fill='${kelp3}' opacity='0.75'/><path d='M80,400 Q100,260 75,140 T105,10 Q110,12 85,142 T110,262 T90,400 Z' fill='${kelp2}' opacity='0.7'/><path d='M120,400 Q90,300 110,180 T80,50 Q85,52 120,182 T100,302 T130,400 Z' fill='${kelp1}' opacity='0.85'/></svg>")`;
+
+        this.root.style.setProperty('--deep-blue-kelp-left', kelpLeftSvg);
+        this.root.style.setProperty('--deep-blue-kelp-right', kelpRightSvg);
     }
 
     initSwatches() {

@@ -118,6 +118,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Bistro Lounge][demo-bistro-louge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
 <!-- *   **[Pirate Adventure][demo-pirate-adventure]:** A swashbuckling pirate adventure theme with weathered wood, nautical elements, and adventurous vibes. -->
 <!-- *   **[Medieval Fantasy][demo-medieval-fantasy]:** A medieval fantasy theme with old-world charm, rustic elements, and a touch of magic. -->
+*   **[Deep Blue Sea][demo-deep-blue]:** A serene aquarium theme with gentle underwater light rays and tranquil ocean colors.
 *   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
 
 ### 🎃 Holiday Pack
@@ -151,7 +152,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | **Game Console** – *Video Gaming Fun* <br> [![Game Console](.github/assets/poster-game-console.avif)][demo-game-console] |
 | **Space Odyssey** – *Futuristic Deep Space* <br> [![Space Odyssey](.github/assets/poster-space-odyssey.avif)][demo-space-odyssey] | **Bistro Lounge** – *Cozy Cafe Atmosphere* <br> [![Bistro Lounge](.github/assets/poster-bistro-lounge.avif)][demo-bistro-lounge] |
-| **Steampunk Gears** – *Victorian Industrial* <br> [![Steampunk Gears](.github/assets/poster-steampunk-gears.avif)][demo-steampunk-gears] | |
+| **Steampunk Gears** – *Victorian Industrial* <br> [![Steampunk Gears](.github/assets/poster-steampunk-gears.avif)][demo-steampunk-gears] | **Deep Blue Sea** – *Calm Aquarium* <br> [![Deep Blue Sea](.github/assets/poster-deep-blue.avif)][demo-deep-blue] |
 
 ### 🎃 Holiday Pack
 | | |
@@ -371,4 +372,5 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
 [demo-2000s-glass]: https://motionposter.ryanmarch.me/?theme=2000s-glass
 [demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
+[demo-deep-blue]: https://motionposter.ryanmarch.me/?theme=deep-blue
 [demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
