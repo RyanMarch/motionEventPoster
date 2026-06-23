@@ -1424,6 +1424,43 @@
             uiLabels: { particlesPlural: 'Petals', particlesSingular: 'Petal', borderToggle: 'Hide bamboo frame', gustStrength: 'Gentle Breeze', frameName: 'Bamboo' }
         }),
 
+        'bistro-lounge': defineTheme({
+            id: 'bistro-lounge',
+            name: 'Bistro Lounge',
+            pack: 'specialty',
+            icon: '☕',
+            primary: '#2B1B17',
+            accent: '#D4A373',
+            secondary: '#FAEDCD',
+            swatchName: 'Espresso',
+            colors: { text: '#FAEDCD', darkText: '#2B1B17' },
+            swatches: [
+                { hex: '#4A3B32', name: 'Latte Macchiato', accent: '#E3D5CA', secondary: '#D5BDAF' },
+                { hex: '#1C1310', name: 'Midnight Brew', accent: '#E28743', secondary: '#EEE3D3' },
+                { hex: '#3C2F2F', name: 'Irish Coffee', accent: '#8DBF88', secondary: '#E5F4E3' },
+                { hex: '#2F3E32', name: 'Matcha Latte', accent: '#C8E6C9', secondary: '#E8F5E9' },
+                { hex: '#3E2723', name: 'Affogato', accent: '#FDFBF7', secondary: '#EFEBE9' },
+                { hex: '#4E3629', name: 'Cortado', accent: '#D7CCC8', secondary: '#F5F5F5' },
+                { hex: '#120A07', name: 'Black Coffee', accent: '#EADBC8', secondary: '#EFEBE9' },
+                { hex: '#161616', name: 'Black Leather', accent: '#D4AF37', secondary: '#F5F5F5' },
+                { hex: '#FDFBF7', name: 'Chai Latte', accent: '#B6703C', secondary: '#D5BDAF' },
+                { hex: '#F4F7F2', name: 'Matcha Green Tea', accent: '#4F7942', secondary: '#C5DCA0' },
+                { hex: '#FFF2F4', name: 'Strawberries & Cream', accent: '#C9184A', secondary: '#FFCCD5' },
+                { hex: '#F7F4EB', name: 'London Fog', accent: '#4A607A', secondary: '#C1C9D2' },
+                { hex: '#FFFDF0', name: 'Lemon Meringue', accent: '#C69B00', secondary: '#FFEBB3' }
+            ],
+            fonts: { primary: "'Cabin', sans-serif", display: "'Abril Fatface', serif", heading: "'Abril Fatface', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#FAEDCD', gradient: '#D4A373', type: 'bistro-steam', weight: 40, speedMultiplier: -0.22, sizeMultiplier: 2.2, massMultiplier: 0.35, isWhite: true },
+                { color: '#FAEDCD', gradient: '#D4A373', type: 'bistro-dust', weight: 60, speedMultiplier: -0.06, sizeMultiplier: 0.7, massMultiplier: 0.45, isWhite: true }
+            ],
+            frameClass: 'theme-frame--bistro',
+            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.1, maxPetals: 25, windiness: 3, hostMaxWidth: 110, backdropOpacity: 60 },
+            defaults: { hostsTitle: "Acoustic Acts", eventTitle: "Open Mic Night", eventSubtitle: "Poetry & Music", eventTopLabel: "Local" },
+            uiLabels: { particlesPlural: 'Steam & Bokeh', particlesSingular: 'Mote', borderToggle: 'Hide chalkboard', gustStrength: 'Draft', frameName: 'Café Frame' }
+        }),
+
         'deep-blue': defineTheme({
             id: 'deep-blue',
             name: 'Deep Blue*',
@@ -1447,30 +1484,6 @@
             overrides: { insetV: 55, insetH: 70, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.2, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 50 },
             defaults: { hostsTitle: "Marine Biologists", eventTitle: "Aquarium Gala", eventSubtitle: "Under the Sea", eventTopLabel: "Explore" },
             uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide light rays', gustStrength: 'Current', frameName: 'Water Rays' }
-        }),
-
-        'cafe-noir': defineTheme({
-            id: 'cafe-noir',
-            name: 'Café Noir*',
-            pack: 'specialty',
-            icon: '☕',
-            primary: '#2B1B17',
-            accent: '#D4A373',
-            secondary: '#FAEDCD',
-            swatchName: 'Espresso',
-            colors: { text: '#FAEDCD', darkText: '#2B1B17' },
-            swatches: [
-                { hex: '#4A3B32', name: 'Latte Macchiato', accent: '#E3D5CA', secondary: '#D5BDAF' }
-            ],
-            fonts: { primary: "'Cabin', sans-serif", display: "'Abril Fatface', serif", heading: "'Abril Fatface', serif" },
-            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
-            particles: [
-                { color: '#FAEDCD', gradient: '#D4A373', type: 'dust', weight: 100, speedMultiplier: -0.15, sizeMultiplier: 1.5, massMultiplier: 0.4, isWhite: true }
-            ],
-            frameClass: 'theme-frame--cafe',
-            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.1, maxPetals: 25, windiness: 3, hostMaxWidth: 110, backdropOpacity: 60 },
-            defaults: { hostsTitle: "Acoustic Acts", eventTitle: "Open Mic Night", eventSubtitle: "Poetry & Music", eventTopLabel: "Local" },
-            uiLabels: { particlesPlural: 'Steam & Bokeh', particlesSingular: 'Mote', borderToggle: 'Hide chalkboard', gustStrength: 'Draft', frameName: 'Café Frame' }
         }),
 
         'steampunk-gears': defineTheme({

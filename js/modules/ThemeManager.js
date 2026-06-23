@@ -29,7 +29,7 @@ window.ThemeManager = class ThemeManager {
         this.state.isApplyingTheme = true;
 
         const prevTheme = this.poster.theme;
-        
+
         // Handle contextual default labels
         if (prevTheme && prevTheme.defaults && theme.defaults) {
             const pt = this.state.posterText;
@@ -37,9 +37,9 @@ window.ThemeManager = class ThemeManager {
             if (pt.eventSubtitle === prevTheme.defaults.eventSubtitle) pt.eventSubtitle = theme.defaults.eventSubtitle;
             if (pt.eventTopLabel === prevTheme.defaults.eventTopLabel) pt.eventTopLabel = theme.defaults.eventTopLabel;
             // Handle current defaults and the legacy global default
-            if (pt.hostsTitle === prevTheme.defaults.hostsTitle || 
-                pt.hostsTitle === 'Thanks To Our Hosts' || 
-                pt.hostsTitle === 'Thanks to our hosts' || 
+            if (pt.hostsTitle === prevTheme.defaults.hostsTitle ||
+                pt.hostsTitle === 'Thanks To Our Hosts' ||
+                pt.hostsTitle === 'Thanks to our hosts' ||
                 pt.hostsTitle === 'Our Host Committee') {
                 pt.hostsTitle = theme.defaults.hostsTitle;
             }
@@ -56,12 +56,18 @@ window.ThemeManager = class ThemeManager {
             this.state.bgColor = null;
             this.state.secondaryColor = null;
         }
-        
+
         // Set the body classes, frames, and assets so the DOM styles are correctly loaded first
         Object.values(THEMES).forEach(t => {
             this.body.classList.remove(`theme-${t.id}`);
         });
         this.body.classList.add(`theme-${themeId}`);
+
+        if (themeId === 'bistro-lounge') {
+            this.setupbistroLights();
+        } else {
+            this.cleanupbistroLights();
+        }
 
         if (this.elements.themeFrame) {
             Object.values(THEMES).forEach(t => {
@@ -78,7 +84,7 @@ window.ThemeManager = class ThemeManager {
         Object.values(this.poster.layers).forEach(layer => layer.innerHTML = '');
         this.state.petals = [];
         this.poster.particleEngine?.adjustAmbientPetals();
-        
+
         this.syncUI(); // Handle expensive label/font updates once
         this.syncBackdrop(); // Handle color/opacity sync
 
@@ -161,7 +167,7 @@ window.ThemeManager = class ThemeManager {
 
         const pLabel = uiLabels.particlesPlural;
         const spLabel = uiLabels.particlesSingular;
-        
+
         const pTitle = document.getElementById('particles-section-title');
         if (pTitle) pTitle.textContent = pLabel;
 
@@ -179,7 +185,7 @@ window.ThemeManager = class ThemeManager {
 
         const fLabel = document.querySelector('label[for="slider-fall-speed"]') || document.querySelector('#slider-fall-speed')?.parentElement.querySelector('label');
         if (fLabel) fLabel.firstChild.textContent = `${uiLabels.fallSpeed || 'Fall Speed'} `;
-         const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
+        const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
         if (windinessControl) {
             windinessControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
         }
@@ -193,11 +199,11 @@ window.ThemeManager = class ThemeManager {
         if (backdropControl) {
             backdropControl.style.display = theme.id === 'memphis-pop' ? 'none' : '';
         }
-        
+
         // Update Theme Selector Trigger
         if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
         if (this.controls.themeSelectLabel) this.controls.themeSelectLabel.textContent = theme.name;
-        
+
         // Sync pause buttons in case labels changed
         if (this.poster.syncPauseStates) this.poster.syncPauseStates();
     }
@@ -212,7 +218,7 @@ window.ThemeManager = class ThemeManager {
 
         const rgb = window.PosterUtils.hexToRgb(color);
         if (!rgb) return;
-        
+
         const rgbStr = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
         const accentColor = this.state.accentColor || theme.colors.accent;
         const accentRgb = window.PosterUtils.hexToRgb(accentColor);
@@ -221,7 +227,7 @@ window.ThemeManager = class ThemeManager {
         const secondaryColor = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
         const secondaryRgb = window.PosterUtils.hexToRgb(secondaryColor);
         const secondaryRgbStr = secondaryRgb ? `${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}` : rgbStr;
-        
+
         // Update Core Colors
         this.root.style.setProperty('--color-primary', color);
         this.root.style.setProperty('--color-primary-rgb', rgbStr);
@@ -231,7 +237,7 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--color-secondary-rgb', secondaryRgbStr);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
-        
+
         const textRgb = window.PosterUtils.hexToRgb(theme.colors.text);
         const darkTextRgb = window.PosterUtils.hexToRgb(theme.colors.darkText || '#1a1c1e');
         if (textRgb) {
@@ -240,11 +246,11 @@ window.ThemeManager = class ThemeManager {
         if (darkTextRgb) {
             this.root.style.setProperty('--color-dark-text-rgb', `${darkTextRgb.r}, ${darkTextRgb.g}, ${darkTextRgb.b}`);
         }
-        
+
         // Dynamic Bunting color SVG generation
         const buntingSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 35' width='50' height='35'><path d='M0,0 Q25,8 50,0 L50,2 L25,32 L0,2 Z' fill='${encodeURIComponent(accentColor)}' opacity='0.85'/><path d='M0,0 Q25,8 50,0 L42,0 L25,24 L8,0 Z' fill='${encodeURIComponent(secondaryColor)}' opacity='0.95'/></svg>")`;
         this.root.style.setProperty('--bunting-image', buntingSvg);
-        
+
         // Stable theme-defined colors (non-swapped reference)
         const themePrimaryRgb = window.PosterUtils.hexToRgb(theme.colors.primary);
         const themeAccentRgb = window.PosterUtils.hexToRgb(theme.colors.accent);
@@ -268,9 +274,9 @@ window.ThemeManager = class ThemeManager {
         // Backdrop Overlays
         const target = this.root;
         target.style.setProperty('--backdrop-opacity', opacity.toString());
-        
+
         const overlayColorStr = theme.flags?.useAccentAsBackground ? accentRgbStr : rgbStr;
-        
+
         if (!theme.flags?.useAccentAsBackground) {
             target.style.setProperty('--overlay-dark', `rgba(${overlayColorStr}, ${0.95 * opacity})`);
             target.style.setProperty('--overlay-mid', `rgba(${overlayColorStr}, ${0.7 * opacity})`);
@@ -391,13 +397,13 @@ window.ThemeManager = class ThemeManager {
                 this.state.bgColor = colorObj.hex;
                 this.state.accentColor = colorObj.accent || null;
                 this.state.secondaryColor = colorObj.secondary || null;
-                
+
                 const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
                 const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
-                
+
                 if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
                 if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.resolveColorLabel(colorObj.name);
-                
+
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
                 // Remote sync
                 if (!window.remoteManager?._applying) {
@@ -440,7 +446,7 @@ window.ThemeManager = class ThemeManager {
         jumpLinksDiv.className = 'custom-select-jump-links';
         jumpLinksDiv.setAttribute('role', 'navigation');
         jumpLinksDiv.setAttribute('aria-label', 'Jump to theme pack');
-        
+
         Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
             const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
             if (packThemes.length === 0) return;
@@ -450,11 +456,11 @@ window.ThemeManager = class ThemeManager {
             link.className = 'jump-link';
             link.tabIndex = -1; // Keep keyboard focus cycle on custom options
             link.title = `Jump to ${packInfo.name}`;
-            
+
             const iconSpan = document.createElement('span');
             iconSpan.textContent = packInfo.icon;
             link.appendChild(iconSpan);
-            
+
             const textSpan = document.createElement('span');
             textSpan.className = 'jump-link-text';
             textSpan.textContent = packInfo.name.split(' ')[0]; // E.g. "Standard", "Holiday"
@@ -560,14 +566,14 @@ window.ThemeManager = class ThemeManager {
         swatches.forEach(s => {
             const swatchColor = (s.dataset.color || '').trim().toLowerCase();
             const currentColor = (this.state.bgColor || this.poster.theme.colors.primary).trim().toLowerCase();
-            
+
             // For themes that swap roles, we also need to verify the accent color matches 
             // to distinguish between 'Normal' and 'Reversed' swatches.
             const currentAccent = (this.state.accentColor || this.poster.theme.colors.accent).trim().toLowerCase();
             const swatchAccent = (s.title && this.poster.theme.swatches.find(sw => sw.name === s.title)?.accent || '').trim().toLowerCase();
-            
+
             const isActive = swatchColor === currentColor && (swatchAccent === '' || swatchAccent === currentAccent);
-            
+
             s.classList.toggle('active', isActive);
             if (isActive) found = true;
         });
@@ -613,13 +619,13 @@ window.ThemeManager = class ThemeManager {
     syncWind() {
         const strength = this.state.gustStrength; // 0-100
         const impact = strength / 10;
-        
+
         // Lower the floor for speed. 
         // We want it very calm at low numbers (0-10) and faster at high numbers.
         // Quadratic curve: at 0 -> 0.12, at 10 -> 0.17, at 50 -> 0.77, at 100 -> 2.62
         // This gives a much wider range of "calmness" at the low end.
         const speed = 0.12 + (strength * strength / 4000);
-        
+
         this.root.style.setProperty('--gust-impact', impact);
         this.root.style.setProperty('--gust-speed', speed.toFixed(3));
         this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
@@ -635,6 +641,64 @@ window.ThemeManager = class ThemeManager {
             this.root.style.setProperty('--space-swirl-opacity-factor', factor.toFixed(4));
             this.root.style.setProperty('--space-swirl-display', 'block');
             this.root.style.setProperty('--space-swirl-play-state', 'running');
+        }
+    }
+
+    setupbistroLights() {
+        if (!this._onbistroResize) {
+            this._onbistroResize = () => {
+                this.buildbistroBulbs();
+            };
+            window.addEventListener('resize', this._onbistroResize);
+        }
+        this.buildbistroBulbs();
+    }
+
+    buildbistroBulbs() {
+        const wrapper = document.querySelector('.content-wrapper');
+        if (!wrapper) return;
+
+        let container = document.getElementById('bistro-lights-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'bistro-lights-container';
+            container.className = 'bistro-lights-container';
+            wrapper.appendChild(container);
+        } else {
+            container.innerHTML = '';
+        }
+
+        const wire = document.createElement('div');
+        wire.className = 'bistro-wire';
+        container.appendChild(wire);
+
+        const width = window.innerWidth + 160;
+        const bulbSpacing = 120;
+        const count = Math.ceil(width / bulbSpacing) + 1;
+
+        for (let i = 0; i < count; i++) {
+            const peak = document.createElement('div');
+            peak.className = 'sway-layer bistro-bulb-peak';
+            peak.style.left = `${(i * bulbSpacing) - 80}px`;
+            container.appendChild(peak);
+
+            const loop = document.createElement('div');
+            loop.className = 'sway-layer bistro-bulb-loop';
+            loop.style.left = `${(i * bulbSpacing + 60) - 80}px`;
+            container.appendChild(loop);
+        }
+
+        this.poster.cacheSwayLayers();
+    }
+
+    cleanupbistroLights() {
+        const container = document.getElementById('bistro-lights-container');
+        if (container) {
+            container.remove();
+        }
+        if (this._onbistroResize) {
+            window.removeEventListener('resize', this._onbistroResize);
+            this._onbistroResize = null;
         }
     }
 };

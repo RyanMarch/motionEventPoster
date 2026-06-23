@@ -115,6 +115,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 *   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
+*   **[Bistro Lounge][demo-bistro-louge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
 
 ### 🎃 Holiday Pack
 *   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
@@ -146,7 +147,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | **Game Console** – *Video Gaming Fun* <br> [![Game Console](.github/assets/poster-game-console.avif)][demo-game-console] |
-| **Space Odyssey** – *Futuristic Deep Space* <br> [![Space Odyssey](.github/assets/poster-space-odyssey.avif)][demo-space-odyssey] | |
+| **Space Odyssey** – *Futuristic Deep Space* <br> [![Space Odyssey](.github/assets/poster-space-odyssey.avif)][demo-space-odyssey] | **Bistro Lounge** – *Cozy Cafe Atmosphere* <br> [![Bistro Lounge](.github/assets/poster-bistro-lounge.avif)][demo-bistro-lounge] |
 
 ### 🎃 Holiday Pack
 | | |
@@ -365,3 +366,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-atomic-mid-century]: https://motionposter.ryanmarch.me/?theme=atomic-mid-century
 [demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
 [demo-2000s-glass]: https://motionposter.ryanmarch.me/?theme=2000s-glass
+[demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
