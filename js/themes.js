@@ -52,16 +52,16 @@
             icon: '🌸',
             primary: '#032858',
             accent: '#f9d783',
-            swatchName: 'Navy',
+            swatchName: 'Original Navy',
             colors: {
                 darkText: '#1a1c1e'
             },
             swatches: [
-                { hex: '#1B363C', name: 'Teal', accent: '#81D4FA' },
-                { hex: '#3B4D35', name: 'Moss', accent: '#C5E1A5' },
-                { hex: '#4E3541', name: 'Plum', accent: '#CE93D8' },
+                { hex: '#1B363C', name: 'Deep Teal', accent: '#81D4FA' },
+                { hex: '#3B4D35', name: 'Deep Moss', accent: '#C5E1A5' },
+                { hex: '#4E3541', name: 'Deep Plum', accent: '#CE93D8' },
                 { hex: '#2B2D31', name: 'Charcoal', accent: '#90CAF9' },
-                { hex: '#8FA382', name: 'Sage', accent: '#ffffff' },
+                { hex: '#8FA382', name: 'Sage Green', accent: '#ffffff' },
                 { hex: '#F5F2EB', name: 'Warm Cream', accent: '#3b58a8' }
             ],
             fonts: {
@@ -122,7 +122,7 @@
                 darkText: '#001a1a'
             },
             swatches: [
-                { hex: '#250e3d', name: 'Purple', accent: '#ff00ff' },
+                { hex: '#250e3d', name: 'Deep Purple', accent: '#ff00ff' },
                 { hex: '#2a0a1a', name: 'Cosmic Red', accent: '#ff4d4d' },
                 { hex: '#000000', name: 'True Black', accent: '#ffffff' },
                 { hex: '#0a2a1a', name: 'Deep Emerald', accent: '#00ff9f' },
@@ -183,7 +183,7 @@
             icon: '❄️',
             primary: '#1B3B57',
             accent: '#AADDFF',
-            swatchName: 'Glacier',
+            swatchName: 'Glacier Deep',
             colors: {
                 darkText: '#0A1520'
             },
@@ -218,12 +218,12 @@
             overrides: {
                 insetV: 50,
                 insetH: 60,
-                hostTextSize: 0.95,
+                hostTextSize: 1.0,
                 gustStrength: 15,
                 fallSpeed: 0.4,
                 maxPetals: 80,
                 windiness: 5,
-                hostMaxWidth: 112,
+                hostMaxWidth: 120,
                 backdropOpacity: 65
             },
             defaults: {
@@ -327,15 +327,15 @@
                 { hex: '#18181B', name: 'Onyx Gold', accent: '#FDE68A' },
                 { hex: '#1E1B4B', name: 'Midnight Rose', accent: '#FFE4E6' },
                 { hex: '#451A03', name: 'Warm Espresso', accent: '#FFEDD5' },
-                { hex: '#F0F4F8', name: 'Business Blue Reverse', accent: '#005FB8' },
-                { hex: '#e3f0fdff', name: 'Sky Blue Reverse', accent: '#56CCF2' },
-                { hex: '#BCE29E', name: 'Onyx & Lime Reverse', accent: '#192b57ff' },
-                { hex: '#41baacff', name: 'Tech Teal Reverse', accent: '#111827' },
-                { hex: '#A5F3FC', name: 'Carbon Cyan Reverse', accent: '#171717' },
-                { hex: '#D9F99D', name: 'Deep Forest Reverse', accent: '#064E3B' },
-                { hex: '#FDE68A', name: 'Onyx Gold Reverse', accent: '#18181B' },
-                // { hex: '#FFEDD5', name: 'Warm Espresso Reverse', accent: '#451A03' },
-                { hex: '#FFE4E6', name: 'Midnight Rose Reverse', accent: '#1E1B4B' }
+                { hex: '#F0F4F8', name: 'Business Blue Rev', accent: '#005FB8' },
+                { hex: '#e3f0fdff', name: 'Sky Blue Rev', accent: '#56CCF2' },
+                { hex: '#BCE29E', name: 'Onyx & Lime Rev', accent: '#192b57ff' },
+                { hex: '#41baacff', name: 'Tech Teal Rev', accent: '#111827' },
+                { hex: '#A5F3FC', name: 'Carbon Cyan Rev', accent: '#171717' },
+                { hex: '#D9F99D', name: 'Deep Forest Rev', accent: '#064E3B' },
+                { hex: '#FDE68A', name: 'Onyx Gold Rev', accent: '#18181B' },
+                // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
+                { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
             ],
             fonts: {
                 primary: "'Inter', sans-serif",
@@ -990,7 +990,8 @@
                 fallSpeed: 0.4,
                 maxPetals: 25,
                 windiness: 6,
-                hostMaxWidth: 125
+                hostMaxWidth: 125,
+                backdropOpacity: 55
             },
             defaults: {
                 hostsTitle: "DJ & DANCERS",
@@ -1534,7 +1535,7 @@
         // --- HOLIDAY PACK ---
         'halloween': defineTheme({
             id: 'halloween',
-            name: 'Halloween*',
+            name: 'Halloween Soiree',
             pack: 'holiday',
             icon: '🎃',
             primary: '#1A0B0C',
@@ -1546,14 +1547,18 @@
                 darkText: '#1A0B0C'
             },
             swatches: [
-                { hex: '#0B1A12', name: 'Toxic Slime', accent: '#39FF14', secondary: '#111111' },
+                { hex: '#141F16', name: 'Monster Mash', accent: '#7FFF00', secondary: '#8A2BE2' },
                 { hex: '#160824', name: 'Witchy Brew', accent: '#9D00FF', secondary: '#FF7518' },
-                { hex: '#2A0808', name: 'Vampire Bite', accent: '#D32F2F', secondary: '#000000' }
+                { hex: '#2A0808', name: 'Vampire Bite', accent: '#D32F2F', secondary: '#000000' },
+                { hex: '#1A201E', name: 'Phantom Mist', accent: '#80C0A0', secondary: '#4A5A50' },
+                { hex: '#1A0A00', name: 'Candy Corn', accent: '#FFAA00', secondary: '#FFD700' },
+                { hex: '#06060A', name: 'Cursed Moon', accent: '#FFE57F', secondary: '#3D2B56' },
+                { hex: '#1D1105', name: 'Pumpkin Patch', accent: '#FF5E00', secondary: '#4A7C59' }
             ],
             fonts: {
-                primary: "'Creepster', cursive",
+                primary: "'Underdog', cursive",
                 display: "'Creepster', cursive",
-                heading: "'Nosifer', cursive"
+                heading: "'Creepster', cursive"
             },
             assets: {
                 border: "none",
@@ -1564,8 +1569,10 @@
                 swaySide: "none"
             },
             particles: [
-                { color: '#FF7518', gradient: '#CC5500', type: 'dust', weight: 40, speedMultiplier: 0.5, sizeMultiplier: 1.5, massMultiplier: 0.8 },
-                { color: '#800080', gradient: '#4B0082', type: 'dust', weight: 30, speedMultiplier: 0.6, sizeMultiplier: 1.2, massMultiplier: 0.7 }
+                { color: '#111111', gradient: '#000000', type: 'halloween-bat', weight: 30, speedMultiplier: 0.8, sizeMultiplier: 1.3, massMultiplier: 0.7 },
+                { color: '#ffffff', gradient: '#e0dbff', type: 'halloween-ghost', weight: 25, speedMultiplier: -0.35, sizeMultiplier: 1.2, massMultiplier: 0.5, isWhite: true },
+                { color: '#FF7518', gradient: '#CC5500', type: 'halloween-pumpkin', weight: 25, speedMultiplier: 0.4, sizeMultiplier: 1.4, massMultiplier: 0.8 },
+                { useThemeAccent: true, type: 'halloween-sparkle', weight: 20, speedMultiplier: 0.5, sizeMultiplier: 0.8, massMultiplier: 0.4 }
             ],
             frameClass: 'theme-frame--halloween',
             overrides: {
@@ -1586,10 +1593,10 @@
                 eventTopLabel: "Annual"
             },
             uiLabels: {
-                particlesPlural: 'Spirits',
+                particlesPlural: 'Spirits & Bats',
                 particlesSingular: 'Spirit',
                 borderToggle: 'Hide cobwebs',
-                gustStrength: 'Eerie Wind',
+                gustStrength: 'Eerie Atmosphere',
                 frameName: 'Haunted Frame'
             }
         }),

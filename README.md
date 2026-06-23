@@ -120,7 +120,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
 
 ### 🎃 Holiday Pack
-*   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
+*   **[Halloween Soiree][demo-halloween-soiree]:** Spooky pumpkins, drifting ghosts, and deep shadows with eerie glowing particles, perfect for haunted events.
 *   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
 
 ## Theme Screenshots
@@ -156,7 +156,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🎃 Holiday Pack
 | | |
 | :---: | :---: |
-| **Halloween** – *Spooky & Atmospheric* <br> [![Halloween](.github/assets/poster-halloween.avif)][demo-halloween] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
+| **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -365,7 +365,7 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-retro-wave]: https://motionposter.ryanmarch.me/?theme=retro-wave
 [demo-art-deco-gala]: https://motionposter.ryanmarch.me/?theme=art-deco-gala
 [demo-cinema]: https://motionposter.ryanmarch.me/?theme=cinema
-[demo-halloween]: https://motionposter.ryanmarch.me/?theme=halloween
+[demo-halloween-soiree]: https://motionposter.ryanmarch.me/?theme=halloween
 [demo-space-odyssey]: https://motionposter.ryanmarch.me/?theme=space-odyssey
 [demo-atomic-mid-century]: https://motionposter.ryanmarch.me/?theme=atomic-mid-century
 [demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
