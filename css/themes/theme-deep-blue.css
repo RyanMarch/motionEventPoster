@@ -1,1 +1,593 @@
-/* Stub theme for Deep Blue */
+/**
+ * DEEP BLUE SEA THEME STYLES
+ * A tranquil, immersive underwater aquarium theme.
+ * Goes edge-to-edge with rising animated bubbles, glowing plankton,
+ * custom vector tropical fish, and swaying kelp forests.
+ */
+
+/* ============================================================
+   1. Background & Underwater Lighting
+   ============================================================ */
+body.theme-deep-blue {
+    position: relative;
+    /* Soft deep blue water gradient (dynamic via swatches/color picking) */
+    background: linear-gradient(180deg, 
+        var(--deep-blue-bg-top, #005F73) 0%, 
+        var(--deep-blue-bg-mid, #0A3D62) 45%, 
+        var(--deep-blue-bg-bottom, #011627) 100%) !important;
+    overflow: hidden;
+
+    /* Tie backdrop-opacity slider to glass opacity: 10 => 0%, 90 => 100% */
+    --deep-blue-glass-opacity: clamp(0, calc((var(--backdrop-opacity, 0.5) - 0.1) / 0.8), 1);
+}
+
+/* Light ray caustics drifting across the water */
+body.theme-deep-blue .theme-texture {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    /* Repeating diagonal shafts of sunlit water */
+    background: repeating-linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0.06) 0px,
+        rgba(255, 255, 255, 0.06) 50px,
+        transparent 100px,
+        transparent 200px
+    ) !important;
+    filter: blur(4px);
+    opacity: calc(0.4 + 0.4 * var(--frame-intensity));
+    mix-blend-mode: overlay;
+    animation: deep-blue-light-drift calc(20s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    will-change: transform, opacity;
+}
+
+@keyframes deep-blue-light-drift {
+    0% {
+        transform: scale(1.0) translateX(-3%);
+        opacity: 0.35;
+    }
+    100% {
+        transform: scale(1.1) translateX(3%);
+        opacity: 0.75;
+    }
+}
+
+/* Water caustics shimmer */
+body.theme-deep-blue .theme-texture::before {
+    content: '' !important;
+    position: absolute;
+    inset: -30%;
+    background-image: 
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.18) 0%, transparent 40%),
+        radial-gradient(circle at 55% 8%, rgba(255, 255, 255, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 85% 12%, rgba(255, 255, 255, 0.18) 0%, transparent 40%);
+    background-size: 100% 100%;
+    opacity: 0.7;
+    mix-blend-mode: screen;
+    animation: deep-blue-shimmer calc(15s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    will-change: transform;
+}
+
+@keyframes deep-blue-shimmer {
+    0% {
+        transform: scale(1.0) translate3d(0, 0, 0);
+    }
+    100% {
+        transform: scale(1.06) translate3d(2vw, 1.5vh, 0);
+    }
+}
+
+/* ============================================================
+   2. Window Frame Styling (Hidden for Edge-to-Edge view)
+   ============================================================ */
+body.theme-deep-blue .theme-frame {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    opacity: 1;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+body.theme-deep-blue .theme-frame-inner {
+    display: none !important;
+}
+
+body.theme-deep-blue .frame-rail {
+    display: none !important;
+}
+
+body.border-hidden.theme-deep-blue .sway-layer,
+body.border-hidden.theme-deep-blue .theme-frame,
+body.border-hidden.theme-deep-blue .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* ============================================================
+   3. Organic Swaying Kelp Layers (Seaweed)
+   ============================================================ */
+body.theme-deep-blue .sway-layer {
+    position: absolute;
+    z-index: 40;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    transform-origin: center bottom;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.theme-deep-blue:not(.is-loading) .sway-layer {
+    opacity: 0.9;
+}
+
+/* Left Kelp forest card */
+body.theme-deep-blue .sway-bottom-left {
+    display: block !important;
+    bottom: calc(-1 * var(--inset-v, 55px)) !important;
+    left: calc(-1 * var(--inset-h, 70px) - 20px) !important;
+    width: 25vw;
+    height: 60vh;
+    min-width: 200px;
+    background-image: var(--deep-blue-kelp-left, url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'%3E%3Cpath d='M20,400 Q40,250 15,130 T45,10 Q50,15 25,135 T50,255 T30,400 Z' fill='%23004D40' opacity='0.75'/%3E%3Cpath d='M70,400 Q50,280 85,160 T60,20 Q65,22 90,162 T60,282 T80,400 Z' fill='%2300695C' opacity='0.65'/%3E%3Cpath d='M120,400 Q100,320 115,200 T95,40 Q100,42 125,202 T110,322 T130,400 Z' fill='%2300796B' opacity='0.8'/%3E%3C/svg%3E")) !important;
+    transform-origin: bottom left;
+    animation: deep-blue-kelp-sway-left calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Right Kelp forest card */
+body.theme-deep-blue .sway-bottom-right {
+    display: block !important;
+    bottom: calc(-1 * var(--inset-v, 55px)) !important;
+    right: calc(-1 * var(--inset-h, 70px) - 20px) !important;
+    width: 25vw;
+    height: 60vh;
+    min-width: 200px;
+    background-image: var(--deep-blue-kelp-right, url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'%3E%3Cpath d='M30,400 Q50,300 25,180 T60,30 Q65,32 35,182 T60,302 T40,400 Z' fill='%2300796B' opacity='0.75'/%3E%3Cpath d='M80,400 Q100,260 75,140 T105,10 Q110,12 85,142 T110,262 T90,400 Z' fill='%2300695C' opacity='0.7'/%3E%3Cpath d='M120,400 Q90,300 110,180 T80,50 Q85,52 120,182 T100,302 T130,400 Z' fill='%23004D40' opacity='0.85'/%3E%3C/svg%3E")) !important;
+    transform-origin: bottom right;
+    animation: deep-blue-kelp-sway-right calc(14s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes deep-blue-kelp-sway-left {
+    0% { transform: scale(1) rotate(-3deg); }
+    100% { transform: scale(1.04) rotate(4deg); }
+}
+
+@keyframes deep-blue-kelp-sway-right {
+    0% { transform: scale(1) rotate(3deg); }
+    100% { transform: scale(1.04) rotate(-4deg); }
+}
+
+/* Fade bottom seaweed when QR codes overlap to preserve contrast */
+body.theme-deep-blue:has(#qr-soiree:not(.qr-hidden)) .sway-bottom-left,
+body.theme-deep-blue:has(#qr-membership:not(.qr-hidden)) .sway-bottom-right {
+    opacity: 0.1 !important;
+}
+
+/* Hide other unused sway layers */
+body.theme-deep-blue .sway-top-right,
+body.theme-deep-blue .sway-top-left,
+body.theme-deep-blue .sway-left-side,
+body.theme-deep-blue .sway-right-side,
+body.theme-deep-blue .sway-top-1,
+body.theme-deep-blue .sway-top-2,
+body.theme-deep-blue .sway-top-3,
+body.theme-deep-blue .sway-bottom-3,
+body.theme-deep-blue .sway-bottom-4,
+body.theme-deep-blue .sway-bottom-5,
+body.theme-deep-blue .sway-bottom-6,
+body.theme-deep-blue .sway-bottom-7,
+body.theme-deep-blue .sway-bottom-8,
+body.theme-deep-blue .sway-bottom-9,
+body.theme-deep-blue .sway-bottom-10 {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Bubble Logo Banner & Translucent Hosts Card
+   ============================================================ */
+body.theme-deep-blue .logo-banner {
+    position: relative !important;
+    /* Soft translucent aqua bubble gradient */
+    background: linear-gradient(135deg, rgba(255, 255, 255, calc(0.22 * var(--deep-blue-glass-opacity))) 0%, rgba(255, 255, 255, calc(0.05 * var(--deep-blue-glass-opacity))) 100%) !important;
+    border: 2px solid rgba(255, 255, 255, calc(0.45 * var(--deep-blue-glass-opacity))) !important;
+    border-radius: 50px !important; /* Pill shape */
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, calc(0.15 * var(--deep-blue-glass-opacity))),
+        0 0 15px rgba(255, 255, 255, calc(0.2 * var(--deep-blue-glass-opacity))),
+        inset 0 4px 10px rgba(255, 255, 255, calc(0.35 * var(--deep-blue-glass-opacity))) !important;
+    backdrop-filter: blur(calc(12px * var(--deep-blue-glass-opacity))) !important;
+    -webkit-backdrop-filter: blur(calc(12px * var(--deep-blue-glass-opacity))) !important;
+    padding: 12px 45px !important;
+    margin: 2rem auto 0 auto !important;
+    z-index: 60;
+    width: 100%;
+    max-width: 520px;
+    animation: deep-blue-logo-float 6s ease-in-out infinite alternate;
+}
+
+@keyframes deep-blue-logo-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-6px); }
+}
+
+body.theme-deep-blue .logo-text-custom {
+    font-family: var(--font-heading) !important;
+    color: var(--color-text) !important;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 1.45rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .logo-banner img {
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .hosts-container {
+    position: relative;
+    background: rgba(255, 255, 255, calc(0.12 * var(--deep-blue-glass-opacity))) !important;
+    border: 1px solid rgba(255, 255, 255, calc(0.28 * var(--deep-blue-glass-opacity))) !important;
+    border-radius: 24px !important;
+    box-shadow: 
+        0 12px 36px rgba(0, 0, 0, calc(0.18 * var(--deep-blue-glass-opacity))),
+        inset 0 0 15px rgba(255, 255, 255, calc(0.08 * var(--deep-blue-glass-opacity))) !important;
+    backdrop-filter: blur(calc(10px * var(--deep-blue-glass-opacity))) !important;
+    -webkit-backdrop-filter: blur(calc(10px * var(--deep-blue-glass-opacity))) !important;
+    padding: 28px 40px 38px 40px !important;
+    margin: 1.5rem auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 100px) !important;
+    z-index: 100;
+}
+
+/* Glass glare highlight for host card */
+body.theme-deep-blue .hosts-container::before {
+    content: '' !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50% !important;
+    background: linear-gradient(180deg, rgba(255, 255, 255, calc(0.25 * var(--deep-blue-glass-opacity))) 0%, rgba(255, 255, 255, calc(0.02 * var(--deep-blue-glass-opacity))) 100%) !important;
+    border-radius: 22px 22px 0 0 !important;
+    pointer-events: none;
+    z-index: 1;
+}
+
+body.theme-deep-blue .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-accent) !important;
+    font-size: calc(2.2rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: var(--color-text) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5), 
+        0 0 8px rgba(255, 255, 255, 0.2) !important;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .hosts-list {
+    padding: 0;
+}
+
+body.theme-deep-blue .hosts-empty-hint {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   5. Event Details Typography & Layout
+   ============================================================ */
+body.theme-deep-blue .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+body.theme-deep-blue .event-footer {
+    z-index: 60 !important;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4)) !important;
+}
+
+body.theme-deep-blue .event-title {
+    font-family: var(--font-display) !important;
+    font-size: 5rem;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-text) !important;
+    text-shadow: 
+        2px 2px 0px rgba(var(--color-primary-rgb), 0.6), 
+        4px 4px 15px rgba(0, 0, 0, 0.6) !important;
+    margin: 0 0 2px 0 !important;
+}
+
+body.theme-deep-blue .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.6rem;
+    color: var(--color-accent) !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+    margin: 0 0 2px 0 !important;
+}
+
+body.theme-deep-blue .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 1.8rem;
+    color: var(--color-accent) !important;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+    margin: 0 0 12px 0 !important;
+}
+
+body.theme-deep-blue .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.25rem;
+    color: var(--color-text) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    margin: 0 !important;
+}
+
+/* ============================================================
+   6. Custom Particles (Bubbles, Plankton, Fish)
+   ============================================================ */
+
+/* 6a. Wobbly Aquarium Bubbles */
+body.theme-deep-blue .petal--deep-blue-bubble {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.theme-deep-blue .petal--deep-blue-bubble::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    /* Soft specular highlight & transparency gradient (keeps highlight in top-left) */
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0.45) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-radius: 50% !important;
+    box-shadow: 
+        0 0 5px rgba(255, 255, 255, 0.4),
+        inset -2px -2px 6px rgba(0, 0, 0, 0.1),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.2) !important;
+    filter: blur(0.2px) !important;
+    animation: deep-blue-bubble-pulse 3s ease-in-out infinite alternate !important;
+    will-change: transform !important;
+}
+
+@keyframes deep-blue-bubble-pulse {
+    0% { transform: scale(0.92, 1.08) rotate(0deg); }
+    50% { transform: scale(1.08, 0.92) rotate(180deg); }
+    100% { transform: scale(0.92, 1.08) rotate(360deg); }
+}
+
+/* 6b. Glowing Bioluminescent Plankton */
+body.theme-deep-blue .petal--deep-blue-plankton {
+    border-radius: 50% !important;
+    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 1) 0%, var(--color-accent) 60%, rgba(var(--color-accent-rgb), 0) 100%) !important;
+    box-shadow: 0 0 12px var(--color-accent), 0 0 20px rgba(var(--color-accent-rgb), 0.5) !important;
+    filter: blur(0.5px) !important;
+    animation: deep-blue-plankton-glow 4s ease-in-out infinite alternate !important;
+}
+
+@keyframes deep-blue-plankton-glow {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 6c. Custom Vector Swimming Fish */
+body.theme-deep-blue .petal--deep-blue-fish {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    pointer-events: none;
+    z-index: 45; /* Swim between backgrounds and text */
+}
+
+/* Fish 1: Clownfish */
+body.theme-deep-blue .petal--deep-blue-fish-1 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'%3E%3Cpath d='M10,40 C30,10 70,10 90,30 C100,25 110,20 115,25 C115,35 110,45 115,55 C110,60 100,55 90,50 C70,70 30,70 10,40 Z' fill='%23FF7A00' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M35,22 C40,24 42,32 40,48 C38,58 35,62 30,60 C32,52 32,32 35,22 Z' fill='%23FFF' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M65,16 C70,20 70,35 68,48 C66,60 62,66 58,64 C60,52 61,28 65,16 Z' fill='%23FFF' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M50,15 C52,5 62,8 60,16 Z' fill='%23FF7A00' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M48,64 C50,75 58,72 56,64 Z' fill='%23FF7A00' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='25' cy='32' r='4' fill='%23FFF' stroke='%23000' stroke-width='1'/%3E%3Ccircle cx='24' cy='32' r='2' fill='%23000'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Fish 2: Blue Tang */
+body.theme-deep-blue .petal--deep-blue-fish-2 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'%3E%3Cpath d='M15,40 C30,15 70,15 90,35 C100,32 108,25 112,30 C108,40 108,40 112,50 C108,55 100,48 90,45 C70,65 30,65 15,40 Z' fill='%230D47A1' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M90,35 L112,30 L108,40 L112,50 L90,45 Z' fill='%23FFD600' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M30,30 C45,20 75,20 85,38 C80,45 60,40 50,42 C40,44 32,38 30,30 Z' fill='%23000'/%3E%3Ccircle cx='28' cy='33' r='3.5' fill='%23FFF' stroke='%23000' stroke-width='1'/%3E%3Ccircle cx='27.5' cy='33' r='1.8' fill='%23000'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Fish 3: Moorish Idol */
+body.theme-deep-blue .petal--deep-blue-fish-3 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Cpath d='M50,40 Q65,-10 52,5 Q48,-5 48,30' fill='none' stroke='%23FFF' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M20,50 C35,20 65,20 80,45 C88,40 98,35 105,42 C100,50 100,50 105,58 C98,65 88,60 80,55 C65,80 35,80 20,50 Z' fill='%23FFF' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M20,50 C23,45 28,45 30,50 C28,55 23,55 20,50 Z' fill='%23FFD600' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M65,28 C75,32 78,45 75,60 C68,55 60,42 65,28 Z' fill='%23FFD600' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M38,28 C45,28 48,50 45,72 C38,68 32,50 38,28 Z' fill='%23000'/%3E%3Cpath d='M78,46 C84,48 88,52 85,56 C80,58 75,54 78,46 Z' fill='%23000'/%3E%3Ccircle cx='32' cy='42' r='3' fill='%23FFF' stroke='%23000' stroke-width='1'/%3E%3Ccircle cx='31.5' cy='42' r='1.5' fill='%23000'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Fish 4: Yellow Tang (Realistic Gradient & Spine Details) */
+body.theme-deep-blue .petal--deep-blue-fish-4 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 90'%3E%3Cdefs%3E%3ClinearGradient id='bgGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFE033'/%3E%3Cstop offset='60%25' stop-color='%23FFC400'/%3E%3Cstop offset='100%25' stop-color='%23E68A00'/%3E%3C/linearGradient%3E%3ClinearGradient id='fnGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFF066'/%3E%3Cstop offset='100%25' stop-color='%23E69D00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M90,45 L115,20 C118,30 118,60 115,70 Z' fill='url(%23fnGrad)' opacity='0.9'/%3E%3Cpath d='M15,45 C25,10 65,-2 85,20 C95,30 92,60 85,70 C65,92 25,80 15,45 Z' fill='url(%23bgGrad)'/%3E%3Cpath d='M42,48 C50,48 55,54 52,60 C48,64 42,56 42,48 Z' fill='%23FFE033' opacity='0.8'/%3E%3Cpath d='M82,45 L88,43 L84,47 Z' fill='%23FFF'/%3E%3Ccircle cx='28' cy='38' r='4.5' fill='%23FFE033'/%3E%3Ccircle cx='28' cy='38' r='3' fill='%231A1A1A'/%3E%3Ccircle cx='27' cy='37' r='1' fill='%23FFF'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Fish 5: Translucent Jellyfish (Glow & Pulsing Tentacles) */
+body.theme-deep-blue .petal--deep-blue-fish-5 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cdefs%3E%3ClinearGradient id='blGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23E040FB' stop-opacity='0.8'/%3E%3Cstop offset='50%25' stop-color='%2300E5FF' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%2300E5FF' stop-opacity='0.1'/%3E%3C/linearGradient%3E%3ClinearGradient id='ttGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300E5FF' stop-opacity='0.7'/%3E%3Cstop offset='50%25' stop-color='%23E040FB' stop-opacity='0.4'/%3E%3Cstop offset='100%25' stop-color='%23E040FB' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M35,45 Q30,70 36,90 T32,118' fill='none' stroke='url(%23ttGrad)' stroke-width='2.5'/%3E%3Cpath d='M45,47 Q48,75 42,95 T46,115' fill='none' stroke='url(%23ttGrad)' stroke-width='3'/%3E%3Cpath d='M55,47 Q52,73 58,93 T54,116' fill='none' stroke='url(%23ttGrad)' stroke-width='3'/%3E%3Cpath d='M65,45 Q70,70 64,90 T68,118' fill='none' stroke='url(%23ttGrad)' stroke-width='2.5'/%3E%3Cpath d='M42,46 Q40,65 46,85 T43,105 L47,105 Q52,85 46,65 Z' fill='%23E040FB' opacity='0.45'/%3E%3Cpath d='M50,46 Q55,68 49,88 T52,108 L48,108 Q45,88 50,68 Z' fill='%2300E5FF' opacity='0.45'/%3E%3Cpath d='M20,45 C20,10 80,10 80,45 C65,48 55,42 50,45 C45,42 35,48 20,45 Z' fill='url(%23blGrad)'/%3E%3Cellipse cx='50' cy='25' rx='20' ry='10' fill='%23FFF' opacity='0.25'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Fish 6: Green Sea Turtle (Majestic Glide & Shell Scute Patterns) */
+body.theme-deep-blue .petal--deep-blue-fish-6 {
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 90'%3E%3Cdefs%3E%3ClinearGradient id='shGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234E6E35'/%3E%3Cstop offset='50%25' stop-color='%23324B20'/%3E%3Cstop offset='100%25' stop-color='%231F3014'/%3E%3C/linearGradient%3E%3ClinearGradient id='skGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2383A35D'/%3E%3Cstop offset='100%25' stop-color='%234F6933'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M85,55 C90,65 98,62 95,52 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M80,30 C85,20 92,23 90,32 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M96,45 L102,45 L95,48 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M12,45 C12,38 25,38 30,42 L30,48 C25,52 12,52 12,45 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M42,28 C45,15 35,-2 18,2 C25,12 35,22 40,32 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M42,62 C45,75 35,92 18,88 C25,78 35,68 40,58 Z' fill='url(%23skGrad)'/%3E%3Cpath d='M30,45 C30,22 92,22 92,45 C92,68 30,68 30,45 Z' fill='url(%23shGrad)'/%3E%3Cpath d='M45,45 C55,42 75,42 85,45 M55,30 C60,38 60,52 55,60 M70,27 C75,38 75,52 70,63 M45,45 L32,45 M58,34 L48,27 M72,31 L68,24 M83,39 L88,31 M58,56 L48,63 M72,59 L68,66 M83,51 L88,59' fill='none' stroke='%23233516' stroke-width='1.5' opacity='0.8'/%3E%3Ccircle cx='17' cy='43' r='1.5' fill='%231A1A1A'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* ============================================================
+   7. QR Codes (Glassy panels)
+   ============================================================ */
+body.theme-deep-blue .qr-code-container {
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+body.theme-deep-blue .qr-code-container img {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   8. Fullscreen Countdown Overlay
+   ============================================================ */
+body.theme-deep-blue .fullscreen-countdown .countdown-content {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.25),
+        inset 0 0 15px rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body.theme-deep-blue .fullscreen-countdown .countdown-label,
+body.theme-deep-blue .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: var(--color-text) !important;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.5) !important;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-deep-blue .fullscreen-countdown .countdown-content .button {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   9. Play-State bindings & Layout Rules
+   ============================================================ */
+body.theme-deep-blue .theme-texture,
+body.theme-deep-blue .theme-texture::before,
+body.theme-deep-blue .logo-banner,
+body.theme-deep-blue .sway-bottom-left,
+body.theme-deep-blue .sway-bottom-right {
+    animation-play-state: var(--grid-play-state, running) !important;
+}
+
+/* Scaling / Responsiveness Adjustments */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-deep-blue .logo-banner {
+        margin-top: 20px !important;
+        margin-bottom: 0 !important;
+        padding: 8px 30px !important;
+    }
+
+    body.theme-deep-blue .hosts-container {
+        margin: 15px auto 0 auto !important;
+        padding: 20px 24px 30px 24px !important;
+        max-width: 82vw !important;
+    }
+
+    body.theme-deep-blue .event-title {
+        font-size: 4.0rem;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-deep-blue .logo-banner {
+        scale: 1.12;
+        margin-top: 2vh !important;
+        margin-bottom: 0 !important;
+    }
+
+    body.theme-deep-blue .hosts-container {
+        margin: 2vh auto 0 auto !important;
+    }
+
+    body.theme-deep-blue .event-footer {
+        scale: 1.12;
+        margin-bottom: 2vh;
+    }
+}
+
+/* ============================================================
+   10. Light BG Adaptations
+   ============================================================ */
+body.theme-deep-blue.is-light-bg .event-title {
+    color: var(--color-accent) !important;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-deep-blue.is-light-bg .hosts-title,
+body.theme-deep-blue.is-light-bg .hosts-list span,
+body.theme-deep-blue.is-light-bg .event-subtitle,
+body.theme-deep-blue.is-light-bg .event-top-label,
+body.theme-deep-blue.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-deep-blue.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-deep-blue.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}

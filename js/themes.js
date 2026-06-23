@@ -1399,30 +1399,30 @@
             uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
         }),
 
-        'zen-garden': defineTheme({
-            id: 'zen-garden',
-            name: 'Zen Garden*',
-            pack: 'specialty',
-            icon: '🪴',
-            primary: '#EBE5D9',
-            accent: '#7A916F',
-            secondary: '#D4A373',
-            swatchName: 'Sand & Sage',
-            colors: { text: '#2F3E2C', darkText: '#EBE5D9' },
-            swatches: [
-                { hex: '#F4F1DE', name: 'Pale Bamboo', accent: '#81B29A', secondary: '#E07A5F' },
-                { hex: '#CCD5AE', name: 'Matcha', accent: '#FAEDCD', secondary: '#D4A373' }
-            ],
-            fonts: { primary: "'Lora', serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
-            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
-            particles: [
-                { color: '#F2D7D5', gradient: '#E6B0AA', type: 'petal', weight: 100, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
-            ],
-            frameClass: 'theme-frame--zen',
-            overrides: { insetV: 60, insetH: 80, hostTextSize: 1.1, gustStrength: 15, fallSpeed: 0.25, maxPetals: 15, windiness: 5, hostMaxWidth: 120, backdropOpacity: 40 },
-            defaults: { hostsTitle: "Guides", eventTitle: "Wellness Retreat", eventSubtitle: "Mindfulness Session", eventTopLabel: "Peaceful" },
-            uiLabels: { particlesPlural: 'Petals', particlesSingular: 'Petal', borderToggle: 'Hide bamboo frame', gustStrength: 'Gentle Breeze', frameName: 'Bamboo' }
-        }),
+        // 'zen-garden': defineTheme({
+        //     id: 'zen-garden',
+        //     name: 'Zen Garden*',
+        //     pack: 'specialty',
+        //     icon: '🪴',
+        //     primary: '#EBE5D9',
+        //     accent: '#7A916F',
+        //     secondary: '#D4A373',
+        //     swatchName: 'Sand & Sage',
+        //     colors: { text: '#2F3E2C', darkText: '#EBE5D9' },
+        //     swatches: [
+        //         { hex: '#F4F1DE', name: 'Pale Bamboo', accent: '#81B29A', secondary: '#E07A5F' },
+        //         { hex: '#CCD5AE', name: 'Matcha', accent: '#FAEDCD', secondary: '#D4A373' }
+        //     ],
+        //     fonts: { primary: "'Lora', serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
+        //     assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+        //     particles: [
+        //         { color: '#F2D7D5', gradient: '#E6B0AA', type: 'petal', weight: 100, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
+        //     ],
+        //     frameClass: 'theme-frame--zen',
+        //     overrides: { insetV: 60, insetH: 80, hostTextSize: 1.1, gustStrength: 15, fallSpeed: 0.25, maxPetals: 15, windiness: 5, hostMaxWidth: 120, backdropOpacity: 40 },
+        //     defaults: { hostsTitle: "Guides", eventTitle: "Wellness Retreat", eventSubtitle: "Mindfulness Session", eventTopLabel: "Peaceful" },
+        //     uiLabels: { particlesPlural: 'Petals', particlesSingular: 'Petal', borderToggle: 'Hide bamboo frame', gustStrength: 'Gentle Breeze', frameName: 'Bamboo' }
+        // }),
 
         'bistro-lounge': defineTheme({
             id: 'bistro-lounge',
@@ -1461,34 +1461,9 @@
             uiLabels: { particlesPlural: 'Steam & Bokeh', particlesSingular: 'Mote', borderToggle: 'Hide chalkboard', gustStrength: 'Draft', frameName: 'Café Frame' }
         }),
 
-        'deep-blue': defineTheme({
-            id: 'deep-blue',
-            name: 'Deep Blue*',
-            pack: 'specialty',
-            icon: '🐟',
-            primary: '#011627',
-            accent: '#2EC4B6',
-            secondary: '#FF9F1C',
-            swatchName: 'Ocean Trench',
-            colors: { text: '#FDFFFC', darkText: '#011627' },
-            swatches: [
-                { hex: '#003049', name: 'Coral Reef', accent: '#D62828', secondary: '#F77F00' }
-            ],
-            fonts: { primary: "'Varela Round', sans-serif", display: "'Baloo 2', cursive", heading: "'Baloo 2', cursive" },
-            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
-            particles: [
-                { color: '#ffffff', gradient: '#E0F7FA', type: 'tropical-oasis-bubble', weight: 80, speedMultiplier: -0.3, sizeMultiplier: 0.9, massMultiplier: 0.6, isWhite: true },
-                { color: '#2EC4B6', gradient: '#009688', type: 'dust', weight: 20, speedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3 }
-            ],
-            frameClass: 'theme-frame--deep-blue',
-            overrides: { insetV: 55, insetH: 70, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.2, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 50 },
-            defaults: { hostsTitle: "Marine Biologists", eventTitle: "Aquarium Gala", eventSubtitle: "Under the Sea", eventTopLabel: "Explore" },
-            uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide light rays', gustStrength: 'Current', frameName: 'Water Rays' }
-        }),
-
         'steampunk-gears': defineTheme({
             id: 'steampunk-gears',
-            name: 'Steampunk Gears*',
+            name: 'Steampunk Gears',
             pack: 'specialty',
             icon: '⚙️',
             primary: '#1A0F0A',
@@ -1522,6 +1497,38 @@
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.0, gustStrength: 25, fallSpeed: 0.4, maxPetals: 35, windiness: 5, hostMaxWidth: 120, backdropOpacity: 45 },
             defaults: { hostsTitle: "Inventors", eventTitle: "Clockwork Expo", eventSubtitle: "Victorian Futurism", eventTopLabel: "Marvelous" },
             uiLabels: { particlesPlural: 'Sparks', particlesSingular: 'Spark', borderToggle: 'Hide brass piping', gustStrength: 'Steam Pressure', frameName: 'Pipes & Gears' }
+        }),
+
+        'deep-blue': defineTheme({
+            id: 'deep-blue',
+            name: 'Deep Blue Sea',
+            pack: 'specialty',
+            icon: '🐟',
+            primary: '#011627',
+            accent: '#2EC4B6',
+            secondary: '#FF9F1C',
+            swatchName: 'Ocean Deep',
+            colors: { text: '#FDFFFC', darkText: '#011627' },
+            swatches: [
+                { hex: '#004E5A', name: 'Coral Lagoon', accent: '#FF2E93', secondary: '#FFD000' },
+                { hex: '#1b6a9cff', name: 'Sunlit Marina', accent: '#00F5D4', secondary: '#FFAA00' },
+                { hex: '#00050d', name: 'Abyssal Trench', accent: '#0096a7ff', secondary: '#00a896' },
+                { hex: '#051C14', name: 'Emerald Reef', accent: '#39FF14', secondary: '#E0A96D' },
+                { hex: '#0A001F', name: 'Twilight Zone', accent: '#FF007F', secondary: '#00F5D4' },
+                { hex: '#0B0C10', name: 'Abyssal Gold', accent: '#FFB300', secondary: '#4FC3F7' }
+            ],
+            fonts: { primary: "'Varela Round', sans-serif", display: "'Baloo 2', cursive", heading: "'Baloo 2', cursive" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'deep-blue-bubble', weight: 60, speedMultiplier: -0.3, sizeMultiplier: 0.9, massMultiplier: 0.6, isWhite: true },
+                { useThemeAccent: true, type: 'deep-blue-plankton', weight: 20, speedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3 },
+                { color: '#FF9F1C', gradient: '#FF6F00', type: 'deep-blue-fish', weight: 20, speedMultiplier: 1.0, sizeMultiplier: 2.5, massMultiplier: 0.8 }
+            ],
+            frameClass: 'theme-frame--deep-blue',
+            flags: { syncParticleColors: true },
+            overrides: { insetV: 55, insetH: 70, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.2, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 50 },
+            defaults: { hostsTitle: "Marine Biologists", eventTitle: "Aquarium Gala", eventSubtitle: "Under the Sea", eventTopLabel: "Explore" },
+            uiLabels: { particlesPlural: 'Fish & Bubbles', particlesSingular: 'Fish & Bubbles', borderToggle: 'Hide light rays', gustStrength: 'Current', frameName: 'Water Rays' }
         }),
 
         // --- HOLIDAY PACK ---

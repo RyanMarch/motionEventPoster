@@ -34,13 +34,35 @@ window.ParticleEngine = class ParticleEngine {
         const element = document.createElement('div');
         const type = this.getRandomPetalType();
         element.className = `petal petal--${type.type || 'dust'}`;
+        
+        const isBubble = type.type && type.type.includes('bubble');
+        const isFish = type.type === 'deep-blue-fish';
+        
+        let fishId = null;
         if (type.type) {
             element.dataset.type = type.type;
+            if (isFish) {
+                fishId = Math.floor(Math.random() * 6) + 1; // 6 varieties
+                element.classList.add(`petal--deep-blue-fish-${fishId}`);
+            }
         }
+        
         const size = (Math.random() * 12 + 10) * (type.sizeMultiplier || 1.0);
         element.style.width = `${size}px`;
-        const isBubble = type.type && type.type.includes('bubble');
-        element.style.height = `${size * (type.type === 'star' || type.type === 'dust' || isBubble ? 1.0 : 1.25)}px`;
+        
+        let heightMultiplier = 1.25;
+        if (isBubble || type.type === 'star' || type.type === 'dust') {
+            heightMultiplier = 1.0;
+        } else if (isFish) {
+            if (fishId === 5) {
+                heightMultiplier = 1.2; // Jellyfish is taller
+            } else if (fishId === 3) {
+                heightMultiplier = 0.83; // Moorish Idol
+            } else {
+                heightMultiplier = 0.75; // Clownfish, Blue Tang, Yellow Tang, Turtle
+            }
+        }
+        element.style.height = `${size * heightMultiplier}px`;
         
         let color = type.color;
         let gradient = type.gradient;
@@ -81,8 +103,14 @@ window.ParticleEngine = class ParticleEngine {
             }
         }
 
-        element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
-        element.style.borderRadius = type.shape || '50%';
+        if (isFish) {
+            element.style.background = 'none';
+            element.style.borderRadius = '0';
+        } else {
+            element.style.background = `linear-gradient(135deg, ${color}, ${gradient})`;
+            element.style.borderRadius = type.shape || '50%';
+        }
+
         if (type.isWhite) {
             element.classList.add('is-white');
         }
@@ -94,24 +122,61 @@ window.ParticleEngine = class ParticleEngine {
             element.style.setProperty('--star-delay', `${Math.random() * -5}s`);
         }
         container.appendChild(element);
+
+        let horizontalSpeed = 0;
+        let verticalDrift = 0;
+        let x = Math.random() * 120 - 10;
+        let y = Math.random() * 140 - 20;
+
+        if (isFish) {
+            if (fishId === 5) {
+                // Jellyfish: drifts slowly horizontally, pulses upwards (verticalDrift starts negative)
+                horizontalSpeed = (Math.random() * 0.8 + 0.4) * (Math.random() > 0.5 ? 1 : -1);
+                verticalDrift = -(Math.random() * 1.5 + 1.0);
+                x = Math.random() * 100;
+                y = Math.random() * 80 + 10;
+            } else if (fishId === 6) {
+                // Sea Turtle: glides slowly and majestically
+                const swimLeft = Math.random() > 0.5;
+                const speed = (Math.random() * 1.5 + 1.5) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0);
+                horizontalSpeed = swimLeft ? -speed : speed;
+                verticalDrift = (Math.random() - 0.5) * 0.15;
+                y = Math.random() * 60 + 20;
+                x = Math.random() * 120 - 10;
+            } else {
+                // Standard Fish: fast/medium horizontal swim with moderate vertical wobble
+                const swimLeft = Math.random() > 0.5;
+                const speed = (Math.random() * 4 + 3) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0);
+                horizontalSpeed = swimLeft ? -speed : speed;
+                verticalDrift = (Math.random() - 0.5) * 0.4;
+                y = Math.random() * 70 + 15;
+                x = Math.random() * 120 - 10;
+            }
+        } else if (type.type && type.type.includes('reflection')) {
+            horizontalSpeed = -(Math.random() * 6 + 3);
+            verticalDrift = (Math.random() - 0.5) * 0.8;
+        }
+
         return {
             element,
             type: type.type,
+            fishId: fishId,
+            pulsePhase: fishId === 5 ? Math.random() * Math.PI * 2 : 0,
             accentShift: type.accentShift,
             useThemePrimary: type.useThemePrimary,
             useThemeAccent: type.useThemeAccent,
             useThemeSecondary: type.useThemeSecondary,
             isWhite: type.isWhite,
-            x: Math.random() * 120 - 10,
-            y: Math.random() * 140 - 20,
+            x: x,
+            y: y,
             mass: (Math.random() * 0.8 + 0.4) * (type.massMultiplier !== undefined ? type.massMultiplier : 1.0),
             aero: Math.random() * 0.5 + 0.5,
-            rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (type.type && type.type.includes('bubble')) ? 0 : (Math.random() * 360),
-            rotSpeed: (type.type && (type.type.includes('reflection') || type.type.includes('bubble'))) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
+            rotation: (type.type && type.type.includes('balloon')) ? (Math.random() * 20 - 10) : (type.type && (type.type.includes('bubble') || isFish)) ? 0 : (Math.random() * 360),
+            rotSpeed: (type.type && (type.type.includes('reflection') || type.type.includes('bubble') || isFish)) ? 0 : ((Math.random() - 0.5) * 100 * (type.rotSpeedMultiplier !== undefined ? type.rotSpeedMultiplier : 1.0)),
             baseFallSpeed: (Math.random() * 15 + 5) * (type.speedMultiplier !== undefined ? type.speedMultiplier : 1.0),
-            naturalDrift: (Math.random() - 0.5) * 5 * (type.driftMultiplier !== undefined ? type.driftMultiplier : 1.0),
-            horizontalSpeed: (type.type && type.type.includes('reflection')) ? -(Math.random() * 6 + 3) : 0,
-            verticalDrift: (type.type && type.type.includes('reflection')) ? (Math.random() - 0.5) * 0.8 : 0
+            naturalDrift: isFish ? 0 : (Math.random() - 0.5) * 5 * (type.driftMultiplier !== undefined ? type.driftMultiplier : 1.0),
+            horizontalSpeed: horizontalSpeed,
+            verticalDrift: verticalDrift
         };
     }
 
@@ -156,7 +221,26 @@ window.ParticleEngine = class ParticleEngine {
         const isSpace = this.poster.theme?.id === 'space-odyssey';
         const totalWind = isSpace ? 0 : (this.state.currentWind + this.state.gustForce) * this.state.windDirection;
         this.state.petals.forEach(p => {
-            if (p.type && p.type.includes('reflection')) {
+            if (p.type === 'deep-blue-fish') {
+                if (p.fishId === 5) {
+                    // Jellyfish: drifts slowly horizontally, pulses upwards (verticalDrift starts negative)
+                    p.pulsePhase = (p.pulsePhase || 0) + dt * 2.5; // pulsing speed
+                    const surge = Math.pow(Math.max(0, Math.sin(p.pulsePhase)), 3.0); // sharp push
+                    p.y += (p.verticalDrift * (0.4 + surge * 2.2)) * dt * (this.state.fallSpeed * 1.5);
+                    p.x += p.horizontalSpeed * 0.3 * dt;
+                    p.rotation = Math.sin(p.pulsePhase) * 6;
+                } else if (p.fishId === 6) {
+                    // Sea Turtle: glides slowly and majestically
+                    p.x += p.horizontalSpeed * dt * (this.state.fallSpeed * 1.8);
+                    p.y += p.verticalDrift * dt + Math.sin(p.x * 0.08) * 0.02;
+                    p.rotation = p.verticalDrift * 8 + Math.sin(p.x * 0.08) * 3;
+                } else {
+                    // Standard Fish (Clownfish, Blue Tang, Moorish Idol, Yellow Tang)
+                    p.x += p.horizontalSpeed * dt * (this.state.fallSpeed * 3);
+                    p.y += p.verticalDrift * dt + Math.sin(p.x * 0.15) * 0.05;
+                    p.rotation = p.verticalDrift * 15 + Math.sin(p.x * 0.15) * 5;
+                }
+            } else if (p.type && p.type.includes('reflection')) {
                 // Reflections sweep horizontally without gravity, wind, or tumbling
                 p.x += p.horizontalSpeed * dt;
                 p.y += p.verticalDrift * dt;
@@ -213,6 +297,41 @@ window.ParticleEngine = class ParticleEngine {
                     p.spawnDelay = 6 + Math.random() * 14;
                     p.element.style.display = 'none';
                 }
+            } else if (p.type === 'deep-blue-fish') {
+                if (p.fishId === 5) {
+                    // Jellyfish wraps vertically when it floats off the top
+                    if (p.y < -20) {
+                        p.y = 115;
+                        p.x = Math.random() * 90 + 5;
+                        p.pulsePhase = Math.random() * Math.PI * 2;
+                        p.horizontalSpeed = (Math.random() * 0.8 + 0.4) * (Math.random() > 0.5 ? 1 : -1);
+                        p.verticalDrift = -(Math.random() * 1.5 + 1.0);
+                    }
+                } else {
+                    // Fish and Turtles wrap horizontally
+                    const isTurtle = p.fishId === 6;
+                    if (p.horizontalSpeed > 0 && p.x > 115) {
+                        p.x = -15;
+                        p.y = Math.random() * 70 + 15;
+                        if (isTurtle) {
+                            p.verticalDrift = (Math.random() - 0.5) * 0.15;
+                            p.horizontalSpeed = (Math.random() * 1.5 + 1.5);
+                        } else {
+                            p.verticalDrift = (Math.random() - 0.5) * 0.4;
+                            p.horizontalSpeed = (Math.random() * 4 + 3);
+                        }
+                    } else if (p.horizontalSpeed < 0 && p.x < -15) {
+                        p.x = 115;
+                        p.y = Math.random() * 70 + 15;
+                        if (isTurtle) {
+                            p.verticalDrift = (Math.random() - 0.5) * 0.15;
+                            p.horizontalSpeed = -(Math.random() * 1.5 + 1.5);
+                        } else {
+                            p.verticalDrift = (Math.random() - 0.5) * 0.4;
+                            p.horizontalSpeed = -(Math.random() * 4 + 3);
+                        }
+                    }
+                }
             } else {
                 if (p.y > 110) { p.y = -10; p.x = Math.random() * 120 - 10; }
                 else if (p.y < -20) p.y = 110;
@@ -223,6 +342,18 @@ window.ParticleEngine = class ParticleEngine {
             // Skip rotation transform for circular particles to optimize GPU matrix operations
             if (p.type === 'space-star' || p.type === 'space-dust-accent' || p.type === 'space-dust-secondary' || p.type === 'dust') {
                 p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0)`;
+            } else if (p.type === 'deep-blue-fish') {
+                if (p.fishId === 5) {
+                    const surge = Math.pow(Math.max(0, Math.sin(p.pulsePhase)), 3.0);
+                    // contract when pushing, expand bell when trailing
+                    const scaleY = 1.0 + surge * 0.15;
+                    const scaleX = 1.0 - surge * 0.1;
+                    const flip = p.horizontalSpeed > 0 ? -1 : 1;
+                    p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0) scale(${flip * scaleX}, ${scaleY}) rotate(${p.rotation}deg)`;
+                } else {
+                    const flip = p.horizontalSpeed > 0 ? -1 : 1;
+                    p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0) scaleX(${flip}) rotate(${p.rotation}deg)`;
+                }
             } else {
                 p.element.style.transform = `translate3d(${p.x}vw, ${p.y}vh, 0) rotate(${p.rotation}deg)`;
             }
