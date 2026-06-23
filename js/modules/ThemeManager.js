@@ -366,11 +366,52 @@ window.ThemeManager = class ThemeManager {
 
             // Side layers SVG compositions
             const leftSideSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><rect x='35' y='25' width='30' height='90' rx='15' fill='black' opacity='0.85'/><rect x='25' y='15' width='30' height='90' rx='15' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 70 30 L 70 80 M 80 30 L 80 80 M 90 30 L 90 80 M 60 40 L 100 40 M 60 50 L 100 50 M 60 60 L 100 60 M 60 70 L 100 70' stroke='${escTextColor}' stroke-width='1.5' opacity='0.6'/><path d='M 20 120 Q 45 100, 70 120 T 120 120' fill='none' stroke='${escSecondaryColor}' stroke-width='5' stroke-linecap='round'/><circle cx='110' cy='30' r='12' fill='none' stroke='${escTextColor}' stroke-width='3'/><circle cx='110' cy='70' r='4' fill='${escTextColor}'/></svg>")`;
-            this.root.style.setProperty('--memphis-sway-left-side', leftSideSvg);
-
-            const rightSideSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><polygon points='50,30 110,10 90,90 30,70' fill='black' opacity='0.85'/><polygon points='40,20 100,0 80,80 20,60' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4' stroke-linejoin='round'/><circle cx='110' cy='110' r='20' fill='none' stroke='${escAccentColor}' stroke-width='6'/><g fill='none' stroke='${escTextColor}' stroke-width='3'><line x1='20' y1='100' x2='60' y2='100'/><line x1='20' y1='110' x2='60' y2='110'/><line x1='20' y1='120' x2='60' y2='120'/></g><g stroke='${escTextColor}' stroke-width='2.5'><line x1='125' y1='45' x2='135' y2='45'/><line x1='130' y1='40' x2='130' y2='50'/></g><circle cx='130' cy='75' r='5' fill='${escTextColor}'/></svg>")`;
             this.root.style.setProperty('--memphis-sway-right-side', rightSideSvg);
         }
+
+        if (theme.id === 'steampunk-gears') {
+            this.syncSteampunkGears();
+        }
+    }
+
+    syncSteampunkGears() {
+        const theme = this.poster.theme;
+        const primary = this.state.bgColor || theme.colors.primary;
+        const accent = this.state.accentColor || theme.colors.accent;
+        const secondary = this.state.secondaryColor || theme.colors.secondary || '#B5A642';
+
+        const pRgb = window.PosterUtils.hexToRgb(primary);
+        const aRgb = window.PosterUtils.hexToRgb(accent);
+        const sRgb = window.PosterUtils.hexToRgb(secondary);
+
+        const pVal = window.PosterUtils.rgbToHsl(pRgb.r, pRgb.g, pRgb.b);
+        const aVal = window.PosterUtils.rgbToHsl(aRgb.r, aRgb.g, aRgb.b);
+        const sVal = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
+
+        const accentHighlight = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, Math.min(aVal.l * 1.3, 95)));
+        const accentMid = encodeURIComponent(accent);
+        const accentDark = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, aVal.l * 0.6));
+        const accentDeep = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, aVal.l * 0.3));
+
+        const secHighlight = encodeURIComponent(window.PosterUtils.hslToHex(sVal.h, sVal.s, Math.min(sVal.l * 1.3, 95)));
+        const secMid = encodeURIComponent(secondary);
+        const secDark = encodeURIComponent(window.PosterUtils.hslToHex(sVal.h, sVal.s, sVal.l * 0.6));
+
+        const gearCopper = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='metal-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentMid}'/><stop offset='50%' stop-color='${accentDark}'/><stop offset='100%' stop-color='${accentDeep}'/></linearGradient><linearGradient id='gold-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentHighlight}'/><stop offset='50%' stop-color='${accentMid}'/><stop offset='100%' stop-color='${accentDark}'/></linearGradient></defs><g fill='url(%23metal-c)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(0, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(22.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(45, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(67.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(90, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(112.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(135, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(157.5, 100, 100)'/></g><circle cx='100' cy='100' r='78' fill='url(%23metal-c)' stroke='rgba(0,0,0,0.6)' stroke-width='2'/><circle cx='100' cy='100' r='68' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='4'/><circle cx='100' cy='100' r='32' fill='url(%23gold-c)' stroke='rgba(0,0,0,0.7)' stroke-width='2'/><circle cx='100' cy='100' r='12' fill='none' stroke='rgba(0,0,0,0.8)' stroke-width='4'/><g stroke='url(%23gold-c)' stroke-width='8' stroke-linecap='round'><line x1='100' y1='28' x2='100' y2='172'/><line x1='28' y1='100' x2='172' y2='100'/><line x1='49' y1='49' x2='151' y2='151'/><line x1='49' y1='151' x2='151' y2='49'/></g><g fill='url(%23gold-c)' stroke='rgba(0,0,0,0.5)' stroke-width='1'><circle cx='100' cy='35' r='4'/><circle cx='100' cy='165' r='4'/><circle cx='35' cy='100' r='4'/><circle cx='165' cy='100' r='4'/><circle cx='54' cy='54' r='4'/><circle cx='146' cy='146' r='4'/><circle cx='54' cy='146' r='4'/><circle cx='146' cy='54' r='4'/></g><circle cx='100' cy='100' r='8' fill='%231a1a1a' stroke='rgba(0,0,0,0.9)' stroke-width='2'/></svg>")`;
+
+        const gearBrass = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><defs><linearGradient id='brass-b' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${secHighlight}'/><stop offset='50%' stop-color='${secMid}'/><stop offset='100%' stop-color='${secDark}'/></linearGradient></defs><g fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(0, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(30, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(60, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(90, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(120, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(150, 75, 75)'/></g><circle cx='75' cy='75' r='58' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'/><mask id='gear-holes-b'><rect x='0' y='0' width='150' height='150' fill='white'/><circle cx='75' cy='75' r='14' fill='black'/><circle cx='75' cy='38' r='12' fill='black'/><circle cx='75' cy='112' r='12' fill='black'/><circle cx='38' cy='75' r='12' fill='black'/><circle cx='112' cy='75' r='12' fill='black'/></mask><circle cx='75' cy='75' r='50' fill='url(%23brass-b)' mask='url(%23gear-holes-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'/><circle cx='75' cy='75' r='18' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><circle cx='75' cy='75' r='6' fill='%23111111' stroke='rgba(0,0,0,0.8)' stroke-width='1'/></svg>")`;
+
+        const gearIron = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='iron-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23555555'/><stop offset='50%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%23111111'/></linearGradient><linearGradient id='bronze-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentHighlight}'/><stop offset='50%' stop-color='${accentMid}'/><stop offset='100%' stop-color='${accentDark}'/></linearGradient></defs><g fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1'><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(0, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(20, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(40, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(60, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(80, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(100, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(120, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(140, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(160, 90, 90)'/></g><circle cx='90' cy='90' r='70' fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><mask id='iron-holes-i'><rect x='0' y='0' width='180' height='180' fill='white'/><circle cx='90' cy='90' r='22' fill='black'/><circle cx='90' cy='46' r='14' fill='black'/><circle cx='128' cy='68' r='14' fill='black'/><circle cx='128' cy='112' r='14' fill='black'/><circle cx='90' cy='134' r='14' fill='black'/><circle cx='52' cy='112' r='14' fill='black'/><circle cx='52' cy='68' r='14' fill='black'/></mask><circle cx='90' cy='90' r='62' fill='url(%23iron-i)' mask='url(%23iron-holes-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1'/><circle cx='90' cy='90' r='25' fill='url(%23bronze-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1.5'/><circle cx='90' cy='90' r='8' fill='%23111111' stroke='rgba(0,0,0,0.9)' stroke-width='1.5'/></svg>")`;
+
+        this.root.style.setProperty('--steampunk-sway-top-left', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-top-right', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-bottom-left', gearIron);
+        this.root.style.setProperty('--steampunk-sway-bottom-right', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-top-1', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-top-2', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-top-3', gearIron);
+        this.root.style.setProperty('--steampunk-sway-left-side', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-right-side', gearIron);
     }
 
     initSwatches() {

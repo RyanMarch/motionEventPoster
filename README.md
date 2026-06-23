@@ -116,6 +116,9 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 *   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
 *   **[Bistro Lounge][demo-bistro-louge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
+<!-- *   **[Pirate Adventure][demo-pirate-adventure]:** A swashbuckling pirate adventure theme with weathered wood, nautical elements, and adventurous vibes. -->
+<!-- *   **[Medieval Fantasy][demo-medieval-fantasy]:** A medieval fantasy theme with old-world charm, rustic elements, and a touch of magic. -->
+*   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
 
 ### 🎃 Holiday Pack
 *   **[Halloween][demo-halloween]:** Spooky pumpkin-orange and deep shadows with eerie glowing particles, perfect for haunted events.
@@ -148,6 +151,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Cinema Premiere** – *Dramatic Movie Premiere* <br> [![Cinema Premiere](.github/assets/poster-cinema.avif)][demo-cinema] | **Game Console** – *Video Gaming Fun* <br> [![Game Console](.github/assets/poster-game-console.avif)][demo-game-console] |
 | **Space Odyssey** – *Futuristic Deep Space* <br> [![Space Odyssey](.github/assets/poster-space-odyssey.avif)][demo-space-odyssey] | **Bistro Lounge** – *Cozy Cafe Atmosphere* <br> [![Bistro Lounge](.github/assets/poster-bistro-lounge.avif)][demo-bistro-lounge] |
+| **Steampunk Gears** – *Victorian Industrial* <br> [![Steampunk Gears](.github/assets/poster-steampunk-gears.avif)][demo-steampunk-gears] | |
 
 ### 🎃 Holiday Pack
 | | |
@@ -367,3 +371,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
 [demo-2000s-glass]: https://motionposter.ryanmarch.me/?theme=2000s-glass
 [demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
+[demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears

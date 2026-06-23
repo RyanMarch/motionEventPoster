@@ -531,6 +531,14 @@ window.UIController = class UIController {
             const isFS = !!document.fullscreenElement;
             this.body.classList.toggle('is-fullscreen', isFS);
             
+            // Force repaint on all sway layers to prevent them from freezing during fullscreen transitions
+            document.querySelectorAll('.sway-layer').forEach(el => {
+                const prev = el.style.transform;
+                el.style.transform = 'translateZ(0)';
+                el.offsetHeight; // trigger reflow
+                el.style.transform = prev;
+            });
+
             // Ensure screen size stats update immediately after layout stabilizes
             requestAnimationFrame(() => {
                 if (this.poster.isControlsPanelVisible()) {
