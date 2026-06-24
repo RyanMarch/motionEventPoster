@@ -29,6 +29,7 @@ function makeFakePoster(stateOverrides = {}) {
             backdropOpacity: 100,
             hideUi: false, hideLogo: false, hideDate: false,
             hideTitle: false, hideHost: false, hideBorder: false,
+            hideValentinesHearts: false,
             qrSoiree: false, qrMembership: false,
             isPetalsPaused: false, isBgPaused: false,
             activeTheme: 'spring',

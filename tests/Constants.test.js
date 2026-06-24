@@ -17,7 +17,7 @@ describe('DEFAULTS', () => {
             'maxPetals', 'windiness', 'fallSpeed', 'tumbleSpeed', 'gustStrength',
             'hostTextSize', 'hostMaxWidth', 'hostLayout', 'backdropOpacity',
             'insetV', 'insetH', 'hideUi', 'hideLogo', 'hideDate', 'hideTitle',
-            'hideHost', 'hideBorder', 'qrSoiree', 'qrMembership',
+            'hideHost', 'hideBorder', 'hideValentinesHearts', 'qrSoiree', 'qrMembership',
             'isPetalsPaused', 'isBgPaused', 'disableAutoFullscreen',
             'autoHideMenu', 'smoothTransitions', 'isAppRunning',
             'bgColor', 'accentColor', 'secondaryColor', 'activeTheme', 'fpsCap',

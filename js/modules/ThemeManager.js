@@ -200,6 +200,11 @@ window.ThemeManager = class ThemeManager {
             backdropControl.style.display = theme.id === 'memphis-pop' ? 'none' : '';
         }
 
+        const valentinesHeartsControl = document.getElementById('label-hide-valentines-hearts');
+        if (valentinesHeartsControl) {
+            valentinesHeartsControl.style.display = theme.id === 'valentines-romance' ? '' : 'none';
+        }
+
         // Update Theme Selector Trigger
         if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
         if (this.controls.themeSelectLabel) this.controls.themeSelectLabel.textContent = theme.name;

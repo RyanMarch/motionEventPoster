@@ -239,6 +239,7 @@ window.EventPoster = class EventPoster {
             hideTitle: document.getElementById('check-hide-title'),
             hideHost: document.getElementById('check-hide-host'),
             hideBorder: document.getElementById('check-hide-border'),
+            hideValentinesHearts: document.getElementById('check-hide-valentines-hearts'),
             qrSoiree: document.getElementById('check-qr-soiree'),
             qrMembership: document.getElementById('check-qr-membership'),
             disableAutoFullscreen: document.getElementById('check-disable-auto-fullscreen'),
@@ -484,6 +485,9 @@ window.EventPoster = class EventPoster {
         this.controls.hideTitle.checked = this.state.hideTitle;
         this.controls.hideHost.checked = this.state.hideHost;
         this.controls.hideBorder.checked = this.state.hideBorder;
+        if (this.controls.hideValentinesHearts) {
+            this.controls.hideValentinesHearts.checked = this.state.hideValentinesHearts;
+        }
         this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
 
         if (this.controls.autoHideMenu) this.controls.autoHideMenu.checked = this.state.autoHideMenu;
@@ -498,6 +502,7 @@ window.EventPoster = class EventPoster {
         this.body.classList.toggle('title-hidden', this.state.hideTitle);
         this.body.classList.toggle('host-hidden', this.state.hideHost);
         this.body.classList.toggle('border-hidden', this.state.hideBorder);
+        this.body.classList.toggle('hide-valentines-hearts', this.state.hideValentinesHearts);
 
         this.elements.qrSoiree.classList.toggle('qr-hidden', !this.state.qrSoiree);
         this.elements.qrMembership.classList.toggle('qr-hidden', !this.state.qrMembership);
