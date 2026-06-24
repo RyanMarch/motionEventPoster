@@ -1660,29 +1660,29 @@
             uiLabels: { particlesPlural: 'Hearts', particlesSingular: 'Heart', borderToggle: 'Hide lace frame', gustStrength: 'Swoon Speed', frameName: 'Lace Border' }
         }),
 
-        'lunar-new-year': defineTheme({
-            id: 'lunar-new-year',
-            name: 'Lunar New Year*',
+        'st-patricks-day': defineTheme({
+            id: 'st-patricks-day',
+            name: 'St. Patrick\'s Day*',
             pack: 'holiday',
-            icon: '🏮',
-            primary: '#8B0000',
+            icon: '☘️',
+            primary: '#006A4E',
             accent: '#FFD700',
-            secondary: '#FF4500',
-            swatchName: 'Dragon Red',
-            colors: { text: '#FFF8DC', darkText: '#3B0000' },
+            secondary: '#E6B800',
+            swatchName: 'Emerald & Gold',
+            colors: { text: '#FFFFFF', darkText: '#00331f' },
             swatches: [
-                { hex: '#1A0000', name: 'Midnight Lantern', accent: '#FFA500', secondary: '#FFD700' }
+                { hex: '#004B32', name: 'Dublin Dusk', accent: '#FFD700', secondary: '#E6B800' }
             ],
-            fonts: { primary: "'Montserrat', sans-serif", display: "'Cinzel', serif", heading: "'Cinzel', serif" },
+            fonts: { primary: "'Jost', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#FFD700', gradient: '#B8860B', type: 'dust', weight: 60, speedMultiplier: 0.4, sizeMultiplier: 1.2, massMultiplier: 0.8 },
-                { color: '#FF4500', gradient: '#8B0000', type: 'confetti', weight: 40, speedMultiplier: 0.5, sizeMultiplier: 1.0, massMultiplier: 0.9 }
+                { color: '#2E7D32', gradient: '#1B5E20', type: 'clover', weight: 60, speedMultiplier: 0.35, sizeMultiplier: 1.2, massMultiplier: 0.7 },
+                { color: '#FFD700', gradient: '#DAA520', type: 'coin', weight: 40, speedMultiplier: 0.45, sizeMultiplier: 1.0, massMultiplier: 1.0 }
             ],
-            frameClass: 'theme-frame--lunar',
-            overrides: { insetV: 65, insetH: 80, hostTextSize: 1.1, gustStrength: 25, fallSpeed: 0.4, maxPetals: 35, windiness: 8, hostMaxWidth: 130, backdropOpacity: 70 },
-            defaults: { hostsTitle: "Honored Guests", eventTitle: "Spring Festival", eventSubtitle: "Lunar Celebration", eventTopLabel: "Prosperous" },
-            uiLabels: { particlesPlural: 'Gold & Confetti', particlesSingular: 'Flake', borderToggle: 'Hide lanterns', gustStrength: 'Lantern Sway', frameName: 'Red Envelopes' }
+            frameClass: 'theme-frame--st-patricks',
+            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.05, gustStrength: 20, fallSpeed: 0.35, maxPetals: 30, windiness: 8, hostMaxWidth: 125, backdropOpacity: 65 },
+            defaults: { hostsTitle: "Lasses & Lads", eventTitle: "St. Patrick's Celebration", eventSubtitle: "Irish Festival", eventTopLabel: "Spirited" },
+            uiLabels: { particlesPlural: 'Clovers & Gold', particlesSingular: 'Clover', borderToggle: 'Hide Celtic borders', gustStrength: 'Breeze Intensity', frameName: 'Celtic Border' }
         }),
 
         'festive-holiday': defineTheme({
@@ -1713,7 +1713,7 @@
 
         'new-years-eve': defineTheme({
             id: 'new-years-eve',
-            name: 'New Year\'s Eve*',
+            name: 'New Year\'s Eve',
             pack: 'holiday',
             icon: '🎆',
             primary: '#050510',
@@ -1722,7 +1722,11 @@
             swatchName: 'Midnight Gold',
             colors: { text: '#FFFFFF', darkText: '#000000' },
             swatches: [
-                { hex: '#110022', name: 'Royal Countdown', accent: '#00FFFF', secondary: '#FF00FF' }
+                { hex: '#110022', name: 'Royal Countdown', accent: '#00FFFF', secondary: '#FF00FF' },
+                { hex: '#0A0A16', name: 'Times Square', accent: '#FF2A54', secondary: '#00FF9F' },
+                { hex: '#1D1217', name: 'Rose Gold Toast', accent: '#B76E79', secondary: '#EAD1DC' },
+                { hex: '#0B0C10', name: 'Silver Glitter', accent: '#E2E2E2', secondary: '#1F2833' },
+                { hex: '#000000', name: 'Neon Countdown', accent: '#39FF14', secondary: '#FF007F' }
             ],
             fonts: { primary: "'Jost', sans-serif", display: "'Cinzel', serif", heading: "'Cinzel', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },

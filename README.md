@@ -122,6 +122,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🎃 Holiday Pack
 *   **[Halloween Soiree][demo-halloween-soiree]:** Spooky pumpkins, drifting ghosts, and deep shadows with eerie glowing particles, perfect for haunted events.
 *   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
+*   **[New Year's Eve][demo-new-years-eve]:** A glamorous New Year's Eve celebration with gold accents, confetti, and a festive atmosphere.
 
 ## Theme Screenshots
 
@@ -157,6 +158,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
+| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | 
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -374,3 +376,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-deep-blue]: https://motionposter.ryanmarch.me/?theme=deep-blue
 [demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
 [demo-autumn-harvest]: https://motionposter.ryanmarch.me/?theme=autumn-harvest
+[demo-new-years-eve]: https://motionposter.ryanmarch.me/?theme=new-years-eve
