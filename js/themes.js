@@ -745,84 +745,6 @@
             }
         }),
 
-        'mardi-gras': defineTheme({
-            id: 'mardi-gras',
-            name: 'Mardi Gras',
-            pack: 'party',
-            icon: '🎭',
-            primary: '#1E0035',
-            accent: '#FFD700',
-            secondary: '#00A86B',
-            swatchName: 'Royal Night',
-            colors: {
-                text: '#ffffff',
-                darkText: '#1E0035'
-            },
-            swatches: [
-                { hex: '#12001F', name: 'Midnight Court', accent: '#FFD700', secondary: '#00A86B' },
-                { hex: '#0A1A08', name: 'Emerald Isle', accent: '#FFD700', secondary: '#9B30FF' },
-                { hex: '#1A0012', name: 'Velvet Rose', accent: '#FFD700', secondary: '#E040FB' },
-                { hex: '#0D0020', name: 'Deep Indigo', accent: '#FFA500', secondary: '#00BCD4' },
-                { hex: '#1A1000', name: 'Bronze Dusk', accent: '#FF8C00', secondary: '#7B68EE' },
-                { hex: '#000A12', name: 'Midnight Teal', accent: '#FFD700', secondary: '#26C6DA' }
-            ],
-            fonts: {
-                primary: "'Josefin Sans', system-ui, sans-serif",
-                display: "'Cinzel Decorative', Georgia, serif",
-                heading: "'Cinzel', Georgia, serif"
-            },
-            assets: {
-                border: "none",
-                sway1: "none",
-                sway2: "none",
-                sway3: "none",
-                sway4: "none",
-                swaySide: "none"
-            },
-            particles: [
-                // Gold confetti
-                { color: '#FFD700', gradient: '#C8960C', type: 'mardi-gras-confetti-gold', weight: 25, speedMultiplier: 0.65, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.85, massMultiplier: 1.0 },
-                // Purple confetti
-                { color: '#9B30FF', gradient: '#6A00C8', type: 'mardi-gras-confetti-purple', weight: 15, speedMultiplier: 0.55, rotSpeedMultiplier: 2.0, sizeMultiplier: 0.8, massMultiplier: 0.9 },
-                // Green confetti
-                { color: '#00A86B', gradient: '#007045', type: 'mardi-gras-confetti-green', weight: 15, speedMultiplier: 0.60, rotSpeedMultiplier: 1.6, sizeMultiplier: 0.88, massMultiplier: 1.0 },
-                // Carnival beads
-                { color: '#FFD700', gradient: '#FFA500', type: 'mardi-gras-bead-gold', weight: 20, speedMultiplier: 0.45, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.1, massMultiplier: 1.3 },
-                { color: '#9B30FF', gradient: '#6600BB', type: 'mardi-gras-bead-purple', weight: 15, speedMultiplier: 0.40, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.05, massMultiplier: 1.2 },
-                // Feathers – long wispy fall
-                { color: '#c040ff', gradient: '#7a00cc', type: 'mardi-gras-feather-purple', weight: 12, speedMultiplier: 0.28, rotSpeedMultiplier: 0.6, sizeMultiplier: 1.4, massMultiplier: 0.5 },
-                { color: '#40c060', gradient: '#1a7a30', type: 'mardi-gras-feather-green', weight: 10, speedMultiplier: 0.25, rotSpeedMultiplier: 0.5, sizeMultiplier: 1.5, massMultiplier: 0.45 },
-                { color: '#FFD700', gradient: '#C89B00', type: 'mardi-gras-feather-gold', weight: 8, speedMultiplier: 0.22, rotSpeedMultiplier: 0.55, sizeMultiplier: 1.35, massMultiplier: 0.5 },
-                // Gold dust sparkles
-                { color: '#FFE566', gradient: '#D4A000', type: 'mardi-gras-dust-gold', weight: 20, speedMultiplier: 0.15, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3, isWhite: false }
-            ],
-            frameClass: 'theme-frame--mardi-gras',
-            overrides: {
-                insetV: 65,
-                insetH: 75,
-                hostTextSize: 1.2,
-                gustStrength: 35,
-                fallSpeed: 0.55,
-                maxPetals: 45,
-                windiness: 10,
-                hostMaxWidth: 120,
-                backdropOpacity: 60
-            },
-            defaults: {
-                hostsTitle: "Our Distinguished Guests",
-                eventTitle: "Mardi Gras",
-                eventSubtitle: "Masquerade Carnival",
-                eventTopLabel: "Laissez les bons temps rouler"
-            },
-            uiLabels: {
-                particlesPlural: 'Beads & Feathers',
-                particlesSingular: 'Bead',
-                borderToggle: 'Hide carnival frame',
-                gustStrength: 'Twirl Speed',
-                frameName: 'Gold Frame'
-            }
-        }),
-
         'casino-night': defineTheme({
             id: 'casino-night',
             name: 'Casino Night',
@@ -861,6 +783,81 @@
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 25, fallSpeed: 0.45, maxPetals: 30, windiness: 8, hostMaxWidth: 125, backdropOpacity: 75 },
             defaults: { hostsTitle: "VIP Guests", eventTitle: "Casino Royale", eventSubtitle: "Charity Gala & Games", eventTopLabel: "Welcome To" },
             uiLabels: { particlesPlural: 'Card Suits', particlesSingular: 'Suit', borderToggle: 'Hide cards & chips', gustStrength: 'Shuffle Speed', frameName: 'Gold Border & Corner Art' }
+        }),
+
+        'karaoke-night': defineTheme({
+            id: 'karaoke-night',
+            name: 'Karaoke Night',
+            pack: 'party',
+            icon: '🎤',
+            primary: '#08080a',
+            accent: '#ff007f',
+            secondary: '#00f2ff',
+            swatchName: 'Tokyo Neon',
+            colors: {
+                text: '#ffffff',
+                darkText: '#08080a'
+            },
+            swatches: [
+                { hex: '#0a0518', name: 'Shibuya Midnight', accent: '#ff00ff', secondary: '#00ffff' },
+                { hex: '#051015', name: 'Akihabara Laser', accent: '#00ff88', secondary: '#ff00aa' },
+                { hex: '#120015', name: 'Kabukicho Pink', accent: '#ff0055', secondary: '#00ffcc' },
+                { hex: '#140c24', name: 'Vaporwave Dream', accent: '#ff00c8', secondary: '#00d2ff' },
+                { hex: '#080c14', name: 'Cyberpunk City', accent: '#00f2ff', secondary: '#ffe600' },
+                { hex: '#101216', name: 'Toxic Glow', accent: '#39ff14', secondary: '#bd00ff' },
+                { hex: '#000000', name: 'Rave Cave', accent: '#ff007f', secondary: '#00f2ff' },
+                { hex: '#05140b', name: 'Acid Wave', accent: '#adff2f', secondary: '#00ffff' },
+                { hex: '#fff5f8', name: 'Daylight Disco', accent: '#ff007f', secondary: '#00b4d8' },
+                { hex: '#effffb', name: 'Neon Mint', accent: '#00b3a6', secondary: '#7b2cbf' },
+                { hex: '#fff6f0', name: 'Solar Flare', accent: '#ff5e00', secondary: '#ff007f' },
+                { hex: '#f0f9ff', name: 'Electric Sky', accent: '#0066ff', secondary: '#e6a100' },
+                { hex: '#f5f0ff', name: 'Lounge Pastel', accent: '#8a2be2', secondary: '#ff7f50' },
+                { hex: '#f1f3f5', name: 'Platinum Beats', accent: '#0070f3', secondary: '#ff007f' }
+            ],
+            fonts: {
+                primary: "'Space Grotesk', system-ui, sans-serif",
+                display: "'Righteous', cursive, sans-serif",
+                heading: "'Space Grotesk', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { useThemeAccent: true, type: 'karaoke-treble', weight: 20, speedMultiplier: 0.5, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.2, massMultiplier: 0.8 },
+                { useThemeSecondary: true, type: 'karaoke-note', weight: 20, speedMultiplier: 0.55, rotSpeedMultiplier: 0.9, sizeMultiplier: 1.1, massMultiplier: 0.7 },
+                { useThemeAccent: true, type: 'karaoke-mic', weight: 15, speedMultiplier: 0.45, rotSpeedMultiplier: 0.7, sizeMultiplier: 1.3, massMultiplier: 0.9 },
+                { color: '#ffffff', type: 'karaoke-orb', weight: 45, speedMultiplier: 0.3, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.5, massMultiplier: 0.6, isWhite: true }
+            ],
+            frameClass: 'theme-frame--karaoke-night',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.4,
+                maxPetals: 35,
+                windiness: 8,
+                hostMaxWidth: 120,
+                backdropOpacity: 75
+            },
+            defaults: {
+                hostsTitle: "Tonight's Singers",
+                eventTitle: "Karaoke Night",
+                eventSubtitle: "Tokyo Neon Lounge",
+                eventTopLabel: "Welcome To"
+            },
+            uiLabels: {
+                particlesPlural: 'Notes & Orbs',
+                particlesSingular: 'Note/Orb',
+                borderToggle: 'Hide Equalizer & Mic',
+                gustStrength: 'Equalizer Speed',
+                frameName: 'Equalizer & Mic'
+            }
         }),
 
         // --- DECADES PACK ---
@@ -1665,29 +1662,82 @@
             uiLabels: { particlesPlural: 'Hearts', particlesSingular: 'Heart', borderToggle: 'Hide lace frame', gustStrength: 'Swoon Speed', frameName: 'Lace Border' }
         }),
 
-        'st-patricks-day': defineTheme({
-            id: 'st-patricks-day',
-            name: 'St. Patrick\'s Day*',
+        'mardi-gras': defineTheme({
+            id: 'mardi-gras',
+            name: 'Mardi Gras',
             pack: 'holiday',
-            icon: '☘️',
-            primary: '#006A4E',
+            icon: '🎭',
+            primary: '#1E0035',
             accent: '#FFD700',
-            secondary: '#E6B800',
-            swatchName: 'Emerald & Gold',
-            colors: { text: '#FFFFFF', darkText: '#00331f' },
+            secondary: '#00A86B',
+            swatchName: 'Royal Night',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1E0035'
+            },
             swatches: [
-                { hex: '#004B32', name: 'Dublin Dusk', accent: '#FFD700', secondary: '#E6B800' }
+                { hex: '#12001F', name: 'Midnight Court', accent: '#FFD700', secondary: '#00A86B' },
+                { hex: '#0A1A08', name: 'Emerald Isle', accent: '#FFD700', secondary: '#9B30FF' },
+                { hex: '#1A0012', name: 'Velvet Rose', accent: '#FFD700', secondary: '#E040FB' },
+                { hex: '#0D0020', name: 'Deep Indigo', accent: '#FFA500', secondary: '#00BCD4' },
+                { hex: '#1A1000', name: 'Bronze Dusk', accent: '#FF8C00', secondary: '#7B68EE' },
+                { hex: '#000A12', name: 'Midnight Teal', accent: '#FFD700', secondary: '#26C6DA' }
             ],
-            fonts: { primary: "'Jost', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
-            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            fonts: {
+                primary: "'Josefin Sans', system-ui, sans-serif",
+                display: "'Cinzel Decorative', Georgia, serif",
+                heading: "'Cinzel', Georgia, serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
             particles: [
-                { color: '#2E7D32', gradient: '#1B5E20', type: 'clover', weight: 60, speedMultiplier: 0.35, sizeMultiplier: 1.2, massMultiplier: 0.7 },
-                { color: '#FFD700', gradient: '#DAA520', type: 'coin', weight: 40, speedMultiplier: 0.45, sizeMultiplier: 1.0, massMultiplier: 1.0 }
+                // Gold confetti
+                { color: '#FFD700', gradient: '#C8960C', type: 'mardi-gras-confetti-gold', weight: 25, speedMultiplier: 0.65, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.85, massMultiplier: 1.0 },
+                // Purple confetti
+                { color: '#9B30FF', gradient: '#6A00C8', type: 'mardi-gras-confetti-purple', weight: 15, speedMultiplier: 0.55, rotSpeedMultiplier: 2.0, sizeMultiplier: 0.8, massMultiplier: 0.9 },
+                // Green confetti
+                { color: '#00A86B', gradient: '#007045', type: 'mardi-gras-confetti-green', weight: 15, speedMultiplier: 0.60, rotSpeedMultiplier: 1.6, sizeMultiplier: 0.88, massMultiplier: 1.0 },
+                // Carnival beads
+                { color: '#FFD700', gradient: '#FFA500', type: 'mardi-gras-bead-gold', weight: 20, speedMultiplier: 0.45, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.1, massMultiplier: 1.3 },
+                { color: '#9B30FF', gradient: '#6600BB', type: 'mardi-gras-bead-purple', weight: 15, speedMultiplier: 0.40, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.05, massMultiplier: 1.2 },
+                // Feathers – long wispy fall
+                { color: '#c040ff', gradient: '#7a00cc', type: 'mardi-gras-feather-purple', weight: 12, speedMultiplier: 0.28, rotSpeedMultiplier: 0.6, sizeMultiplier: 1.4, massMultiplier: 0.5 },
+                { color: '#40c060', gradient: '#1a7a30', type: 'mardi-gras-feather-green', weight: 10, speedMultiplier: 0.25, rotSpeedMultiplier: 0.5, sizeMultiplier: 1.5, massMultiplier: 0.45 },
+                { color: '#FFD700', gradient: '#C89B00', type: 'mardi-gras-feather-gold', weight: 8, speedMultiplier: 0.22, rotSpeedMultiplier: 0.55, sizeMultiplier: 1.35, massMultiplier: 0.5 },
+                // Gold dust sparkles
+                { color: '#FFE566', gradient: '#D4A000', type: 'mardi-gras-dust-gold', weight: 20, speedMultiplier: 0.15, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3, isWhite: false }
             ],
-            frameClass: 'theme-frame--st-patricks',
-            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.05, gustStrength: 20, fallSpeed: 0.35, maxPetals: 30, windiness: 8, hostMaxWidth: 125, backdropOpacity: 65 },
-            defaults: { hostsTitle: "Lasses & Lads", eventTitle: "St. Patrick's Celebration", eventSubtitle: "Irish Festival", eventTopLabel: "Spirited" },
-            uiLabels: { particlesPlural: 'Clovers & Gold', particlesSingular: 'Clover', borderToggle: 'Hide Celtic borders', gustStrength: 'Breeze Intensity', frameName: 'Celtic Border' }
+            frameClass: 'theme-frame--mardi-gras',
+            overrides: {
+                insetV: 65,
+                insetH: 75,
+                hostTextSize: 1.2,
+                gustStrength: 35,
+                fallSpeed: 0.55,
+                maxPetals: 45,
+                windiness: 10,
+                hostMaxWidth: 120,
+                backdropOpacity: 60
+            },
+            defaults: {
+                hostsTitle: "Our Distinguished Guests",
+                eventTitle: "Mardi Gras",
+                eventSubtitle: "Masquerade Carnival",
+                eventTopLabel: "Laissez les bons temps rouler"
+            },
+            uiLabels: {
+                particlesPlural: 'Beads & Feathers',
+                particlesSingular: 'Bead',
+                borderToggle: 'Hide carnival frame',
+                gustStrength: 'Twirl Speed',
+                frameName: 'Gold Frame'
+            }
         }),
 
         'festive-holiday': defineTheme({
