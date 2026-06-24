@@ -102,6 +102,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing and vibrant with a tropical oasis theme.
 *   **[Mardi Gras][demo-mardi-gras]:** Festive masquerade carnival with beads, masks, and a celebratory atmosphere.
 *   **[Casino Night][demo-casino-night]:** Glamorous casino table with felt textures, gold borders, corner card fans, clicky poker chip stacks, and floating card suit particles.
+*   **[Karaoke Night][demo-karaoke-night]:** A vibrant and energetic theme featuring a neon-drenched karaoke bar aesthetic, complete with floating musical notes, disco lighting, and a dynamic color palette.
 
 ### 🪩 Decades Pack
 *   **[Retro Wave][demo-retro-wave]:** Retro sunsets, tropical palm trees, and neon vibes with a chasing grid pattern.
@@ -115,7 +116,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 *   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
-*   **[Bistro Lounge][demo-bistro-louge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
+*   **[Bistro Lounge][demo-bistro-lounge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
 *   **[Deep Blue Sea][demo-deep-blue]:** A serene aquarium theme with gentle underwater light rays and tranquil ocean colors.
 *   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
 
@@ -140,7 +141,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Electric Pulse** – *High-Energy Music Festival* <br> [![Electric Pulse](.github/assets/poster-electric-pulse.avif)][demo-electric-pulse] | **Celebration** – *Festive & Fun* <br> [![Celebration Time](.github/assets/poster-celebration.avif)][demo-celebration] |
 | **Summer Cookout** – *Warm & Inviting* <br> [![Summer Cookout](.github/assets/poster-cookout.avif)][demo-summer-cookout] | **Tropical Oasis** – *Refreshing & Vibrant* <br> [![Tropical Oasis](.github/assets/poster-tropical-oasis.avif)][demo-tropical-oasis] |
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | **Casino Night** – *Gala Games & Fun* <br> [![Casino Night](.github/assets/poster-casino-night.avif)][demo-casino-night] |
+| **Casino Night** – *Gala Games & Fun* <br> [![Casino Night](.github/assets/poster-casino-night.avif)][demo-casino-night] | **Karaoke Night** – *Sing Your Heart Out* <br> [![Karaoke Night](.github/assets/poster-karaoke-night.avif)][demo-karaoke-night] |
 
 ### 🪩 Decades Pack
 | | |
@@ -161,7 +162,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
 | **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] | 
-| **Festive Holiday** – *Christmas & Winter Fun* <br> [![Festive Holiday](.github/assets/poster-festive-holiday.avif)][demo-festive-holiday] | 
+| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | **Festive Holiday** – *Christmas & Winter Fun* <br> [![Festive Holiday](.github/assets/poster-festive-holiday.avif)][demo-festive-holiday] | 
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -382,3 +383,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-new-years-eve]: https://motionposter.ryanmarch.me/?theme=new-years-eve
 [demo-valentines-romance]: https://motionposter.ryanmarch.me/?theme=valentines-romance
 [demo-festive-holiday]: https://motionposter.ryanmarch.me/?theme=festive-holiday
+[demo-karaoke-night]: https://motionposter.ryanmarch.me/?theme=karaoke-night
