@@ -22,7 +22,7 @@
             --color-ui-text: rgba(255, 255, 255, 0.9);
             --color-ui-accent: #f9d783;
             --color-ui-brand: #111;
-            --font-ui: 'Inter', system-ui, sans-serif;
+            --font-ui: 'Outfit', system-ui, sans-serif;
         }
 
         * {
@@ -64,8 +64,10 @@
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.649);
+            /* color: rgba(255, 255, 255, 0.649); */
+            color: var(--color-ui-accent);
             margin-bottom: 40px;
+            font-family: var(--font-ui);
         }
 
         .rcs-heading {
@@ -242,6 +244,62 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform-origin: center;
+            transition: transform 0.05s ease-out;
+        }
+
+        .rcs-scanner-zoom-container {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 160px;
+            box-sizing: border-box;
+        }
+
+        .rcs-scanner-zoom-container span {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: system-ui, sans-serif;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .rcs-scanner-zoom-input {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            margin: 0;
+        }
+
+        .rcs-scanner-zoom-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #4ade80;
+            cursor: pointer;
+            box-shadow: 0 0 4px rgba(74, 222, 128, 0.5);
+            transition: transform 0.1s ease;
+        }
+
+        .rcs-scanner-zoom-input::-webkit-slider-thumb:active {
+            transform: scale(1.2);
         }
 
         .rcs-scanner-overlay {
@@ -352,6 +410,7 @@
             cursor: pointer;
             transition: background 0.15s, opacity 0.15s;
             letter-spacing: -0.01em;
+            font-family: var(--font-ui);
         }
 
         .rcs-btn:disabled {
@@ -541,8 +600,6 @@
             <div id="rcs-step-entry">
                 <h1 class="rcs-heading">Remote Control</h1>
                 <p class="rcs-sub">Enter the code shown on the host display Wireless Remote pairing panel. </p>
-                <p class="rcs-sub"> On the main display, press the [W] key, or click the "Remote" button in the control
-                    panel to get started.</p>
 
                 <div class="rcs-input-group">
                     <input type="text" id="rcs-code-input" class="rcs-code-input" maxlength="6" inputmode="text"
@@ -558,6 +615,12 @@
                     </button>
                 </div>
                 <button id="rcs-connect-btn" class="rcs-btn" disabled>Connect</button>
+
+                <div id="rcs-step-entry">
+                    <p class="rcs-sub" style="text-align:center;margin-top:40px;">On the main display, press the
+                        <kbd>[W]</kbd> key, or click the "Remote" button in the control panel to get a pairing code.
+                    </p>
+                </div>
             </div>
 
             <div id="rcs-step-connecting" style="display:none">
@@ -581,12 +644,19 @@
         <div class="rcs-scanner-backdrop"></div>
         <div class="rcs-scanner-panel">
             <div class="rcs-scanner-header">
-                <h2 class="rcs-scanner-title">Scan Host QR Code</h2>
+                <h2 class="rcs-scanner-title">Scan Pairing QR Code</h2>
                 <button class="rcs-scanner-close" id="btn-scanner-close" aria-label="Close">✕</button>
             </div>
             <div class="rcs-scanner-body">
                 <div class="rcs-scanner-viewfinder">
                     <video id="scanner-video" autoplay playsinline muted></video>
+                    <!-- Zoom Control Slider -->
+                    <div class="rcs-scanner-zoom-container">
+                        <span>1x</span>
+                        <input type="range" id="scanner-zoom-slider" class="rcs-scanner-zoom-input" min="1" max="4"
+                            step="0.1" value="1">
+                        <span>4x</span>
+                    </div>
                     <div class="rcs-scanner-overlay">
                         <div class="rcs-scanner-laser"></div>
                         <div class="rcs-scanner-corners">
@@ -746,9 +816,10 @@
                                         class="slider"></span></span>
                                 <span class="toggle-label">Hide background shapes</span>
                             </label>
-                            <label class="toggle-control toggle-control--simple" id="label-hide-valentines-hearts" style="margin-top:12px; display:none;">
-                                <span class="toggle-switch"><input type="checkbox" id="check-hide-valentines-hearts"><span
-                                        class="slider"></span></span>
+                            <label class="toggle-control toggle-control--simple" id="label-hide-valentines-hearts"
+                                style="margin-top:12px; display:none;">
+                                <span class="toggle-switch"><input type="checkbox"
+                                        id="check-hide-valentines-hearts"><span class="slider"></span></span>
                                 <span class="toggle-label">Hide hearts in names</span>
                             </label>
                         </div>

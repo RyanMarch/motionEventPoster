@@ -871,10 +871,19 @@ class RemoteController {
         const scanBtn = document.getElementById('rcs-scan-btn');
         const closeBtn = document.getElementById('btn-scanner-close');
         const backdrop = document.querySelector('.rcs-scanner-backdrop');
+        const zoomSlider = document.getElementById('scanner-zoom-slider');
 
         scanBtn?.addEventListener('click', () => this._startScanner());
         closeBtn?.addEventListener('click', () => this._stopScanner());
         backdrop?.addEventListener('click', () => this._stopScanner());
+
+        zoomSlider?.addEventListener('input', (e) => {
+            this.scannerZoom = parseFloat(e.target.value) || 1.0;
+            const video = document.getElementById('scanner-video');
+            if (video) {
+                video.style.transform = `scale(${this.scannerZoom})`;
+            }
+        });
     }
 
     async _startScanner() {
@@ -898,10 +907,16 @@ class RemoteController {
                 video: { facingMode: { ideal: 'environment' } }
             });
 
+            // Reset zoom
+            this.scannerZoom = 1.0;
+            const zoomSlider = document.getElementById('scanner-zoom-slider');
+            if (zoomSlider) zoomSlider.value = '1';
+
             const video = document.getElementById('scanner-video');
             if (video) {
                 video.srcObject = this.scannerStream;
                 video.setAttribute('playsinline', 'true'); // Required for iOS Safari
+                video.style.transform = 'scale(1)';
                 video.play();
             }
 
@@ -941,7 +956,13 @@ class RemoteController {
             this.scannerStream = null;
         }
         const video = document.getElementById('scanner-video');
-        if (video) video.srcObject = null;
+        if (video) {
+            video.srcObject = null;
+            video.style.transform = 'scale(1)';
+        }
+
+        const zoomSlider = document.getElementById('scanner-zoom-slider');
+        if (zoomSlider) zoomSlider.value = '1';
 
         const modal = document.getElementById('rcs-scanner-modal');
         if (modal) modal.style.display = 'none';
@@ -959,7 +980,14 @@ class RemoteController {
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Draw cropped frame for zoom
+            const zoom = this.scannerZoom || 1.0;
+            const sw = video.videoWidth / zoom;
+            const sh = video.videoHeight / zoom;
+            const sx = (video.videoWidth - sw) / 2;
+            const sy = (video.videoHeight - sh) / 2;
+            ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
 
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
