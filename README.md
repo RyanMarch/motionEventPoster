@@ -124,6 +124,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
 *   **[New Year's Eve][demo-new-years-eve]:** A glamorous New Year's Eve celebration with gold accents, confetti, and a festive atmosphere.
 *   **[Valentines Romance][demo-valentines-romance]:** A romantic Valentine's Day celebration with red hearts, pink accents, and a festive atmosphere.
+*   **[Festive Holiday][demo-festive-holiday]:** A festive holiday celebration with lights, decorations, trees and a festive atmosphere.
 
 ## Theme Screenshots
 
@@ -159,7 +160,8 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
-| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] |
+| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] | 
+| **Festive Holiday** – *Christmas & Winter Fun* <br> [![Festive Holiday](.github/assets/poster-festive-holiday.avif)][demo-festive-holiday] | 
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -379,3 +381,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-autumn-harvest]: https://motionposter.ryanmarch.me/?theme=autumn-harvest
 [demo-new-years-eve]: https://motionposter.ryanmarch.me/?theme=new-years-eve
 [demo-valentines-romance]: https://motionposter.ryanmarch.me/?theme=valentines-romance
+[demo-festive-holiday]: https://motionposter.ryanmarch.me/?theme=festive-holiday
