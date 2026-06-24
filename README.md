@@ -89,9 +89,9 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 
 ### 📦 Standard Pack
 *   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral framing.
-*   **[Digital Grid][demo-digital]:** High-tech accents and techy-glass with striking light beams.
-*   **[Alpine Winter][demo-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
-*   **[Vintage Radio][demo-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
+*   **[Digital Grid][demo-digital-grid]:** High-tech accents and techy-glass with striking light beams.
+*   **[Alpine Winter][demo-alpine-winter]:** Frosted glass window and a rustic wood frame with a gentle snowfall effect.
+*   **[Vintage Radio][demo-vintage-radio]:** Warm wood textures, with a tuning needle and floating particles of light.
 *   **[Corporate Pro][demo-corporate]:** Modern geometric shapes and professional, abstract gradients.
 *   **[Minimal Elegance][demo-minimal-elegance]**: A sophisticated and high-fashion design perfect for art galleries, museums, and brand showcases.
 
@@ -100,7 +100,6 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Celebration][demo-celebration]:** Festive and fun with confetti, balloons, and a celebratory atmosphere.
 *   **[Summer Cookout][demo-summer-cookout]:** Warm and inviting with a summer cookout theme.
 *   **[Tropical Oasis][demo-tropical-oasis]:** Refreshing and vibrant with a tropical oasis theme.
-*   **[Mardi Gras][demo-mardi-gras]:** Festive masquerade carnival with beads, masks, and a celebratory atmosphere.
 *   **[Casino Night][demo-casino-night]:** Glamorous casino table with felt textures, gold borders, corner card fans, clicky poker chip stacks, and floating card suit particles.
 *   **[Karaoke Night][demo-karaoke-night]:** A vibrant and energetic theme featuring a neon-drenched karaoke bar aesthetic, complete with floating musical notes, disco lighting, and a dynamic color palette.
 
@@ -110,30 +109,31 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Art Deco Gala][demo-art-deco-gala]:** Glamorous and geometric Roaring 20s style with a repeating gold Art Deco pattern, swaying crystal chandelier, corner champagne flutes, and a mix of gold dust, sparkles, and rising champagne bubble particles.
 *   **[Atomic Mid-Century][demo-atomic-mid-century]:** A retro 1950s-1960s style with atomic shapes, geometric patterns, and bold colors.
 *   **[Memphis Pop][demo-memphis-pop]:** Vibrant and bold 1980s-1990s Memphis design with geometric shapes, diagonal stripes, and high-contrast colors. A playful and energetic theme perfect for creative events.
-*   **[2000s Glass][demo-2000s-glass]:** Bring back the glass and frosted surfaces with a mid-2000s vibe.
+*   **[2000s Glass][demo-00-glass]:** Bring back the glass and frosted surfaces with a mid-2000s vibe.
 
 ### 🌌 Specialty Pack
 *   **[Cinema Premiere][demo-cinema]:** Dramatic theater curtains, red velvet styling, marquee glow, dust slowly drifting through the projector beam, and even a little bit of popcorn.
 *   **[Game Console][demo-game-console]:** Video gaming fun with CRT monitor styling, pixel art buttons, and console control outlines.
 *   **[Space Odyssey][demo-space-odyssey]:** A futuristic, deep-space theme featuring diagonal shooting stars, a futuristic HUD overlay, and slow-moving galactic nebulas.
 *   **[Bistro Lounge][demo-bistro-lounge]:** A sophisticated and intimate speakeasy atmosphere with warm wood textures, elegant brass accents, and a cozy, ambient glow.
-*   **[Deep Blue Sea][demo-deep-blue]:** A serene aquarium theme with gentle underwater light rays and tranquil ocean colors.
 *   **[Steampunk Gears][demo-steampunk-gears]:** A Steampunk-themed showcase featuring exposed brass gears, Victorian-era industrial design, and atmospheric floating steam particles.
+*   **[Deep Blue Sea][demo-deep-blue]:** A serene aquarium theme with gentle underwater light rays and tranquil ocean colors.
 
 ### 🎃 Holiday Pack
-*   **[Halloween Soiree][demo-halloween-soiree]:** Spooky pumpkins, drifting ghosts, and deep shadows with eerie glowing particles, perfect for haunted events.
+*   **[Halloween Soiree][demo-halloween]:** Spooky pumpkins, drifting ghosts, and deep shadows with eerie glowing particles, perfect for haunted events.
 *   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
-*   **[New Year's Eve][demo-new-years-eve]:** A glamorous New Year's Eve celebration with gold accents, confetti, and a festive atmosphere.
 *   **[Valentines Romance][demo-valentines-romance]:** A romantic Valentine's Day celebration with red hearts, pink accents, and a festive atmosphere.
+*   **[Mardi Gras][demo-mardi-gras]:** Festive masquerade carnival with beads, masks, and a celebratory atmosphere.
 *   **[Festive Holiday][demo-festive-holiday]:** A festive holiday celebration with lights, decorations, trees and a festive atmosphere.
+*   **[New Year's Eve][demo-new-years-eve]:** A glamorous New Year's Eve celebration with gold accents, confetti, and a festive atmosphere.
 
 ## Theme Screenshots
 
 ### 📦 Standard Pack
 | | |
 | :---: | :---: |
-| **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.avif)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.avif)][demo-digital] |
-| **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.avif)][demo-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.avif)][demo-radio] |
+| **Spring Blossom** – *Fresh & Elegant* <br> [![Spring Blossom](.github/assets/eventPoster.avif)][demo-spring] | **Digital Grid** – *High-Tech & Modern* <br> [![Digital Grid](.github/assets/poster-digital.avif)][demo-digital-grid] |
+| **Alpine Winter** – *Frosty & Rustic* <br> [![Alpine Winter](.github/assets/poster-winter.avif)][demo-alpine-winter] | **Vintage Radio** – *Warm & Nostalgic* <br> [![Vintage Radio](.github/assets/poster-radio.avif)][demo-vintage-radio] |
 | **Corporate Pro** – *Sleek & Professional* <br> [![Corporate Pro](.github/assets/poster-corporate.avif)][demo-corporate] | **Minimal Elegance** – *Sophisticated & Fashion-Forward* <br> [![Minimal Elegance](.github/assets/poster-minimal.avif)][demo-minimal-elegance] |
 
 ### 🥳 Party Pack
@@ -148,7 +148,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | :---: | :---: |
 | **Retro Wave** – *Neon Nights & Good Vibes* <br> [![Retro Wave](.github/assets/poster-retro-wave.avif)][demo-retro-wave] | **Disco Fever** – *Retro Dance Party* <br> [![Disco Fever](.github/assets/poster-disco-fever.avif)][demo-disco-fever] |
 | **Art Deco Gala** – *Glamorous Art Deco* <br> [![Art Deco Gala](.github/assets/poster-art-deco.avif)][demo-art-deco-gala] | **Atomic Mid-Century** – *Mid-Century Modern Style* <br> [![Atomic Mid-Century](.github/assets/poster-mid-century.avif)][demo-atomic-mid-century] |
-| **Memphis Pop** – *Vibrant 80s-90s Style* <br> [![Memphis Pop](.github/assets/poster-memphis-pop.avif)][demo-memphis-pop] | **00s Glass** - *Clear & Fresh* <br> [![00s Glass](.github/assets/poster-00s-glass.avif)][demo-2000s-glass] | 
+| **Memphis Pop** – *Vibrant 80s-90s Style* <br> [![Memphis Pop](.github/assets/poster-memphis-pop.avif)][demo-memphis-pop] | **00s Glass** – *Clear & Fresh* <br> [![00s Glass](.github/assets/poster-00s-glass.avif)][demo-00-glass] | 
 
 ### 🌌 Specialty Pack
 | | |
@@ -160,9 +160,9 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 ### 🎃 Holiday Pack
 | | |
 | :---: | :---: |
-| **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
-| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] | 
-| **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | **Festive Holiday** – *Christmas & Winter Fun* <br> [![Festive Holiday](.github/assets/poster-festive-holiday.avif)][demo-festive-holiday] | 
+| **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
+| **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] | **Mardi Gras** – *Festive Masquerade Carnival* <br> [![Mardi Gras](.github/assets/poster-mardi-gras.avif)][demo-mardi-gras] | 
+| **Festive Holiday** – *Christmas & Winter Fun* <br> [![Festive Holiday](.github/assets/poster-festive-holiday.avif)][demo-festive-holiday] | **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | 
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -355,9 +355,9 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 [demo]: https://motionposter.ryanmarch.me/
 [demo-spring]: https://motionposter.ryanmarch.me/?theme=spring
-[demo-digital]: https://motionposter.ryanmarch.me/?theme=digital-grid
-[demo-winter]: https://motionposter.ryanmarch.me/?theme=alpine-winter
-[demo-radio]: https://motionposter.ryanmarch.me/?theme=vintage-radio
+[demo-digital-grid]: https://motionposter.ryanmarch.me/?theme=digital-grid
+[demo-alpine-winter]: https://motionposter.ryanmarch.me/?theme=alpine-winter
+[demo-vintage-radio]: https://motionposter.ryanmarch.me/?theme=vintage-radio
 [demo-corporate]: https://motionposter.ryanmarch.me/?theme=corporate
 [demo-minimal-elegance]: https://motionposter.ryanmarch.me/?theme=minimal-elegance
 [demo-electric-pulse]: https://motionposter.ryanmarch.me/?theme=electric-pulse
@@ -371,11 +371,11 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-retro-wave]: https://motionposter.ryanmarch.me/?theme=retro-wave
 [demo-art-deco-gala]: https://motionposter.ryanmarch.me/?theme=art-deco-gala
 [demo-cinema]: https://motionposter.ryanmarch.me/?theme=cinema
-[demo-halloween-soiree]: https://motionposter.ryanmarch.me/?theme=halloween
+[demo-halloween]: https://motionposter.ryanmarch.me/?theme=halloween
 [demo-space-odyssey]: https://motionposter.ryanmarch.me/?theme=space-odyssey
 [demo-atomic-mid-century]: https://motionposter.ryanmarch.me/?theme=atomic-mid-century
 [demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
-[demo-2000s-glass]: https://motionposter.ryanmarch.me/?theme=2000s-glass
+[demo-00-glass]: https://motionposter.ryanmarch.me/?theme=00-glass
 [demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
 [demo-deep-blue]: https://motionposter.ryanmarch.me/?theme=deep-blue
 [demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
