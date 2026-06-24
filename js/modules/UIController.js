@@ -372,7 +372,7 @@ window.UIController = class UIController {
                 // If they are picking a custom background, we keep the current primary color
             } else {
                 this.state.bgColor = color;
-                this.state.accentColor = this.poster.deriveAccentColor(color);
+                this.state.accentColor = window.PosterUtils.deriveAccentColor(color);
             }
             
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.poster.themeManager?.resolveColorLabel();
@@ -882,15 +882,16 @@ window.UIController = class UIController {
 
         // Only set inactivity timers if auto-hide is enabled
         if (this.state.autoHideMenu) {
-            this.poster.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
-            this.poster.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
+            this.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
+            this.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
         }
     }
 
     clearInactivityTimers() {
-        if (this.poster.inactivityTimer) clearTimeout(this.poster.inactivityTimer);
-        if (this.poster.dismissTimer) clearTimeout(this.poster.dismissTimer);
-        this.poster.inactivityTimer = null; this.poster.dismissTimer = null;
+        if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+        if (this.dismissTimer) clearTimeout(this.dismissTimer);
+        this.inactivityTimer = null;
+        this.dismissTimer = null;
     }
 
     resetGlobalInactivityTimer() {

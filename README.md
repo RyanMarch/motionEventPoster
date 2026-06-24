@@ -49,7 +49,7 @@ Designed with a "set it and forget it" philosophy, this tool allows event manage
     - [Edit Poster Content](#edit-poster-content)
     - [Controls Screenshots](#controls-screenshots)
   - [Using the Remote Control](#using-the-remote-control)
-  - [Project Architechture and Technical Specs](#project-architechture-and-technical-specs)
+  - [Project Architecture and Technical Specs](#project-architecture-and-technical-specs)
     - [File Structure](#file-structure)
     - [Persistence Strategy](#persistence-strategy)
     - [Technical Specifications](#technical-specifications)
@@ -85,7 +85,7 @@ Remote pairing requires the remote device to be on the same network as the host 
 *More: [Using the Remote Control](#using-the-remote-control)*
 
 ## Themes
-Choose from multiple themes, each with its own unique particle engine, decorative frame, and color palette.
+Choose from multiple themes, each with its own unique particle engine, decorative frame, and color palette. 30 themes are available with 276 built-in color schemes to get you started.
 
 ### 📦 Standard Pack
 *   **[Spring Blossom][demo-spring]:** Delicate cherry blossoms and elegant floral framing.
@@ -275,7 +275,7 @@ All text and appearance settings on the poster are controlled via an intuitive m
 
 | Remote Pairing |
 |:---:|
-![Remote Pairing](.github/assets/motion-poster-one-step-pairing.avif) <br> *Easy, one-step remote control pairing.* |
+| ![Remote Pairing](.github/assets/motion-poster-one-step-pairing.avif) <br> *Easy, one-step remote control pairing.* |
 
 <br>
 
@@ -343,7 +343,7 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 | Version | Notes |
 |---------|-------|
-| v8 | **New Theme Packs:** Added many more themes to choose from:<br>• **Party Pack:** Electric Pulse, Celebration, Summer Cookout, Tropical Oasis, Mardi Gras<br>• **Decades Pack:** Retro Wave, Art Deco, Disco Fever<br>• **Specialty Pack:** Cinema<br>• **Holiday Pack:** Halloween |
+| v8 | **New Theme Packs:** Added many more themes to choose from:<br>• **Party Pack:** Electric Pulse, Celebration, Summer Cookout, Tropical Oasis, Casino Night, Karaoke Night<br>• **Decades Pack:** Retro Wave, Disco Fever, Art Deco, Atomic Mid-Century, Memphis Pop, 00s Glass<br>• **Specialty Pack:** Cinema Premiere, Game Console, Space Odyssey, Bistro Lounge, Steampunk Gears, Deep Blue Sea<br>• **Holiday Pack:** Halloween Soiree, Autumn Harvest, Valentine's Romance, Mardi Gras, Festive Holiday, New Year's Eve<br>|
 | v7.1 | **Minimal Elegance Theme:** Added a new theme for art galleries, museums, and brand showcases with a sophisticated and fashion-forward design. |
 | v7 | **The Remote Update:** Remote control for managing and customizing the poster from a different device. |
 | v6 | **The Themes Update:** Theme Engine with 5 curated themes: *Spring Blossom*, *Digital Grid*, *Alpine Winter*, *Vintage Radio*, *Corporate Pro*. Added dynamic particle system, improved color swatch management, and enhanced UI labels. Complete architectural refactor under the hood for greater extensibility. |

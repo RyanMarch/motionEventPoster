@@ -21,13 +21,9 @@ function makeFakePoster(stateOverrides = {}) {
             autoHideMenu: true,
             isAppRunning: false,
             isKeyboardUser: false,
-            inactivityTimer: null,
-            dismissTimer: null,
             ...stateOverrides,
         },
         baseHosts: window.DEFAULT_HOSTS || [],
-        inactivityTimer: null,
-        dismissTimer: null,
         root: document.documentElement,
         isControlsPanelVisible: vi.fn(() => false),
         isAddHostFormOpen: vi.fn(() => false),
@@ -233,19 +229,19 @@ describe('UIController.renderRemovedHosts', () => {
 // clearInactivityTimers
 // ---------------------------------------------------------------------------
 describe('UIController.clearInactivityTimers', () => {
-    it('clears inactivityTimer and dismissTimer on the poster', () => {
-        const { ui, poster } = makeUI();
-        poster.inactivityTimer = setTimeout(() => {}, 99999);
-        poster.dismissTimer = setTimeout(() => {}, 99999);
+    it('clears inactivityTimer and dismissTimer on the UIController', () => {
+        const { ui } = makeUI();
+        ui.inactivityTimer = setTimeout(() => {}, 99999);
+        ui.dismissTimer = setTimeout(() => {}, 99999);
         ui.clearInactivityTimers();
-        expect(poster.inactivityTimer).toBeNull();
-        expect(poster.dismissTimer).toBeNull();
+        expect(ui.inactivityTimer).toBeNull();
+        expect(ui.dismissTimer).toBeNull();
     });
 
     it('does not throw when timers are already null', () => {
-        const { ui, poster } = makeUI();
-        poster.inactivityTimer = null;
-        poster.dismissTimer = null;
+        const { ui } = makeUI();
+        ui.inactivityTimer = null;
+        ui.dismissTimer = null;
         expect(() => ui.clearInactivityTimers()).not.toThrow();
     });
 });

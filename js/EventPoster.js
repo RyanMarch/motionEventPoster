@@ -321,6 +321,7 @@ window.EventPoster = class EventPoster {
         this.petalTypes = this.theme.particles;
 
         Object.keys(window.DEFAULTS).forEach((key) => {
+            if (key === 'isAppRunning') return;
             let defaultValue = window.DEFAULTS[key];
 
             // If the active theme has an override for this key, use it as the new baseline
@@ -370,8 +371,6 @@ window.EventPoster = class EventPoster {
     }
 
     init() {
-        // setupEventListeners moved to startApp so dynamic sliders are ready before binding
-
         if (this.elements.btnBypassBlocker) {
             this.elements.btnBypassBlocker.addEventListener('click', () => {
                 this.body.classList.add('is-mobile-dismissed');
@@ -379,22 +378,26 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+        // Run the check on initial load
+        this.checkScreenSize();
 
-        // On touch-primary devices (like iPad or mobile phones), evaluate window dimensions.
-        // On pointer-fine devices (laptops, desktops, projectors), use the physical screen dimensions 
-        // to avoid false-positives from browser chrome (e.g. Safari tab/address bars on 13" laptops).
-        const isTooSmall = isTouchDevice
-            ? (window.innerWidth < 1280 || window.innerHeight < 800)
-            : (window.screen.width < 1280 || window.screen.height < 800);
+        // Listen for live window resizing
+        window.addEventListener('resize', () => this.checkScreenSize());
+    }
 
-        if (isTooSmall || isTouchDevice) {
+    checkScreenSize() {
+        // If the coach already clicked "Proceed anyway", don't interrupt them again
+        if (this.body.classList.contains('is-mobile-dismissed')) return;
+
+        const isTooSmall = window.innerWidth < 1180 || window.innerHeight < 768;
+
+        if (isTooSmall) {
             this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
-            return;
+        } else {
+            this.elements.mobileBlocker?.classList.remove('is-visible');
+            if (!this.state.isAppRunning) this.startApp();
         }
-
-        this.startApp();
     }
 
     startApp() {
@@ -707,8 +710,6 @@ window.EventPoster = class EventPoster {
     readStoredRemovedHosts() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.removedHosts) || '[]'); } catch { return []; } }
     persistRemovedHosts() { localStorage.setItem(window.STORAGE_KEYS.removedHosts, JSON.stringify(this.state.removedHosts)); }
 
-    // Logic Helpers
-    deriveAccentColor(hex) { return window.PosterUtils.deriveAccentColor(hex); }
 
     // UI visibility helpers
     isControlsPanelVisible() { return this.elements.controlsPanel?.classList.contains('is-visible'); }
@@ -772,7 +773,7 @@ window.EventPoster = class EventPoster {
         this.state.addedHosts.push(val);
         this.state.hasEverAddedHost = true;
         localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
-        localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
+        this.persistAddedHosts();
         this.renderHosts(); this.closeAddHostForm();
         // Remote sync
         if (!window.remoteManager?._applying) {
@@ -835,7 +836,11 @@ window.EventPoster = class EventPoster {
         };
         requestAnimationFrame(update);
     }
-    handleFactoryResetKeyUp() { this.state.factoryResetStartTime = null; this.elements.factoryResetOverlay.classList.add('is-hidden'); this.elements.factoryResetProgress.style.width = '0%'; }
+    handleFactoryResetKeyUp() {
+        this.state.factoryResetStartTime = null;
+        this.elements.factoryResetOverlay.classList.add('is-hidden');
+        this.elements.factoryResetProgress.style.width = '0%';
+    }
     showFactoryResetConfirmation() { this.elements.factoryResetModal.classList.remove('is-hidden'); }
     hideFactoryResetConfirmation() { this.elements.factoryResetModal.classList.add('is-hidden'); }
     performFactoryReset() { localStorage.clear(); window.location.reload(); }
@@ -1001,13 +1006,31 @@ window.EventPoster = class EventPoster {
 
     showKeyboardHint() {
         if (!this.elements.keyboardHint) return;
-        setTimeout(() => { if (!this.isControlsPanelVisible() && !document.fullscreenElement) { this.elements.keyboardHint.classList.add('is-visible'); setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000); } }, 1500);
+        setTimeout(() => {
+            if (!this.isControlsPanelVisible() && !document.fullscreenElement) {
+                this.elements.keyboardHint.classList.add('is-visible');
+                setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000);
+            }
+        }, 1500);
     }
 
     updateMobileScreenSizeInfo() {
-        if (this.elements.mobileScreenSizeInfo) {
-            this.elements.mobileScreenSizeInfo.textContent = `Detected: ${window.innerWidth}×${window.innerHeight}  |  Recommended: >1280×800`;
-        }
+        if (!this.elements.mobileScreenSizeInfo) return;
+
+        // Detect width and height safely, fallback to null if unavailable
+        const width = window.innerWidth || null;
+        const height = window.innerHeight || null;
+
+        // Determine the text string or fallback stand-in message
+        const detectedDisplay = (width && height)
+            ? `${width}×${height}`
+            : 'Unavailable';
+
+        // Update the innerHTML to handle bolding and a forced line break (<br>)
+        this.elements.mobileScreenSizeInfo.innerHTML = `
+        <strong>Detected:</strong> ${detectedDisplay}<br>
+        <strong>Recommended:</strong> 1280×768
+    `;
     }
 
     autoGrowTextarea(el) { el.style.height = 'auto'; el.style.height = (el.scrollHeight) + 'px'; }

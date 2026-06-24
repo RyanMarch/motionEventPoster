@@ -334,7 +334,6 @@
                 { hex: '#A5F3FC', name: 'Carbon Cyan Rev', accent: '#171717' },
                 { hex: '#D9F99D', name: 'Deep Forest Rev', accent: '#064E3B' },
                 { hex: '#FDE68A', name: 'Onyx Gold Rev', accent: '#18181B' },
-                // { hex: '#FFEDD5', name: 'Warm Espresso Rev', accent: '#451A03' },
                 { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
             ],
             fonts: {
@@ -537,9 +536,9 @@
             name: 'Celebration',
             pack: 'party',
             icon: '🎉',
-            primary: '#100520', // Vibrant deep night background
-            accent: '#FF007F',  // Hot magenta
-            secondary: '#00E5FF', // Bright cyan
+            primary: '#100520',
+            accent: '#FF007F',
+            secondary: '#00E5FF',
             swatchName: 'Party Time',
             colors: {
                 text: '#ffffff',
@@ -1023,9 +1022,7 @@
                 { hex: '#0F161E', name: 'Sapphire Deco', accent: '#F3E5AB', secondary: '#D4AF37' },
                 { hex: '#220A0A', name: 'Velvet Wine', accent: '#D4AF37', secondary: '#C5A059' },
                 { hex: '#0B1A12', name: 'Emerald Court', accent: '#D4AF37', secondary: '#9FC8A0' },
-                // { hex: '#180C04', name: 'Midnight Copper', accent: '#B87333', secondary: '#E8C49A' },q
                 { hex: '#08101E', name: 'Navy Opulence', accent: '#C0C0C0', secondary: '#A8B8C8' },
-                // Light schemes
                 { hex: '#F0EAD6', name: 'Parchment', accent: '#7C5C2E', secondary: '#3D2B0F' },
                 { hex: '#F5E8E8', name: 'Blush Parlor', accent: '#8B3A3A', secondary: '#5C2020' },
             ],
@@ -1159,7 +1156,7 @@
                 { type: 'memphis-dot', weight: 20, speedMultiplier: 0.6, sizeMultiplier: 0.8, massMultiplier: 0.9 }
             ],
             frameClass: 'theme-frame--memphis',
-            flags: { syncParticleColors: true },
+            flags: { syncParticleColors: true, hideBackdropControl: true },
             overrides: { insetV: 55, insetH: 65, hostTextSize: 1.0, gustStrength: 45, fallSpeed: 0.8, maxPetals: 30, windiness: 15, hostMaxWidth: 130, backdropOpacity: 90 },
             defaults: { hostsTitle: "Starring", eventTitle: "90s Dance Party", eventSubtitle: "Totally Rad", eventTopLabel: "Like," },
             uiLabels: { particlesPlural: 'Shapes', particlesSingular: 'Shape', borderToggle: 'Hide squiggles', gustStrength: 'Wackiness', frameName: 'Memphis Grid' }
@@ -1378,7 +1375,6 @@
                 { hex: '#12001a', name: 'Pulsar', accent: '#bd00ff', secondary: '#ff00aa' },
                 { hex: '#06001a', name: 'Supernova', accent: '#ffaa00', secondary: '#00ffcc' },
                 { hex: '#051008', name: 'Alien Skies', accent: '#00ff88', secondary: '#7cfc00' },
-                // { hex: '#0a0705', name: 'Cosmic Dust', accent: '#f4c430', secondary: '#ff6b35' },q
                 { hex: '#020202', name: 'Quantum Void', accent: '#ffffff', secondary: '#555555' },
                 { hex: '#070b12', name: 'Frozen Comet', accent: '#a5ffd6', secondary: '#3a86c8' }
             ],
@@ -1391,7 +1387,7 @@
                 { useThemeAccent: true, type: 'shooting-star', weight: 2, speedMultiplier: 3.5, sizeMultiplier: 1.5, massMultiplier: 1.2 }
             ],
             frameClass: 'theme-frame--space',
-            flags: { syncParticleColors: true, showSecondaryAsSwatch: true },
+            flags: { syncParticleColors: true, showSecondaryAsSwatch: true, hideWindinessControl: true },
             overrides: { insetV: 50, insetH: 60, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.15, maxPetals: 95, windiness: 2, hostMaxWidth: 130, backdropOpacity: 45 },
             defaults: { hostsTitle: "Space Commanders", eventTitle: "Tech Launch", eventSubtitle: "Next Generation", eventTopLabel: "Mission" },
             uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
@@ -1631,7 +1627,7 @@
                 { useThemeSecondary: true, type: 'heart', weight: 30, speedMultiplier: -0.25, sizeMultiplier: 1.0, massMultiplier: 0.5 }
             ],
             frameClass: 'theme-frame--valentine',
-            flags: { syncParticleColors: true },
+            flags: { syncParticleColors: true, showHeartsToggle: true },
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 15, fallSpeed: 0.2, maxPetals: 20, windiness: 5, hostMaxWidth: 125, backdropOpacity: 50 },
             defaults: { hostsTitle: "Couples", eventTitle: "Sweetheart Dance", eventSubtitle: "Valentine's Gala", eventTopLabel: "Romantic" },
             uiLabels: { particlesPlural: 'Hearts', particlesSingular: 'Heart', borderToggle: 'Hide lace frame', gustStrength: 'Swoon Speed', frameName: 'Lace Border' }

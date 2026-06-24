@@ -64,9 +64,9 @@ window.ThemeManager = class ThemeManager {
         this.body.classList.add(`theme-${themeId}`);
 
         if (themeId === 'bistro-lounge') {
-            this.setupbistroLights();
+            this.setupBistroLights();
         } else {
-            this.cleanupbistroLights();
+            this.cleanupBistroLights();
         }
 
         if (this.elements.themeFrame) {
@@ -187,22 +187,22 @@ window.ThemeManager = class ThemeManager {
         if (fLabel) fLabel.firstChild.textContent = `${uiLabels.fallSpeed || 'Fall Speed'} `;
         const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
         if (windinessControl) {
-            windinessControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
+            windinessControl.style.display = theme.flags?.hideWindinessControl ? 'none' : '';
         }
 
         const tumbleControl = document.getElementById('slider-tumble-speed')?.closest('.control');
         if (tumbleControl) {
-            tumbleControl.style.display = theme.id === 'space-odyssey' ? 'none' : '';
+            tumbleControl.style.display = theme.flags?.hideWindinessControl ? 'none' : '';
         }
 
         const backdropControl = document.getElementById('slider-backdrop-opacity')?.closest('.control');
         if (backdropControl) {
-            backdropControl.style.display = theme.id === 'memphis-pop' ? 'none' : '';
+            backdropControl.style.display = theme.flags?.hideBackdropControl ? 'none' : '';
         }
 
         const valentinesHeartsControl = document.getElementById('label-hide-valentines-hearts');
         if (valentinesHeartsControl) {
-            valentinesHeartsControl.style.display = theme.id === 'valentines-romance' ? '' : 'none';
+            valentinesHeartsControl.style.display = theme.flags?.showHeartsToggle ? '' : 'none';
         }
 
         // Update Theme Selector Trigger
@@ -368,10 +368,6 @@ window.ThemeManager = class ThemeManager {
             // Bottom-Right corner SVG composition
             const bottomRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><circle cx='105' cy='85' r='30' fill='none' stroke='black' stroke-width='16' opacity='0.85'/><circle cx='95' cy='75' r='30' fill='none' stroke='${escSecondaryColor}' stroke-width='16'/><polygon points='30,30 70,10 50,50' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='3' stroke-linejoin='round'/><g fill='none' stroke='${escAccentColor}' stroke-width='4'><line x1='20' y1='60' x2='60' y2='20'/><line x1='30' y1='70' x2='70' y2='30'/><line x1='40' y1='80' x2='80' y2='40'/><line x1='50' y1='90' x2='90' y2='50'/></g><path d='M 30 110 Q 60 80, 90 120 T 150 100' fill='none' stroke='${escTextColor}' stroke-width='5' stroke-linecap='round'/><circle cx='120' cy='30' r='6' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='2'/><g stroke='${escTextColor}' stroke-width='2.5'><line x1='75' y1='115' x2='85' y2='115'/><line x1='80' y1='110' x2='80' y2='120'/></g></svg>")`;
             this.root.style.setProperty('--memphis-sway-bottom-right', bottomRightSvg);
-
-            // Side layers SVG compositions
-            const leftSideSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><rect x='35' y='25' width='30' height='90' rx='15' fill='black' opacity='0.85'/><rect x='25' y='15' width='30' height='90' rx='15' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 70 30 L 70 80 M 80 30 L 80 80 M 90 30 L 90 80 M 60 40 L 100 40 M 60 50 L 100 50 M 60 60 L 100 60 M 60 70 L 100 70' stroke='${escTextColor}' stroke-width='1.5' opacity='0.6'/><path d='M 20 120 Q 45 100, 70 120 T 120 120' fill='none' stroke='${escSecondaryColor}' stroke-width='5' stroke-linecap='round'/><circle cx='110' cy='30' r='12' fill='none' stroke='${escTextColor}' stroke-width='3'/><circle cx='110' cy='70' r='4' fill='${escTextColor}'/></svg>")`;
-            this.root.style.setProperty('--memphis-sway-right-side', rightSideSvg);
         }
 
         if (theme.id === 'steampunk-gears') {
@@ -747,17 +743,17 @@ window.ThemeManager = class ThemeManager {
         }
     }
 
-    setupbistroLights() {
-        if (!this._onbistroResize) {
-            this._onbistroResize = () => {
-                this.buildbistroBulbs();
+    setupBistroLights() {
+        if (!this._onBistroResize) {
+            this._onBistroResize = () => {
+                this.buildBistroBulbs();
             };
-            window.addEventListener('resize', this._onbistroResize);
+            window.addEventListener('resize', this._onBistroResize);
         }
-        this.buildbistroBulbs();
+        this.buildBistroBulbs();
     }
 
-    buildbistroBulbs() {
+    buildBistroBulbs() {
         const wrapper = document.querySelector('.content-wrapper');
         if (!wrapper) return;
 
@@ -794,14 +790,14 @@ window.ThemeManager = class ThemeManager {
         this.poster.cacheSwayLayers();
     }
 
-    cleanupbistroLights() {
+    cleanupBistroLights() {
         const container = document.getElementById('bistro-lights-container');
         if (container) {
             container.remove();
         }
-        if (this._onbistroResize) {
-            window.removeEventListener('resize', this._onbistroResize);
-            this._onbistroResize = null;
+        if (this._onBistroResize) {
+            window.removeEventListener('resize', this._onBistroResize);
+            this._onBistroResize = null;
         }
     }
 };
