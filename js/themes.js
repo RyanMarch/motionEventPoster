@@ -1692,7 +1692,7 @@
 
         'festive-holiday': defineTheme({
             id: 'festive-holiday',
-            name: 'Festive Holiday*',
+            name: 'Festive Holiday',
             pack: 'holiday',
             icon: '🎄',
             primary: '#0B3B24',
@@ -1701,8 +1701,11 @@
             swatchName: 'Pine & Holly',
             colors: { text: '#F8F9FA', darkText: '#04170E' },
             swatches: [
-                { hex: '#0B0B0C', name: 'Silent Night', accent: '#D4AF37', secondary: '#C41E3A' },
-                { hex: '#C41E3A', name: 'Santa Red', accent: '#FFFFFF', secondary: '#0B3B24' }
+                { hex: '#0A1128', name: 'Silent Night', accent: '#D4AF37', secondary: '#C41E3A' },
+                { hex: '#7C0A15', name: 'Santa Red', accent: '#FFFFFF', secondary: '#0B3B24' },
+                { hex: '#2A0800', name: 'Candlelight Glow', accent: '#FFAA00', secondary: '#C41E3A' },
+                { hex: '#1A2F1C', name: 'Mistletoe Magic', accent: '#D4AF37', secondary: '#FFFFFF' },
+                { hex: '#1C2023', name: 'Silver Bells', accent: '#E0E0E0', secondary: '#C41E3A' }
             ],
             fonts: { primary: "'Outfit', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
@@ -1712,7 +1715,7 @@
             ],
             frameClass: 'theme-frame--festive',
             overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.3, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 65 },
-            defaults: { hostsTitle: "Carolers", eventTitle: "Holiday Party", eventSubtitle: "Jingle & Mingle", eventTopLabel: "Merry" },
+            defaults: { hostsTitle: "Carolers", eventTitle: "Holiday Party", eventSubtitle: "Jingle & Mingle", eventTopLabel: "Festive" },
             uiLabels: { particlesPlural: 'Snow & Sparkles', particlesSingular: 'Flake', borderToggle: 'Hide garland', gustStrength: 'Winter Breeze', frameName: 'Pine Garland' }
         }),
 
