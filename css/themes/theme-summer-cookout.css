@@ -1,0 +1,365 @@
+/**
+ * SUMMER COOKOUT THEME STYLES
+ */
+
+/* Main Background Sky Gradient */
+body.theme-summer-cookout {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 60%, var(--color-primary) 100%) !important;
+}
+
+/* Solid Header Backdrop Area Removed */
+body.theme-summer-cookout::before {
+    content: none !important;
+}
+
+/* Wood Grain Texture Overlay */
+body.theme-summer-cookout .theme-texture {
+    position: absolute;
+    inset: 0;
+    background: url('../../assets/images/wood-grain-rustic.png') center center / cover no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 1. Ribbon Divider - Gone (No rules defined) */
+
+/* 2. Theme Frame Styling */
+body.theme-summer-cookout .theme-frame {
+    opacity: 1;
+    border: 8px double var(--color-accent);
+    border-radius: 12px;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow:
+        0 0 calc(12px * var(--frame-intensity)) rgba(0, 0, 0, 0.45),
+        inset 0 0 calc(12px * var(--frame-intensity)) rgba(0, 0, 0, 0.3);
+}
+
+body.theme-summer-cookout .theme-frame-inner {
+    position: absolute;
+    inset: 4px;
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    border-radius: 6px;
+}
+
+body.theme-summer-cookout .frame-rail {
+    display: none !important;
+}
+
+/* Hide Motif Toggle Logic */
+body.border-hidden.theme-summer-cookout .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* 3. Sway Layers - Decorations */
+body.theme-summer-cookout .sway-layer {
+    position: absolute;
+    z-index: 3;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.theme-summer-cookout:not(.is-loading) .sway-layer {
+    opacity: 0.85;
+}
+
+/* Overhanging String Lights */
+body.theme-summer-cookout .sway-top-1 {
+    display: block !important;
+    position: absolute;
+    top: 30px;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    height: 80px;
+    z-index: 4;
+    background-repeat: repeat-x;
+    background-size: 160px 80px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40' width='80' height='40'><style>@keyframes pulse { 0% { opacity: 0.25; } 100% { opacity: 0.85; } } .glow { animation: pulse 2.2s infinite alternate ease-in-out; } .delay-1 { animation-delay: 0s; } .delay-2 { animation-delay: 0.7s; } .delay-3 { animation-delay: 1.4s; }</style><path d='M0,5 Q40,25 80,5' fill='none' stroke='%23222222' stroke-width='2'/><rect x='18.5' y='12.5' width='3' height='4' fill='%23111111' rx='1'/><rect x='38.5' y='15' width='3' height='4' fill='%23111111' rx='1'/><rect x='58.5' y='12.5' width='3' height='4' fill='%23111111' rx='1'/><circle class='glow delay-1' cx='20' cy='18.5' r='12' fill='%23FF8F00' opacity='0.4'/><circle class='glow delay-2' cx='40' cy='21' r='12' fill='%23FF8F00' opacity='0.4'/><circle class='glow delay-3' cx='60' cy='18.5' r='12' fill='%23FF8F00' opacity='0.4'/><circle cx='20' cy='18.5' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='40' cy='21' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='60' cy='18.5' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='20' cy='18.5' r='3.5' fill='%23FFFFFF'/><circle cx='40' cy='21' r='3.5' fill='%23FFFFFF'/><circle cx='60' cy='18.5' r='3.5' fill='%23FFFFFF'/></svg>") !important;
+    transform-origin: center top;
+    animation: cookout-lights-sway calc(8.5s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+    filter: drop-shadow(0 4px 12px rgba(255, 143, 0, 0.45));
+}
+
+@keyframes cookout-lights-sway {
+    0% {
+        transform: skewX(-1.5deg) scaleY(0.98);
+    }
+
+    100% {
+        transform: skewX(1.5deg) scaleY(1.02);
+    }
+}
+
+/* Completely Remove Corner Decorations (Horrible Streamers and Silhouettes) */
+body.theme-summer-cookout .sway-top-left,
+body.theme-summer-cookout .sway-top-right,
+body.theme-summer-cookout .sway-bottom-left,
+body.theme-summer-cookout .sway-bottom-right,
+body.theme-summer-cookout .sway-left-side,
+body.theme-summer-cookout .sway-right-side,
+body.theme-summer-cookout .sway-top-2,
+body.theme-summer-cookout .sway-top-3,
+body.theme-summer-cookout .sway-top-4,
+body.theme-summer-cookout .sway-bottom-3,
+body.theme-summer-cookout .sway-bottom-4,
+body.theme-summer-cookout .sway-bottom-5,
+body.theme-summer-cookout .sway-bottom-6 {
+    display: none !important;
+}
+
+/* 4. Logo Banner - Chalkboard style */
+body.theme-summer-cookout .logo-banner {
+    position: relative !important;
+    transform: rotate(-0.7deg) !important;
+    margin: 2.5rem 0 -1.5rem 0 !important;
+    background: #232528;
+    /* Chalkboard dark grey */
+    border: 5px solid var(--color-accent);
+    outline: 2px solid rgba(255, 255, 255, 0.95);
+    border-radius: 4px;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.45),
+        inset 0 0 15px rgba(0, 0, 0, 0.65);
+    padding: 12px 48px;
+    z-index: 10;
+    width: 100%;
+    max-width: 420px;
+}
+
+body.theme-summer-cookout .logo-banner::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px dashed rgba(255, 255, 255, 0.32);
+    pointer-events: none;
+}
+
+body.theme-summer-cookout .logo-text-custom {
+    font-family: var(--font-primary);
+    color: #FFF8F0 !important;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+/* 5. Main Content Spacing */
+body.theme-summer-cookout .main-content {
+    max-width: 1700px;
+    padding-top: 0 !important;
+    /* Reset padding since ribbon and banner are removed */
+}
+
+body.theme-summer-cookout .hosts-container {
+    margin-top: 0 !important;
+}
+
+/* 6. Typography Styling & Shadows */
+body.theme-summer-cookout .event-title {
+    font-family: var(--font-display) !important;
+    color: #FFF8F0;
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 0.5px;
+    text-shadow:
+        3px 3px 0px var(--color-accent),
+        -1px -1px 0px rgba(0, 0, 0, 0.4),
+        1px -1px 0px rgba(0, 0, 0, 0.4),
+        -1px 1px 0px rgba(0, 0, 0, 0.4),
+        1px 1px 0px rgba(0, 0, 0, 0.4),
+        6px 6px 15px rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+}
+
+body.theme-summer-cookout .event-title::after {
+    display: none !important;
+}
+
+body.theme-summer-cookout .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 2.2rem;
+    color: var(--color-secondary);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
+    letter-spacing: 2px;
+    margin-bottom: -8px;
+    text-transform: uppercase;
+}
+
+body.theme-summer-cookout .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 2.4rem;
+    color: var(--color-secondary);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+body.theme-summer-cookout .event-date {
+    font-family: var(--font-primary);
+    font-size: 1.25rem;
+    color: #FFF8F0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.95;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Host Names Layout and Colors */
+body.theme-summer-cookout .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-secondary);
+    font-size: calc(2.8rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
+}
+
+body.theme-summer-cookout .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #FFF8F0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-summer-cookout .hosts-list {
+    padding: 0;
+}
+
+/* 7. Custom Vector Particle Shapes (Embers & Fireflies) */
+
+body.theme-summer-cookout .petal--cookout-ember {
+    border-radius: 50% 12% 50% 12% !important;
+    /* Tear-shape ember */
+    box-shadow: 0 0 10px var(--color-accent), 0 0 20px #FF7043;
+    filter: blur(0.5px);
+}
+
+body.theme-summer-cookout .petal--cookout-spark {
+    border-radius: 50% !important;
+    box-shadow: 0 0 8px #FF7043, 0 0 15px #FFF59D;
+}
+
+body.theme-summer-cookout .petal--cookout-firefly {
+    border-radius: 50% !important;
+    box-shadow: 0 0 15px #FFF59D, 0 0 25px #FBC02D;
+    opacity: 0.9 !important;
+    animation: cookout-firefly-glow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes cookout-firefly-glow {
+    0% {
+        opacity: 0.35;
+        transform: scale(0.85);
+    }
+
+    100% {
+        opacity: 0.95;
+        transform: scale(1.15);
+    }
+}
+
+/* 8. Fullscreen Countdown Overlay Override */
+body.theme-summer-cookout .fullscreen-countdown .countdown-content {
+    background: rgba(34, 37, 42, 0.95) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 25px rgba(var(--color-accent-rgb), 0.45),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.2) !important;
+    border-radius: 8px !important;
+}
+
+body.theme-summer-cookout .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: #FFF8F0 !important;
+}
+
+body.theme-summer-cookout .fullscreen-countdown #countdown-number {
+    color: var(--color-secondary) !important;
+    text-shadow: 0 0 12px rgba(var(--color-secondary-rgb), 0.8) !important;
+}
+
+/* 9. Layout Scaling & Responsive Adjustments */
+@media (max-width: 1800px) {
+    body.theme-summer-cookout .hosts-list span {
+        font-size: calc(1.45em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-summer-cookout .hosts-container {
+        margin: 1vh 0 -3.5vh 0;
+    }
+
+    body.theme-summer-cookout .event-footer {
+        margin-bottom: 2.5vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-summer-cookout .hosts-list span {
+        font-size: calc(1.85em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-summer-cookout .hosts-container {
+        margin-top: 2.5vh;
+        margin-bottom: -2vh;
+    }
+
+    body.theme-summer-cookout .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Connect CSS Animations to Play-State Toggles */
+body.theme-summer-cookout .sway-top-1 {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+body.theme-summer-cookout .sway-top-1.paused {
+    animation-play-state: paused !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40' width='80' height='40'><style>.glow { opacity: 0.65; }</style><path d='M0,5 Q40,25 80,5' fill='none' stroke='%23222222' stroke-width='2'/><rect x='18.5' y='12.5' width='3' height='4' fill='%23111111' rx='1'/><rect x='38.5' y='15' width='3' height='4' fill='%23111111' rx='1'/><rect x='58.5' y='12.5' width='3' height='4' fill='%23111111' rx='1'/><circle class='glow' cx='20' cy='18.5' r='12' fill='%23FF8F00' opacity='0.4'/><circle class='glow' cx='40' cy='21' r='12' fill='%23FF8F00' opacity='0.4'/><circle class='glow' cx='60' cy='18.5' r='12' fill='%23FF8F00' opacity='0.4'/><circle cx='20' cy='18.5' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='40' cy='21' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='60' cy='18.5' r='6' fill='%23FFCA28' opacity='0.65'/><circle cx='20' cy='18.5' r='3.5' fill='%23FFFFFF'/><circle cx='40' cy='21' r='3.5' fill='%23FFFFFF'/><circle cx='60' cy='18.5' r='3.5' fill='%23FFFFFF'/></svg>") !important;
+}
+
+/* Light Mode Swatch Adaptations */
+body.theme-summer-cookout.is-light-bg .event-title {
+    color: var(--color-accent) !important;
+    text-shadow:
+        2px 2px 0px var(--color-secondary),
+        3px 3px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-summer-cookout.is-light-bg .hosts-title,
+body.theme-summer-cookout.is-light-bg .hosts-list span,
+body.theme-summer-cookout.is-light-bg .event-subtitle,
+body.theme-summer-cookout.is-light-bg .event-top-label,
+body.theme-summer-cookout.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-summer-cookout.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-summer-cookout.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+/* Reposition and scale chalkboard banner when names are hidden for visual balance */
+body.theme-summer-cookout.host-hidden .logo-banner {
+    transform: translateY(10vh) scale(1.5) rotate(-0.7deg) !important;
+}

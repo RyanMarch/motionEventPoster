@@ -239,6 +239,7 @@ window.EventPoster = class EventPoster {
             hideTitle: document.getElementById('check-hide-title'),
             hideHost: document.getElementById('check-hide-host'),
             hideBorder: document.getElementById('check-hide-border'),
+            hideValentinesHearts: document.getElementById('check-hide-valentines-hearts'),
             qrSoiree: document.getElementById('check-qr-soiree'),
             qrMembership: document.getElementById('check-qr-membership'),
             disableAutoFullscreen: document.getElementById('check-disable-auto-fullscreen'),
@@ -271,12 +272,15 @@ window.EventPoster = class EventPoster {
         const layers = [
             'sway-top-right', 'sway-top-left', 'sway-bottom-left', 'sway-bottom-right',
             'sway-left-side', 'sway-right-side', 'sway-top-1', 'sway-top-2', 'sway-top-3',
-            'sway-bottom-3', 'sway-bottom-4', 'sway-bottom-5', 'sway-bottom-6'
+            'sway-bottom-3', 'sway-bottom-4', 'sway-bottom-5', 'sway-bottom-6',
+            'sway-bottom-7', 'sway-bottom-8', 'sway-bottom-9', 'sway-bottom-10',
+            'sway-bottom-11', 'sway-bottom-12', 'sway-bottom-13', 'sway-bottom-14'
         ];
+        const wrapper = document.querySelector('.content-wrapper') || this.body;
         layers.forEach(cls => {
             const div = document.createElement('div');
             div.className = `sway-layer ${cls}`;
-            this.body.appendChild(div);
+            wrapper.appendChild(div);
         });
     }
 
@@ -317,6 +321,7 @@ window.EventPoster = class EventPoster {
         this.petalTypes = this.theme.particles;
 
         Object.keys(window.DEFAULTS).forEach((key) => {
+            if (key === 'isAppRunning') return;
             let defaultValue = window.DEFAULTS[key];
 
             // If the active theme has an override for this key, use it as the new baseline
@@ -366,8 +371,6 @@ window.EventPoster = class EventPoster {
     }
 
     init() {
-        // setupEventListeners moved to startApp so dynamic sliders are ready before binding
-
         if (this.elements.btnBypassBlocker) {
             this.elements.btnBypassBlocker.addEventListener('click', () => {
                 this.body.classList.add('is-mobile-dismissed');
@@ -375,22 +378,26 @@ window.EventPoster = class EventPoster {
             });
         }
 
-        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+        // Run the check on initial load
+        this.checkScreenSize();
 
-        // On touch-primary devices (like iPad or mobile phones), evaluate window dimensions.
-        // On pointer-fine devices (laptops, desktops, projectors), use the physical screen dimensions 
-        // to avoid false-positives from browser chrome (e.g. Safari tab/address bars on 13" laptops).
-        const isTooSmall = isTouchDevice
-            ? (window.innerWidth < 1280 || window.innerHeight < 800)
-            : (window.screen.width < 1280 || window.screen.height < 800);
+        // Listen for live window resizing
+        window.addEventListener('resize', () => this.checkScreenSize());
+    }
 
-        if (isTooSmall || isTouchDevice) {
+    checkScreenSize() {
+        // If the coach already clicked "Proceed anyway", don't interrupt them again
+        if (this.body.classList.contains('is-mobile-dismissed')) return;
+
+        const isTooSmall = window.innerWidth < 1180 || window.innerHeight < 768;
+
+        if (isTooSmall) {
             this.elements.mobileBlocker?.classList.add('is-visible');
             this.updateMobileScreenSizeInfo();
-            return;
+        } else {
+            this.elements.mobileBlocker?.classList.remove('is-visible');
+            if (!this.state.isAppRunning) this.startApp();
         }
-
-        this.startApp();
     }
 
     startApp() {
@@ -481,6 +488,9 @@ window.EventPoster = class EventPoster {
         this.controls.hideTitle.checked = this.state.hideTitle;
         this.controls.hideHost.checked = this.state.hideHost;
         this.controls.hideBorder.checked = this.state.hideBorder;
+        if (this.controls.hideValentinesHearts) {
+            this.controls.hideValentinesHearts.checked = this.state.hideValentinesHearts;
+        }
         this.controls.disableAutoFullscreen.checked = this.state.disableAutoFullscreen;
 
         if (this.controls.autoHideMenu) this.controls.autoHideMenu.checked = this.state.autoHideMenu;
@@ -495,6 +505,7 @@ window.EventPoster = class EventPoster {
         this.body.classList.toggle('title-hidden', this.state.hideTitle);
         this.body.classList.toggle('host-hidden', this.state.hideHost);
         this.body.classList.toggle('border-hidden', this.state.hideBorder);
+        this.body.classList.toggle('hide-valentines-hearts', this.state.hideValentinesHearts);
 
         this.elements.qrSoiree.classList.toggle('qr-hidden', !this.state.qrSoiree);
         this.elements.qrMembership.classList.toggle('qr-hidden', !this.state.qrMembership);
@@ -561,8 +572,17 @@ window.EventPoster = class EventPoster {
         if (!this.containers.hosts || !this.elements.logoBanner || !this.elements.eventFooter) return;
         const MIN_SCALE = 0.35;
 
+        // Temporarily disable transitions to measure natural sizes accurately
+        const hadIsSliding = this.body.classList.contains('is-sliding');
+        if (!hadIsSliding) {
+            this.body.classList.add('is-sliding');
+        }
+
         // Reset scale temporarily to measure natural sizes
         this.containers.hosts.style.setProperty('--dynamic-scale', '1');
+
+        // Force reflow so transition is disabled and scale: 1 is computed
+        this.containers.hosts.offsetHeight;
 
         // Measure element dimensions (including transforms like scale)
         const logoH = this.elements.logoBanner.getBoundingClientRect().height;
@@ -599,6 +619,12 @@ window.EventPoster = class EventPoster {
 
         scale = Math.max(MIN_SCALE, Math.min(1.0, scale));
         this.containers.hosts.style.setProperty('--dynamic-scale', scale.toFixed(3));
+
+        // Restore transitions
+        if (!hadIsSliding) {
+            this.containers.hosts.offsetHeight; // force reflow with new scale
+            this.body.classList.remove('is-sliding');
+        }
     }
 
     applyPosterText() {
@@ -684,8 +710,6 @@ window.EventPoster = class EventPoster {
     readStoredRemovedHosts() { try { return JSON.parse(localStorage.getItem(window.STORAGE_KEYS.removedHosts) || '[]'); } catch { return []; } }
     persistRemovedHosts() { localStorage.setItem(window.STORAGE_KEYS.removedHosts, JSON.stringify(this.state.removedHosts)); }
 
-    // Logic Helpers
-    deriveAccentColor(hex) { return window.PosterUtils.deriveAccentColor(hex); }
 
     // UI visibility helpers
     isControlsPanelVisible() { return this.elements.controlsPanel?.classList.contains('is-visible'); }
@@ -749,7 +773,7 @@ window.EventPoster = class EventPoster {
         this.state.addedHosts.push(val);
         this.state.hasEverAddedHost = true;
         localStorage.setItem(window.STORAGE_KEYS.hasEverAddedHost, 'true');
-        localStorage.setItem(window.STORAGE_KEYS.addedHosts, JSON.stringify(this.state.addedHosts));
+        this.persistAddedHosts();
         this.renderHosts(); this.closeAddHostForm();
         // Remote sync
         if (!window.remoteManager?._applying) {
@@ -812,7 +836,11 @@ window.EventPoster = class EventPoster {
         };
         requestAnimationFrame(update);
     }
-    handleFactoryResetKeyUp() { this.state.factoryResetStartTime = null; this.elements.factoryResetOverlay.classList.add('is-hidden'); this.elements.factoryResetProgress.style.width = '0%'; }
+    handleFactoryResetKeyUp() {
+        this.state.factoryResetStartTime = null;
+        this.elements.factoryResetOverlay.classList.add('is-hidden');
+        this.elements.factoryResetProgress.style.width = '0%';
+    }
     showFactoryResetConfirmation() { this.elements.factoryResetModal.classList.remove('is-hidden'); }
     hideFactoryResetConfirmation() { this.elements.factoryResetModal.classList.add('is-hidden'); }
     performFactoryReset() { localStorage.clear(); window.location.reload(); }
@@ -978,13 +1006,31 @@ window.EventPoster = class EventPoster {
 
     showKeyboardHint() {
         if (!this.elements.keyboardHint) return;
-        setTimeout(() => { if (!this.isControlsPanelVisible() && !document.fullscreenElement) { this.elements.keyboardHint.classList.add('is-visible'); setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000); } }, 1500);
+        setTimeout(() => {
+            if (!this.isControlsPanelVisible() && !document.fullscreenElement) {
+                this.elements.keyboardHint.classList.add('is-visible');
+                setTimeout(() => this.elements.keyboardHint.classList.remove('is-visible'), 8000);
+            }
+        }, 1500);
     }
 
     updateMobileScreenSizeInfo() {
-        if (this.elements.mobileScreenSizeInfo) {
-            this.elements.mobileScreenSizeInfo.textContent = `Detected: ${window.innerWidth}×${window.innerHeight}  |  Recommended: >1280×800`;
-        }
+        if (!this.elements.mobileScreenSizeInfo) return;
+
+        // Detect width and height safely, fallback to null if unavailable
+        const width = window.innerWidth || null;
+        const height = window.innerHeight || null;
+
+        // Determine the text string or fallback stand-in message
+        const detectedDisplay = (width && height)
+            ? `${width}×${height}`
+            : 'Unavailable';
+
+        // Update the innerHTML to handle bolding and a forced line break (<br>)
+        this.elements.mobileScreenSizeInfo.innerHTML = `
+        <strong>Detected:</strong> ${detectedDisplay}<br>
+        <strong>Recommended:</strong> 1280×768
+    `;
     }
 
     autoGrowTextarea(el) { el.style.height = 'auto'; el.style.height = (el.scrollHeight) + 'px'; }

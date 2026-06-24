@@ -7,6 +7,10 @@
 (function () {
     window.THEME_PACKS = {
         standard: { name: 'Standard Pack', icon: '📦' },
+        party: { name: 'Party Pack', icon: '🥳' },
+        decades: { name: 'Decades Pack', icon: '🪩' },
+        specialty: { name: 'Specialty Pack', icon: '🌌' },
+        holiday: { name: 'Holiday Pack', icon: '🎃' }
     };
 
     /**
@@ -40,7 +44,7 @@
 
     window.THEMES = {
 
-        // STANDARD PACK
+        // --- STANDARD PACK ---
         spring: defineTheme({
             id: 'spring',
             name: 'Spring Blossom',
@@ -48,16 +52,16 @@
             icon: '🌸',
             primary: '#032858',
             accent: '#f9d783',
-            swatchName: 'Navy',
+            swatchName: 'Original Navy',
             colors: {
                 darkText: '#1a1c1e'
             },
             swatches: [
-                { hex: '#1B363C', name: 'Teal', accent: '#81D4FA' },
-                { hex: '#3B4D35', name: 'Moss', accent: '#C5E1A5' },
-                { hex: '#4E3541', name: 'Plum', accent: '#CE93D8' },
+                { hex: '#1B363C', name: 'Deep Teal', accent: '#81D4FA' },
+                { hex: '#3B4D35', name: 'Deep Moss', accent: '#C5E1A5' },
+                { hex: '#4E3541', name: 'Deep Plum', accent: '#CE93D8' },
                 { hex: '#2B2D31', name: 'Charcoal', accent: '#90CAF9' },
-                { hex: '#8FA382', name: 'Sage', accent: '#ffffff' },
+                { hex: '#8FA382', name: 'Sage Green', accent: '#ffffff' },
                 { hex: '#F5F2EB', name: 'Warm Cream', accent: '#3b58a8' }
             ],
             fonts: {
@@ -104,6 +108,7 @@
                 frameName: 'Floral Sway'
             }
         }),
+
         'digital-grid': defineTheme({
             id: 'digital-grid',
             name: 'Digital Grid',
@@ -117,7 +122,7 @@
                 darkText: '#001a1a'
             },
             swatches: [
-                { hex: '#250e3d', name: 'Purple', accent: '#ff00ff' },
+                { hex: '#250e3d', name: 'Deep Purple', accent: '#ff00ff' },
                 { hex: '#2a0a1a', name: 'Cosmic Red', accent: '#ff4d4d' },
                 { hex: '#000000', name: 'True Black', accent: '#ffffff' },
                 { hex: '#0a2a1a', name: 'Deep Emerald', accent: '#00ff9f' },
@@ -170,6 +175,7 @@
                 frameName: 'Frame'
             }
         }),
+
         'alpine-winter': defineTheme({
             id: 'alpine-winter',
             name: 'Alpine Winter',
@@ -177,7 +183,7 @@
             icon: '❄️',
             primary: '#1B3B57',
             accent: '#AADDFF',
-            swatchName: 'Glacier',
+            swatchName: 'Glacier Deep',
             colors: {
                 darkText: '#0A1520'
             },
@@ -212,12 +218,12 @@
             overrides: {
                 insetV: 50,
                 insetH: 60,
-                hostTextSize: 0.95,
+                hostTextSize: 1.0,
                 gustStrength: 15,
                 fallSpeed: 0.4,
                 maxPetals: 80,
                 windiness: 5,
-                hostMaxWidth: 112,
+                hostMaxWidth: 120,
                 backdropOpacity: 65
             },
             defaults: {
@@ -234,6 +240,7 @@
                 frameName: 'Frost'
             }
         }),
+
         'vintage-radio': defineTheme({
             id: 'vintage-radio',
             name: 'Vintage Radio',
@@ -298,6 +305,7 @@
                 frameName: 'Signal'
             }
         }),
+
         'corporate': defineTheme({
             id: 'corporate',
             name: 'Corporate Pro',
@@ -319,15 +327,14 @@
                 { hex: '#18181B', name: 'Onyx Gold', accent: '#FDE68A' },
                 { hex: '#1E1B4B', name: 'Midnight Rose', accent: '#FFE4E6' },
                 { hex: '#451A03', name: 'Warm Espresso', accent: '#FFEDD5' },
-                { hex: '#F0F4F8', name: 'Business Blue Reverse', accent: '#005FB8' },
-                { hex: '#e3f0fdff', name: 'Sky Blue Reverse', accent: '#56CCF2' },
-                { hex: '#BCE29E', name: 'Onyx & Lime Reverse', accent: '#192b57ff' },
-                { hex: '#41baacff', name: 'Tech Teal Reverse', accent: '#111827' },
-                { hex: '#A5F3FC', name: 'Carbon Cyan Reverse', accent: '#171717' },
-                { hex: '#D9F99D', name: 'Deep Forest Reverse', accent: '#064E3B' },
-                { hex: '#FDE68A', name: 'Onyx Gold Reverse', accent: '#18181B' },
-                // { hex: '#FFEDD5', name: 'Warm Espresso Reverse', accent: '#451A03' },
-                { hex: '#FFE4E6', name: 'Midnight Rose Reverse', accent: '#1E1B4B' }
+                { hex: '#F0F4F8', name: 'Business Blue Rev', accent: '#005FB8' },
+                { hex: '#e3f0fdff', name: 'Sky Blue Rev', accent: '#56CCF2' },
+                { hex: '#BCE29E', name: 'Onyx & Lime Rev', accent: '#192b57ff' },
+                { hex: '#41baacff', name: 'Tech Teal Rev', accent: '#111827' },
+                { hex: '#A5F3FC', name: 'Carbon Cyan Rev', accent: '#171717' },
+                { hex: '#D9F99D', name: 'Deep Forest Rev', accent: '#064E3B' },
+                { hex: '#FDE68A', name: 'Onyx Gold Rev', accent: '#18181B' },
+                { hex: '#FFE4E6', name: 'Midnight Rose Rev', accent: '#1E1B4B' }
             ],
             fonts: {
                 primary: "'Inter', sans-serif",
@@ -373,6 +380,7 @@
                 frameName: 'Shapes'
             }
         }),
+
         'minimal-elegance': defineTheme({
             id: 'minimal-elegance',
             name: 'Minimal Elegance',
@@ -442,6 +450,1326 @@
                 gustStrength: 'Animation Intensity',
                 frameName: 'Gallery Frame'
             }
+        }),
+
+        // --- PARTY PACK ---
+        'electric-pulse': defineTheme({
+            id: 'electric-pulse',
+            name: 'Electric Pulse',
+            pack: 'party',
+            icon: '🎸',
+            primary: '#0B191E',
+            accent: '#00FF88',
+            secondary: '#FFD700',
+            swatchName: 'Echo Forest',
+            colors: {
+                text: '#ffffff',
+                darkText: '#090714'
+            },
+            swatches: [
+                { hex: '#090714', name: 'Main Stage', accent: '#FF1A75', secondary: '#00F2FE' },
+                { hex: '#140505', name: 'Twilight', accent: '#FF3C00', secondary: '#FFCC00' },
+                { hex: '#0D0B1C', name: 'Aftershock', accent: '#FF7A00', secondary: '#FF1A75' },
+                { hex: '#000000', name: 'Rave', accent: '#00FFCC', secondary: '#9600a7ff' },
+                { hex: '#160824', name: 'Violet', accent: '#CC00FF', secondary: '#00FFFF' },
+                { hex: '#050C1A', name: 'Subzero', accent: '#0084ffff', secondary: '#46dbf5ff' },
+                { hex: '#0F081D', name: 'Hyperpop', accent: '#8ACE00', secondary: '#d7ffd7ff' },
+                { hex: '#1F3540', name: 'Deep Tech', accent: '#00FFCC', secondary: '#FF007F' },
+                { hex: '#32303F', name: 'Steel Pulse', accent: '#FF7A00', secondary: '#00F2FE' },
+                { hex: '#FFF5F8', name: 'Dayglow', accent: '#FF1A75', secondary: '#00F2FE' },
+                { hex: '#F0F9FF', name: 'Static', accent: '#7B2CBF', secondary: '#FF007F' },
+                { hex: '#FDFFE0', name: 'Acid Sun', accent: '#9D00FF', secondary: '#00E5FF' },
+                { hex: '#FFF6F0', name: 'Solar Flares', accent: '#FF5E00', secondary: '#FF007F' },
+                { hex: '#EFFFFB', name: 'Mint Glitch', accent: '#00B3A6', secondary: '#0066FF' },
+                { hex: '#B5B8C0', name: 'Concrete', accent: '#FF1A75', secondary: '#00E5FF' },
+                { hex: '#C8B195', name: 'Desert Laser', accent: '#9D00FF', secondary: '#FF3C00' },
+            ],
+            fonts: {
+                primary: "'Archivo Black', sans-serif",
+                display: "'Bungee Shade', sans-serif",
+                heading: "'Bungee Inline', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF1A75', gradient: '#B30047', type: 'confetti', weight: 40 },
+                { color: '#00F2FE', gradient: '#00A8B3', type: 'confetti', weight: 30 },
+                { color: '#FFD700', gradient: '#B39600', type: 'confetti', weight: 20 },
+                { useThemeAccent: true, type: 'laser', weight: 25 }
+            ],
+            frameClass: 'theme-frame--electric-pulse',
+            flags: { syncParticleColors: true, showAccentAsSwatch: true },
+            overrides: {
+                insetV: 65,
+                insetH: 40,
+                hostTextSize: 1.1,
+                gustStrength: 45,
+                fallSpeed: 0.6,
+                maxPetals: 65,
+                windiness: 12,
+                backdropOpacity: 0,
+                hostMaxWidth: 123
+            },
+            defaults: {
+                hostsTitle: "Special Guests",
+                eventTitle: "ELECTRIC PULSE",
+                eventSubtitle: "LIVE MUSIC FESTIVAL",
+                eventTopLabel: "PRESENTS"
+            },
+            uiLabels: {
+                particlesPlural: 'Confetti & Lasers',
+                particlesSingular: 'Confetti Piece',
+                borderToggle: 'Hide Stage Scaffold',
+                gustStrength: 'Light & Stage Motion',
+                frameName: 'Stage Movement'
+            }
+        }),
+
+        'celebration': defineTheme({
+            id: 'celebration',
+            name: 'Celebration',
+            pack: 'party',
+            icon: '🎉',
+            primary: '#100520',
+            accent: '#FF007F',
+            secondary: '#00E5FF',
+            swatchName: 'Party Time',
+            colors: {
+                text: '#ffffff',
+                darkText: '#100520'
+            },
+            swatches: [
+                { hex: '#0F1A1C', name: 'Golden Jubilee', accent: '#FFD700', secondary: '#F8F9FA' },
+                { hex: '#21092F', name: 'Parade', accent: '#FF5E00', secondary: '#FFC400' },
+                { hex: '#0B0C10', name: 'Midnight Sparkler', accent: '#00E5FF', secondary: '#FFD700' },
+                { hex: '#071E22', name: 'Festival Glow', accent: '#ADFF2F', secondary: '#FF007F' },
+                { hex: '#FFF9E6', name: 'Confetti Pop', accent: '#FF3F80', secondary: '#3F51B5' },
+                { hex: '#FFF0F6', name: 'Candy Land', accent: '#9C27B0', secondary: '#00BCD4' },
+                { hex: '#FAF5EC', name: 'Champagne Toast', accent: '#D4AF37', secondary: '#5D4037' }
+            ],
+            fonts: {
+                primary: "'Nunito', system-ui, sans-serif",
+                display: "'Pacifico', cursive",
+                heading: "'Chewy', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF007F', gradient: '#D00060', type: 'confetti-magenta', weight: 20 },
+                { color: '#00E5FF', gradient: '#00B0D0', type: 'confetti-cyan', weight: 20 },
+                { color: '#FFD700', gradient: '#D5A600', type: 'confetti-yellow', weight: 20 },
+                { color: '#9D00FF', gradient: '#7500C0', type: 'confetti-purple', weight: 15 },
+                { color: '#FF6B6B', gradient: '#D04B4B', type: 'confetti-red', weight: 15 },
+                { color: '#00FF66', gradient: '#00C850', type: 'confetti-green', weight: 10 },
+                // Balloons (floating upwards using negative speedMultiplier - increased weights for higher density)
+                { color: '#FF007F', gradient: '#FF66B2', type: 'balloon-magenta', weight: 35, speedMultiplier: -0.65, rotSpeedMultiplier: 0, massMultiplier: 1.5, sizeMultiplier: 2.2 },
+                { color: '#00E5FF', gradient: '#66FFFF', type: 'balloon-cyan', weight: 35, speedMultiplier: -0.55, rotSpeedMultiplier: 0, massMultiplier: 1.4, sizeMultiplier: 2.5 },
+                { color: '#FFD700', gradient: '#FFE866', type: 'balloon-yellow', weight: 35, speedMultiplier: -0.6, rotSpeedMultiplier: 0, massMultiplier: 1.6, sizeMultiplier: 2.0 }
+            ],
+            frameClass: 'theme-frame--celebration',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 0.95,
+                gustStrength: 40,
+                fallSpeed: 0.7,
+                maxPetals: 25,
+                windiness: 15,
+                hostMaxWidth: 115
+            },
+            defaults: {
+                hostsTitle: "Special Guests",
+                eventTitle: "Grand Celebration",
+                eventSubtitle: "All-Day Party",
+                eventTopLabel: "Welcome To Our"
+            },
+            uiLabels: {
+                particlesPlural: 'Party Favors',
+                particlesSingular: 'Favor',
+                borderToggle: 'Hide decorations',
+                gustStrength: 'Wind & Sway',
+                frameName: 'Decorations'
+            }
+        }),
+
+        'summer-cookout': defineTheme({
+            id: 'summer-cookout',
+            name: 'Summer Cookout',
+            pack: 'party',
+            icon: '🍔',
+            primary: '#22252A',
+            accent: '#D32F2F',
+            secondary: '#FBC02D',
+            swatchName: 'Charcoal Grill',
+            colors: {
+                text: '#FFF8F0',
+                darkText: '#22252A'
+            },
+            swatches: [
+                { hex: '#1A365D', name: 'Gingham Blue', accent: '#D32F2F', secondary: '#E2E8F0' },
+                { hex: '#7A1A1A', name: 'Gingham Red', accent: '#D32F2F', secondary: '#F9F6F0' },
+                { hex: '#1A3F2A', name: 'Watermelon Slice', accent: '#E91E63', secondary: '#E8F5E9' },
+                { hex: '#2A1B14', name: 'Sunset BBQ', accent: '#E65100', secondary: '#FFE0B2' },
+                { hex: '#0D3B4C', name: 'Citrus Lemonade', accent: '#FFB300', secondary: '#FFF9C4' },
+                { hex: '#1E0F0A', name: 'Campfire Amber', accent: '#D84315', secondary: '#FFB13D' },
+                { hex: '#004D40', name: 'Ocean Breeze', accent: '#00BFA5', secondary: '#E0F2F1' },
+            ],
+            fonts: {
+                primary: "'PT Sans', system-ui, sans-serif",
+                display: "'Lilita One', cursive, sans-serif",
+                heading: "'Alfa Slab One', cursive, sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#FF7043', gradient: '#D32F2F', type: 'cookout-ember', weight: 45, speedMultiplier: -0.65, rotSpeedMultiplier: 1.2, sizeMultiplier: 0.9, massMultiplier: 1.1 },
+                { color: '#FBC02D', gradient: '#FF7043', type: 'cookout-spark', weight: 35, speedMultiplier: -0.75, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.7, massMultiplier: 0.9 },
+                { color: '#FFF59D', gradient: '#FBC02D', type: 'cookout-firefly', weight: 20, speedMultiplier: 0.2, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.2, massMultiplier: 0.5 }
+            ],
+            frameClass: 'theme-frame--summer-cookout',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.5,
+                maxPetals: 30,
+                windiness: 12,
+                hostMaxWidth: 120,
+                backdropOpacity: 65
+            },
+            defaults: {
+                hostsTitle: "Thanks to our hosts",
+                eventTitle: "Backyard Cookout",
+                eventSubtitle: "BBQ & Drinks",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Embers & Fireflies',
+                particlesSingular: 'Ember',
+                borderToggle: 'Hide string lights',
+                gustStrength: 'Wind & Sway',
+                frameName: 'String Lights'
+            }
+        }),
+
+        'tropical-oasis': defineTheme({
+            id: 'tropical-oasis',
+            name: 'Tropical Oasis',
+            pack: 'party',
+            icon: '🌊',
+            primary: '#028090',
+            accent: '#f0a500',
+            secondary: '#f26419',
+            swatchName: 'Turquoise Water',
+            colors: {
+                text: '#ffffff',
+                darkText: '#012a36'
+            },
+            swatches: [
+                { hex: '#00a896', name: 'Coral Beach', accent: '#fab1a0', secondary: '#e63946' },
+                { hex: '#005f73', name: 'Blue Lagoon', accent: '#ee9b00', secondary: '#ca6702' },
+                { hex: '#f4a261', name: 'Sunset Pool', accent: '#e76f51', secondary: '#2a9d8f' },
+                { hex: '#2ec4b6', name: 'Tropical Mojito', accent: '#c7f9cc', secondary: '#ffbf69' },
+                { hex: '#f8f9fa', name: 'Flamingo Pink', accent: '#00b4d8', secondary: '#ff7096' }
+            ],
+            fonts: {
+                primary: "'Quicksand', system-ui, sans-serif",
+                display: "'Lilita One', cursive, sans-serif",
+                heading: "'Fredoka', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Bubbles rising (negative speedMultiplier)
+                { color: '#ffffff', gradient: '#e0f2f1', type: 'tropical-oasis-bubble', weight: 45, speedMultiplier: -0.55, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.8, massMultiplier: 0.7, isWhite: true },
+                { color: '#ffffff', gradient: '#b2dfdb', type: 'tropical-oasis-bubble-large', weight: 20, speedMultiplier: -0.65, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.3, massMultiplier: 0.6, isWhite: true },
+                // Beach balls (conic-gradient stripes styled in CSS)
+                { color: '#ff5722', gradient: '#ffeb3b', type: 'tropical-oasis-beachball', weight: 12, speedMultiplier: 0.4, rotSpeedMultiplier: 1.5, sizeMultiplier: 2.1, massMultiplier: 1.1 },
+                // Fruit slices (lemon, orange, lime)
+                { color: '#ffeb3b', gradient: '#fbc02d', type: 'tropical-oasis-fruit-lemon', weight: 10, speedMultiplier: 0.5, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.25, massMultiplier: 0.8 },
+                { color: '#ff9800', gradient: '#f57c00', type: 'tropical-oasis-fruit-orange', weight: 8, speedMultiplier: 0.45, rotSpeedMultiplier: 0.7, sizeMultiplier: 1.35, massMultiplier: 0.9 },
+                { color: '#4caf50', gradient: '#388e3c', type: 'tropical-oasis-fruit-lime', weight: 7, speedMultiplier: 0.55, rotSpeedMultiplier: 0.9, sizeMultiplier: 1.15, massMultiplier: 0.7 },
+                // Splash / ripples on pool water surface
+                { color: '#ffffff', gradient: '#e0f2f1', type: 'tropical-oasis-splash', weight: 25, speedMultiplier: 0.08, rotSpeedMultiplier: 0, sizeMultiplier: 1.0, massMultiplier: 0.4, isWhite: true }
+            ],
+            frameClass: 'theme-frame--tropical-oasis',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.3,
+                maxPetals: 65,
+                windiness: 2,
+                hostMaxWidth: 120,
+                backdropOpacity: 65
+            },
+            defaults: {
+                hostsTitle: "Thanks to our hosts",
+                eventTitle: "Pool Party",
+                eventSubtitle: "Tropical Oasis",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Pool Floats',
+                particlesSingular: 'Float',
+                borderToggle: 'Hide decorations',
+                gustStrength: 'Water Current',
+                frameName: 'Water Current'
+            }
+        }),
+
+        'casino-night': defineTheme({
+            id: 'casino-night',
+            name: 'Casino Night',
+            pack: 'party',
+            icon: '🎲',
+            primary: '#0F4C2A',
+            accent: '#D4AF37',
+            secondary: '#E31B23',
+            swatchName: 'Vegas Green',
+            colors: {
+                text: '#ffffff',
+                darkText: '#0F4C2A'
+            },
+            swatches: [
+                { hex: '#222121', name: 'High Roller Black', accent: '#D4AF37', secondary: '#E31B23' },
+                { hex: '#1C3144', name: 'Atlantic Blue', accent: '#F0F4F8', secondary: '#D4AF37' },
+                { hex: '#4A0D17', name: 'Monte Carlo Burgundy', accent: '#D4AF37', secondary: '#FFFFFF' },
+                { hex: '#140A26', name: 'Neon Strip', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#2A082C', name: 'Royal Plum', accent: '#D4AF37', secondary: '#E31B23' },
+                { hex: '#D4AF37', name: 'Golden Jackpot', accent: '#1A1A1A', secondary: '#E31B23' },
+                { hex: '#F4F1EA', name: 'Vintage Cardroom', accent: '#0F4C2A', secondary: '#A81116' }
+            ],
+            fonts: {
+                primary: "'Jost', sans-serif",
+                display: "'Playfair Display', serif",
+                heading: "'Playfair Display', serif"
+            },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#E31B23', gradient: '#A81116', type: 'heart', weight: 25, speedMultiplier: 0.4, sizeMultiplier: 1.0, massMultiplier: 0.8 },
+                { color: '#ffffff', gradient: '#e0e0e0', type: 'diamond', weight: 25, speedMultiplier: 0.45, sizeMultiplier: 1.0, massMultiplier: 0.8, isWhite: true },
+                { color: '#000000', gradient: '#1a1a1a', type: 'spade', weight: 25, speedMultiplier: 0.4, sizeMultiplier: 1.0, massMultiplier: 0.8 },
+                { color: '#E31B23', gradient: '#A81116', type: 'club', weight: 25, speedMultiplier: 0.45, sizeMultiplier: 1.0, massMultiplier: 0.8 }
+            ],
+            frameClass: 'theme-frame--casino',
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 25, fallSpeed: 0.45, maxPetals: 30, windiness: 8, hostMaxWidth: 125, backdropOpacity: 75 },
+            defaults: { hostsTitle: "VIP Guests", eventTitle: "Casino Royale", eventSubtitle: "Charity Gala & Games", eventTopLabel: "Welcome To" },
+            uiLabels: { particlesPlural: 'Card Suits', particlesSingular: 'Suit', borderToggle: 'Hide cards & chips', gustStrength: 'Shuffle Speed', frameName: 'Gold Border & Corner Art' }
+        }),
+
+        'karaoke-night': defineTheme({
+            id: 'karaoke-night',
+            name: 'Karaoke Night',
+            pack: 'party',
+            icon: '🎤',
+            primary: '#08080a',
+            accent: '#ff007f',
+            secondary: '#00f2ff',
+            swatchName: 'Tokyo Neon',
+            colors: {
+                text: '#ffffff',
+                darkText: '#08080a'
+            },
+            swatches: [
+                { hex: '#0a0518', name: 'Shibuya Midnight', accent: '#ff00ff', secondary: '#00ffff' },
+                { hex: '#051015', name: 'Akihabara Laser', accent: '#00ff88', secondary: '#ff00aa' },
+                { hex: '#120015', name: 'Kabukicho Pink', accent: '#ff0055', secondary: '#00ffcc' },
+                { hex: '#140c24', name: 'Vaporwave Dream', accent: '#ff00c8', secondary: '#00d2ff' },
+                { hex: '#080c14', name: 'Cyberpunk City', accent: '#00f2ff', secondary: '#ffe600' },
+                { hex: '#101216', name: 'Toxic Glow', accent: '#39ff14', secondary: '#bd00ff' },
+                { hex: '#000000', name: 'Rave Cave', accent: '#ff007f', secondary: '#00f2ff' },
+                { hex: '#05140b', name: 'Acid Wave', accent: '#adff2f', secondary: '#00ffff' },
+                { hex: '#fff5f8', name: 'Daylight Disco', accent: '#ff007f', secondary: '#00b4d8' },
+                { hex: '#effffb', name: 'Neon Mint', accent: '#00b3a6', secondary: '#7b2cbf' },
+                { hex: '#fff6f0', name: 'Solar Flare', accent: '#ff5e00', secondary: '#ff007f' },
+                { hex: '#f0f9ff', name: 'Electric Sky', accent: '#0066ff', secondary: '#e6a100' },
+                { hex: '#f5f0ff', name: 'Lounge Pastel', accent: '#8a2be2', secondary: '#ff7f50' },
+                { hex: '#f1f3f5', name: 'Platinum Beats', accent: '#0070f3', secondary: '#ff007f' }
+            ],
+            fonts: {
+                primary: "'Space Grotesk', system-ui, sans-serif",
+                display: "'Righteous', cursive, sans-serif",
+                heading: "'Space Grotesk', sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { useThemeAccent: true, type: 'karaoke-treble', weight: 20, speedMultiplier: 0.5, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.2, massMultiplier: 0.8 },
+                { useThemeSecondary: true, type: 'karaoke-note', weight: 20, speedMultiplier: 0.55, rotSpeedMultiplier: 0.9, sizeMultiplier: 1.1, massMultiplier: 0.7 },
+                { useThemeAccent: true, type: 'karaoke-mic', weight: 15, speedMultiplier: 0.45, rotSpeedMultiplier: 0.7, sizeMultiplier: 1.3, massMultiplier: 0.9 },
+                { color: '#ffffff', type: 'karaoke-orb', weight: 45, speedMultiplier: 0.3, rotSpeedMultiplier: 0.1, sizeMultiplier: 1.5, massMultiplier: 0.6, isWhite: true }
+            ],
+            frameClass: 'theme-frame--karaoke-night',
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.0,
+                gustStrength: 30,
+                fallSpeed: 0.4,
+                maxPetals: 35,
+                windiness: 8,
+                hostMaxWidth: 120,
+                backdropOpacity: 75
+            },
+            defaults: {
+                hostsTitle: "Tonight's Singers",
+                eventTitle: "Karaoke Night",
+                eventSubtitle: "Tokyo Neon Lounge",
+                eventTopLabel: "Welcome To"
+            },
+            uiLabels: {
+                particlesPlural: 'Notes & Orbs',
+                particlesSingular: 'Note/Orb',
+                borderToggle: 'Hide Equalizer & Mic',
+                gustStrength: 'Equalizer Speed',
+                frameName: 'Equalizer & Mic'
+            }
+        }),
+
+        // --- DECADES PACK ---
+        'retro-wave': defineTheme({
+            id: 'retro-wave',
+            name: 'Retro Wave',
+            pack: 'decades',
+            icon: '🕶️',
+            primary: '#180030',
+            accent: '#ff007f',
+            secondary: '#00ffff',
+            swatchName: 'Neon Pink',
+            colors: {
+                text: '#ffffff',
+                darkText: '#180030'
+            },
+            swatches: [
+                { hex: '#0b111e', name: 'Grid Runner', accent: '#00d2ff', secondary: '#ffb703' },
+                { hex: '#002a3a', name: 'Miami', accent: '#00f0ff', secondary: '#ff007f' },
+                { hex: '#2b001d', name: 'Sunset', accent: '#ffea00', secondary: '#ff007f' },
+                { hex: '#09001b', name: 'Synthwave', accent: '#bd00ff', secondary: '#00ffff' },
+                { hex: '#051a05', name: 'Radioactive', accent: '#39ff14', secondary: '#ff007f' },
+                { hex: '#0c0c00', name: 'Cyberpunk', accent: '#ffe600', secondary: '#00ffff' },
+                { hex: '#0b001a', name: 'Indigo', accent: '#ff00ff', secondary: '#00ffcc' },
+                { hex: '#140024', name: 'Arcade', accent: '#ff0055', secondary: '#ffaa00' },
+                { hex: '#ffd6e8', name: 'Flamingo', accent: '#ff007f', secondary: '#00ffff' },
+                { hex: '#d6fdf6', name: 'Mint', accent: '#009492ff', secondary: '#7b2cbf' },
+                { hex: '#e5dbff', name: 'Vapor', accent: '#ff00c8', secondary: '#00d2ff' },
+                { hex: '#fdf5e6', name: 'Dunes', accent: '#ff6600', secondary: '#00a8cc' },
+                { hex: '#ffe4e6', name: 'Sunset', accent: '#f489faff', secondary: '#ff007f' },
+                { hex: '#2c0012', name: 'Overdrive', accent: '#ff0055', secondary: '#00ffcc' },
+                { hex: '#18002a', name: 'Supernova', accent: '#ffd700', secondary: '#ff00ff' },
+                { hex: '#0d1e0d', name: 'Dream', accent: '#adff2f', secondary: '#ff00ff' }
+            ],
+            fonts: {
+                primary: "'ITC Avant Garde Gothic', 'Avant Garde', 'Century Gothic', 'Futura', 'Jost', sans-serif",
+                display: "'Audiowide', sans-serif",
+                heading: "'Yellowtail', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ff007f', gradient: '#a80054', type: 'triangle', weight: 35 },
+                { color: '#00ffff', gradient: '#00a8a8', type: 'square', weight: 35 },
+                { color: '#ffff00', gradient: '#a8a800', type: 'star', weight: 20 },
+                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 10, isWhite: true }
+            ],
+            frameClass: 'theme-frame--retro-wave',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 40,
+                insetH: 40,
+                hostTextSize: 1.1,
+                gustStrength: 50,
+                fallSpeed: 0.5,
+                maxPetals: 15,
+                windiness: 12,
+                backdropOpacity: 70,
+                hostMaxWidth: 130
+            },
+            defaults: {
+                hostsTitle: "Vaporwave Visionaries",
+                eventTitle: "Retro Wave",
+                eventSubtitle: "Neon Nights & Good Vibes",
+                eventTopLabel: "Radical"
+            },
+            uiLabels: {
+                particlesPlural: 'Particles',
+                particlesSingular: 'Particle',
+                borderToggle: 'Hide VHS scanlines & grid',
+                gustStrength: 'Glitch Intensity',
+                frameName: 'Scanlines'
+            }
+        }),
+
+        'disco-fever': defineTheme({
+            id: 'disco-fever',
+            name: 'Disco Fever',
+            pack: 'decades',
+            icon: '🪩',
+            primary: '#1A052E',
+            accent: '#FBC02D',
+            secondary: '#E91E63',
+            swatchName: 'Original Plum',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1A052E'
+            },
+            swatches: [
+                { hex: '#11001C', name: 'Studio 54', accent: '#FFD700', secondary: '#FAF5EC' },
+                { hex: '#2A0845', name: 'Velvet Disco', accent: '#FFEB3B', secondary: '#FF007F' },
+                { hex: '#0D0221', name: 'Neon Hustle', accent: '#39FF14', secondary: '#00F0FF' },
+                { hex: '#260401', name: 'Boogie Nights', accent: '#FFA500', secondary: '#FF007F' },
+                { hex: '#020C1B', name: 'Midnight Roller', accent: '#00FFFF', secondary: '#BD00FF' },
+                { hex: '#0A0A0A', name: 'Glitter & Gold', accent: '#FFD700', secondary: '#E5E9EC' }
+            ],
+            fonts: {
+                primary: "'Jost', system-ui, sans-serif",
+                display: "'Pacifico', cursive",
+                heading: "'Lilita One', cursive, sans-serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ffffff', gradient: '#fff5dc', type: 'disco-reflection-white', weight: 60, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5, isWhite: true },
+                { color: '#FBC02D', gradient: '#FF9800', type: 'disco-reflection-gold', weight: 40, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
+            ],
+            frameClass: 'theme-frame--disco-fever',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 60,
+                insetH: 70,
+                hostTextSize: 1.05,
+                gustStrength: 35,
+                fallSpeed: 0.4,
+                maxPetals: 25,
+                windiness: 6,
+                hostMaxWidth: 125,
+                backdropOpacity: 55
+            },
+            defaults: {
+                hostsTitle: "DJ & DANCERS",
+                eventTitle: "DISCO FEVER",
+                eventSubtitle: "RETRO DANCE PARTY",
+                eventTopLabel: "GET DOWN AT THE"
+            },
+            uiLabels: {
+                particlesPlural: 'Reflections',
+                particlesSingular: 'Reflection',
+                borderToggle: 'Hide dance floor grid',
+                gustStrength: 'Spotlight Speed',
+                frameName: 'Spotlight Sway'
+            }
+        }),
+
+        'art-deco-gala': defineTheme({
+            id: 'art-deco-gala',
+            name: 'Art Deco Gala',
+            pack: 'decades',
+            icon: '🥂',
+            primary: '#0B0B0C',
+            accent: '#D4AF37',
+            secondary: '#C5A059',
+            swatchName: 'Roaring Black',
+            colors: {
+                text: '#ffffff',
+                darkText: '#0B0B0C'
+            },
+            swatches: [
+                { hex: '#1C1C1D', name: 'Gilded Onyx', accent: '#E5C158', secondary: '#B39343' },
+                { hex: '#0F161E', name: 'Sapphire Deco', accent: '#F3E5AB', secondary: '#D4AF37' },
+                { hex: '#220A0A', name: 'Velvet Wine', accent: '#D4AF37', secondary: '#C5A059' },
+                { hex: '#0B1A12', name: 'Emerald Court', accent: '#D4AF37', secondary: '#9FC8A0' },
+                { hex: '#08101E', name: 'Navy Opulence', accent: '#C0C0C0', secondary: '#A8B8C8' },
+                { hex: '#F0EAD6', name: 'Parchment', accent: '#7C5C2E', secondary: '#3D2B0F' },
+                { hex: '#F5E8E8', name: 'Blush Parlor', accent: '#8B3A3A', secondary: '#5C2020' },
+            ],
+            fonts: {
+                primary: "'Josefin Sans', system-ui, sans-serif",
+                display: "'Limelight', Georgia, serif",
+                heading: "'Limelight', Georgia, serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Gold Diamonds (floating)
+                { color: '#D4AF37', gradient: '#8C6F2D', type: 'art-deco-diamond', weight: 35, speedMultiplier: 0.4, sizeMultiplier: 0.85, massMultiplier: 0.6 },
+                // Sparkles (twinkling star/glimmer sparkles)
+                { color: '#FFECA0', gradient: '#D4AF37', type: 'art-deco-sparkle', weight: 25, speedMultiplier: 0.25, rotSpeedMultiplier: 0.8, sizeMultiplier: 1.0, massMultiplier: 0.6 },
+            ],
+            frameClass: 'theme-frame--art-deco-gala',
+            overrides: {
+                insetV: 60,
+                insetH: 80,
+                hostTextSize: 1.3,
+                gustStrength: 20,
+                fallSpeed: 0.5,
+                maxPetals: 35,
+                windiness: 8,
+                hostMaxWidth: 143,
+                backdropOpacity: 70
+            },
+            defaults: {
+                hostsTitle: "Distinguished Patrons",
+                eventTitle: "Art Deco Gala",
+                eventSubtitle: "Charity Soiree",
+                eventTopLabel: "The Roaring 20s"
+            },
+            uiLabels: {
+                particlesPlural: 'Stars & Diamonds',
+                particlesSingular: 'Star',
+                borderToggle: 'Hide geometric frame',
+                gustStrength: 'Breeze Intensity',
+                frameName: 'Deco Frame'
+            }
+        }),
+
+        'atomic-mid-century': defineTheme({
+            id: 'atomic-mid-century',
+            name: 'Atomic Mid-Century',
+            pack: 'decades',
+            icon: '✨',
+            primary: '#C4ECE7',
+            accent: '#0D2D31',
+            secondary: '#FF8A75',
+            swatchName: 'Light Teal',
+            colors: {
+                text: '#2A1B14',
+                darkText: '#F3E5AB'
+            },
+            swatches: [
+                { hex: '#0D2D31', name: 'Deep Teal', accent: '#F3E5AB', secondary: '#FFA085' },
+                { hex: '#f8f0cfff', name: 'Vanilla Cream', accent: '#004D40', secondary: '#FF7E67' },
+                { hex: '#E29578', name: 'Retro Coral', accent: '#0D2D31', secondary: '#FFDDD2' },
+                // { hex: '#83C5BE', name: 'Mint Diner', accent: '#7C2D12', secondary: '#EDF6F9' },
+                { hex: '#E2B13C', name: 'Harvest Gold', accent: '#1A2F2B', secondary: '#E76D53' },
+                { hex: '#A3B18A', name: 'Avocado Sage', accent: '#1B2A11', secondary: '#E3A857' },
+                { hex: '#2B2E33', name: 'Retro Charcoal', accent: '#D4E157', secondary: '#FF7E67' },
+                { hex: '#F28E2B', name: 'Tropicana Orange', accent: '#0B1D3A', secondary: '#FFF0C2' }
+            ],
+            fonts: {
+                primary: "'Jost', sans-serif",
+                display: "'Lobster Two', cursive",
+                heading: "'Lobster Two', cursive"
+            },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#FFA085', gradient: '#E2836B', type: 'atomic-starburst-8', weight: 35, speedMultiplier: 0.35, sizeMultiplier: 1.2, massMultiplier: 0.8 },
+                { color: '#0D2D31', gradient: '#071F22', type: 'atomic-boomerang', weight: 35, speedMultiplier: 0.3, sizeMultiplier: 1.4, massMultiplier: 0.9 },
+                { color: '#F3E5AB', gradient: '#D2C38C', type: 'atomic-starburst-4', weight: 30, speedMultiplier: 0.4, sizeMultiplier: 0.8, massMultiplier: 0.7 }
+            ],
+            frameClass: 'theme-frame--atomic',
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 25, fallSpeed: 0.4, maxPetals: 20, windiness: 8, hostMaxWidth: 120, backdropOpacity: 80 },
+            defaults: { hostsTitle: "Presented By", eventTitle: "Space Age Soiree", eventSubtitle: "1950s Cocktail Hour", eventTopLabel: "Fabulous" },
+            uiLabels: { particlesPlural: 'Starbursts', particlesSingular: 'Starburst', borderToggle: 'Hide retro shapes', gustStrength: 'Breeze', frameName: 'Boomerang Frame' }
+        }),
+
+        'memphis-pop': defineTheme({
+            id: 'memphis-pop',
+            name: 'Memphis Pop',
+            pack: 'decades',
+            icon: '📺',
+            primary: '#FFF275',
+            accent: '#FF007F',
+            secondary: '#2A2AFF',
+            swatchName: 'Lemon Pop',
+            colors: {
+                text: '#111111',
+                darkText: '#ffffff'
+            },
+            swatches: [
+                { hex: '#FF007F', name: 'Hot Pink', accent: '#00E5FF', secondary: '#FCEEB5' },
+                { hex: '#00E5FF', name: 'Electric Cyan', accent: '#FF007F', secondary: '#FCEEB5' },
+                { hex: '#111111', name: 'Midnight Arcade', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#2A2AFF', name: 'Retro Cobalt', accent: '#FFE600', secondary: '#FF007F' },
+                { hex: '#7B2CBF', name: 'Cyber Violet', accent: '#00F5D4', secondary: '#FF007F' },
+                { hex: '#2EC4B6', name: 'Teal Squiggle', accent: '#FF9F1C', secondary: '#E71D36' },
+                { hex: '#FF6B35', name: 'Sunburst Pop', accent: '#2EC4B6', secondary: '#1A1A1A' },
+                { hex: '#D6FF79', name: 'Acid Melon', accent: '#A06CD5', secondary: '#E05780' },
+                { hex: '#5C0D38', name: 'Plum Pop', accent: '#00FFCC', secondary: '#FFFF00' },
+                { hex: '#FFFFFF', name: 'White Grid', accent: '#000000', secondary: '#FF007F' },
+                { hex: '#EBEBFF', name: 'Lavender Sprinkles', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#FFE5D9', name: 'Peach Squiggle', accent: '#2A2AFF', secondary: '#FF007F' },
+                { hex: '#CBF3F0', name: 'Mint Confetti', accent: '#FF9F1C', secondary: '#FF007F' },
+                { hex: '#D7E3FC', name: 'Sky Grid', accent: '#E71D36', secondary: '#00E5FF' },
+                { hex: '#FCEEB5', name: 'Radical Pastel', accent: '#FF007F', secondary: '#00E5FF' },
+                { hex: '#FFE5D9', name: 'Apricot Fizz', accent: '#FF6B35', secondary: '#00E5FF' }
+            ],
+            fonts: {
+                primary: "'Space Grotesk', sans-serif",
+                display: "'Bungee', sans-serif",
+                heading: "'Bungee', sans-serif"
+            },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { useThemeAccent: true, type: 'memphis-triangle', weight: 30, speedMultiplier: 0.7, sizeMultiplier: 1.4, massMultiplier: 1.0 },
+                { useThemeSecondary: true, type: 'memphis-ring', weight: 30, speedMultiplier: 0.8, sizeMultiplier: 1.3, massMultiplier: 1.1 },
+                { type: 'memphis-zigzag', weight: 20, speedMultiplier: 0.65, sizeMultiplier: 1.5, massMultiplier: 1.0 },
+                { type: 'memphis-dot', weight: 20, speedMultiplier: 0.6, sizeMultiplier: 0.8, massMultiplier: 0.9 }
+            ],
+            frameClass: 'theme-frame--memphis',
+            flags: { syncParticleColors: true, hideBackdropControl: true },
+            overrides: { insetV: 55, insetH: 65, hostTextSize: 1.0, gustStrength: 45, fallSpeed: 0.8, maxPetals: 30, windiness: 15, hostMaxWidth: 130, backdropOpacity: 90 },
+            defaults: { hostsTitle: "Starring", eventTitle: "90s Dance Party", eventSubtitle: "Totally Rad", eventTopLabel: "Like," },
+            uiLabels: { particlesPlural: 'Shapes', particlesSingular: 'Shape', borderToggle: 'Hide squiggles', gustStrength: 'Wackiness', frameName: 'Memphis Grid' }
+        }),
+
+        '00-glass': defineTheme({
+            id: '00-glass',
+            name: '00s Glass',
+            pack: 'decades',
+            icon: '💿',
+            primary: '#E0F7FA',
+            accent: '#00B4D8',
+            secondary: '#81C784',
+            swatchName: 'Frutiger Aero',
+            colors: {
+                text: '#E0F7FA',
+                darkText: '#004D40'
+            },
+            swatches: [
+                { hex: '#E8F5E9', name: 'Glossy Grass', accent: '#4CAF50', secondary: '#00B4D8' },
+                { hex: '#F3E5F5', name: 'Cyber Grape', accent: '#9C27B0', secondary: '#03A9F4' },
+                { hex: '#E0F2F1', name: 'Teal Aurora', accent: '#00897B', secondary: '#4DB6AC' },
+                { hex: '#FFF9C4', name: 'Sunlight Glaze', accent: '#FBC02D', secondary: '#81C784' },
+                { hex: '#E1F5FE', name: 'Liquid Blue', accent: '#0288D1', secondary: '#26A69A' },
+                { hex: '#FCE4EC', name: 'Plum Frost', accent: '#EC407A', secondary: '#AB47BC' },
+                { hex: '#F1F8E9', name: 'Neon Mint', accent: '#7CB342', secondary: '#00E5FF' },
+                { hex: '#ECEFF1', name: 'Silver Aurora', accent: '#78909C', secondary: '#4FC3F7' },
+                { hex: '#202020', name: 'Energy Noir', accent: '#FF5722', secondary: '#424242' },
+                { hex: '#121212', name: 'Obsidian Teal', accent: '#00E5FF', secondary: '#00E676' },
+                { hex: '#1A1A24', name: 'Carbon Violet', accent: '#FF007F', secondary: '#2979FF' },
+                { hex: '#0F1A14', name: 'Midnight Forest', accent: '#00FF66', secondary: '#4DB6AC' },
+                { hex: '#0A0D1A', name: 'Deep Nebula', accent: '#E040FB', secondary: '#00B4D8' },
+                { hex: '#18181A', name: 'Sunset Charcoal', accent: '#FF3D00', secondary: '#FFC107' },
+                { hex: '#111625', name: 'Cyber Slate', accent: '#00E5FF', secondary: '#FF007F' },
+                { hex: '#180B20', name: 'Amethyst Glow', accent: '#D500F9', secondary: '#00E5FF' }
+            ],
+            fonts: {
+                primary: "'Nunito', sans-serif",
+                display: "'Segoe UI', system-ui, -apple-system, sans-serif",
+                heading: "'Varela Round', sans-serif"
+            },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#ffffff', gradient: '#B2EBF2', type: 'aero-bubble', weight: 50, speedMultiplier: -0.4, sizeMultiplier: 1.2, massMultiplier: 0.5, isWhite: true },
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'aero-bubble-large', weight: 30, speedMultiplier: -0.5, sizeMultiplier: 1.8, massMultiplier: 0.6, isWhite: true },
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'aero-sparkle', weight: 10, speedMultiplier: -0.2, sizeMultiplier: 1.0, massMultiplier: 0.4, isWhite: true }
+            ],
+            frameClass: 'theme-frame--aero',
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 20, fallSpeed: 0.3, maxPetals: 40, windiness: 5, hostMaxWidth: 125, backdropOpacity: 60 },
+            defaults: { hostsTitle: "Our Hosts", eventTitle: "A NEW HORIZON", eventSubtitle: "The Wow Starts Now", eventTopLabel: "CLEAR. CONFIDENT. CONNECTED." },
+            uiLabels: { particlesPlural: 'Bubbles', particlesSingular: 'Bubble', borderToggle: 'Hide glossy frame', gustStrength: 'Frame & Shine', frameName: 'Aqua Glass' }
+        }),
+
+        // --- SPECIALTY PACK ---
+        'cinema': defineTheme({
+            id: 'cinema',
+            name: 'Cinema Premiere',
+            pack: 'specialty',
+            icon: '🍿',
+            primary: '#0A0A0A',
+            accent: '#FFD700',
+            secondary: '#8B0000',
+            swatchName: 'Velvet Premiere',
+            colors: {
+                text: '#ffffff',
+                darkText: '#111111'
+            },
+            swatches: [
+                { hex: '#050B14', name: 'Cosmic', accent: '#00D2FF', secondary: '#16223F' },
+                { hex: '#0D0905', name: 'Golden Age', accent: '#F4D068', secondary: '#7C5315' },
+                { hex: '#0A0A0A', name: 'Noir', accent: '#ECEFF1', secondary: '#5A2E32' },
+                { hex: '#060A07', name: 'Emerald Palace', accent: '#E5BA5C', secondary: '#123C24' },
+                { hex: '#0B0612', name: 'Arthouse', accent: '#39FF14', secondary: '#4B1263' },
+                { hex: '#0A080D', name: 'Technicolor', accent: '#FF597B', secondary: '#0D3A37' }
+            ],
+            fonts: {
+                primary: "'Bebas Neue', sans-serif",
+                display: "'Limelight', Georgia, serif",
+                heading: "'Yesteryear', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ffffff', gradient: '#cccccc', type: 'dust', weight: 60, shape: '50%', isWhite: true },
+                { color: '#e0e0e0', gradient: '#999999', type: 'dust', weight: 15, shape: '50%', isWhite: true },
+                { color: '#fffbec', gradient: '#ffd700', type: 'popcorn', weight: 25, shape: '50%', isWhite: true, speedMultiplier: 3.8, massMultiplier: 2.6, rotSpeedMultiplier: 1.8, sizeMultiplier: 2.8 }
+            ],
+            frameClass: 'theme-frame--cinema',
+            flags: { showSecondaryAsSwatch: true },
+            overrides: {
+                insetV: 95,
+                insetH: 130,
+                hostTextSize: 1.0,
+                gustStrength: 10,
+                fallSpeed: 0.15, // Theatre dust floats slowly
+                maxPetals: 20,
+                windiness: 1,   // Quiet air inside
+                backdropOpacity: 0,
+                hostMaxWidth: 110
+            },
+            defaults: {
+                hostsTitle: "Starring",
+                eventTitle: "Cinema Premiere",
+                eventSubtitle: "Featured Screening",
+                eventTopLabel: "Now Showing"
+            },
+            uiLabels: {
+                particlesPlural: 'Motes & Popcorn',
+                particlesSingular: 'Particle',
+                borderToggle: 'Hide velvet curtains',
+                gustStrength: 'Marquee Brightness',
+                frameName: 'Marquee Glow'
+            }
+        }),
+
+        'game-console': defineTheme({
+            id: 'game-console',
+            name: 'Game Console',
+            pack: 'specialty',
+            icon: '🎮',
+            primary: '#151226',
+            accent: '#ffcc00',
+            secondary: '#ff3366',
+            swatchName: 'Chrono Indigo',
+            colors: {
+                text: '#ffffff',
+                darkText: '#151226'
+            },
+            swatches: [
+                { hex: '#2e1f47', name: 'Cyber Purple', accent: '#39ff14', secondary: '#00ffff' },
+                { hex: '#0d0d1a', name: 'Void Vector', accent: '#ff007f', secondary: '#00f0ff' },
+                { hex: '#2b2b2b', name: 'Controller', accent: '#ff3b30', secondary: '#ffcc00' },
+                { hex: '#8bac0f', name: 'Handheld', accent: '#306230', secondary: '#0f380f' },
+                { hex: '#05050a', name: 'Blackout', accent: '#00ffcc', secondary: '#9d00ff' },
+                { hex: '#4e3e8c', name: 'Indigo Cube', accent: '#dfdfdfff', secondary: '#00BB7A' },
+                { hex: '#6f2da8', name: 'Purple Dragon', accent: '#ffd700', secondary: '#ff4500' },
+                { hex: '#ff7a00', name: 'Strange Fruit', accent: '#00d2ff', secondary: '#3a2312' },
+                { hex: '#3d4e3a', name: 'Spartan Green', accent: '#e09500', secondary: '#1e221c' },
+                { hex: '#050914', name: 'Star Fighter', accent: '#00f0ff', secondary: '#ff6600' },
+                { hex: '#06070a', name: 'Ghost Maze', accent: '#ffea00', secondary: '#1b45ff' },
+                { hex: '#0a331a', name: 'Forest Hero', accent: '#ffd700', secondary: '#c92a2a' },
+                { hex: '#d2d2d6', name: 'Console Grey', accent: '#003087', secondary: '#e3000f' },
+                { hex: '#f5faf0', name: 'Dino Egg', accent: '#4cd137', secondary: '#ff7f00' },
+                { hex: '#f0f6fc', name: 'Mega Ring', accent: '#0054b2', secondary: '#ffcc00' },
+                { hex: '#fafafa', name: 'Dream Spiral', accent: '#ff5000', secondary: '#0054b2' }
+            ],
+            fonts: {
+                primary: "'Share Tech Mono', 'Courier New', monospace",
+                display: "'Press Start 2P', monospace",
+                heading: "'VT323', monospace"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#ffcc00', gradient: '#cc9900', type: 'coin', weight: 30, speedMultiplier: -0.4, massMultiplier: 0.8 },
+                { color: '#ff3366', gradient: '#cc0033', type: 'heart', weight: 25, speedMultiplier: -0.3, massMultiplier: 0.6 },
+                { color: '#00ffff', gradient: '#009999', type: 'invader', weight: 20, speedMultiplier: 0.5, massMultiplier: 1.0 },
+                { color: '#39ff14', gradient: '#1b8a0a', type: 'star', weight: 25, speedMultiplier: 0.4, massMultiplier: 0.7 }
+            ],
+            frameClass: 'theme-frame--game-console',
+            flags: { syncParticleColors: true },
+            overrides: {
+                insetV: 50,
+                insetH: 50,
+                hostTextSize: 1,
+                gustStrength: 35,
+                fallSpeed: 0.5,
+                maxPetals: 35,
+                windiness: 10,
+                backdropOpacity: 70,
+                hostMaxWidth: 112
+            },
+            defaults: {
+                hostsTitle: "PLAYER SELECT",
+                eventTitle: "GAME START",
+                eventSubtitle: "INSERT COIN TO PLAY",
+                eventTopLabel: "STAGE 1"
+            },
+            uiLabels: {
+                particlesPlural: 'Pixels',
+                particlesSingular: 'Pixel',
+                borderToggle: 'Hide screen bezel',
+                gustStrength: 'Glitch Rate',
+                frameName: 'CRT Scanlines'
+            }
+        }),
+
+        'space-odyssey': defineTheme({
+            id: 'space-odyssey',
+            name: 'Space Odyssey',
+            pack: 'specialty',
+            icon: '🌌',
+            primary: '#050510',
+            accent: '#00E5FF',
+            secondary: '#B000FF',
+            swatchName: 'Deep Space',
+            colors: { text: '#ffffff', darkText: '#050510' },
+            swatches: [
+                { hex: '#000000', name: 'Event Horizon', accent: '#FF0055', secondary: '#FFAA00' },
+                { hex: '#0B1021', name: 'Nebula', accent: '#FF00FF', secondary: '#00FFFF' },
+                { hex: '#0f051d', name: 'Andromeda', accent: '#ff007f', secondary: '#00e5ff' },
+                { hex: '#150505', name: 'Solar Flare', accent: '#ff5500', secondary: '#ffcc00' },
+                { hex: '#030b1e', name: 'Hyperdrive', accent: '#39ff14', secondary: '#00f0ff' },
+                { hex: '#12001a', name: 'Pulsar', accent: '#bd00ff', secondary: '#ff00aa' },
+                { hex: '#06001a', name: 'Supernova', accent: '#ffaa00', secondary: '#00ffcc' },
+                { hex: '#051008', name: 'Alien Skies', accent: '#00ff88', secondary: '#7cfc00' },
+                { hex: '#020202', name: 'Quantum Void', accent: '#ffffff', secondary: '#555555' },
+                { hex: '#070b12', name: 'Frozen Comet', accent: '#a5ffd6', secondary: '#3a86c8' }
+            ],
+            fonts: { primary: "'Exo 2', sans-serif", display: "'Orbitron', sans-serif", heading: "'Orbitron', sans-serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#ffffff', gradient: '#e0e0e0', type: 'space-star', weight: 65, speedMultiplier: 0.05, sizeMultiplier: 0.4, massMultiplier: 0.2, isWhite: true },
+                { useThemeAccent: true, type: 'space-dust-accent', weight: 20, speedMultiplier: 0.08, sizeMultiplier: 0.7, massMultiplier: 0.3 },
+                { useThemeSecondary: true, type: 'space-dust-secondary', weight: 10, speedMultiplier: 0.06, sizeMultiplier: 0.9, massMultiplier: 0.4 },
+                { useThemeAccent: true, type: 'shooting-star', weight: 2, speedMultiplier: 3.5, sizeMultiplier: 1.5, massMultiplier: 1.2 }
+            ],
+            frameClass: 'theme-frame--space',
+            flags: { syncParticleColors: true, showSecondaryAsSwatch: true, hideWindinessControl: true },
+            overrides: { insetV: 50, insetH: 60, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.15, maxPetals: 95, windiness: 2, hostMaxWidth: 130, backdropOpacity: 45 },
+            defaults: { hostsTitle: "Space Commanders", eventTitle: "Tech Launch", eventSubtitle: "Next Generation", eventTopLabel: "Mission" },
+            uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
+        }),
+
+        'bistro-lounge': defineTheme({
+            id: 'bistro-lounge',
+            name: 'Bistro Lounge',
+            pack: 'specialty',
+            icon: '☕',
+            primary: '#2B1B17',
+            accent: '#D4A373',
+            secondary: '#FAEDCD',
+            swatchName: 'Espresso',
+            colors: { text: '#FAEDCD', darkText: '#2B1B17' },
+            swatches: [
+                { hex: '#4A3B32', name: 'Latte Macchiato', accent: '#E3D5CA', secondary: '#D5BDAF' },
+                { hex: '#1C1310', name: 'Midnight Brew', accent: '#E28743', secondary: '#EEE3D3' },
+                { hex: '#3C2F2F', name: 'Irish Coffee', accent: '#8DBF88', secondary: '#E5F4E3' },
+                { hex: '#2F3E32', name: 'Matcha Latte', accent: '#C8E6C9', secondary: '#E8F5E9' },
+                { hex: '#3E2723', name: 'Affogato', accent: '#FDFBF7', secondary: '#EFEBE9' },
+                { hex: '#4E3629', name: 'Cortado', accent: '#D7CCC8', secondary: '#F5F5F5' },
+                { hex: '#120A07', name: 'Black Coffee', accent: '#EADBC8', secondary: '#EFEBE9' },
+                { hex: '#161616', name: 'Black Leather', accent: '#D4AF37', secondary: '#F5F5F5' },
+                { hex: '#FDFBF7', name: 'Chai Latte', accent: '#B6703C', secondary: '#D5BDAF' },
+                { hex: '#F4F7F2', name: 'Matcha Green Tea', accent: '#4F7942', secondary: '#C5DCA0' },
+                { hex: '#FFF2F4', name: 'Strawberries & Cream', accent: '#C9184A', secondary: '#FFCCD5' },
+                { hex: '#F7F4EB', name: 'London Fog', accent: '#4A607A', secondary: '#C1C9D2' },
+                { hex: '#FFFDF0', name: 'Lemon Meringue', accent: '#C69B00', secondary: '#FFEBB3' }
+            ],
+            fonts: { primary: "'Cabin', sans-serif", display: "'Abril Fatface', serif", heading: "'Abril Fatface', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#FAEDCD', gradient: '#D4A373', type: 'bistro-steam', weight: 40, speedMultiplier: -0.22, sizeMultiplier: 2.2, massMultiplier: 0.35, isWhite: true },
+                { color: '#FAEDCD', gradient: '#D4A373', type: 'bistro-dust', weight: 60, speedMultiplier: -0.06, sizeMultiplier: 0.7, massMultiplier: 0.45, isWhite: true }
+            ],
+            frameClass: 'theme-frame--bistro',
+            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 10, fallSpeed: 0.1, maxPetals: 25, windiness: 3, hostMaxWidth: 110, backdropOpacity: 60 },
+            defaults: { hostsTitle: "Acoustic Acts", eventTitle: "Open Mic Night", eventSubtitle: "Poetry & Music", eventTopLabel: "Local" },
+            uiLabels: { particlesPlural: 'Steam & Bokeh', particlesSingular: 'Mote', borderToggle: 'Hide chalkboard', gustStrength: 'Draft', frameName: 'Café Frame' }
+        }),
+
+        'steampunk-gears': defineTheme({
+            id: 'steampunk-gears',
+            name: 'Steampunk Gears',
+            pack: 'specialty',
+            icon: '⚙️',
+            primary: '#1A0F0A',
+            accent: '#CD7F32',
+            secondary: '#B5A642',
+            swatchName: 'Brass & Soot',
+            colors: { text: '#F4E8D6', darkText: '#1A0F0A' },
+            swatches: [
+                { hex: '#0F1A1B', name: 'Oxidized Teal', accent: '#2EC4B6', secondary: '#CD7F32' },
+                { hex: '#151515', name: 'Iron Foundry', accent: '#FF5722', secondary: '#A89F91' },
+                { hex: '#1C2430', name: 'Polished Steel & Cyan', accent: '#00F2FE', secondary: '#A8B8C8' },
+                { hex: '#1C152B', name: 'Aetheric Amethyst', accent: '#D946EF', secondary: '#CD7F32' },
+                { hex: '#0B1B17', name: 'Gilded Emerald', accent: '#D4AF37', secondary: '#8E7618' },
+                { hex: '#0D162A', name: 'Royal Amber & Cobalt', accent: '#FF9F1C', secondary: '#B5A642' },
+                { hex: '#0E0F12', name: 'Tesla Electric Violet', accent: '#A855F7', secondary: '#94A3B8' },
+                { hex: '#1A0D0E', name: 'Copper Crimson', accent: '#C86446', secondary: '#D4AF37' },
+                { hex: '#F9F6F0', name: 'Chronometer Gold & Ivory', accent: '#D4AF37', secondary: '#8B7045' },
+                { hex: '#E2ECE9', name: 'Verdigris & Bronze', accent: '#6B7A5C', secondary: '#A87C58' },
+                { hex: '#FAF3E0', name: 'Aged Parchment & Rust', accent: '#A0522D', secondary: '#CD853F' },
+                { hex: '#E3ECEF', name: 'Pneumatic Sky', accent: '#CD7F32', secondary: '#5F9EA0' },
+                { hex: '#FAF0EC', name: 'Rose Gold Chronograph', accent: '#B76E79', secondary: '#8A736E' }
+            ],
+            fonts: { primary: "'IM Fell English', serif", display: "'Sancreek', cursive", heading: "'Sancreek', cursive" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { useThemeAccent: true, type: 'dust', weight: 60, speedMultiplier: 0.5, sizeMultiplier: 0.8, massMultiplier: 0.9 },
+                { useThemeSecondary: true, type: 'dust', weight: 40, speedMultiplier: 0.6, sizeMultiplier: 0.7, massMultiplier: 1.0 }
+            ],
+            frameClass: 'theme-frame--steampunk',
+            flags: { syncParticleColors: true },
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.0, gustStrength: 25, fallSpeed: 0.4, maxPetals: 35, windiness: 5, hostMaxWidth: 120, backdropOpacity: 45 },
+            defaults: { hostsTitle: "Inventors", eventTitle: "Clockwork Expo", eventSubtitle: "Victorian Futurism", eventTopLabel: "Marvelous" },
+            uiLabels: { particlesPlural: 'Sparks', particlesSingular: 'Spark', borderToggle: 'Hide brass piping', gustStrength: 'Steam Pressure', frameName: 'Pipes & Gears' }
+        }),
+
+        'deep-blue': defineTheme({
+            id: 'deep-blue',
+            name: 'Deep Blue Sea',
+            pack: 'specialty',
+            icon: '🐟',
+            primary: '#011627',
+            accent: '#2EC4B6',
+            secondary: '#FF9F1C',
+            swatchName: 'Ocean Deep',
+            colors: { text: '#FDFFFC', darkText: '#011627' },
+            swatches: [
+                { hex: '#004E5A', name: 'Coral Lagoon', accent: '#FF2E93', secondary: '#FFD000' },
+                { hex: '#1b6a9cff', name: 'Sunlit Marina', accent: '#00F5D4', secondary: '#FFAA00' },
+                { hex: '#00050d', name: 'Abyssal Trench', accent: '#0096a7ff', secondary: '#00a896' },
+                { hex: '#051C14', name: 'Emerald Reef', accent: '#39FF14', secondary: '#E0A96D' },
+                { hex: '#0A001F', name: 'Twilight Zone', accent: '#FF007F', secondary: '#00F5D4' },
+                { hex: '#0B0C10', name: 'Abyssal Gold', accent: '#FFB300', secondary: '#4FC3F7' }
+            ],
+            fonts: { primary: "'Varela Round', sans-serif", display: "'Baloo 2', cursive", heading: "'Baloo 2', cursive" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#ffffff', gradient: '#E0F7FA', type: 'deep-blue-bubble', weight: 60, speedMultiplier: -0.3, sizeMultiplier: 0.9, massMultiplier: 0.6, isWhite: true },
+                { useThemeAccent: true, type: 'deep-blue-plankton', weight: 20, speedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3 },
+                { color: '#FF9F1C', gradient: '#FF6F00', type: 'deep-blue-fish', weight: 20, speedMultiplier: 1.0, sizeMultiplier: 2.5, massMultiplier: 0.8 }
+            ],
+            frameClass: 'theme-frame--deep-blue',
+            flags: { syncParticleColors: true },
+            overrides: { insetV: 55, insetH: 70, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.2, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 50 },
+            defaults: { hostsTitle: "Marine Biologists", eventTitle: "Aquarium Gala", eventSubtitle: "Under the Sea", eventTopLabel: "Explore" },
+            uiLabels: { particlesPlural: 'Fish & Bubbles', particlesSingular: 'Fish & Bubbles', borderToggle: 'Hide light rays', gustStrength: 'Current', frameName: 'Water Rays' }
+        }),
+
+        // --- HOLIDAY PACK ---
+        'halloween': defineTheme({
+            id: 'halloween',
+            name: 'Halloween Soiree',
+            pack: 'holiday',
+            icon: '🎃',
+            primary: '#1A0B0C',
+            accent: '#FF7518',
+            secondary: '#800080',
+            swatchName: 'Pumpkin Spice',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1A0B0C'
+            },
+            swatches: [
+                { hex: '#141F16', name: 'Monster Mash', accent: '#7FFF00', secondary: '#8A2BE2' },
+                { hex: '#160824', name: 'Witchy Brew', accent: '#9D00FF', secondary: '#FF7518' },
+                { hex: '#2A0808', name: 'Vampire Bite', accent: '#D32F2F', secondary: '#000000' },
+                { hex: '#1A201E', name: 'Phantom Mist', accent: '#80C0A0', secondary: '#4A5A50' },
+                { hex: '#1A0A00', name: 'Candy Corn', accent: '#FFAA00', secondary: '#FFD700' },
+                { hex: '#06060A', name: 'Cursed Moon', accent: '#FFE57F', secondary: '#3D2B56' },
+                { hex: '#1D1105', name: 'Pumpkin Patch', accent: '#FF5E00', secondary: '#4A7C59' }
+            ],
+            fonts: {
+                primary: "'Underdog', cursive",
+                display: "'Creepster', cursive",
+                heading: "'Creepster', cursive"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                { color: '#111111', gradient: '#000000', type: 'halloween-bat', weight: 30, speedMultiplier: 0.8, sizeMultiplier: 1.3, massMultiplier: 0.7 },
+                { color: '#ffffff', gradient: '#e0dbff', type: 'halloween-ghost', weight: 25, speedMultiplier: -0.35, sizeMultiplier: 1.2, massMultiplier: 0.5, isWhite: true },
+                { color: '#FF7518', gradient: '#CC5500', type: 'halloween-pumpkin', weight: 25, speedMultiplier: 0.4, sizeMultiplier: 1.4, massMultiplier: 0.8 },
+                { useThemeAccent: true, type: 'halloween-sparkle', weight: 20, speedMultiplier: 0.5, sizeMultiplier: 0.8, massMultiplier: 0.4 }
+            ],
+            frameClass: 'theme-frame--halloween',
+            overrides: {
+                insetV: 60,
+                insetH: 80,
+                hostTextSize: 1.2,
+                gustStrength: 40,
+                fallSpeed: 0.6,
+                maxPetals: 40,
+                windiness: 15,
+                hostMaxWidth: 130,
+                backdropOpacity: 80
+            },
+            defaults: {
+                hostsTitle: "Enter If You Dare",
+                eventTitle: "Halloween Soiree",
+                eventSubtitle: "Costume Party",
+                eventTopLabel: "Annual"
+            },
+            uiLabels: {
+                particlesPlural: 'Spirits & Bats',
+                particlesSingular: 'Spirit',
+                borderToggle: 'Hide cobwebs',
+                gustStrength: 'Eerie Atmosphere',
+                frameName: 'Haunted Frame'
+            }
+        }),
+
+        'autumn-harvest': defineTheme({
+            id: 'autumn-harvest',
+            name: 'Autumn Harvest',
+            pack: 'holiday',
+            icon: '🍂',
+            primary: '#3E1C00',
+            accent: '#FF7F00',
+            secondary: '#FFC82A',
+            swatchName: 'Burnt Maple',
+            colors: { text: '#FDF0D5', darkText: '#2B1400' },
+            swatches: [
+                { hex: '#3D0C11', name: 'Crimson Fall', accent: '#C0392B', secondary: '#F39C12' },
+                { hex: '#2D0F2C', name: 'Velvet Plum', accent: '#D35400', secondary: '#F4D03F' },
+                { hex: '#2C3A20', name: 'Olive Orchard', accent: '#D2691E', secondary: '#DAA520' },
+                { hex: '#5C2016', name: 'Cider Press', accent: '#D35400', secondary: '#F39C12' },
+                { hex: '#1E2522', name: 'Forest Moss', accent: '#8FA382', secondary: '#D4A373' },
+                { hex: '#1E1F38', name: 'October Twilight', accent: '#D05A3F', secondary: '#F2C14E' },
+                { hex: '#F4EADA', name: 'Misty Trail', accent: '#8C6239', secondary: '#C69C6D' }
+            ],
+            fonts: { primary: "'PT Sans', sans-serif", display: "'Rokkitt', serif", heading: "'Rokkitt', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { useThemeAccent: true, type: 'leaf-maple', weight: 40, speedMultiplier: 0.3, sizeMultiplier: 1.3, massMultiplier: 0.6 },
+                { useThemeSecondary: true, type: 'leaf-oak', weight: 40, speedMultiplier: 0.35, sizeMultiplier: 1.4, massMultiplier: 0.7 },
+                { color: '#c0392b', gradient: '#922b21', type: 'leaf-elm', weight: 20, speedMultiplier: 0.32, sizeMultiplier: 1.1, massMultiplier: 0.55 },
+                { color: '#ff9f1c', gradient: '#ff5500', type: 'autumn-ember', weight: 25, speedMultiplier: -0.22, sizeMultiplier: 0.5, massMultiplier: 0.35, driftMultiplier: 1.5 }
+            ],
+            frameClass: 'theme-frame--autumn',
+            flags: { syncParticleColors: true },
+            overrides: { insetV: 60, insetH: 91, hostTextSize: 1.15, gustStrength: 25, fallSpeed: 0.32, maxPetals: 30, windiness: 8, hostMaxWidth: 85, backdropOpacity: 65 },
+            defaults: { hostsTitle: "Thanks to our hosts", eventTitle: "Autumn Harvest", eventSubtitle: "Cozy Thanksgiving Soiree", eventTopLabel: "Celebrate the season" },
+            uiLabels: { particlesPlural: 'Leaves & Embers', particlesSingular: 'Leaf', borderToggle: 'Hide frame and trees', gustStrength: 'Autumn Wind', frameName: 'Rustic Wood' }
+        }),
+
+        'valentines-romance': defineTheme({
+            id: 'valentines-romance',
+            name: 'Valentine\'s Romance',
+            pack: 'holiday',
+            icon: '💝',
+            primary: '#4A001F',
+            accent: '#FF4D6D',
+            secondary: '#FF8FA3',
+            swatchName: 'Velvet Romance',
+            colors: { text: '#FFF0F3', darkText: '#2D0013' },
+            swatches: [
+                { hex: '#1C0A1A', name: 'Midnight Cupid', accent: '#FF2A85', secondary: '#FFB8DE' },
+                { hex: '#4F1A3B', name: 'Wild Orchid', accent: '#EC407A', secondary: '#F8BBD0' },
+                { hex: '#2B171A', name: 'Chocolate Truffle', accent: '#C2185B', secondary: '#F8BBD0' },
+                { hex: '#241130', name: 'Amethyst Dreams', accent: '#9C27B0', secondary: '#F8BBD0' },
+                { hex: '#FFF0F3', name: 'Sweetheart Pink', accent: '#C9184A', secondary: '#FF4D6D' }
+            ],
+            fonts: { primary: "'Nunito', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { useThemeAccent: true, type: 'heart', weight: 70, speedMultiplier: -0.2, sizeMultiplier: 1.5, massMultiplier: 0.6 },
+                { useThemeSecondary: true, type: 'heart', weight: 30, speedMultiplier: -0.25, sizeMultiplier: 1.0, massMultiplier: 0.5 }
+            ],
+            frameClass: 'theme-frame--valentine',
+            flags: { syncParticleColors: true, showHeartsToggle: true },
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 15, fallSpeed: 0.2, maxPetals: 20, windiness: 5, hostMaxWidth: 125, backdropOpacity: 50 },
+            defaults: { hostsTitle: "Couples", eventTitle: "Sweetheart Dance", eventSubtitle: "Valentine's Gala", eventTopLabel: "Romantic" },
+            uiLabels: { particlesPlural: 'Hearts', particlesSingular: 'Heart', borderToggle: 'Hide lace frame', gustStrength: 'Swoon Speed', frameName: 'Lace Border' }
+        }),
+
+        'mardi-gras': defineTheme({
+            id: 'mardi-gras',
+            name: 'Mardi Gras',
+            pack: 'holiday',
+            icon: '🎭',
+            primary: '#1E0035',
+            accent: '#FFD700',
+            secondary: '#00A86B',
+            swatchName: 'Royal Night',
+            colors: {
+                text: '#ffffff',
+                darkText: '#1E0035'
+            },
+            swatches: [
+                { hex: '#12001F', name: 'Midnight Court', accent: '#FFD700', secondary: '#00A86B' },
+                { hex: '#0A1A08', name: 'Emerald Isle', accent: '#FFD700', secondary: '#9B30FF' },
+                { hex: '#1A0012', name: 'Velvet Rose', accent: '#FFD700', secondary: '#E040FB' },
+                { hex: '#0D0020', name: 'Deep Indigo', accent: '#FFA500', secondary: '#00BCD4' },
+                { hex: '#1A1000', name: 'Bronze Dusk', accent: '#FF8C00', secondary: '#7B68EE' },
+                { hex: '#000A12', name: 'Midnight Teal', accent: '#FFD700', secondary: '#26C6DA' }
+            ],
+            fonts: {
+                primary: "'Josefin Sans', system-ui, sans-serif",
+                display: "'Cinzel Decorative', Georgia, serif",
+                heading: "'Cinzel', Georgia, serif"
+            },
+            assets: {
+                border: "none",
+                sway1: "none",
+                sway2: "none",
+                sway3: "none",
+                sway4: "none",
+                swaySide: "none"
+            },
+            particles: [
+                // Gold confetti
+                { color: '#FFD700', gradient: '#C8960C', type: 'mardi-gras-confetti-gold', weight: 25, speedMultiplier: 0.65, rotSpeedMultiplier: 1.8, sizeMultiplier: 0.85, massMultiplier: 1.0 },
+                // Purple confetti
+                { color: '#9B30FF', gradient: '#6A00C8', type: 'mardi-gras-confetti-purple', weight: 15, speedMultiplier: 0.55, rotSpeedMultiplier: 2.0, sizeMultiplier: 0.8, massMultiplier: 0.9 },
+                // Green confetti
+                { color: '#00A86B', gradient: '#007045', type: 'mardi-gras-confetti-green', weight: 15, speedMultiplier: 0.60, rotSpeedMultiplier: 1.6, sizeMultiplier: 0.88, massMultiplier: 1.0 },
+                // Carnival beads
+                { color: '#FFD700', gradient: '#FFA500', type: 'mardi-gras-bead-gold', weight: 20, speedMultiplier: 0.45, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.1, massMultiplier: 1.3 },
+                { color: '#9B30FF', gradient: '#6600BB', type: 'mardi-gras-bead-purple', weight: 15, speedMultiplier: 0.40, rotSpeedMultiplier: 0.3, sizeMultiplier: 1.05, massMultiplier: 1.2 },
+                // Feathers – long wispy fall
+                { color: '#c040ff', gradient: '#7a00cc', type: 'mardi-gras-feather-purple', weight: 12, speedMultiplier: 0.28, rotSpeedMultiplier: 0.6, sizeMultiplier: 1.4, massMultiplier: 0.5 },
+                { color: '#40c060', gradient: '#1a7a30', type: 'mardi-gras-feather-green', weight: 10, speedMultiplier: 0.25, rotSpeedMultiplier: 0.5, sizeMultiplier: 1.5, massMultiplier: 0.45 },
+                { color: '#FFD700', gradient: '#C89B00', type: 'mardi-gras-feather-gold', weight: 8, speedMultiplier: 0.22, rotSpeedMultiplier: 0.55, sizeMultiplier: 1.35, massMultiplier: 0.5 },
+                // Gold dust sparkles
+                { color: '#FFE566', gradient: '#D4A000', type: 'mardi-gras-dust-gold', weight: 20, speedMultiplier: 0.15, rotSpeedMultiplier: 0.1, sizeMultiplier: 0.5, massMultiplier: 0.3, isWhite: false }
+            ],
+            frameClass: 'theme-frame--mardi-gras',
+            overrides: {
+                insetV: 65,
+                insetH: 75,
+                hostTextSize: 1.2,
+                gustStrength: 35,
+                fallSpeed: 0.55,
+                maxPetals: 45,
+                windiness: 10,
+                hostMaxWidth: 120,
+                backdropOpacity: 60
+            },
+            defaults: {
+                hostsTitle: "Our Distinguished Guests",
+                eventTitle: "Mardi Gras",
+                eventSubtitle: "Masquerade Carnival",
+                eventTopLabel: "Laissez les bons temps rouler"
+            },
+            uiLabels: {
+                particlesPlural: 'Beads & Feathers',
+                particlesSingular: 'Bead',
+                borderToggle: 'Hide carnival frame',
+                gustStrength: 'Twirl Speed',
+                frameName: 'Gold Frame'
+            }
+        }),
+
+        'festive-holiday': defineTheme({
+            id: 'festive-holiday',
+            name: 'Festive Holiday',
+            pack: 'holiday',
+            icon: '🎄',
+            primary: '#0B3B24',
+            accent: '#C41E3A',
+            secondary: '#D4AF37',
+            swatchName: 'Pine & Holly',
+            colors: { text: '#F8F9FA', darkText: '#04170E' },
+            swatches: [
+                { hex: '#0A1128', name: 'Silent Night', accent: '#D4AF37', secondary: '#C41E3A' },
+                { hex: '#7C0A15', name: 'Santa Red', accent: '#FFFFFF', secondary: '#0B3B24' },
+                { hex: '#2A0800', name: 'Candlelight Glow', accent: '#FFAA00', secondary: '#C41E3A' },
+                { hex: '#1A2F1C', name: 'Mistletoe Magic', accent: '#D4AF37', secondary: '#FFFFFF' },
+                { hex: '#1C2023', name: 'Silver Bells', accent: '#E0E0E0', secondary: '#C41E3A' }
+            ],
+            fonts: { primary: "'Outfit', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#FFFFFF', gradient: '#F0F8FF', type: 'star', weight: 50, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5, isWhite: true },
+                { color: '#D4AF37', gradient: '#B8860B', type: 'star', weight: 50, speedMultiplier: 0.25, sizeMultiplier: 1.0, massMultiplier: 0.6 }
+            ],
+            frameClass: 'theme-frame--festive',
+            overrides: { insetV: 60, insetH: 75, hostTextSize: 1.0, gustStrength: 20, fallSpeed: 0.3, maxPetals: 40, windiness: 10, hostMaxWidth: 120, backdropOpacity: 65 },
+            defaults: { hostsTitle: "Carolers", eventTitle: "Holiday Party", eventSubtitle: "Jingle & Mingle", eventTopLabel: "Festive" },
+            uiLabels: { particlesPlural: 'Snow & Sparkles', particlesSingular: 'Flake', borderToggle: 'Hide garland', gustStrength: 'Winter Breeze', frameName: 'Pine Garland' }
+        }),
+
+        'new-years-eve': defineTheme({
+            id: 'new-years-eve',
+            name: 'New Year\'s Eve',
+            pack: 'holiday',
+            icon: '🎆',
+            primary: '#050510',
+            accent: '#FFD700',
+            secondary: '#C0C0C0',
+            swatchName: 'Midnight Gold',
+            colors: { text: '#FFFFFF', darkText: '#000000' },
+            swatches: [
+                { hex: '#110022', name: 'Royal Countdown', accent: '#00FFFF', secondary: '#FF00FF' },
+                { hex: '#0A0A16', name: 'Times Square', accent: '#FF2A54', secondary: '#00FF9F' },
+                { hex: '#1D1217', name: 'Rose Gold Toast', accent: '#B76E79', secondary: '#EAD1DC' },
+                { hex: '#0B0C10', name: 'Silver Glitter', accent: '#E2E2E2', secondary: '#1F2833' },
+                { hex: '#000000', name: 'Neon Countdown', accent: '#39FF14', secondary: '#FF007F' }
+            ],
+            fonts: { primary: "'Jost', sans-serif", display: "'Cinzel', serif", heading: "'Cinzel', serif" },
+            assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
+            particles: [
+                { color: '#FFD700', gradient: '#FFF8DC', type: 'confetti', weight: 40, speedMultiplier: 0.6, sizeMultiplier: 1.1, massMultiplier: 1.0 },
+                { color: '#C0C0C0', gradient: '#FFFFFF', type: 'confetti', weight: 40, speedMultiplier: 0.65, sizeMultiplier: 1.0, massMultiplier: 0.9 },
+                { color: '#FFFFFF', gradient: '#FFD700', type: 'star', weight: 20, speedMultiplier: 0.2, sizeMultiplier: 1.5, massMultiplier: 0.5, isWhite: true }
+            ],
+            frameClass: 'theme-frame--nye',
+            flags: { showSecondaryAsSwatch: true },
+            overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 35, fallSpeed: 0.5, maxPetals: 50, windiness: 15, hostMaxWidth: 130, backdropOpacity: 85 },
+            defaults: { hostsTitle: "VIP Guests", eventTitle: "NYE Countdown", eventSubtitle: "Black Tie Gala", eventTopLabel: "Cheers" },
+            uiLabels: { particlesPlural: 'Confetti', particlesSingular: 'Piece', borderToggle: 'Hide fireworks', gustStrength: 'Excitement', frameName: 'Firework Glow' }
         })
+
     };
 })();

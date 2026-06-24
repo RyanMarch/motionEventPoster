@@ -1,0 +1,706 @@
+/**
+ * NEW YEAR'S EVE THEME STYLES
+ * Colors: Midnight Cosmic Space (#050510) · Champagne Gold (#FFD700) · Bright Silver (#C0C0C0)
+ */
+
+/* ============================================================
+   1. Background – Midnight Cosmic Sky, Shimmering Grid, & Clock Rotation
+   ============================================================ */
+body.theme-new-years-eve {
+    position: relative;
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 65%),
+        radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.8) 100%),
+        linear-gradient(180deg,
+            #020206 0%,
+            var(--color-primary) 50%,
+            #000000 100%) !important;
+
+    /* Glow utility tokens */
+    --gold-nye-glow: 0 0 15px rgba(255, 215, 0, 0.45);
+    --silver-nye-glow: 0 0 15px rgba(192, 192, 192, 0.4);
+}
+
+/* Starry/Glittering texture layer */
+body.theme-new-years-eve .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23FFD700' fill-opacity='0.15'%3E%3Ccircle cx='40' cy='40' r='1' /%3E%3Cpath d='M0 0 L4 4 M80 0 L76 4 M0 80 L4 76 M80 80 L76 76' stroke='%23FFD700' stroke-width='0.5' stroke-opacity='0.1' /%3E%3Ccircle cx='10' cy='15' r='0.7' /%3E%3Ccircle cx='70' cy='65' r='0.7' /%3E%3Ccircle cx='60' cy='20' r='0.5' /%3E%3Ccircle cx='20' cy='60' r='0.5' /%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 160px 160px;
+    opacity: calc(0.4 + 0.6 * var(--frame-intensity));
+    animation: nye-texture-drift 100s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background-position;
+}
+
+@keyframes nye-texture-drift {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 160px 160px;
+    }
+}
+
+/* ============================================================
+   2. Theme Frame – Gold-Metallic Double Border & Art Deco Starburst Corners
+   ============================================================ */
+body.theme-new-years-eve .theme-frame {
+    opacity: 1;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
+    border: 3px double var(--color-accent) !important;
+    border-radius: 6px !important;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 35px rgba(0, 0, 0, 0.95),
+        0 0 calc(15px * var(--frame-intensity)) rgba(var(--color-accent-rgb), 0.25),
+        inset 0 0 calc(20px * var(--frame-intensity)) rgba(var(--color-accent-rgb), 0.12) !important;
+}
+
+body.theme-new-years-eve .theme-frame-inner {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border: 1.5px solid rgba(var(--color-secondary-rgb), 0.38) !important;
+    border-radius: 4px !important;
+    pointer-events: none;
+    z-index: 51;
+}
+
+/* Hide unused default rail elements */
+body.theme-new-years-eve .frame-rail {
+    display: none !important;
+}
+
+body.theme-new-years-eve .floral-bg {
+    display: none !important;
+}
+
+/* Starburst corner bracket ornaments */
+body.theme-new-years-eve .theme-frame::before,
+body.theme-new-years-eve .theme-frame::after,
+body.theme-new-years-eve .theme-frame-inner::before,
+body.theme-new-years-eve .theme-frame-inner::after {
+    content: '';
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 55;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 L80,0 M0,0 L0,80 M0,0 L60,60 M0,0 L75,30 M0,0 L30,75 M0,0 L80,15 M0,0 L15,80' stroke='%23FFD700' stroke-width='2' stroke-linecap='round' opacity='0.9' /%3E%3Cpath d='M0,0 L70,5 M0,0 L5,70 M0,0 L50,20 M0,0 L20,50' stroke='%23C0C0C0' stroke-width='1.5' stroke-linecap='round' opacity='0.75' /%3E%3Ccircle cx='30' cy='30' r='2' fill='%23FFFFFF' /%3E%3Ccircle cx='50' cy='20' r='1.5' fill='%23FFD700' /%3E%3Ccircle cx='20' cy='50' r='1.5' fill='%23FFD700' /%3E%3C/svg%3E");
+    opacity: calc(0.65 + 0.35 * var(--frame-intensity));
+}
+
+body.theme-new-years-eve .theme-frame::before {
+    top: -3px;
+    left: -3px;
+}
+
+body.theme-new-years-eve .theme-frame::after {
+    top: -3px;
+    right: -3px;
+    transform: scaleX(-1);
+}
+
+body.theme-new-years-eve .theme-frame-inner::before {
+    bottom: -3px;
+    left: -3px;
+    transform: scaleY(-1);
+}
+
+body.theme-new-years-eve .theme-frame-inner::after {
+    bottom: -3px;
+    right: -3px;
+    transform: scale(-1);
+}
+
+/* ============================================================
+   3. Sway Layers – Staggered Firework Burst Animations
+   ============================================================ */
+body.theme-new-years-eve .sway-layer {
+    display: block !important;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+/* Gold Firework Burst (Top Left) */
+body.theme-new-years-eve .sway-top-left {
+    top: 6vh;
+    left: 8vw;
+    width: 320px;
+    height: 320px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='4' fill='%23FFFFFF' /%3E%3Cg stroke='%23FFD700' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M100,100 L100,40 M100,100 L100,160 M100,100 L40,100 M100,100 L160,100 M100,100 L58,58 M100,100 L142,142 M100,100 L142,58 M100,100 L58,142' stroke-dasharray='5,8' /%3E%3Cpath d='M100,100 L100,60 M100,100 L100,140 M100,100 L60,100 M100,100 L140,100 M100,100 L72,72 M100,100 L128,128 M100,100 L128,72 M100,100 L72,128' stroke='%23FFFFFF' stroke-width='1.5' stroke-dasharray='3,6' opacity='0.8' /%3E%3C/g%3E%3Ccircle cx='100' cy='30' r='2.5' fill='%23FFD700' /%3E%3Ccircle cx='100' cy='170' r='2.5' fill='%23FFD700' /%3E%3Ccircle cx='30' cy='100' r='2.5' fill='%23FFD700' /%3E%3Ccircle cx='170' cy='100' r='2.5' fill='%23FFD700' /%3E%3C/svg%3E");
+    animation: nye-firework-burst-left calc(6s / var(--gust-speed, 1)) ease-out infinite;
+    animation-delay: 0s;
+}
+
+/* Silver & Gold Firework Burst (Top Right) */
+body.theme-new-years-eve .sway-top-right {
+    top: 13vh;
+    right: 10vw;
+    width: 270px;
+    height: 270px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='4' fill='%23FFFFFF' /%3E%3Cg stroke='%23C0C0C0' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M100,100 L100,45 M100,100 L100,155 M100,100 L45,100 M100,100 L155,100 M100,100 L61,61 M100,100 L139,139 M100,100 L139,61 M100,100 L61,139' stroke-dasharray='4,7' /%3E%3Cpath d='M100,100 L100,65 M100,100 L100,135 M100,100 L65,100 M100,100 L135,100 M100,100 L75,75 M100,100 L125,125 M100,100 L125,75 M100,100 L75,125' stroke='%23FFD700' stroke-width='1.5' stroke-dasharray='2,5' opacity='0.8' /%3E%3C/g%3E%3C/svg%3E");
+    animation: nye-firework-burst-right calc(5.2s / var(--gust-speed, 1)) ease-out infinite;
+    animation-delay: 1.8s;
+}
+
+/* Champagne Firework Burst (Bottom Left) */
+body.theme-new-years-eve .sway-bottom-left {
+    bottom: 10vh;
+    left: 7vw;
+    width: 280px;
+    height: 280px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='4' fill='%23FFFFFF' /%3E%3Cg stroke='%23FFD700' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M100,100 L100,40 M100,100 L100,160 M100,100 L40,100 M100,100 L160,100 M100,100 L58,58 M100,100 L142,142 M100,100 L142,58 M100,100 L58,142' stroke-dasharray='5,8' /%3E%3C/g%3E%3C/svg%3E");
+    animation: nye-firework-burst-left calc(6.5s / var(--gust-speed, 1)) ease-out infinite;
+    animation-delay: 3.6s;
+}
+
+/* Silver Sparkler Burst (Bottom Right) */
+body.theme-new-years-eve .sway-bottom-right {
+    bottom: 7vh;
+    right: 8vw;
+    width: 300px;
+    height: 300px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='4' fill='%23FFFFFF' /%3E%3Cg stroke='%23C0C0C0' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M100,100 L100,45 M100,100 L100,155 M100,100 L45,100 M100,100 L155,100 M100,100 L61,61 M100,100 L139,139 M100,100 L139,61 M100,100 L61,139' stroke-dasharray='4,7' /%3E%3C/g%3E%3C/svg%3E");
+    animation: nye-firework-burst-right calc(5.8s / var(--gust-speed, 1)) ease-out infinite;
+    animation-delay: 0.8s;
+}
+
+@keyframes nye-firework-burst-left {
+    0% {
+        transform: scale(0.1) rotate(0deg);
+        opacity: 0;
+    }
+    4% {
+        opacity: 0;
+    }
+    14% {
+        opacity: calc(0.75 + 0.25 * var(--frame-intensity, 1));
+    }
+    75% {
+        opacity: calc(0.6 + 0.4 * var(--frame-intensity, 1));
+    }
+    100% {
+        transform: scale(1.15) rotate(28deg);
+        opacity: 0;
+    }
+}
+
+@keyframes nye-firework-burst-right {
+    0% {
+        transform: scale(0.15) rotate(0deg);
+        opacity: 0;
+    }
+    4% {
+        opacity: 0;
+    }
+    14% {
+        opacity: calc(0.72 + 0.28 * var(--frame-intensity, 1));
+    }
+    75% {
+        opacity: calc(0.58 + 0.42 * var(--frame-intensity, 1));
+    }
+    100% {
+        transform: scale(1.1) rotate(-32deg);
+        opacity: 0;
+    }
+}
+
+/* Disable/hide other themes' cartoon/seasonal sway layers */
+body.theme-new-years-eve .sway-left-side,
+body.theme-new-years-eve .sway-right-side,
+body.theme-new-years-eve .sway-top-1,
+body.theme-new-years-eve .sway-top-2,
+body.theme-new-years-eve .sway-top-3,
+body.theme-new-years-eve .sway-top-4,
+body.theme-new-years-eve .sway-bottom-3,
+body.theme-new-years-eve .sway-bottom-4,
+body.theme-new-years-eve .sway-bottom-5,
+body.theme-new-years-eve .sway-bottom-6,
+body.theme-new-years-eve .sway-bottom-7,
+body.theme-new-years-eve .sway-bottom-8,
+body.theme-new-years-eve .sway-bottom-9,
+body.theme-new-years-eve .sway-bottom-10,
+body.theme-new-years-eve .sway-bottom-11,
+body.theme-new-years-eve .sway-bottom-12,
+body.theme-new-years-eve .sway-bottom-13,
+body.theme-new-years-eve .sway-bottom-14 {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Searchlight Beams (Celebrate/Sweep from screen bottom)
+   ============================================================ */
+body.theme-new-years-eve .content-wrapper::before,
+body.theme-new-years-eve .content-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -45%;
+    width: 48%;
+    height: 180%;
+    transform-origin: bottom center;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 2;
+    will-change: transform, opacity;
+    transition: opacity 1.2s ease;
+}
+
+body.theme-new-years-eve .content-wrapper::before {
+    left: 12%;
+    background: radial-gradient(ellipse at bottom,
+            rgba(var(--color-accent-rgb), 0.35) 0%,
+            rgba(var(--color-accent-rgb), 0.08) 50%,
+            transparent 80%);
+    animation: nye-spot-left calc(20s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+    opacity: calc(0.45 + 0.55 * var(--frame-intensity, 1));
+}
+
+body.theme-new-years-eve .content-wrapper::after {
+    right: 12%;
+    background: radial-gradient(ellipse at bottom,
+            rgba(var(--color-secondary-rgb), 0.35) 0%,
+            rgba(var(--color-secondary-rgb), 0.08) 50%,
+            transparent 80%);
+    animation: nye-spot-right calc(16s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+    opacity: calc(0.45 + 0.55 * var(--frame-intensity, 1));
+}
+
+@keyframes nye-spot-left {
+    0% {
+        transform: rotate(-16deg) scale(0.96);
+    }
+    100% {
+        transform: rotate(10deg) scale(1.04);
+    }
+}
+
+@keyframes nye-spot-right {
+    0% {
+        transform: rotate(16deg) scale(0.96);
+    }
+    100% {
+        transform: rotate(-10deg) scale(1.04);
+    }
+}
+
+/* ============================================================
+   5. Logo Banner – Glowing Double Frame & Clock Face Watermark
+   ============================================================ */
+body.theme-new-years-eve .logo-banner {
+    position: relative;
+    margin-top: 60px !important;
+    margin-bottom: -12px !important;
+    padding: 16px 44px !important;
+    border-radius: 6px !important;
+    max-width: 520px !important;
+    z-index: 60;
+}
+
+body.theme-new-years-eve:not(.is-light-bg) .logo-banner {
+    background: rgba(5, 5, 16, var(--backdrop-opacity, 0.75)) !important;
+    border: 1.5px solid rgba(var(--color-accent-rgb), calc(0.95 * var(--backdrop-opacity, 0.75))) !important;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(var(--color-accent-rgb), 0.25),
+        inset 0 0 0 2px rgba(5, 5, 16, 0.95),
+        inset 0 0 0 3.5px rgba(var(--color-secondary-rgb), 0.45),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.1) !important;
+}
+
+
+
+body.theme-new-years-eve .logo-text-custom {
+    font-family: var(--font-display);
+    color: #ffffff !important;
+    font-size: 1.8rem !important;
+    text-shadow:
+        0 0 6px rgba(var(--color-accent-rgb), 0.6),
+        2px 2px 4px rgba(0, 0, 0, 0.95) !important;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: normal;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+}
+
+body.theme-new-years-eve #logo-img {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   6. Hosts Container – Double Metallic Gold/Silver Plaque
+   ============================================================ */
+body.theme-new-years-eve .hosts-container {
+    position: relative;
+    padding: 22px 34px !important;
+    margin: 2vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 200px) !important;
+    border-radius: 6px !important;
+    z-index: 100;
+}
+
+body.theme-new-years-eve:not(.is-light-bg) .hosts-container {
+    background: rgba(5, 5, 16, var(--backdrop-opacity, 0.85)) !important;
+    border: 1.5px solid rgba(var(--color-secondary-rgb), calc(0.7 * var(--backdrop-opacity, 0.85))) !important;
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(var(--color-accent-rgb), calc(0.12 * var(--backdrop-opacity, 0.85))),
+        inset 0 0 0 2px rgba(5, 5, 16, 0.95),
+        inset 0 0 0 3px rgba(var(--color-accent-rgb), calc(0.4 * var(--backdrop-opacity, 0.85))),
+        inset 0 0 20px rgba(var(--color-secondary-rgb), calc(0.08 * var(--backdrop-opacity, 0.85))) !important;
+}
+
+/* ============================================================
+   7. Typography & Dividers
+   ============================================================ */
+body.theme-new-years-eve .event-title {
+    font-family: var(--font-display) !important;
+    color: var(--color-accent) !important;
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 15px rgba(var(--color-accent-rgb), 0.4),
+        0 0 30px rgba(var(--color-accent-rgb), 0.2),
+        3px 3px 5px rgba(0, 0, 0, 0.95) !important;
+    animation: nye-title-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes nye-title-glow {
+    0%, 100% {
+        text-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.4), 3px 3px 5px rgba(0, 0, 0, 0.95);
+    }
+    50% {
+        text-shadow: 0 0 25px rgba(var(--color-accent-rgb), 0.75), 0 0 40px rgba(var(--color-secondary-rgb), 0.4), 3px 3px 5px rgba(0, 0, 0, 0.95);
+    }
+}
+
+body.theme-new-years-eve .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.7rem;
+    color: #ffffff !important;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 8px rgba(var(--color-accent-rgb), 0.5),
+        2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-new-years-eve .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 1.9rem;
+    color: var(--color-secondary) !important;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 8px rgba(var(--color-secondary-rgb), 0.5),
+        2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+    margin-top: 8px;
+}
+
+body.theme-new-years-eve .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.2rem;
+    color: #ffffff !important;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+    margin-top: 4px;
+}
+
+/* Custom Starburst Divider below Hosts Title */
+body.theme-new-years-eve .hosts-title::after {
+    content: '';
+    display: block;
+    width: 220px;
+    height: 20px;
+    margin: 15px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='20' viewBox='0 0 220 20'%3E%3Cg stroke='%23FFD700' stroke-width='1.5' fill='none'%3E%3Cpolygon points='110,4 114,10 110,16 106,10' fill='%23FFD700'/%3E%3Cpath d='M 95,10 L 40,10 M 125,10 L 180,10' stroke='%23C0C0C0' stroke-width='1'/%3E%3Cpolygon points='40,10 44,7 40,4 36,7' fill='%23C0C0C0' stroke='none'/%3E%3Cpolygon points='180,10 184,7 180,4 176,7' fill='%23C0C0C0' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.95;
+}
+
+/* Star/Dot Divider below Event Subtitle */
+body.theme-new-years-eve .event-subtitle::after {
+    content: '';
+    display: block;
+    width: 260px;
+    height: 10px;
+    margin: 12px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='10' viewBox='0 0 260 10'%3E%3Cg stroke='%23C0C0C0' stroke-width='1.2' fill='none'%3E%3Ccircle cx='130' cy='5' r='2' fill='%23C0C0C0'/%3E%3Cline x1='115' y1='5' x2='20' y2='5'/%3E%3Cline x1='145' y1='5' x2='240' y2='5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.85;
+}
+
+body.theme-new-years-eve .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-accent) !important;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-new-years-eve .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+body.theme-new-years-eve .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   8. Particles – Sparkling 4-Point Stars & Confetti Overrides
+   ============================================================ */
+
+/* Falling Confetti Pieces */
+body.theme-new-years-eve .petal--confetti {
+    clip-path: none !important;
+    border-radius: 1px !important;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+}
+
+/* Twinkling 4-Point Stars */
+body.theme-new-years-eve .petal--star {
+    clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: nye-star-twinkle 1.8s ease-in-out infinite alternate;
+    animation-delay: var(--star-delay, 0s);
+}
+
+@keyframes nye-star-twinkle {
+    0% {
+        opacity: 0.25;
+        filter: brightness(0.7) drop-shadow(0 0 2px rgba(255, 255, 255, 0.4));
+    }
+    100% {
+        opacity: 1.0;
+        filter: brightness(1.3) drop-shadow(0 0 8px rgba(var(--color-accent-rgb), 0.9));
+    }
+}
+
+/* ============================================================
+   9. Border-hidden Override (Clean Hide Visual Structure)
+   ============================================================ */
+body.border-hidden.theme-new-years-eve .theme-frame,
+body.border-hidden.theme-new-years-eve .theme-texture,
+body.border-hidden.theme-new-years-eve .theme-frame-inner,
+body.border-hidden.theme-new-years-eve .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+body.border-hidden.theme-new-years-eve .hosts-container,
+body.border-hidden.theme-new-years-eve .logo-banner {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+
+
+/* ============================================================
+   10. Countdown Overlay Override
+   ============================================================ */
+body.theme-new-years-eve .fullscreen-countdown .countdown-content {
+    background: rgba(5, 5, 16, 0.98) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 25px rgba(var(--color-accent-rgb), 0.45),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.2) !important;
+    border-radius: 6px !important;
+}
+
+body.theme-new-years-eve .fullscreen-countdown .countdown-label {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+}
+
+body.theme-new-years-eve .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.85) !important;
+}
+
+/* ============================================================
+   11. Play/Pause Animation State Bindings
+   ============================================================ */
+body.theme-new-years-eve .theme-texture,
+body.theme-new-years-eve .sway-top-left,
+body.theme-new-years-eve .sway-top-right,
+body.theme-new-years-eve .sway-bottom-left,
+body.theme-new-years-eve .sway-bottom-right,
+body.theme-new-years-eve .content-wrapper::before,
+body.theme-new-years-eve .content-wrapper::after,
+body.theme-new-years-eve .event-title {
+    animation-play-state: var(--grid-play-state, running) !important;
+}
+
+/* ============================================================
+   12. Layout / Responsive Scaling Rules (14-inch MacBook fit)
+   ============================================================ */
+body.theme-new-years-eve .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+body.theme-new-years-eve:not(.date-hidden):not(.title-hidden):not(.logo-hidden):not(.host-hidden) .logo-banner,
+body.theme-new-years-eve:not(.date-hidden):not(.title-hidden):not(.logo-hidden):not(.host-hidden) .hosts-container {
+    transform: none !important;
+}
+
+@media (max-width: 1800px) {
+    body.theme-new-years-eve .hosts-list span {
+        font-size: calc(1.4em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-new-years-eve .hosts-container {
+        margin: 1.5vh auto 0 auto !important;
+        padding: 16px 20px !important;
+        max-width: calc(var(--host-max-width) - 100px) !important;
+    }
+
+    body.theme-new-years-eve .event-footer {
+        margin-bottom: 0.5vh;
+    }
+}
+
+/* MacBook Pro 14" (1512x945) & standard screens */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-new-years-eve .logo-banner {
+        margin-top: 28px !important;
+        margin-bottom: -6px !important;
+        padding: 8px 20px !important;
+    }
+
+    body.theme-new-years-eve .hosts-container {
+        margin: 3vh auto 0 auto !important;
+        padding: 12px 20px !important;
+        max-width: 78vw !important;
+    }
+
+    body.theme-new-years-eve .hosts-title::after {
+        margin: 8px auto 0 auto;
+        height: 16px;
+    }
+
+    body.theme-new-years-eve .event-top-label {
+        font-size: 1.35rem;
+    }
+
+    body.theme-new-years-eve .event-title {
+        font-size: 4.2rem;
+    }
+
+    body.theme-new-years-eve .event-subtitle {
+        font-size: 1.5rem;
+        margin-top: 4px;
+    }
+
+    body.theme-new-years-eve .event-date {
+        font-size: 1.1rem;
+        margin-top: 2px;
+    }
+
+    body.theme-new-years-eve .event-footer {
+        margin-bottom: 2px;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-new-years-eve .logo-banner {
+        scale: 1.15;
+        margin-top: 1.5vh !important;
+    }
+
+    body.theme-new-years-eve .hosts-list span {
+        font-size: calc(1.62em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-new-years-eve .hosts-container {
+        margin: 6.5vh auto 0 auto !important;
+    }
+
+    body.theme-new-years-eve .event-footer {
+        scale: 1.15;
+        margin-bottom: 1.5vh;
+    }
+}
+
+/* ============================================================
+   13. Light Background Adaptations (Ivory / Champagne Swatches)
+   ============================================================ */
+body.theme-new-years-eve.is-light-bg {
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.15) 0%, transparent 65%),
+        radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.08) 100%),
+        linear-gradient(180deg,
+            var(--color-primary) 0%,
+            var(--color-primary) 100%) !important;
+}
+
+body.theme-new-years-eve.is-light-bg .event-title {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-new-years-eve.is-light-bg .hosts-title,
+body.theme-new-years-eve.is-light-bg .hosts-list span,
+body.theme-new-years-eve.is-light-bg .event-subtitle,
+body.theme-new-years-eve.is-light-bg .event-top-label,
+body.theme-new-years-eve.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-new-years-eve.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, var(--backdrop-opacity, 0.75)) !important;
+    border-color: var(--color-dark-text) !important;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.95),
+        inset 0 0 0 3px var(--color-dark-text) !important;
+}
+
+body.theme-new-years-eve.is-light-bg .hosts-container {
+    background: rgba(255, 255, 255, var(--backdrop-opacity, 0.75)) !important;
+    border-color: var(--color-dark-text) !important;
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.95),
+        inset 0 0 0 3px var(--color-dark-text) !important;
+}
+
+body.theme-new-years-eve.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}

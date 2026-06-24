@@ -1,0 +1,706 @@
+/**
+ * STEAMPUNK GEARS THEME
+ * 
+ * Layout Philosophy: The user is in among the gears of a complex machine.
+ * We establish a rich 3D-depth hierarchy:
+ *   - Background: Dark textured metal panels with slow, blurred background gears (z-index: 5).
+ *   - Mid-ground: Suspended poster content (z-index: 30) with clear text on a soot-glow backdrop.
+ *   - Foreground: Giant, heavily-blurred gears sweeping close in front of the lens (z-index: 40).
+ *   - Frame: Riveted brass steam pipes and a vibrating steam pressure gauge.
+ */
+
+/* ============================================
+   1. BASE COLORS, TEXTURES & BACKGROUND
+   ============================================ */
+
+body.theme-steampunk-gears {
+    --steampunk-bg: var(--color-primary, #110906);
+    --steampunk-accent: var(--color-accent, #CD7F32);
+    --steampunk-secondary: var(--color-secondary, #B5A642);
+
+    --steampunk-pipe-dark: color-mix(in srgb, var(--steampunk-accent) 15%, #050302);
+    --steampunk-pipe-base: var(--steampunk-accent);
+    --steampunk-pipe-highlight: color-mix(in srgb, var(--steampunk-secondary) 80%, white);
+    --steampunk-pipe-shadow: color-mix(in srgb, var(--steampunk-accent) 40%, black);
+    --steampunk-pipe-border: color-mix(in srgb, var(--steampunk-accent) 60%, black);
+
+    background-color: var(--steampunk-bg);
+    background-image:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 75%),
+        radial-gradient(circle at center, color-mix(in srgb, var(--steampunk-bg) 75%, var(--steampunk-accent)) 0%, color-mix(in srgb, var(--steampunk-bg) 85%, black) 100%);
+    --z-particles-back: 10;
+    --z-particles-mid: 20;
+    --z-particles-front: 45;
+}
+
+/* Repeating Metal Plate Overlay */
+body.theme-steampunk-gears .floral-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><rect width='160' height='160' fill='none'/><path d='M 160 0 L 0 0 0 160' fill='none' stroke='rgba(205,127,50,0.03)' stroke-width='1.5'/><circle cx='8' cy='8' r='2' fill='rgba(205,127,50,0.08)'/><circle cx='152' cy='8' r='2' fill='rgba(205,127,50,0.08)'/><circle cx='8' cy='152' r='2' fill='rgba(205,127,50,0.08)'/><circle cx='152' cy='152' r='2' fill='rgba(205,127,50,0.08)'/><path d='M 0 80 L 160 80 M 80 0 L 80 160' fill='none' stroke='rgba(0,0,0,0.3)' stroke-width='1' stroke-dasharray='4,4'/></svg>");
+    background-repeat: repeat;
+    background-size: 160px 160px;
+    opacity: 0.25;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.theme-steampunk-gears:not(.is-loading) .floral-bg {
+    opacity: 0.35;
+}
+
+body.theme-steampunk-gears.border-hidden .floral-bg {
+    opacity: 0 !important;
+}
+
+/* Heavy Vignetted Soot Layer */
+body.theme-steampunk-gears .theme-texture {
+    background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.92) 90%);
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ============================================
+   2. POLISHED BRASS PIPES (FRAME RAILS)
+   ============================================ */
+
+body.theme-steampunk-gears .theme-frame {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    z-index: 50;
+}
+
+body.theme-steampunk-gears .frame-rail {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: none;
+    background-color: var(--steampunk-bg);
+}
+
+body.theme-steampunk-gears .rail-top {
+    height: 32px;
+    left: 0;
+    right: 0;
+    top: 0;
+    background:
+        /* Organic Soot & Rust smudges distributed across the screen */
+        radial-gradient(ellipse at 15vw 50%, rgba(0, 0, 0, 0.7) 0%, transparent 60px),
+        radial-gradient(ellipse at 45vw 30%, rgba(85, 38, 10, 0.6) 0%, transparent 45px),
+        radial-gradient(ellipse at 75vw 60%, rgba(0, 0, 0, 0.75) 0%, transparent 55px),
+        /* Verdigris patches */
+        radial-gradient(ellipse at 30vw 20%, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 60vw 80%, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 90vw 20%, rgba(64, 224, 208, 0.35) 0%, transparent 20px),
+        /* Repeating custom steampunk pipes SVG */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 32'><defs><linearGradient id='iron' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%231a1a1a'/><stop offset='30%' stop-color='%23555555'/><stop offset='70%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%230d0d0d'/></linearGradient><linearGradient id='brass' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%234a3610'/><stop offset='20%' stop-color='%23a88030'/><stop offset='45%' stop-color='%23ffd570'/><stop offset='70%' stop-color='%238a6515'/><stop offset='100%' stop-color='%232b1d05'/></linearGradient><linearGradient id='copper' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%233d160a'/><stop offset='20%' stop-color='%23a34a2c'/><stop offset='45%' stop-color='%23ff9b70'/><stop offset='75%' stop-color='%23853316'/><stop offset='100%' stop-color='%23240a03'/></linearGradient></defs><rect x='0' y='22' width='400' height='5' fill='url(%23iron)'/><rect x='0' y='4' width='400' height='12' fill='url(%23brass)'/><rect x='0' y='16' width='400' height='4' fill='url(%23copper)'/><rect x='85' y='2' width='10' height='16' rx='1.5' fill='url(%23iron)' stroke='%23ffd570' stroke-width='0.5'/><circle cx='90' cy='5' r='0.8' fill='%23ffd570'/><circle cx='90' cy='15' r='0.8' fill='%23ffd570'/><rect x='275' y='0' width='10' height='32' fill='url(%23iron)' stroke='%23a88030' stroke-width='0.5'/><circle cx='280' cy='4' r='1' fill='%23ffd570'/><circle cx='280' cy='28' r='1' fill='%23ffd570'/></svg>") repeat-x center/400px 32px;
+    border-bottom: 2px solid var(--steampunk-pipe-border);
+}
+
+body.theme-steampunk-gears .rail-bottom {
+    height: 32px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        /* Organic Soot & Rust smudges distributed across the screen */
+        radial-gradient(ellipse at 25vw 50%, rgba(85, 38, 10, 0.6) 0%, transparent 50px),
+        radial-gradient(ellipse at 55vw 70%, rgba(0, 0, 0, 0.75) 0%, transparent 60px),
+        radial-gradient(ellipse at 85vw 30%, rgba(85, 38, 10, 0.5) 0%, transparent 40px),
+        /* Verdigris patches */
+        radial-gradient(ellipse at 20vw 80%, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 50vw 20%, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 80vw 80%, rgba(64, 224, 208, 0.35) 0%, transparent 20px),
+        /* Repeating custom steampunk pipes SVG */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 32'><defs><linearGradient id='iron' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%231a1a1a'/><stop offset='30%' stop-color='%23555555'/><stop offset='70%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%230d0d0d'/></linearGradient><linearGradient id='brass' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%234a3610'/><stop offset='20%' stop-color='%23a88030'/><stop offset='45%' stop-color='%23ffd570'/><stop offset='70%' stop-color='%238a6515'/><stop offset='100%' stop-color='%232b1d05'/></linearGradient><linearGradient id='copper' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%233d160a'/><stop offset='20%' stop-color='%23a34a2c'/><stop offset='45%' stop-color='%23ff9b70'/><stop offset='75%' stop-color='%23853316'/><stop offset='100%' stop-color='%23240a03'/></linearGradient></defs><rect x='0' y='6' width='400' height='5' fill='url(%23iron)'/><rect x='0' y='16' width='400' height='12' fill='url(%23brass)'/><rect x='0' y='12' width='400' height='4' fill='url(%23copper)'/><rect x='155' y='14' width='10' height='16' rx='1.5' fill='url(%23iron)' stroke='%23ffd570' stroke-width='0.5'/><circle cx='160' cy='17' r='0.8' fill='%23ffd570'/><circle cx='160' cy='27' r='0.8' fill='%23ffd570'/><rect x='345' y='0' width='10' height='32' fill='url(%23iron)' stroke='%23a88030' stroke-width='0.5'/><circle cx='350' cy='4' r='1' fill='%23ffd570'/><circle cx='350' cy='28' r='1' fill='%23ffd570'/></svg>") repeat-x center/400px 32px;
+    border-top: 2px solid var(--steampunk-pipe-border);
+}
+
+body.theme-steampunk-gears .rail-left {
+    width: 32px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background:
+        /* Organic Soot & Rust smudges distributed vertically */
+        radial-gradient(ellipse at 50% 15vh, rgba(0, 0, 0, 0.7) 0%, transparent 60px),
+        radial-gradient(ellipse at 30% 45vh, rgba(85, 38, 10, 0.6) 0%, transparent 45px),
+        radial-gradient(ellipse at 70% 75vh, rgba(0, 0, 0, 0.75) 0%, transparent 55px),
+        /* Verdigris patches */
+        radial-gradient(ellipse at 20% 30vh, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 80% 60vh, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        /* Repeating vertical custom steampunk pipes SVG */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 400'><defs><linearGradient id='iron' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%231a1a1a'/><stop offset='30%' stop-color='%23555555'/><stop offset='70%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%230d0d0d'/></linearGradient><linearGradient id='brass' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%234a3610'/><stop offset='20%' stop-color='%23a88030'/><stop offset='45%' stop-color='%23ffd570'/><stop offset='70%' stop-color='%238a6515'/><stop offset='100%' stop-color='%232b1d05'/></linearGradient><linearGradient id='copper' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%233d160a'/><stop offset='20%' stop-color='%23a34a2c'/><stop offset='45%' stop-color='%23ff9b70'/><stop offset='75%' stop-color='%23853316'/><stop offset='100%' stop-color='%23240a03'/></linearGradient></defs><rect x='22' y='0' width='5' height='400' fill='url(%23iron)'/><rect x='4' y='0' width='12' height='400' fill='url(%23brass)'/><rect x='16' y='0' width='4' height='400' fill='url(%23copper)'/><rect x='2' y='85' width='16' height='10' rx='1.5' fill='url(%23iron)' stroke='%23ffd570' stroke-width='0.5'/><circle cx='5' cy='90' r='0.8' fill='%23ffd570'/><circle cx='15' cy='90' r='0.8' fill='%23ffd570'/><rect x='0' y='275' width='32' height='10' fill='url(%23iron)' stroke='%23a88030' stroke-width='0.5'/><circle cx='4' cy='280' r='1' fill='%23ffd570'/><circle cx='28' cy='280' r='1' fill='%23ffd570'/></svg>") repeat-y center/32px 400px;
+    border-right: 2px solid var(--steampunk-pipe-border);
+}
+
+body.theme-steampunk-gears .rail-right {
+    width: 32px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background:
+        /* Organic Soot & Rust smudges distributed vertically */
+        radial-gradient(ellipse at 50% 25vh, rgba(85, 38, 10, 0.6) 0%, transparent 45px),
+        radial-gradient(ellipse at 40% 55vh, rgba(0, 0, 0, 0.75) 0%, transparent 60px),
+        radial-gradient(ellipse at 60% 82vh, rgba(85, 38, 10, 0.5) 0%, transparent 40px),
+        /* Verdigris patches */
+        radial-gradient(ellipse at 80% 15vh, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        radial-gradient(ellipse at 20% 70vh, rgba(64, 224, 208, 0.45) 0%, transparent 25px),
+        /* Repeating vertical custom steampunk pipes SVG */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 400'><defs><linearGradient id='iron' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%231a1a1a'/><stop offset='30%' stop-color='%23555555'/><stop offset='70%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%230d0d0d'/></linearGradient><linearGradient id='brass' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%234a3610'/><stop offset='20%' stop-color='%23a88030'/><stop offset='45%' stop-color='%23ffd570'/><stop offset='70%' stop-color='%238a6515'/><stop offset='100%' stop-color='%232b1d05'/></linearGradient><linearGradient id='copper' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%233d160a'/><stop offset='20%' stop-color='%23a34a2c'/><stop offset='45%' stop-color='%23ff9b70'/><stop offset='75%' stop-color='%23853316'/><stop offset='100%' stop-color='%23240a03'/></linearGradient></defs><rect x='6' y='0' width='5' height='400' fill='url(%23iron)'/><rect x='16' y='0' width='12' height='400' fill='url(%23brass)'/><rect x='12' y='0' width='4' height='400' fill='url(%23copper)'/><rect x='14' y='155' width='16' height='10' rx='1.5' fill='url(%23iron)' stroke='%23ffd570' stroke-width='0.5'/><circle cx='17' cy='160' r='0.8' fill='%23ffd570'/><circle cx='27' cy='160' r='0.8' fill='%23ffd570'/><rect x='0' y='345' width='32' height='10' fill='url(%23iron)' stroke='%23a88030' stroke-width='0.5'/><circle cx='4' cy='350' r='1' fill='%23ffd570'/><circle cx='28' cy='350' r='1' fill='%23ffd570'/></svg>") repeat-y center/32px 400px;
+    border-left: 2px solid var(--steampunk-pipe-border);
+}
+
+
+body.border-hidden.theme-steampunk-gears .theme-frame,
+body.border-hidden.theme-steampunk-gears .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* ============================================
+   3. LAYERED 3D ROTATING GEARS
+   ============================================ */
+
+body.theme-steampunk-gears .sway-layer {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center center !important;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.theme-steampunk-gears:not(.is-loading) .sway-layer {
+    opacity: 1;
+}
+
+body.theme-steampunk-gears.border-hidden .sway-layer {
+    opacity: 0 !important;
+    animation-play-state: paused !important;
+}
+
+/* Dynamic Custom properties for gear coloring */
+body.theme-steampunk-gears .sway-top-left {
+    background-image: var(--steampunk-sway-top-left) !important;
+}
+
+body.theme-steampunk-gears .sway-top-right {
+    background-image: var(--steampunk-sway-top-right) !important;
+}
+
+body.theme-steampunk-gears .sway-bottom-left::before {
+    background-image: var(--steampunk-sway-bottom-left) !important;
+}
+
+body.theme-steampunk-gears .sway-bottom-right {
+    background-image: var(--steampunk-sway-bottom-right) !important;
+}
+
+body.theme-steampunk-gears .sway-top-1 {
+    background-image: var(--steampunk-sway-top-1) !important;
+}
+
+body.theme-steampunk-gears .sway-top-2 {
+    background-image: var(--steampunk-sway-top-2) !important;
+}
+
+body.theme-steampunk-gears .sway-top-3 {
+    background-image: var(--steampunk-sway-top-3) !important;
+}
+
+body.theme-steampunk-gears .sway-left-side {
+    background-image: var(--steampunk-sway-left-side) !important;
+}
+
+body.theme-steampunk-gears .sway-right-side {
+    background-image: var(--steampunk-sway-right-side) !important;
+}
+
+/* Pause support */
+body.theme-steampunk-gears .sway-layer.paused {
+    animation-play-state: paused !important;
+}
+
+/* Rotating Animations (speed scaled by --gust-speed) */
+@keyframes gear-rotate-cw {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gear-rotate-ccw {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+/* ── BACKGROUND GEARS (z-index: 5) ── */
+
+/* Top-Left: Large Copper Gear (CW) */
+body.theme-steampunk-gears .sway-top-left {
+    top: -12%;
+    left: -12%;
+    width: 32vw;
+    height: 32vw;
+    min-width: 250px;
+    min-height: 250px;
+    z-index: 5;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='metal-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23CD7F32'/><stop offset='50%' stop-color='%238B4513'/><stop offset='100%' stop-color='%233e1c00'/></linearGradient><linearGradient id='gold-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23E8C49A'/><stop offset='50%' stop-color='%23CD7F32'/><stop offset='100%' stop-color='%238B4513'/></linearGradient><mask id='holes-c'><rect x='0' y='0' width='200' height='200' fill='white'/><circle cx='146.2' cy='119.1' r='10' fill='black'/><circle cx='119.1' cy='146.2' r='10' fill='black'/><circle cx='80.9' cy='146.2' r='10' fill='black'/><circle cx='53.8' cy='119.1' r='10' fill='black'/><circle cx='53.8' cy='80.9' r='10' fill='black'/><circle cx='80.9' cy='53.8' r='10' fill='black'/><circle cx='119.1' cy='53.8' r='10' fill='black'/><circle cx='146.2' cy='80.9' r='10' fill='black'/></mask></defs><g fill='url(%23metal-c)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(0, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(22.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(45, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(67.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(90, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(112.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(135, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(157.5, 100, 100)'/></g><circle cx='100' cy='100' r='78' fill='url(%23metal-c)' mask='url(%23holes-c)' stroke='rgba(0,0,0,0.6)' stroke-width='2'/><circle cx='100' cy='100' r='68' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='4'/><circle cx='100' cy='100' r='32' fill='url(%23gold-c)' stroke='rgba(0,0,0,0.7)' stroke-width='2'/><circle cx='100' cy='100' r='12' fill='none' stroke='rgba(0,0,0,0.8)' stroke-width='4'/><g stroke='url(%23gold-c)' stroke-width='8' stroke-linecap='round'><line x1='100' y1='28' x2='100' y2='172'/><line x1='28' y1='100' x2='172' y2='100'/><line x1='49' y1='49' x2='151' y2='151'/><line x1='49' y1='151' x2='151' y2='49'/></g><g fill='url(%23gold-c)' stroke='rgba(0,0,0,0.5)' stroke-width='1'><circle cx='100' cy='35' r='4'/><circle cx='100' cy='165' r='4'/><circle cx='35' cy='100' r='4'/><circle cx='165' cy='100' r='4'/><circle cx='54' cy='54' r='4'/><circle cx='146' cy='146' r='4'/><circle cx='54' cy='146' r='4'/><circle cx='146' cy='54' r='4'/></g><circle cx='100' cy='100' r='8' fill='%231a1a1a' stroke='rgba(0,0,0,0.9)' stroke-width='2'/></svg>") !important;
+    animation: gear-rotate-cw calc(45s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+/* Top-Right: Medium Brass Gear (CCW) */
+body.theme-steampunk-gears .sway-top-right {
+    top: -10%;
+    right: -10%;
+    width: 25vw;
+    height: 25vw;
+    min-width: 180px;
+    min-height: 180px;
+    z-index: 5;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><defs><linearGradient id='brass-b' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23FFE082'/><stop offset='50%' stop-color='%23B5A642'/><stop offset='100%' stop-color='%23554400'/></linearGradient></defs><g fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(0, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(30, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(60, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(90, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(120, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(150, 75, 75)'/></g><circle cx='75' cy='75' r='58' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'/><mask id='gear-holes-b'><rect x='0' y='0' width='150' height='150' fill='white'/><circle cx='75' cy='75' r='14' fill='black'/><circle cx='75' cy='38' r='12' fill='black'/><circle cx='75' cy='112' r='12' fill='black'/><circle cx='38' cy='75' r='12' fill='black'/><circle cx='112' cy='75' r='12' fill='black'/></mask><circle cx='75' cy='75' r='50' fill='url(%23brass-b)' mask='url(%23gear-holes-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'/><circle cx='75' cy='75' r='18' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><circle cx='75' cy='75' r='6' fill='%23111111' stroke='rgba(0,0,0,0.8)' stroke-width='1'/></svg>") !important;
+    animation: gear-rotate-ccw calc(32s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+/* Bottom-Left: Large Dark Iron Gear (CW) */
+body.theme-steampunk-gears .sway-bottom-left {
+    bottom: -12%;
+    left: -12%;
+    width: 28vw;
+    height: 28vw;
+    min-width: 220px;
+    min-height: 220px;
+    z-index: 5;
+    animation: gear-rotate-cw calc(38s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+body.theme-steampunk-gears .sway-bottom-left::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='iron-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23555555'/><stop offset='50%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%23111111'/></linearGradient><linearGradient id='bronze-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23a88060'/><stop offset='50%' stop-color='%23704830'/><stop offset='100%' stop-color='%23301808'/></linearGradient></defs><g fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1'><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(0, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(20, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(40, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(60, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(80, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(100, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(120, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(140, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(160, 90, 90)'/></g><circle cx='90' cy='90' r='70' fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><mask id='iron-holes-i'><rect x='0' y='0' width='180' height='180' fill='white'/><circle cx='90' cy='90' r='22' fill='black'/><circle cx='90' cy='46' r='14' fill='black'/><circle cx='128' cy='68' r='14' fill='black'/><circle cx='128' cy='112' r='14' fill='black'/><circle cx='90' cy='134' r='14' fill='black'/><circle cx='52' cy='112' r='14' fill='black'/><circle cx='52' cy='68' r='14' fill='black'/></mask><circle cx='90' cy='90' r='62' fill='url(%23iron-i)' mask='url(%23iron-holes-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1'/><circle cx='90' cy='90' r='25' fill='url(%23bronze-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1.5'/><circle cx='90' cy='90' r='8' fill='%23111111' stroke='rgba(0,0,0,0.9)' stroke-width='1.5'/></svg>") !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: none !important;
+}
+
+/* Bottom-Right: Medium Brass Gear (CCW) */
+body.theme-steampunk-gears .sway-bottom-right {
+    bottom: -6%;
+    right: -6%;
+    width: 20vw;
+    height: 20vw;
+    min-width: 165px;
+    min-height: 165px;
+    z-index: 5;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><defs><linearGradient id='brass-b2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23FFE082'/><stop offset='50%' stop-color='%23B5A642'/><stop offset='100%' stop-color='%23554400'/></linearGradient></defs><g fill='url(%23brass-b2)' stroke='rgba(0,0,0,0.6)' stroke-width='1'><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(0, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(30, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(60, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(90, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(120, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(150, 75, 75)'/></g><circle cx='75' cy='75' r='58' fill='url(%23brass-b2)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'/><mask id='gear-holes-b2'><rect x='0' y='0' width='150' height='150' fill='white'/><circle cx='75' cy='75' r='14' fill='black'/><circle cx='75' cy='38' r='12' fill='black'/><circle cx='75' cy='112' r='12' fill='black'/><circle cx='38' cy='75' r='12' fill='black'/><circle cx='112' cy='75' r='12' fill='black'/></mask><circle cx='75' cy='75' r='50' fill='url(%23brass-b2)' mask='url(%23gear-holes-b2)' stroke='rgba(0,0,0,0.6)' stroke-width='1'/><circle cx='75' cy='75' r='18' fill='url(%23brass-b2)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><circle cx='75' cy='75' r='6' fill='%23111111' stroke='rgba(0,0,0,0.8)' stroke-width='1'/></svg>") !important;
+    animation: gear-rotate-ccw calc(26s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+/* ── SMALL CONNECTOR GEARS (z-index: 4) ── */
+
+body.theme-steampunk-gears .sway-top-1 {
+    top: -4%;
+    left: 20%;
+    width: 9vw;
+    height: 9vw;
+    min-width: 80px;
+    min-height: 80px;
+    z-index: 4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><defs><linearGradient id='brass-b3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23FFE082'/><stop offset='50%' stop-color='%23B5A642'/><stop offset='100%' stop-color='%23554400'/></linearGradient></defs><g fill='url(%23brass-b3)' stroke='rgba(0,0,0,0.6)' stroke-width='1'><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(0, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(30, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(60, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(90, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(120, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(150, 75, 75)'/></g><circle cx='75' cy='75' r='58' fill='url(%23brass-b3)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'/><mask id='gear-holes-b3'><rect x='0' y='0' width='150' height='150' fill='white'/><circle cx='75' cy='75' r='14' fill='black'/><circle cx='75' cy='38' r='12' fill='black'/><circle cx='75' cy='112' r='12' fill='black'/><circle cx='38' cy='75' r='12' fill='black'/><circle cx='112' cy='75' r='12' fill='black'/></mask><circle cx='75' cy='75' r='50' fill='url(%23brass-b3)' mask='url(%23gear-holes-b3)' stroke='rgba(0,0,0,0.6)' stroke-width='1'/><circle cx='75' cy='75' r='18' fill='url(%23brass-b3)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><circle cx='75' cy='75' r='6' fill='%23111111' stroke='rgba(0,0,0,0.8)' stroke-width='1'/></svg>") !important;
+    animation: gear-rotate-ccw calc(18s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+body.theme-steampunk-gears .sway-top-2 {
+    top: -3%;
+    left: 45%;
+    width: 11vw;
+    height: 11vw;
+    min-width: 95px;
+    min-height: 95px;
+    z-index: 4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='metal-c2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23CD7F32'/><stop offset='50%' stop-color='%238B4513'/><stop offset='100%' stop-color='%233e1c00'/></linearGradient><linearGradient id='gold-c2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23E8C49A'/><stop offset='50%' stop-color='%23CD7F32'/><stop offset='100%' stop-color='%238B4513'/></linearGradient><mask id='holes-c2'><rect x='0' y='0' width='200' height='200' fill='white'/><circle cx='146.2' cy='119.1' r='10' fill='black'/><circle cx='119.1' cy='146.2' r='10' fill='black'/><circle cx='80.9' cy='146.2' r='10' fill='black'/><circle cx='53.8' cy='119.1' r='10' fill='black'/><circle cx='53.8' cy='80.9' r='10' fill='black'/><circle cx='80.9' cy='53.8' r='10' fill='black'/><circle cx='119.1' cy='53.8' r='10' fill='black'/><circle cx='146.2' cy='80.9' r='10' fill='black'/></mask></defs><g fill='url(%23metal-c2)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(0, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(22.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(45, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(67.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(90, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(112.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(135, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(157.5, 100, 100)'/></g><circle cx='100' cy='100' r='78' fill='url(%23metal-c2)' mask='url(%23holes-c2)' stroke='rgba(0,0,0,0.6)' stroke-width='2'/><circle cx='100' cy='100' r='68' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='4'/><circle cx='100' cy='100' r='32' fill='url(%23gold-c2)' stroke='rgba(0,0,0,0.7)' stroke-width='2'/><circle cx='100' cy='100' r='12' fill='none' stroke='rgba(0,0,0,0.8)' stroke-width='4'/><g stroke='url(%23gold-c2)' stroke-width='8' stroke-linecap='round'><line x1='100' y1='28' x2='100' y2='172'/><line x1='28' y1='100' x2='172' y2='100'/><line x1='49' y1='49' x2='151' y2='151'/><line x1='49' y1='151' x2='151' y2='49'/></g><g fill='url(%23gold-c2)' stroke='rgba(0,0,0,0.5)' stroke-width='1'><circle cx='100' cy='35' r='4'/><circle cx='100' cy='165' r='4'/><circle cx='35' cy='100' r='4'/><circle cx='165' cy='100' r='4'/><circle cx='54' cy='54' r='4'/><circle cx='146' cy='146' r='4'/><circle cx='54' cy='146' r='4'/><circle cx='146' cy='54' r='4'/></g><circle cx='100' cy='100' r='8' fill='%231a1a1a' stroke='rgba(0,0,0,0.9)' stroke-width='2'/></svg>") !important;
+    animation: gear-rotate-cw calc(22s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+body.theme-steampunk-gears .sway-top-3 {
+    top: -4%;
+    left: 70%;
+    width: 8vw;
+    height: 8vw;
+    min-width: 75px;
+    min-height: 75px;
+    z-index: 4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='iron-i2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23555555'/><stop offset='50%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%23111111'/></linearGradient><linearGradient id='bronze-i2' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23a88060'/><stop offset='50%' stop-color='%23704830'/><stop offset='100%' stop-color='%23301808'/></linearGradient></defs><g fill='url(%23iron-i2)' stroke='rgba(0,0,0,0.7)' stroke-width='1'><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(0, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(20, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(40, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(60, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(80, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(100, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(120, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(140, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(160, 90, 90)'/></g><circle cx='90' cy='90' r='70' fill='url(%23iron-i2)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><mask id='iron-holes-i2'><rect x='0' y='0' width='180' height='180' fill='white'/><circle cx='90' cy='90' r='22' fill='black'/><circle cx='90' cy='46' r='14' fill='black'/><circle cx='128' cy='68' r='14' fill='black'/><circle cx='128' cy='112' r='14' fill='black'/><circle cx='90' cy='134' r='14' fill='black'/><circle cx='52' cy='112' r='14' fill='black'/><circle cx='52' cy='68' r='14' fill='black'/></mask><circle cx='90' cy='90' r='62' fill='url(%23iron-i2)' mask='url(%23iron-holes-i2)' stroke='rgba(0,0,0,0.8)' stroke-width='1'/><circle cx='90' cy='90' r='25' fill='url(%23bronze-i2)' stroke='rgba(0,0,0,0.8)' stroke-width='1.5'/><circle cx='90' cy='90' r='8' fill='%23111111' stroke='rgba(0,0,0,0.9)' stroke-width='1.5'/></svg>") !important;
+    animation: gear-rotate-ccw calc(16s / var(--gust-speed, 1)) linear infinite !important;
+}
+
+/* ── FOREGROUND BLURRED GEARS (z-index: 45) ── */
+
+/* Left-Side: Giant Copper Gear (CCW, Blurred) */
+body.theme-steampunk-gears .sway-left-side {
+    top: 25%;
+    left: -20%;
+    width: 44vw;
+    height: 44vw;
+    min-width: 380px;
+    min-height: 380px;
+    z-index: 25;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='metal-c3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23CD7F32'/><stop offset='50%' stop-color='%238B4513'/><stop offset='100%' stop-color='%233e1c00'/></linearGradient><linearGradient id='gold-c3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23E8C49A'/><stop offset='50%' stop-color='%23CD7F32'/><stop offset='100%' stop-color='%238B4513'/></linearGradient><mask id='holes-c3'><rect x='0' y='0' width='200' height='200' fill='white'/><circle cx='146.2' cy='119.1' r='10' fill='black'/><circle cx='119.1' cy='146.2' r='10' fill='black'/><circle cx='80.9' cy='146.2' r='10' fill='black'/><circle cx='53.8' cy='119.1' r='10' fill='black'/><circle cx='53.8' cy='80.9' r='10' fill='black'/><circle cx='80.9' cy='53.8' r='10' fill='black'/><circle cx='119.1' cy='53.8' r='10' fill='black'/><circle cx='146.2' cy='80.9' r='10' fill='black'/></mask></defs><g fill='url(%23metal-c3)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(0, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(22.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(45, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(67.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(90, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(112.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(135, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(157.5, 100, 100)'/></g><circle cx='100' cy='100' r='78' fill='url(%23metal-c3)' mask='url(%23holes-c3)' stroke='rgba(0,0,0,0.6)' stroke-width='2'/><circle cx='100' cy='100' r='68' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='4'/><circle cx='100' cy='100' r='32' fill='url(%23gold-c3)' stroke='rgba(0,0,0,0.7)' stroke-width='2'/><circle cx='100' cy='100' r='12' fill='none' stroke='rgba(0,0,0,0.8)' stroke-width='4'/><g stroke='url(%23gold-c3)' stroke-width='8' stroke-linecap='round'><line x1='100' y1='28' x2='100' y2='172'/><line x1='28' y1='100' x2='172' y2='100'/><line x1='49' y1='49' x2='151' y2='151'/><line x1='49' y1='151' x2='151' y2='49'/></g><g fill='url(%23gold-c3)' stroke='rgba(0,0,0,0.5)' stroke-width='1'><circle cx='100' cy='35' r='4'/><circle cx='100' cy='165' r='4'/><circle cx='35' cy='100' r='4'/><circle cx='165' cy='100' r='4'/><circle cx='54' cy='54' r='4'/><circle cx='146' cy='146' r='4'/><circle cx='54' cy='146' r='4'/><circle cx='146' cy='54' r='4'/></g><circle cx='100' cy='100' r='8' fill='%231a1a1a' stroke='rgba(0,0,0,0.9)' stroke-width='2'/></svg>") !important;
+    animation: gear-rotate-ccw calc(65s / var(--gust-speed, 1)) linear infinite !important;
+    filter: brightness(0.65) contrast(1.15) blur(1px) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.95));
+    transform-origin: center center !important;
+}
+
+/* Right-Side: Giant Dark Iron Gear (CW, Blurred) */
+body.theme-steampunk-gears .sway-right-side {
+    top: 15%;
+    right: -20%;
+    width: 40vw;
+    height: 40vw;
+    min-width: 350px;
+    min-height: 350px;
+    z-index: 25;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='iron-i3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23555555'/><stop offset='50%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%23111111'/></linearGradient><linearGradient id='bronze-i3' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23a88060'/><stop offset='50%' stop-color='%23704830'/><stop offset='100%' stop-color='%23301808'/></linearGradient></defs><g fill='url(%23iron-i3)' stroke='rgba(0,0,0,0.7)' stroke-width='1'><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(0, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(20, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(40, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(60, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(80, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(100, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(120, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(140, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(160, 90, 90)'/></g><circle cx='90' cy='90' r='70' fill='url(%23iron-i3)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><mask id='iron-holes-i3'><rect x='0' y='0' width='180' height='180' fill='white'/><circle cx='90' cy='90' r='22' fill='black'/><circle cx='90' cy='46' r='14' fill='black'/><circle cx='128' cy='68' r='14' fill='black'/><circle cx='128' cy='112' r='14' fill='black'/><circle cx='90' cy='134' r='14' fill='black'/><circle cx='52' cy='112' r='14' fill='black'/><circle cx='52' cy='68' r='14' fill='black'/></mask><circle cx='90' cy='90' r='62' fill='url(%23iron-i3)' mask='url(%23iron-holes-i3)' stroke='rgba(0,0,0,0.8)' stroke-width='1'/><circle cx='90' cy='90' r='25' fill='url(%23bronze-i3)' stroke='rgba(0,0,0,0.8)' stroke-width='1.5'/><circle cx='90' cy='90' r='8' fill='%23111111' stroke='rgba(0,0,0,0.9)' stroke-width='1.5'/></svg>") !important;
+    animation: gear-rotate-cw calc(55s / var(--gust-speed, 1)) linear infinite !important;
+    filter: brightness(0.65) contrast(1.15) blur(1px) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.95));
+    transform-origin: center center !important;
+}
+
+/* ============================================
+   4. TYPOGRAPHY & TEXT PLATES
+   ============================================ */
+
+/* Hosts Section Background Shade */
+body.theme-steampunk-gears .hosts-container {
+    position: relative;
+    z-index: 30;
+    margin: 2.2rem auto 0 auto;
+    max-width: var(--host-max-width, 850px);
+}
+
+body.theme-steampunk-gears.logo-hidden .hosts-container {
+    max-width: calc(var(--host-max-width, 850px) / 1.1);
+}
+
+body.theme-steampunk-gears .hosts-container::before {
+    content: '';
+    position: absolute;
+    inset: 0.5rem 1rem;
+    background: radial-gradient(ellipse at center, rgba(10, 5, 3, 0.95) 0%, rgba(10, 5, 3, 0.65) 60%, transparent 100%);
+    opacity: var(--backdrop-opacity, 0.85);
+    border-radius: 16px;
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(10px);
+    transition: opacity 0.3s ease;
+}
+
+body.theme-steampunk-gears .hosts-title {
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    font-size: calc(2.4rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 0.08em;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.95),
+        0 0 10px rgba(205, 127, 50, 0.25);
+}
+
+body.theme-steampunk-gears .hosts-list span {
+    font-family: var(--font-primary);
+    color: #F4E8D6;
+    font-size: calc(1.7rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+}
+
+/* Logo Banner (Riveted copper/iron plate) */
+body.theme-steampunk-gears .logo-banner {
+    background: linear-gradient(135deg, #2b170e 0%, #170b06 100%);
+    border: 4px double #CD7F32;
+    border-radius: 4px;
+    padding: 12px 35px;
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.95),
+        inset 0 0 15px rgba(0, 0, 0, 0.9);
+    position: relative;
+    max-width: 680px;
+    height: auto;
+    min-height: 80px;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+body.theme-steampunk-gears .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px dashed rgba(205, 127, 50, 0.3);
+    pointer-events: none;
+}
+
+body.theme-steampunk-gears .logo-text-custom {
+    color: #F4E8D6;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: normal;
+    letter-spacing: 0.08em;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.95);
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* Event Footer (Riveted copper/iron plate) */
+body.theme-steampunk-gears .event-footer {
+    background: linear-gradient(135deg, #2b170e 0%, #170b06 100%);
+    border: 4px double #CD7F32;
+    border-radius: 4px;
+    padding: 15px 40px;
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.95),
+        inset 0 0 15px rgba(0, 0, 0, 0.9);
+    position: relative;
+    max-width: 780px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+body.theme-steampunk-gears .event-footer::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px dashed rgba(205, 127, 50, 0.3);
+    pointer-events: none;
+}
+
+body.theme-steampunk-gears:not(.is-fullscreen) .event-footer {
+    top: -2.5rem;
+}
+
+body.theme-steampunk-gears .event-title {
+    font-family: var(--font-display);
+    color: var(--color-accent);
+    font-size: 3.8rem;
+    font-weight: normal;
+    letter-spacing: 0.06em;
+    margin: 5px 0;
+    text-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.95),
+        0 0 12px rgba(205, 127, 50, 0.3);
+}
+
+body.theme-steampunk-gears .event-top-label,
+body.theme-steampunk-gears .event-subtitle {
+    font-family: var(--font-heading);
+    font-weight: normal;
+    color: #F4E8D6;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.95);
+}
+
+body.theme-steampunk-gears .event-date {
+    font-family: var(--font-primary);
+    color: #CD7F32;
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
+    margin-top: 8px;
+}
+
+/* ============================================
+   5. SPARKS PARTICLES
+   ============================================ */
+
+/* Glow on amber sparks */
+body.theme-steampunk-gears .petal {
+    filter: drop-shadow(0 0 4px rgba(255, 120, 0, 0.8)) !important;
+}
+
+body.theme-steampunk-gears .petal.is-blurred {
+    filter: blur(2.5px) drop-shadow(0 0 2px rgba(255, 120, 0, 0.5)) !important;
+    opacity: 0.45 !important;
+}
+
+/* ============================================
+   6. RESPONSIVENESS & SCALING
+   ============================================ */
+
+@media (max-width: 1600px) {
+    body.theme-steampunk-gears .content-wrapper {
+        padding: 60px 80px 30px 80px !important;
+    }
+
+    body.theme-steampunk-gears .logo-banner {
+        scale: 0.85 !important;
+        margin-top: 1rem;
+    }
+
+    body.theme-steampunk-gears .hosts-container {
+        margin-top: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+
+    body.theme-steampunk-gears .hosts-title {
+        font-size: calc(2.0rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-steampunk-gears .hosts-list span {
+        font-size: calc(1.45rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-steampunk-gears .event-footer {
+        scale: 0.85 !important;
+        top: -3rem !important;
+    }
+
+    body.theme-steampunk-gears .event-title {
+        font-size: 3.0rem;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-steampunk-gears .main-content {
+        max-width: 1650px !important;
+    }
+
+    body.theme-steampunk-gears .logo-banner {
+        scale: 1.1;
+        transform-origin: top center;
+        margin-top: 2rem;
+    }
+
+    body.theme-steampunk-gears .hosts-container {
+        --host-max-width: 1250px;
+        margin-top: 0.5rem;
+        max-width: 1650px !important;
+        margin-bottom: 2rem;
+    }
+
+    body.theme-steampunk-gears .hosts-list span {
+        font-size: calc(1.9rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-steampunk-gears .event-footer {
+        scale: 1.1;
+        transform-origin: bottom center;
+        margin-bottom: 1rem;
+    }
+}
+
+/* ============================================
+   7. LIGHT BACKGROUND OVERRIDES
+   ============================================ */
+
+body.theme-steampunk-gears.is-light-bg {
+    /* For light backgrounds, soot-vignette layer should be light/parchment rather than heavy pitch-black */
+    --steampunk-bg-light-vignette: color-mix(in srgb, var(--steampunk-bg) 65%, #FFFDF9);
+}
+
+body.theme-steampunk-gears.is-light-bg .theme-texture {
+    background: radial-gradient(circle at center, transparent 35%, rgba(26, 15, 10, 0.08) 85%, rgba(26, 15, 10, 0.25) 100%);
+    opacity: 0.85;
+}
+
+body.theme-steampunk-gears.is-light-bg .floral-bg {
+    opacity: 0.15;
+    mix-blend-mode: multiply;
+}
+
+body.theme-steampunk-gears.is-light-bg .hosts-container::before {
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 65%, transparent 100%);
+    filter: blur(8px);
+}
+
+/* Light mode text colors */
+body.theme-steampunk-gears.is-light-bg .hosts-title {
+    color: color-mix(in srgb, var(--steampunk-accent) 60%, black);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-steampunk-gears.is-light-bg .hosts-list span {
+    color: #2b170e;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Light Mode Containers (Polished Ivory / light brass plate style) */
+body.theme-steampunk-gears.is-light-bg .logo-banner,
+body.theme-steampunk-gears.is-light-bg .event-footer {
+    background: linear-gradient(135deg, #FAF8F5 0%, #EAE5DD 100%);
+    border-color: var(--steampunk-accent);
+    box-shadow:
+        0 8px 20px rgba(26, 15, 10, 0.15),
+        inset 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+body.theme-steampunk-gears.is-light-bg .logo-banner::before,
+body.theme-steampunk-gears.is-light-bg .event-footer::before {
+    border-color: rgba(26, 15, 10, 0.25);
+}
+
+body.theme-steampunk-gears.is-light-bg .logo-text-custom {
+    color: #2b170e;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-steampunk-gears.is-light-bg .event-title {
+    color: color-mix(in srgb, var(--steampunk-accent) 70%, black);
+    text-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.8),
+        0 0 8px rgba(var(--color-accent-rgb), 0.15);
+}
+
+body.theme-steampunk-gears.is-light-bg .event-top-label,
+body.theme-steampunk-gears.is-light-bg .event-subtitle {
+    color: #2b170e;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-steampunk-gears.is-light-bg .event-date {
+    color: color-mix(in srgb, var(--steampunk-accent) 75%, black);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Light mode gear brightness adjustment */
+body.theme-steampunk-gears.is-light-bg .sway-left-side,
+body.theme-steampunk-gears.is-light-bg .sway-right-side {
+    filter: brightness(0.9) contrast(1.05) blur(1px) drop-shadow(0 10px 20px rgba(26, 15, 10, 0.25));
+}

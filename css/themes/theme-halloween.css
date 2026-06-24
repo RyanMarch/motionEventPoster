@@ -1,0 +1,1044 @@
+/**
+ * HALLOWEEN SOIREE THEME STYLES
+ * Colors: Deep Haunted Midnight (#0C0914) · Pumpkin Orange (#FF5E00) · Toxic Slime Green (#39FF14)
+ */
+
+/* ============================================================
+   1. Background – Haunted Midnight & Rotating Cobweb Rays
+   ============================================================ */
+body.theme-halloween {
+    position: relative;
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 65%),
+        radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%),
+        linear-gradient(180deg,
+            #06040a 0%,
+            var(--color-primary) 50%,
+            #000000 100%) !important;
+
+    /* Glow combinations */
+    --toxic-neon-glow: 0 0 15px rgba(57, 255, 20, 0.45);
+    --pumpkin-neon-glow: 0 0 15px rgba(255, 94, 0, 0.45);
+}
+
+/* Pulsing full moon backdrop behind content */
+body.theme-halloween::before {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 45vw;
+    max-width: 500px;
+    height: 45vw;
+    max-height: 500px;
+    background: radial-gradient(circle,
+            rgba(255, 248, 220, 0.28) 0%,
+            rgba(255, 230, 180, 0.08) 45%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+    animation: halloween-moon-pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes halloween-moon-pulse {
+    0% {
+        transform: translate(-50%, 0) scale(0.96);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(-50%, 0) scale(1.04);
+        opacity: 1;
+    }
+}
+
+/* Spider web pattern overlay */
+body.theme-halloween .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='black' stroke-width='1.2' fill='none'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='black' stroke-width='0.8' fill='none'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='black' stroke-width='1.2' fill='none'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='black' stroke-width='0.8' fill='none'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat;
+    mask-repeat: repeat;
+    -webkit-mask-size: 240px 240px;
+    mask-size: 240px 240px;
+    background-color: var(--color-accent) !important;
+    opacity: calc(0.38 * var(--frame-intensity, 1));
+    animation: halloween-web-drift calc(140s / var(--gust-speed, 1)) linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background-position;
+}
+
+@keyframes halloween-web-drift {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 200px 200px;
+    }
+}
+
+/* ============================================================
+   2. Theme Frame – Neon Slime Border & Corner Cobwebs
+   ============================================================ */
+body.theme-halloween .theme-frame {
+    opacity: 1;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
+    border: 2px solid rgba(var(--color-secondary-rgb), calc(0.2 + 0.5 * var(--frame-intensity))) !important;
+    border-radius: 8px !important;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 20px rgba(var(--color-primary-rgb), 0.8),
+        inset 0 0 25px rgba(var(--color-secondary-rgb), calc(0.08 * var(--frame-intensity))) !important;
+}
+
+body.theme-halloween .frame-rail {
+    display: none !important;
+    /* Hide other themes' rails */
+}
+
+/* Cobweb Corner Ornaments */
+body.theme-halloween .theme-frame::before,
+body.theme-halloween .theme-frame::after {
+    content: '';
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 55;
+    /* Boosted SVG stroke-widths and stroke opacity to 0.9 for prominent display in corners */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='%2339FF14' stroke-width='2.2' fill='none' opacity='0.9'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='%2339FF14' stroke-width='1.5' fill='none' opacity='0.9'/%3E%3C/svg%3E");
+    opacity: calc(0.65 + 0.35 * var(--frame-intensity));
+}
+
+body.theme-halloween .theme-frame::before {
+    top: -2px;
+    left: -2px;
+}
+
+body.theme-halloween .theme-frame::after {
+    top: -2px;
+    right: -2px;
+    transform: scaleX(-1);
+}
+
+/* Hide unused assets */
+body.theme-halloween .floral-bg {
+    display: none !important;
+}
+
+/* ============================================================
+   3. Sway Layers – Swinging Jack-o'-Lanterns & Corner Branches
+   ============================================================ */
+body.theme-halloween .sway-layer {
+    display: block !important;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 2;
+    /* Behind text, in front of background */
+    will-change: transform;
+}
+
+/* Sitting Jack-o'-Lanterns at the bottom */
+body.theme-halloween .sway-left-side {
+    left: 16vw;
+    bottom: 25px;
+    top: auto;
+    width: 180px;
+    height: 180px;
+    transform-origin: bottom center;
+    position: absolute;
+    /* Static pumpkin body containing the green stem and orange layered ellipses */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpath d='M56,36 Q48,15 72,12 Q75,18 64,24 Q62,35 62,36' fill='%2339FF14'/%3E%3Cellipse cx='42' cy='75' rx='28' ry='38' fill='%23cc4a00'/%3E%3Cellipse cx='78' cy='75' rx='28' ry='38' fill='%23cc4a00'/%3E%3Cellipse cx='50' cy='75' rx='30' ry='40' fill='%23e65500'/%3E%3Cellipse cx='70' cy='75' rx='30' ry='40' fill='%23e65500'/%3E%3Cellipse cx='60' cy='75' rx='32' ry='42' fill='%23FF5E00'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation:
+        halloween-pumpkin-wobble-1 calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Flickering background glow (hardware accelerated opacity) layered behind pumpkin */
+body.theme-halloween .sway-left-side::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(255, 94, 0, 0.6) 0%, rgba(255, 230, 0, 0.25) 45%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+    will-change: opacity;
+    animation: halloween-glow-flicker-1 calc(3.5s / var(--gust-speed, 0.52)) linear infinite;
+}
+
+/* Crisp Jack-o'-lantern carved face vector layers on top and flickers */
+body.theme-halloween .sway-left-side::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpolygon points='36,64 46,52 54,64' fill='%23FFEA00'/%3E%3Cpolygon points='66,64 74,52 84,64' fill='%23FFEA00'/%3E%3Cpolygon points='54,74 60,64 66,74' fill='%23FFEA00'/%3E%3Cpath d='M30,80 Q45,95 60,95 Q75,95 90,80 Q80,90 74,86 L72,92 L68,86 Q60,96 52,86 L48,92 L46,86 Q40,90 30,80 Z' fill='%23FFEA00'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+    pointer-events: none;
+    will-change: opacity, filter;
+    animation: halloween-face-flicker-1 calc(3.5s / var(--gust-speed, 0.52)) linear infinite;
+}
+
+body.theme-halloween .sway-right-side {
+    right: 16vw;
+    bottom: 25px;
+    top: auto;
+    width: 180px;
+    height: 180px;
+    transform-origin: bottom center;
+    position: absolute;
+    /* Static pumpkin body containing the green stem and orange layered ellipses */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpath d='M56,36 Q48,15 72,12 Q75,18 64,24 Q62,35 62,36' fill='%2339FF14'/%3E%3Cellipse cx='42' cy='75' rx='28' ry='38' fill='%23cc4a00'/%3E%3Cellipse cx='78' cy='75' rx='28' ry='38' fill='%23cc4a00'/%3E%3Cellipse cx='50' cy='75' rx='30' ry='40' fill='%23e65500'/%3E%3Cellipse cx='70' cy='75' rx='30' ry='40' fill='%23e65500'/%3E%3Cellipse cx='60' cy='75' rx='32' ry='42' fill='%23FF5E00'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation:
+        halloween-pumpkin-wobble-2 calc(9.5s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Flickering background glow (hardware accelerated opacity) layered behind pumpkin */
+body.theme-halloween .sway-right-side::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(255, 94, 0, 0.6) 0%, rgba(255, 230, 0, 0.25) 45%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+    will-change: opacity;
+    animation: halloween-glow-flicker-2 calc(4.5s / var(--gust-speed, 0.52)) linear infinite;
+}
+
+/* Crisp Jack-o'-lantern carved face vector layers on top and flickers */
+body.theme-halloween .sway-right-side::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpolygon points='36,64 46,52 54,64' fill='%23FFEA00'/%3E%3Cpolygon points='66,64 74,52 84,64' fill='%23FFEA00'/%3E%3Cpolygon points='54,74 60,64 66,74' fill='%23FFEA00'/%3E%3Cpath d='M30,80 Q45,95 60,95 Q75,95 90,80 Q80,90 74,86 L72,92 L68,86 Q60,96 52,86 L48,92 L46,86 Q40,90 30,80 Z' fill='%23FFEA00'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+    pointer-events: none;
+    will-change: opacity, filter;
+    animation: halloween-face-flicker-2 calc(4.5s / var(--gust-speed, 0.52)) linear infinite;
+}
+
+@keyframes halloween-pumpkin-wobble-1 {
+    0% {
+        transform: rotate(-1.5deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(1.5deg) scale(1.03);
+    }
+}
+
+@keyframes halloween-pumpkin-wobble-2 {
+    0% {
+        transform: rotate(1.5deg) scale(1.03);
+    }
+
+    100% {
+        transform: rotate(-1.5deg) scale(1);
+    }
+}
+
+/* Subtle tealight candle flicker — narrow opacity/brightness range, organic timing. */
+@keyframes halloween-glow-flicker-1 {
+    0% {
+        opacity: 0.93;
+    }
+
+    12% {
+        opacity: 0.95;
+    }
+
+    /* Gentle dip */
+    14% {
+        opacity: 0.83;
+    }
+
+    16% {
+        opacity: 0.93;
+    }
+
+    /* Long calm */
+    38% {
+        opacity: 0.96;
+    }
+
+    /* Tiny flutter */
+    39% {
+        opacity: 0.87;
+    }
+
+    40% {
+        opacity: 0.91;
+    }
+
+    41% {
+        opacity: 0.85;
+    }
+
+    43% {
+        opacity: 0.94;
+    }
+
+    /* Calm */
+    68% {
+        opacity: 0.95;
+    }
+
+    /* Soft dip */
+    70% {
+        opacity: 0.82;
+    }
+
+    72% {
+        opacity: 0.93;
+    }
+
+    100% {
+        opacity: 0.94;
+    }
+}
+
+@keyframes halloween-glow-flicker-2 {
+    0% {
+        opacity: 0.92;
+    }
+
+    /* Calm stretch */
+    18% {
+        opacity: 0.94;
+    }
+
+    /* Quick soft stutter */
+    19% {
+        opacity: 0.84;
+    }
+
+    20% {
+        opacity: 0.90;
+    }
+
+    21% {
+        opacity: 0.80;
+    }
+
+    23% {
+        opacity: 0.93;
+    }
+
+    /* Long calm */
+    50% {
+        opacity: 0.95;
+    }
+
+    /* Single gentle dip */
+    52% {
+        opacity: 0.85;
+    }
+
+    54% {
+        opacity: 0.93;
+    }
+
+    /* Calm */
+    78% {
+        opacity: 0.96;
+    }
+
+    /* Tiny waver */
+    79% {
+        opacity: 0.87;
+    }
+
+    81% {
+        opacity: 0.93;
+    }
+
+    100% {
+        opacity: 0.92;
+    }
+}
+
+@keyframes halloween-face-flicker-1 {
+    0% {
+        opacity: 0.93;
+        filter: brightness(1.00);
+    }
+
+    12% {
+        opacity: 0.95;
+        filter: brightness(1.02);
+    }
+
+    /* Gentle dip — flame dims slightly */
+    14% {
+        opacity: 0.82;
+        filter: brightness(0.92);
+    }
+
+    16% {
+        opacity: 0.93;
+        filter: brightness(1.01);
+    }
+
+    /* Long calm */
+    38% {
+        opacity: 0.95;
+        filter: brightness(1.02);
+    }
+
+    /* Tiny stutter */
+    39% {
+        opacity: 0.86;
+        filter: brightness(0.94);
+    }
+
+    40% {
+        opacity: 0.91;
+        filter: brightness(1.01);
+    }
+
+    41% {
+        opacity: 0.84;
+        filter: brightness(0.93);
+    }
+
+    43% {
+        opacity: 0.93;
+        filter: brightness(1.02);
+    }
+
+    /* Calm */
+    68% {
+        opacity: 0.95;
+        filter: brightness(1.01);
+    }
+
+    /* Soft dip */
+    70% {
+        opacity: 0.83;
+        filter: brightness(0.93);
+    }
+
+    72% {
+        opacity: 0.93;
+        filter: brightness(1.01);
+    }
+
+    100% {
+        opacity: 0.94;
+        filter: brightness(1.00);
+    }
+}
+
+@keyframes halloween-face-flicker-2 {
+    0% {
+        opacity: 0.92;
+        filter: brightness(1.01);
+    }
+
+    18% {
+        opacity: 0.94;
+        filter: brightness(1.02);
+    }
+
+    /* Soft stutter */
+    19% {
+        opacity: 0.83;
+        filter: brightness(0.93);
+    }
+
+    20% {
+        opacity: 0.90;
+        filter: brightness(1.01);
+    }
+
+    21% {
+        opacity: 0.80;
+        filter: brightness(0.92);
+    }
+
+    23% {
+        opacity: 0.93;
+        filter: brightness(1.01);
+    }
+
+    /* Long calm */
+    50% {
+        opacity: 0.95;
+        filter: brightness(1.02);
+    }
+
+    /* Single gentle dip */
+    52% {
+        opacity: 0.85;
+        filter: brightness(0.94);
+    }
+
+    54% {
+        opacity: 0.93;
+        filter: brightness(1.01);
+    }
+
+    /* Calm */
+    78% {
+        opacity: 0.94;
+        filter: brightness(1.02);
+    }
+
+    /* Tiny waver */
+    79% {
+        opacity: 0.86;
+        filter: brightness(0.94);
+    }
+
+    81% {
+        opacity: 0.93;
+        filter: brightness(1.01);
+    }
+
+    100% {
+        opacity: 0.92;
+        filter: brightness(1.00);
+    }
+}
+
+/* Bottom Gnarled Branch Silhouettes */
+body.theme-halloween .sway-bottom-left {
+    left: -10px;
+    bottom: -10px;
+    width: 140px;
+    height: 140px;
+    /* Spooky gothic deep purple base highlighted with a vivid violet moonlit inner stroke for clear contrast */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpath d='M10,120 Q30,70 60,50 T90,20 M60,50 Q45,35 40,15 M60,50 Q80,40 105,45 M30,85 Q15,70 5,65 M75,35 Q90,30 95,15' stroke='%231C132E' stroke-width='4.5' stroke-linecap='round' fill='none'/%3E%3Cpath d='M10,120 Q30,70 60,50 T90,20 M60,50 Q45,35 40,15 M60,50 Q80,40 105,45 M30,85 Q15,70 5,65 M75,35 Q90,30 95,15' stroke='%236C44B3' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+    transform-origin: bottom left;
+    animation: halloween-branch-sway calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+body.theme-halloween .sway-bottom-right {
+    right: -10px;
+    bottom: -10px;
+    width: 140px;
+    height: 140px;
+    /* Spooky gothic deep purple base highlighted with a vivid violet moonlit inner stroke for clear contrast */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'%3E%3Cpath d='M10,120 Q30,70 60,50 T90,20 M60,50 Q45,35 40,15 M60,50 Q80,40 105,45 M30,85 Q15,70 5,65 M75,35 Q90,30 95,15' stroke='%231C132E' stroke-width='4.5' stroke-linecap='round' fill='none'/%3E%3Cpath d='M10,120 Q30,70 60,50 T90,20 M60,50 Q45,35 40,15 M60,50 Q80,40 105,45 M30,85 Q15,70 5,65 M75,35 Q90,30 95,15' stroke='%236C44B3' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+    transform-origin: bottom right;
+    transform: scaleX(-1);
+    animation: halloween-branch-sway calc(14s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes halloween-branch-sway {
+    0% {
+        transform: scale(1) rotate(-1.5deg);
+    }
+
+    100% {
+        transform: scale(1.03) rotate(2deg);
+    }
+}
+
+/* Disable unused sway layers */
+body.theme-halloween .sway-top-1,
+body.theme-halloween .sway-top-2,
+body.theme-halloween .sway-top-3,
+body.theme-halloween .sway-top-4,
+body.theme-halloween .sway-top-left,
+body.theme-halloween .sway-top-right,
+body.theme-halloween .sway-bottom-3,
+body.theme-halloween .sway-bottom-4,
+body.theme-halloween .sway-bottom-5,
+body.theme-halloween .sway-bottom-6 {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Logo Banner – Dripping Slime / Gothic Frame
+   ============================================================ */
+body.theme-halloween .logo-banner {
+    position: relative;
+    margin-top: 50px !important;
+    margin-bottom: -15px !important;
+    max-width: 640px !important;
+}
+
+body.theme-halloween:not(.is-light-bg) .logo-banner {
+    background: var(--color-accent) !important;
+    /* Border color */
+    clip-path: polygon(0% 20%, 20% 0%, 100% 25%, 100% 75%, 20% 100%, 0% 80%) !important;
+    padding: 22px 54px !important;
+    filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 15px rgba(var(--color-accent-rgb), 0.4)) !important;
+}
+
+body.theme-halloween:not(.is-light-bg) .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: rgba(12, 9, 20, 0.9) !important;
+    /* Inner background */
+    clip-path: polygon(0% 20%, 20% 0%, 100% 25%, 100% 75%, 20% 100%, 0% 80%) !important;
+    z-index: -1;
+}
+
+body.theme-halloween .logo-text-custom {
+    font-family: var(--font-display) !important;
+    color: #ffffff !important;
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+    text-shadow:
+        0 0 8px rgba(var(--color-accent-rgb), 0.7),
+        2px 2px 4px rgba(0, 0, 0, 0.95) !important;
+    letter-spacing: 2.5px;
+    font-weight: normal;
+    display: inline-block;
+}
+
+/* ============================================================
+   5. Hosts Container – Neon Gothic Shield
+   ============================================================ */
+body.theme-halloween .hosts-container {
+    position: relative;
+    padding: 24px 32px !important;
+    margin: 2.5vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 200px) !important;
+    border-radius: 8px !important;
+    z-index: 100;
+}
+
+body.theme-halloween:not(.is-light-bg) .hosts-container {
+    background: rgba(12, 9, 20, var(--backdrop-opacity, 0.65)) !important;
+    border: 2px solid rgba(var(--color-secondary-rgb), calc(0.9 * var(--backdrop-opacity, 0.65))) !important;
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.85),
+        0 0 20px rgba(var(--color-secondary-rgb), calc(0.3 * var(--backdrop-opacity, 0.65))),
+        inset 0 0 15px rgba(var(--color-accent-rgb), calc(0.2 * var(--backdrop-opacity, 0.65))) !important;
+}
+
+/* ============================================================
+   6. Typography & Dividers
+   ============================================================ */
+body.theme-halloween .event-title {
+    font-family: var(--font-display) !important;
+    color: var(--color-accent) !important;
+    font-weight: normal;
+    font-size: 5.4rem;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 10px rgba(var(--color-accent-rgb), 0.5),
+        0 0 25px rgba(var(--color-accent-rgb), 0.25),
+        3px 3px 5px rgba(0, 0, 0, 0.95) !important;
+}
+
+body.theme-halloween .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.8rem;
+    color: #ffffff !important;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(var(--color-accent-rgb), 0.6),
+        2px 2px 4px rgba(0, 0, 0, 0.95) !important;
+}
+
+body.theme-halloween .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 2.1rem;
+    color: #ffffff !important;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 10px rgba(var(--color-accent-rgb), 0.6),
+        2px 2px 4px rgba(0, 0, 0, 0.95) !important;
+    margin-top: 8px;
+}
+
+body.theme-halloween .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.25rem;
+    color: #ffffff !important;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+    margin-top: 4px;
+}
+
+/* Custom Web/Bat Divider */
+body.theme-halloween .hosts-title::after {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 20px;
+    margin: 15px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='20' viewBox='0 0 200 20'%3E%3Cg stroke='%23FF5E00' stroke-width='1.2' fill='none'%3E%3Cpath d='M100,5 Q90,0 80,4 Q70,7 60,3 Q50,7 30,5'/%3E%3Cpath d='M100,5 Q110,0 120,4 Q130,7 140,3 Q150,7 170,5'/%3E%3Cpolygon points='100,1 106,7 100,13 94,7' fill='%23FF5E00'/%3E%3Ccircle cx='50' cy='5' r='1.5' fill='%2339FF14'/%3E%3Ccircle cx='150' cy='5' r='1.5' fill='%2339FF14'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.9;
+}
+
+body.theme-halloween .event-subtitle::after {
+    content: '';
+    display: block;
+    width: 260px;
+    height: 10px;
+    margin: 12px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='10' viewBox='0 0 260 10'%3E%3Cg stroke='%2339FF14' stroke-width='1.2' fill='none'%3E%3Ccircle cx='130' cy='5' r='2' fill='%2339FF14'/%3E%3Cline x1='115' y1='5' x2='20' y2='5'/%3E%3Cline x1='145' y1='5' x2='240' y2='5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.85;
+}
+
+body.theme-halloween .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-accent) !important;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-halloween .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+body.theme-halloween .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   7. Particles – Bats, Ghosts, Pumpkin Faces, & Sparks
+   ============================================================ */
+
+/* Bats (flapping side-to-side) */
+body.theme-halloween .petal--halloween-bat {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20' width='30' height='20'%3E%3Cpath d='M15,5 Q19,0 23,2 Q27,4 30,0 Q29,8 24,10 Q21,11 19,13 Q17,14 15,14 Q13,14 11,13 Q9,11 6,10 Q1,8 0,0 Q3,4 7,2 Q11,0 15,5 Z' fill='%23111111'/%3E%3C/svg%3E") !important;
+    animation: halloween-bat-flap 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes halloween-bat-flap {
+    0% {
+        transform: scaleY(0.5);
+    }
+
+    100% {
+        transform: scaleY(1.1);
+    }
+}
+
+/* Rising Ghosts (translucent, wavy wobble) */
+body.theme-halloween .petal--halloween-ghost {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 40' width='30' height='40'%3E%3Cpath d='M15,2 C22,2 27,8 27,15 L27,33 Q21,30 18,33 Q15,36 12,33 Q9,30 3,33 L3,15 C3,8 8,2 15,2 Z' fill='%23ffffff' opacity='0.75'/%3E%3Ccircle cx='11' cy='12' r='2' fill='%23000000'/%3E%3Ccircle cx='19' cy='12' r='2' fill='%23000000'/%3E%3Cellipse cx='15' cy='18' rx='2' ry='3' fill='%23000000'/%3E%3C/svg%3E") !important;
+    opacity: 0.75 !important;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Jack-o'-Lantern Pumpkins */
+body.theme-halloween .petal--halloween-pumpkin {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='30' height='30'%3E%3Cellipse cx='15' cy='16' rx='13' ry='11' fill='%23FF5E00'/%3E%3Cpath d='M15,5 L15,2 Q17,2 17,5 Z' fill='%234c2200'/%3E%3Cpolygon points='10,13 12,15 14,13' fill='%23ffffcc'/%3E%3Cpolygon points='16,13 18,15 20,13' fill='%23ffffcc'/%3E%3Cpath d='M10,21 Q15,26 20,21 Q17,23 15,23 Q13,23 10,21 Z' fill='%23ffffcc'/%3E%3C/svg%3E") !important;
+}
+
+/* Green/Orange toxic sparkles */
+body.theme-halloween .petal--halloween-sparkle {
+    clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: halloween-sparkle-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes halloween-sparkle-glow {
+    0% {
+        opacity: 0.3;
+        filter: brightness(0.8);
+    }
+
+    100% {
+        opacity: 1.0;
+        filter: brightness(1.5);
+    }
+}
+
+/* ============================================================
+   8. Border-hidden Override
+   ============================================================ */
+body.border-hidden.theme-halloween .theme-frame,
+body.border-hidden.theme-halloween .theme-texture,
+body.border-hidden.theme-halloween .sway-layer,
+body.border-hidden.theme-halloween .hosts-container {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* ============================================================
+   9. Countdown Overlay Override
+   ============================================================ */
+body.theme-halloween .fullscreen-countdown .countdown-content {
+    background: rgba(12, 9, 20, 0.98) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 25px rgba(var(--color-accent-rgb), 0.45),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.2) !important;
+    border-radius: 8px !important;
+}
+
+body.theme-halloween .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+}
+
+body.theme-halloween .fullscreen-countdown #countdown-number {
+    color: var(--color-secondary) !important;
+    text-shadow: 0 0 12px rgba(var(--color-secondary-rgb), 0.8) !important;
+}
+
+/* ============================================================
+   10. Layout / Responsive Scaling Rules
+   ============================================================ */
+body.theme-halloween .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+
+
+@media (max-width: 1800px) {
+    body.theme-halloween .hosts-list span {
+        font-size: calc(1.45em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-halloween .hosts-container {
+        margin: 1.5vh auto 0 auto !important;
+        padding: 16px 24px !important;
+        max-width: calc(var(--host-max-width) - 100px) !important;
+    }
+
+    body.theme-halloween .event-footer {
+        margin-bottom: 0.5vh;
+    }
+
+    body.theme-halloween .sway-left-side,
+    body.theme-halloween .sway-right-side {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-halloween .logo-banner {
+        margin-top: 24px !important;
+        margin-bottom: -10px !important;
+        padding: 14px 32px !important;
+    }
+
+    body.theme-halloween .hosts-container {
+        margin: 2vh auto 0 auto !important;
+        padding: 12px 20px !important;
+        max-width: 78vw !important;
+    }
+
+    body.theme-halloween .hosts-title::after {
+        margin: 8px auto 0 auto;
+        height: 16px;
+    }
+
+    body.theme-halloween .event-top-label {
+        font-size: 1.5rem;
+    }
+
+    body.theme-halloween .event-title {
+        font-size: 4.5rem;
+    }
+
+    body.theme-halloween .event-subtitle {
+        font-size: 1.8rem;
+        margin-top: 4px;
+    }
+
+    body.theme-halloween .event-date {
+        font-size: 1.1rem;
+        margin-top: 2px;
+    }
+
+    body.theme-halloween .event-footer {
+        margin-bottom: 2px;
+    }
+
+    body.theme-halloween .sway-left-side,
+    body.theme-halloween .sway-right-side {
+        width: 120px;
+        height: 120px;
+        bottom: 25px;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-halloween .logo-banner {
+        scale: 1.15;
+        margin-top: 2vh !important;
+    }
+
+    body.theme-halloween .hosts-list span {
+        font-size: calc(1.72em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-halloween .hosts-container {
+        margin: 5.5vh auto 0 auto !important;
+    }
+
+    body.theme-halloween .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+
+    body.theme-halloween .sway-left-side,
+    body.theme-halloween .sway-right-side {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+/* Play/Pause Animation State Bindings */
+body.theme-halloween .theme-texture,
+body.theme-halloween .sway-layer {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+/* ============================================================
+   11. Light Background Adaptations (Spectral Mist Inversion)
+   ============================================================ */
+body.theme-halloween.is-light-bg {
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 65%),
+        radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.08) 100%),
+        linear-gradient(180deg,
+            var(--color-primary) 0%,
+            var(--color-primary) 100%) !important;
+}
+
+body.theme-halloween.is-light-bg .event-title {
+    color: var(--color-accent) !important;
+    text-shadow: none !important;
+}
+
+body.theme-halloween.is-light-bg .theme-frame {
+    border-color: rgba(var(--color-accent-rgb), 0.35) !important;
+    box-shadow:
+        inset 0 0 25px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.theme-halloween.is-light-bg .theme-frame::before,
+body.theme-halloween.is-light-bg .theme-frame::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='%234B0082' stroke-width='1.5' fill='none' opacity='0.35'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='%234B0082' stroke-width='1' fill='none' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+body.theme-halloween.is-light-bg .hosts-title,
+body.theme-halloween.is-light-bg .hosts-list span,
+body.theme-halloween.is-light-bg .event-subtitle,
+body.theme-halloween.is-light-bg .event-top-label,
+body.theme-halloween.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-halloween.is-light-bg .logo-banner {
+    background: var(--color-accent) !important;
+    /* Border color */
+    clip-path: polygon(0% 20%, 20% 0%, 100% 25%, 100% 75%, 20% 100%, 0% 80%) !important;
+    padding: 22px 54px !important;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.15)) !important;
+}
+
+body.theme-halloween.is-light-bg .logo-banner::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: rgba(255, 255, 255, 0.9) !important;
+    /* Light inner background */
+    clip-path: polygon(0% 20%, 20% 0%, 100% 25%, 100% 75%, 20% 100%, 0% 80%) !important;
+    z-index: -1;
+}
+
+body.theme-halloween.is-light-bg .hosts-container {
+    background: rgba(255, 255, 255, var(--backdrop-opacity, 0.65)) !important;
+    border: 2px solid rgba(var(--color-accent-rgb), calc(0.35 * var(--backdrop-opacity, 0.65))) !important;
+    box-shadow:
+        0 2px 12px rgba(0, 0, 0, calc(0.08 * var(--backdrop-opacity, 0.65))),
+        inset 0 0 0 3px rgba(var(--color-accent-rgb), calc(0.12 * var(--backdrop-opacity, 0.65))) !important;
+}
+
+body.theme-halloween.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-halloween.is-light-bg .theme-texture {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='black' stroke-width='1.2' fill='none'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='black' stroke-width='0.8' fill='none'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0,0 L120,0 M0,0 L0,120 M0,0 L85,85 M0,0 L110,55 M0,0 L55,110' stroke='black' stroke-width='1.2' fill='none'/%3E%3Cpath d='M30,0 A30,30 0 0,1 0,30 M50,0 A50,50 0 0,1 0,50 M75,0 A75,75 0 0,1 0,75 M100,0 A100,100 0 0,1 0,100' stroke='black' stroke-width='0.8' fill='none'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat;
+    mask-repeat: repeat;
+    -webkit-mask-size: 240px 240px;
+    mask-size: 240px 240px;
+    background-color: var(--color-accent) !important;
+    opacity: calc(0.08 * var(--frame-intensity, 1)) !important;
+    background-image: none !important;
+}

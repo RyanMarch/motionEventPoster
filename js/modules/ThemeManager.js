@@ -29,7 +29,7 @@ window.ThemeManager = class ThemeManager {
         this.state.isApplyingTheme = true;
 
         const prevTheme = this.poster.theme;
-        
+
         // Handle contextual default labels
         if (prevTheme && prevTheme.defaults && theme.defaults) {
             const pt = this.state.posterText;
@@ -37,9 +37,9 @@ window.ThemeManager = class ThemeManager {
             if (pt.eventSubtitle === prevTheme.defaults.eventSubtitle) pt.eventSubtitle = theme.defaults.eventSubtitle;
             if (pt.eventTopLabel === prevTheme.defaults.eventTopLabel) pt.eventTopLabel = theme.defaults.eventTopLabel;
             // Handle current defaults and the legacy global default
-            if (pt.hostsTitle === prevTheme.defaults.hostsTitle || 
-                pt.hostsTitle === 'Thanks To Our Hosts' || 
-                pt.hostsTitle === 'Thanks to our hosts' || 
+            if (pt.hostsTitle === prevTheme.defaults.hostsTitle ||
+                pt.hostsTitle === 'Thanks To Our Hosts' ||
+                pt.hostsTitle === 'Thanks to our hosts' ||
                 pt.hostsTitle === 'Our Host Committee') {
                 pt.hostsTitle = theme.defaults.hostsTitle;
             }
@@ -56,20 +56,18 @@ window.ThemeManager = class ThemeManager {
             this.state.bgColor = null;
             this.state.secondaryColor = null;
         }
-        
-        if (theme.overrides && !skipOverrides) {
-            Object.keys(theme.overrides).forEach(key => {
-                if (key in this.state) this.state[key] = theme.overrides[key];
-            });
-            this.poster.applyStateToUI();
-            this.poster.syncLayout();
-            this.syncWind();
-        }
-        
+
+        // Set the body classes, frames, and assets so the DOM styles are correctly loaded first
         Object.values(THEMES).forEach(t => {
             this.body.classList.remove(`theme-${t.id}`);
         });
         this.body.classList.add(`theme-${themeId}`);
+
+        if (themeId === 'bistro-lounge') {
+            this.setupBistroLights();
+        } else {
+            this.cleanupBistroLights();
+        }
 
         if (this.elements.themeFrame) {
             Object.values(THEMES).forEach(t => {
@@ -86,15 +84,42 @@ window.ThemeManager = class ThemeManager {
         Object.values(this.poster.layers).forEach(layer => layer.innerHTML = '');
         this.state.petals = [];
         this.poster.particleEngine?.adjustAmbientPetals();
-        
+
         this.syncUI(); // Handle expensive label/font updates once
         this.syncBackdrop(); // Handle color/opacity sync
+
+        // Apply state overrides and sync layout measurements with correct fonts/classes active
+        if (theme.overrides && !skipOverrides) {
+            Object.keys(theme.overrides).forEach(key => {
+                if (key in this.state) this.state[key] = theme.overrides[key];
+            });
+            this.poster.applyStateToUI();
+            this.poster.syncLayout();
+            this.syncWind();
+        }
 
         this.initSwatches();
         this.poster.saveSettings();
         this.updateThemeSelectorActiveState();
         this.state.isApplyingTheme = false;
         this.poster.cacheSwayLayers();
+
+        // Defer font ready listener by a frame so browser registers the style changes first
+        requestAnimationFrame(() => {
+            if (document.fonts) {
+                document.fonts.ready.then(() => {
+                    requestAnimationFrame(() => {
+                        this.poster.optimizeLayouts();
+                    });
+                });
+            }
+        });
+
+        // Progressive fail-safe reflows to handle fonts/images loading asynchronously
+        setTimeout(() => this.poster.optimizeLayouts(), 50);
+        setTimeout(() => this.poster.optimizeLayouts(), 250);
+        setTimeout(() => this.poster.optimizeLayouts(), 600);
+
         // Remote sync
         if (!window.remoteManager?._applying) {
             window.remoteManager?.send({ type: 'theme', id: themeId });
@@ -142,7 +167,7 @@ window.ThemeManager = class ThemeManager {
 
         const pLabel = uiLabels.particlesPlural;
         const spLabel = uiLabels.particlesSingular;
-        
+
         const pTitle = document.getElementById('particles-section-title');
         if (pTitle) pTitle.textContent = pLabel;
 
@@ -157,11 +182,33 @@ window.ThemeManager = class ThemeManager {
 
         const wLabel = document.querySelector('label[for="slider-gust-strength"]') || document.querySelector('#slider-gust-strength')?.parentElement.querySelector('label');
         if (wLabel) wLabel.firstChild.textContent = `${uiLabels.gustStrength} `;
-        
+
+        const fLabel = document.querySelector('label[for="slider-fall-speed"]') || document.querySelector('#slider-fall-speed')?.parentElement.querySelector('label');
+        if (fLabel) fLabel.firstChild.textContent = `${uiLabels.fallSpeed || 'Fall Speed'} `;
+        const windinessControl = document.getElementById('slider-gust-freq')?.closest('.control');
+        if (windinessControl) {
+            windinessControl.style.display = theme.flags?.hideWindinessControl ? 'none' : '';
+        }
+
+        const tumbleControl = document.getElementById('slider-tumble-speed')?.closest('.control');
+        if (tumbleControl) {
+            tumbleControl.style.display = theme.flags?.hideWindinessControl ? 'none' : '';
+        }
+
+        const backdropControl = document.getElementById('slider-backdrop-opacity')?.closest('.control');
+        if (backdropControl) {
+            backdropControl.style.display = theme.flags?.hideBackdropControl ? 'none' : '';
+        }
+
+        const valentinesHeartsControl = document.getElementById('label-hide-valentines-hearts');
+        if (valentinesHeartsControl) {
+            valentinesHeartsControl.style.display = theme.flags?.showHeartsToggle ? '' : 'none';
+        }
+
         // Update Theme Selector Trigger
         if (this.controls.themeSelectIcon) this.controls.themeSelectIcon.textContent = theme.icon || '✨';
         if (this.controls.themeSelectLabel) this.controls.themeSelectLabel.textContent = theme.name;
-        
+
         // Sync pause buttons in case labels changed
         if (this.poster.syncPauseStates) this.poster.syncPauseStates();
     }
@@ -176,7 +223,7 @@ window.ThemeManager = class ThemeManager {
 
         const rgb = window.PosterUtils.hexToRgb(color);
         if (!rgb) return;
-        
+
         const rgbStr = `${rgb.r}, ${rgb.g}, ${rgb.b}`;
         const accentColor = this.state.accentColor || theme.colors.accent;
         const accentRgb = window.PosterUtils.hexToRgb(accentColor);
@@ -185,7 +232,7 @@ window.ThemeManager = class ThemeManager {
         const secondaryColor = this.state.secondaryColor || theme.colors.secondary || '#ffffff';
         const secondaryRgb = window.PosterUtils.hexToRgb(secondaryColor);
         const secondaryRgbStr = secondaryRgb ? `${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}` : rgbStr;
-        
+
         // Update Core Colors
         this.root.style.setProperty('--color-primary', color);
         this.root.style.setProperty('--color-primary-rgb', rgbStr);
@@ -195,7 +242,7 @@ window.ThemeManager = class ThemeManager {
         this.root.style.setProperty('--color-secondary-rgb', secondaryRgbStr);
         this.root.style.setProperty('--color-text', theme.colors.text);
         this.root.style.setProperty('--color-dark-text', theme.colors.darkText || '#1a1c1e');
-        
+
         const textRgb = window.PosterUtils.hexToRgb(theme.colors.text);
         const darkTextRgb = window.PosterUtils.hexToRgb(theme.colors.darkText || '#1a1c1e');
         if (textRgb) {
@@ -204,11 +251,11 @@ window.ThemeManager = class ThemeManager {
         if (darkTextRgb) {
             this.root.style.setProperty('--color-dark-text-rgb', `${darkTextRgb.r}, ${darkTextRgb.g}, ${darkTextRgb.b}`);
         }
-        
+
         // Dynamic Bunting color SVG generation
         const buntingSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 35' width='50' height='35'><path d='M0,0 Q25,8 50,0 L50,2 L25,32 L0,2 Z' fill='${encodeURIComponent(accentColor)}' opacity='0.85'/><path d='M0,0 Q25,8 50,0 L42,0 L25,24 L8,0 Z' fill='${encodeURIComponent(secondaryColor)}' opacity='0.95'/></svg>")`;
         this.root.style.setProperty('--bunting-image', buntingSvg);
-        
+
         // Stable theme-defined colors (non-swapped reference)
         const themePrimaryRgb = window.PosterUtils.hexToRgb(theme.colors.primary);
         const themeAccentRgb = window.PosterUtils.hexToRgb(theme.colors.accent);
@@ -232,9 +279,9 @@ window.ThemeManager = class ThemeManager {
         // Backdrop Overlays
         const target = this.root;
         target.style.setProperty('--backdrop-opacity', opacity.toString());
-        
+
         const overlayColorStr = theme.flags?.useAccentAsBackground ? accentRgbStr : rgbStr;
-        
+
         if (!theme.flags?.useAccentAsBackground) {
             target.style.setProperty('--overlay-dark', `rgba(${overlayColorStr}, ${0.95 * opacity})`);
             target.style.setProperty('--overlay-mid', `rgba(${overlayColorStr}, ${0.7 * opacity})`);
@@ -249,6 +296,180 @@ window.ThemeManager = class ThemeManager {
         if (theme.flags?.syncParticleColors) {
             this.poster.particleEngine?.updateParticleColors();
         }
+
+        // Mid-Century Theme dynamic SVGs & contrast calculation
+        if (theme.id === 'atomic-mid-century') {
+            const lineStroke = encodeURIComponent(theme.colors.text); // '#2A1B14'
+            const centerCircleFill = encodeURIComponent(secondaryColor);
+            const diagonalCirclesFill = encodeURIComponent(secondaryColor);
+            const nsewCirclesFill = encodeURIComponent(accentColor);
+            const diamondFill = encodeURIComponent(accentColor);
+
+            const starburstSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='8' fill='${centerCircleFill}'/><g stroke='${lineStroke}' stroke-width='1.5'><line x1='50' y1='50' x2='50' y2='10'/><line x1='50' y1='50' x2='50' y2='90'/><line x1='50' y1='50' x2='10' y2='50'/><line x1='50' y1='50' x2='90' y2='50'/><line x1='50' y1='50' x2='22' y2='22'/><line x1='50' y1='50' x2='78' y2='78'/><line x1='50' y1='50' x2='22' y2='78'/><line x1='50' y1='50' x2='78' y2='22'/></g><circle cx='50' cy='10' r='5' fill='${nsewCirclesFill}'/><circle cx='50' cy='90' r='5' fill='${nsewCirclesFill}'/><circle cx='10' cy='50' r='5' fill='${nsewCirclesFill}'/><circle cx='90' cy='50' r='5' fill='${nsewCirclesFill}'/><circle cx='22' cy='22' r='5' fill='${diagonalCirclesFill}'/><circle cx='78' cy='78' r='5' fill='${diagonalCirclesFill}'/><circle cx='22' cy='78' r='5' fill='${diagonalCirclesFill}'/><circle cx='78' cy='22' r='5' fill='${diagonalCirclesFill}'/><polygon points='50,40 52,47 59,50 52,53 50,60 48,53 41,50 48,47' fill='${diamondFill}'/></svg>")`;
+            this.root.style.setProperty('--atomic-starburst-image', starburstSvg);
+
+            const starSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 54,44 95,50 54,56 50,95 46,56 5,50 46,44' fill='${nsewCirclesFill}'/><polygon points='50,20 52,46 78,32 53,49 80,50 53,51 78,68 52,54 50,80 48,54 22,68 47,51 20,50 47,49 22,32 48,46' fill='${centerCircleFill}' opacity='0.75'/><circle cx='50' cy='50' r='4' fill='${diamondFill}'/></svg>")`;
+            this.root.style.setProperty('--atomic-star-image', starSvg);
+
+            const separatorSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'><path d='M 10 5 Q 30 2, 50 5 T 90 5' fill='none' stroke='${centerCircleFill}' stroke-width='1.5'/><circle cx='50' cy='5' r='2' fill='${nsewCirclesFill}'/></svg>")`;
+            this.root.style.setProperty('--atomic-separator-image', separatorSvg);
+
+            const textureSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g><line x1='15' y1='15' x2='105' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><g stroke='${centerCircleFill}' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='35' cy='55' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='25' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='45' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/></g><path d='M 65 52 Q 80 20, 82 20 Q 85 20, 100 52 Q 82 37, 65 52 Z' fill='${nsewCirclesFill}' fill-opacity='0.1' stroke='${nsewCirclesFill}' stroke-width='0.8' opacity='0.3'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='${centerCircleFill}' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='${centerCircleFill}' fill-opacity='0.15' stroke='none'/></g><g transform='translate(120,0)'><line x1='15' y1='15' x2='105' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><g stroke='${centerCircleFill}' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='35' cy='55' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='25' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='45' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/></g><path d='M 82.5 17.5 Q 82.5 35, 100 35 Q 82.5 35, 82.5 52.5 Q 82.5 35, 65 35 Q 82.5 35, 82.5 17.5 Z' fill='${nsewCirclesFill}' fill-opacity='0.1' stroke='${nsewCirclesFill}' stroke-width='0.8' opacity='0.35'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='${centerCircleFill}' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='${centerCircleFill}' fill-opacity='0.15' stroke='none'/></g><g transform='translate(0,120)'><line x1='15' y1='15' x2='105' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><g stroke='${centerCircleFill}' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='35' cy='55' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='25' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='45' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/></g><path d='M 82.5 17.5 Q 82.5 35, 100 35 Q 82.5 35, 82.5 52.5 Q 82.5 35, 65 35 Q 82.5 35, 82.5 17.5 Z' fill='${nsewCirclesFill}' fill-opacity='0.1' stroke='${nsewCirclesFill}' stroke-width='0.8' opacity='0.35'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='${centerCircleFill}' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='${centerCircleFill}' fill-opacity='0.15' stroke='none'/></g><g transform='translate(120,120)'><line x1='15' y1='15' x2='105' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='${centerCircleFill}' stroke-width='0.4' opacity='0.12'/><g stroke='${centerCircleFill}' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='35' cy='55' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='25' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/><circle cx='45' cy='45' r='2' fill='${nsewCirclesFill}' stroke='none'/></g><path d='M 65 52 Q 80 20, 82 20 Q 85 20, 100 52 Q 82 37, 65 52 Z' fill='${nsewCirclesFill}' fill-opacity='0.1' stroke='${nsewCirclesFill}' stroke-width='0.8' opacity='0.3'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='${centerCircleFill}' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='${centerCircleFill}' fill-opacity='0.15' stroke='none'/></g></svg>")`;
+            this.root.style.setProperty('--atomic-texture-image', textureSvg);
+
+            // Calculate banner text contrast based on the background color of the logo banner.
+            const bannerBgColor = isLight ? secondaryColor : color;
+            const bannerBgRgb = window.PosterUtils.hexToRgb(bannerBgColor);
+            const bannerBgLuminance = bannerBgRgb ? (0.2126 * bannerBgRgb.r + 0.7152 * bannerBgRgb.g + 0.0722 * bannerBgRgb.b) / 255 : 0;
+            const isBannerBgLight = bannerBgLuminance > 0.5;
+
+            const logoTextColor = isBannerBgLight ? theme.colors.text : theme.colors.darkText;
+            const logoBorderColor = isBannerBgLight ? theme.colors.text : accentColor;
+
+            this.root.style.setProperty('--atomic-logo-text-color', logoTextColor);
+            this.root.style.setProperty('--atomic-logo-border-color', logoBorderColor);
+        }
+
+        // Memphis Pop Theme dynamic SVGs & contrast calculation
+        if (theme.id === 'memphis-pop') {
+            const textColor = isLight ? '#111111' : '#ffffff';
+            const escTextColor = encodeURIComponent(textColor);
+            const escAccentColor = encodeURIComponent(accentColor);
+            const escSecondaryColor = encodeURIComponent(secondaryColor);
+
+            // Calculate banner text contrast based on the background color of the logo banner (secondaryColor)
+            const secRgb = window.PosterUtils.hexToRgb(secondaryColor);
+            const secLuminance = secRgb ? (0.2126 * secRgb.r + 0.7152 * secRgb.g + 0.0722 * secRgb.b) / 255 : 0;
+            const logoTextColor = secLuminance > 0.5 ? '#111111' : '#ffffff';
+            this.root.style.setProperty('--memphis-logo-text-color', logoTextColor);
+
+            // 1. Dynamic SVG separator line (zigzag squiggle)
+            const separatorSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M 5 10 L 20 4 L 35 16 L 50 4 L 65 16 L 80 4 L 95 10' fill='none' stroke='${escAccentColor}' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/></svg>")`;
+            this.root.style.setProperty('--memphis-separator-image', separatorSvg);
+
+            // 2. Dynamic SVG background grid image
+            const gridColor = isLight ? 'rgba(17, 17, 17, 0.12)' : 'rgba(255, 255, 255, 0.12)';
+            const gridSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='none'/><path d='M 80 0 L 0 0 0 80' fill='none' stroke='${encodeURIComponent(gridColor)}' stroke-width='1.5'/></svg>")`;
+            this.root.style.setProperty('--memphis-grid-image', gridSvg);
+
+            // 3. Dynamic Sway Layers corners
+            // Top-Left corner SVG composition
+            const topLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><polygon points='30,30 110,30 70,110' fill='black' opacity='0.85'/><polygon points='20,20 100,20 60,100' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4' stroke-linejoin='bevel'/><polygon points='40,40 80,40 60,80' fill='none' stroke='${escTextColor}' stroke-width='3'/><circle cx='100' cy='70' r='30' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 120 20 L 120 60 M 130 20 L 130 60 M 140 20 L 140 60 M 110 30 L 150 30 M 110 40 L 150 40 M 110 50 L 150 50' stroke='${escTextColor}' stroke-width='2' opacity='0.7'/><path d='M 20 110 Q 40 90, 60 110 T 100 110 T 140 110' fill='none' stroke='${escTextColor}' stroke-width='6' stroke-linecap='round'/><circle cx='40' cy='60' r='4' fill='${escTextColor}'/><circle cx='55' cy='50' r='4' fill='${escTextColor}'/><circle cx='70' cy='65' r='4' fill='${escTextColor}'/><circle cx='30' cy='90' r='5' fill='${escAccentColor}'/><circle cx='130' cy='120' r='8' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='2'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-top-left', topLeftSvg);
+
+            // Top-Right corner SVG composition
+            const topRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><g fill='none' stroke='${escTextColor}' stroke-width='3'><line x1='60' y1='10' x2='140' y2='10'/><line x1='60' y1='20' x2='140' y2='20'/><line x1='60' y1='30' x2='140' y2='30'/><line x1='60' y1='40' x2='140' y2='40'/><line x1='60' y1='50' x2='140' y2='50'/></g><rect x='30' y='50' width='70' height='70' rx='5' fill='black' opacity='0.85'/><rect x='20' y='40' width='70' height='70' rx='5' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4'/><polygon points='90,80 130,120 70,120' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><circle cx='120' cy='90' r='18' fill='none' stroke='${escTextColor}' stroke-width='5'/><path d='M 20 130 Q 40 110, 60 130 T 100 130' fill='none' stroke='${escAccentColor}' stroke-width='4' stroke-linecap='round'/><circle cx='80' cy='25' r='5' fill='${escSecondaryColor}'/><circle cx='150' cy='70' r='3.5' fill='${escTextColor}'/></svg>")`;
+            this.root.style.setProperty('--memphis-sway-top-right', topRightSvg);
+
+            // Bottom-Left corner SVG composition
+            const bottomLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><circle cx='60' cy='90' r='35' fill='black' opacity='0.85'/><circle cx='50' cy='80' r='35' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='4'/><polygon points='80,30 130,70 90,110' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='4'/><path d='M 10 50 L 30 30 L 50 70 L 70 30 L 90 70' fill='none' stroke='${escTextColor}' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><path d='M 10 60 L 30 40 L 50 80 L 70 40 L 90 80' fill='none' stroke='${escAccentColor}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.75'/><circle cx='130' cy='130' r='14' fill='none' stroke='${escTextColor}' stroke-width='4'/><g stroke='${escTextColor}' stroke-width='3'><line x1='120' y1='25' x2='130' y2='25'/><line x1='125' y1='20' x2='125' y2='30'/></g><g stroke='${escTextColor}' stroke-width='3'><line x1='20' y1='130' x2='30' y2='130'/><line x1='25' y1='125' x2='25' y2='135'/></g></svg>")`;
+            this.root.style.setProperty('--memphis-sway-bottom-left', bottomLeftSvg);
+
+            // Bottom-Right corner SVG composition
+            const bottomRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><circle cx='105' cy='85' r='30' fill='none' stroke='black' stroke-width='16' opacity='0.85'/><circle cx='95' cy='75' r='30' fill='none' stroke='${escSecondaryColor}' stroke-width='16'/><polygon points='30,30 70,10 50,50' fill='${escAccentColor}' stroke='${escTextColor}' stroke-width='3' stroke-linejoin='round'/><g fill='none' stroke='${escAccentColor}' stroke-width='4'><line x1='20' y1='60' x2='60' y2='20'/><line x1='30' y1='70' x2='70' y2='30'/><line x1='40' y1='80' x2='80' y2='40'/><line x1='50' y1='90' x2='90' y2='50'/></g><path d='M 30 110 Q 60 80, 90 120 T 150 100' fill='none' stroke='${escTextColor}' stroke-width='5' stroke-linecap='round'/><circle cx='120' cy='30' r='6' fill='${escSecondaryColor}' stroke='${escTextColor}' stroke-width='2'/><g stroke='${escTextColor}' stroke-width='2.5'><line x1='75' y1='115' x2='85' y2='115'/><line x1='80' y1='110' x2='80' y2='120'/></g></svg>")`;
+            this.root.style.setProperty('--memphis-sway-bottom-right', bottomRightSvg);
+        }
+
+        if (theme.id === 'steampunk-gears') {
+            this.syncSteampunkGears();
+        }
+
+        if (theme.id === 'deep-blue') {
+            this.syncDeepBlue();
+        }
+    }
+
+    syncSteampunkGears() {
+        const theme = this.poster.theme;
+        const primary = this.state.bgColor || theme.colors.primary;
+        const accent = this.state.accentColor || theme.colors.accent;
+        const secondary = this.state.secondaryColor || theme.colors.secondary || '#B5A642';
+
+        const pRgb = window.PosterUtils.hexToRgb(primary);
+        const aRgb = window.PosterUtils.hexToRgb(accent);
+        const sRgb = window.PosterUtils.hexToRgb(secondary);
+
+        const pVal = window.PosterUtils.rgbToHsl(pRgb.r, pRgb.g, pRgb.b);
+        const aVal = window.PosterUtils.rgbToHsl(aRgb.r, aRgb.g, aRgb.b);
+        const sVal = window.PosterUtils.rgbToHsl(sRgb.r, sRgb.g, sRgb.b);
+
+        const accentHighlight = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, Math.min(aVal.l * 1.3, 95)));
+        const accentMid = encodeURIComponent(accent);
+        const accentDark = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, aVal.l * 0.6));
+        const accentDeep = encodeURIComponent(window.PosterUtils.hslToHex(aVal.h, aVal.s, aVal.l * 0.3));
+
+        const secHighlight = encodeURIComponent(window.PosterUtils.hslToHex(sVal.h, sVal.s, Math.min(sVal.l * 1.3, 95)));
+        const secMid = encodeURIComponent(secondary);
+        const secDark = encodeURIComponent(window.PosterUtils.hslToHex(sVal.h, sVal.s, sVal.l * 0.6));
+
+        const gearCopper = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='metal-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentMid}'/><stop offset='50%' stop-color='${accentDark}'/><stop offset='100%' stop-color='${accentDeep}'/></linearGradient><linearGradient id='gold-c' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentHighlight}'/><stop offset='50%' stop-color='${accentMid}'/><stop offset='100%' stop-color='${accentDark}'/></linearGradient></defs><g fill='url(%23metal-c)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(0, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(22.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(45, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(67.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(90, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(112.5, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(135, 100, 100)'/><rect x='85' y='10' width='30' height='180' rx='4' transform='rotate(157.5, 100, 100)'/></g><circle cx='100' cy='100' r='78' fill='url(%23metal-c)' stroke='rgba(0,0,0,0.6)' stroke-width='2'/><circle cx='100' cy='100' r='68' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='4'/><circle cx='100' cy='100' r='32' fill='url(%23gold-c)' stroke='rgba(0,0,0,0.7)' stroke-width='2'/><circle cx='100' cy='100' r='12' fill='none' stroke='rgba(0,0,0,0.8)' stroke-width='4'/><g stroke='url(%23gold-c)' stroke-width='8' stroke-linecap='round'><line x1='100' y1='28' x2='100' y2='172'/><line x1='28' y1='100' x2='172' y2='100'/><line x1='49' y1='49' x2='151' y2='151'/><line x1='49' y1='151' x2='151' y2='49'/></g><g fill='url(%23gold-c)' stroke='rgba(0,0,0,0.5)' stroke-width='1'><circle cx='100' cy='35' r='4'/><circle cx='100' cy='165' r='4'/><circle cx='35' cy='100' r='4'/><circle cx='165' cy='100' r='4'/><circle cx='54' cy='54' r='4'/><circle cx='146' cy='146' r='4'/><circle cx='54' cy='146' r='4'/><circle cx='146' cy='54' r='4'/></g><circle cx='100' cy='100' r='8' fill='%231a1a1a' stroke='rgba(0,0,0,0.9)' stroke-width='2'/></svg>")`;
+
+        const gearBrass = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><defs><linearGradient id='brass-b' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${secHighlight}'/><stop offset='50%' stop-color='${secMid}'/><stop offset='100%' stop-color='${secDark}'/></linearGradient></defs><g fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(0, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(30, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(60, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(90, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(120, 75, 75)'/><rect x='63' y='8' width='24' height='134' rx='3' transform='rotate(150, 75, 75)'/></g><circle cx='75' cy='75' r='58' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1.5'/><mask id='gear-holes-b'><rect x='0' y='0' width='150' height='150' fill='white'/><circle cx='75' cy='75' r='14' fill='black'/><circle cx='75' cy='38' r='12' fill='black'/><circle cx='75' cy='112' r='12' fill='black'/><circle cx='38' cy='75' r='12' fill='black'/><circle cx='112' cy='75' r='12' fill='black'/></mask><circle cx='75' cy='75' r='50' fill='url(%23brass-b)' mask='url(%23gear-holes-b)' stroke='rgba(0,0,0,0.6)' stroke-width='1'/><circle cx='75' cy='75' r='18' fill='url(%23brass-b)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><circle cx='75' cy='75' r='6' fill='%23111111' stroke='rgba(0,0,0,0.8)' stroke-width='1'/></svg>")`;
+
+        const gearIron = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='iron-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23555555'/><stop offset='50%' stop-color='%232a2a2a'/><stop offset='100%' stop-color='%23111111'/></linearGradient><linearGradient id='bronze-i' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='${accentHighlight}'/><stop offset='50%' stop-color='${accentMid}'/><stop offset='100%' stop-color='${accentDark}'/></linearGradient></defs><g fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1'><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(0, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(20, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(40, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(60, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(80, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(100, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(120, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(140, 90, 90)'/><rect x='76' y='8' width='28' height='164' rx='3' transform='rotate(160, 90, 90)'/></g><circle cx='90' cy='90' r='70' fill='url(%23iron-i)' stroke='rgba(0,0,0,0.7)' stroke-width='1.5'/><mask id='iron-holes-i'><rect x='0' y='0' width='180' height='180' fill='white'/><circle cx='90' cy='90' r='22' fill='black'/><circle cx='90' cy='46' r='14' fill='black'/><circle cx='128' cy='68' r='14' fill='black'/><circle cx='128' cy='112' r='14' fill='black'/><circle cx='90' cy='134' r='14' fill='black'/><circle cx='52' cy='112' r='14' fill='black'/><circle cx='52' cy='68' r='14' fill='black'/></mask><circle cx='90' cy='90' r='62' fill='url(%23iron-i)' mask='url(%23iron-holes-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1'/><circle cx='90' cy='90' r='25' fill='url(%23bronze-i)' stroke='rgba(0,0,0,0.8)' stroke-width='1.5'/><circle cx='90' cy='90' r='8' fill='%23111111' stroke='rgba(0,0,0,0.9)' stroke-width='1.5'/></svg>")`;
+
+        this.root.style.setProperty('--steampunk-sway-top-left', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-top-right', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-bottom-left', gearIron);
+        this.root.style.setProperty('--steampunk-sway-bottom-right', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-top-1', gearBrass);
+        this.root.style.setProperty('--steampunk-sway-top-2', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-top-3', gearIron);
+        this.root.style.setProperty('--steampunk-sway-left-side', gearCopper);
+        this.root.style.setProperty('--steampunk-sway-right-side', gearIron);
+    }
+
+    syncDeepBlue() {
+        const theme = this.poster.theme;
+        const primary = this.state.bgColor || theme.colors.primary;
+        const accent = this.state.accentColor || theme.colors.accent;
+        const secondary = this.state.secondaryColor || theme.colors.secondary || '#FF9F1C';
+
+        const pRgb = window.PosterUtils.hexToRgb(primary);
+        const aRgb = window.PosterUtils.hexToRgb(accent);
+
+        if (!pRgb || !aRgb) return;
+
+        const pVal = window.PosterUtils.rgbToHsl(pRgb.r, pRgb.g, pRgb.b);
+        const aVal = window.PosterUtils.rgbToHsl(aRgb.r, aRgb.g, aRgb.b);
+
+        // Top of the water is lighter and shifted slightly toward the accent color
+        let topHue = pVal.h;
+        if (Math.abs(aVal.h - pVal.h) < 180) {
+            topHue = pVal.h + (aVal.h - pVal.h) * 0.35;
+        } else {
+            const adjustedValH = aVal.h > pVal.h ? aVal.h - 360 : aVal.h + 360;
+            topHue = (pVal.h + (adjustedValH - pVal.h) * 0.35 + 360) % 360;
+        }
+
+        // Keep light level high enough for dynamic lighting caustics visibility
+        const topL = Math.min(Math.max(pVal.l * 3.5, 0.18), 0.45);
+        const topS = Math.min(pVal.s * 1.1, 1.0);
+        const topColor = window.PosterUtils.hslToHex(topHue, topS, topL);
+
+        const midL = Math.min(Math.max(pVal.l * 2.0, 0.12), 0.25);
+        const midS = pVal.s;
+        const midColor = window.PosterUtils.hslToHex(pVal.h, midS, midL);
+
+        const bottomColor = primary;
+
+        this.root.style.setProperty('--deep-blue-bg-top', topColor);
+        this.root.style.setProperty('--deep-blue-bg-mid', midColor);
+        this.root.style.setProperty('--deep-blue-bg-bottom', bottomColor);
+
+        // Calculate Seaweed colors that coordinate perfectly with the scene and remain vibrant/alive
+        const kelpHue = aVal.h;
+        const kelpSat = 0.90; // Force high saturation to keep it vibrant and lush
+
+        const kelp1 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.13));
+        const kelp2 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.20));
+        const kelp3 = encodeURIComponent(window.PosterUtils.hslToHex(kelpHue, kelpSat, 0.27));
+
+        const kelpLeftSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'><path d='M20,400 Q40,250 15,130 T45,10 Q50,15 25,135 T50,255 T30,400 Z' fill='${kelp1}' opacity='0.75'/><path d='M70,400 Q50,280 85,160 T60,20 Q65,22 90,162 T60,282 T80,400 Z' fill='${kelp2}' opacity='0.65'/><path d='M120,400 Q100,320 115,200 T95,40 Q100,42 125,202 T110,322 T130,400 Z' fill='${kelp3}' opacity='0.8'/></svg>")`;
+        const kelpRightSvg = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 400'><path d='M30,400 Q50,300 25,180 T60,30 Q65,32 35,182 T60,302 T40,400 Z' fill='${kelp3}' opacity='0.75'/><path d='M80,400 Q100,260 75,140 T105,10 Q110,12 85,142 T110,262 T90,400 Z' fill='${kelp2}' opacity='0.7'/><path d='M120,400 Q90,300 110,180 T80,50 Q85,52 120,182 T100,302 T130,400 Z' fill='${kelp1}' opacity='0.85'/></svg>")`;
+
+        this.root.style.setProperty('--deep-blue-kelp-left', kelpLeftSvg);
+        this.root.style.setProperty('--deep-blue-kelp-right', kelpRightSvg);
     }
 
     initSwatches() {
@@ -275,13 +496,13 @@ window.ThemeManager = class ThemeManager {
                 this.state.bgColor = colorObj.hex;
                 this.state.accentColor = colorObj.accent || null;
                 this.state.secondaryColor = colorObj.secondary || null;
-                
+
                 const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
                 const displayColor = isAccentBg ? (this.state.accentColor || this.poster.theme.colors.accent) : this.state.bgColor;
-                
+
                 if (this.elements.bgColorPicker) this.elements.bgColorPicker.value = displayColor;
                 if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.resolveColorLabel(colorObj.name);
-                
+
                 this.syncBackdrop(); this.updateSwatchActiveState(); this.poster.saveSettings();
                 // Remote sync
                 if (!window.remoteManager?._applying) {
@@ -324,7 +545,7 @@ window.ThemeManager = class ThemeManager {
         jumpLinksDiv.className = 'custom-select-jump-links';
         jumpLinksDiv.setAttribute('role', 'navigation');
         jumpLinksDiv.setAttribute('aria-label', 'Jump to theme pack');
-        
+
         Object.entries(window.THEME_PACKS || {}).forEach(([packId, packInfo]) => {
             const packThemes = Object.values(THEMES).filter(t => t.pack === packId && existingThemeIds.has(t.id));
             if (packThemes.length === 0) return;
@@ -334,11 +555,11 @@ window.ThemeManager = class ThemeManager {
             link.className = 'jump-link';
             link.tabIndex = -1; // Keep keyboard focus cycle on custom options
             link.title = `Jump to ${packInfo.name}`;
-            
+
             const iconSpan = document.createElement('span');
             iconSpan.textContent = packInfo.icon;
             link.appendChild(iconSpan);
-            
+
             const textSpan = document.createElement('span');
             textSpan.className = 'jump-link-text';
             textSpan.textContent = packInfo.name.split(' ')[0]; // E.g. "Standard", "Holiday"
@@ -444,14 +665,14 @@ window.ThemeManager = class ThemeManager {
         swatches.forEach(s => {
             const swatchColor = (s.dataset.color || '').trim().toLowerCase();
             const currentColor = (this.state.bgColor || this.poster.theme.colors.primary).trim().toLowerCase();
-            
+
             // For themes that swap roles, we also need to verify the accent color matches 
             // to distinguish between 'Normal' and 'Reversed' swatches.
             const currentAccent = (this.state.accentColor || this.poster.theme.colors.accent).trim().toLowerCase();
             const swatchAccent = (s.title && this.poster.theme.swatches.find(sw => sw.name === s.title)?.accent || '').trim().toLowerCase();
-            
+
             const isActive = swatchColor === currentColor && (swatchAccent === '' || swatchAccent === currentAccent);
-            
+
             s.classList.toggle('active', isActive);
             if (isActive) found = true;
         });
@@ -497,16 +718,86 @@ window.ThemeManager = class ThemeManager {
     syncWind() {
         const strength = this.state.gustStrength; // 0-100
         const impact = strength / 10;
-        
+
         // Lower the floor for speed. 
         // We want it very calm at low numbers (0-10) and faster at high numbers.
         // Quadratic curve: at 0 -> 0.12, at 10 -> 0.17, at 50 -> 0.77, at 100 -> 2.62
         // This gives a much wider range of "calmness" at the low end.
         const speed = 0.12 + (strength * strength / 4000);
-        
+
         this.root.style.setProperty('--gust-impact', impact);
         this.root.style.setProperty('--gust-speed', speed.toFixed(3));
         this.root.style.setProperty('--frame-intensity', (strength / 100).toFixed(3));
         this.root.style.setProperty('--grid-play-state', strength === 0 ? 'paused' : 'running');
+
+        // Space Odyssey Swirl visibility & resource controls
+        if (strength < 47) {
+            this.root.style.setProperty('--space-swirl-opacity-factor', '0');
+            this.root.style.setProperty('--space-swirl-display', 'none');
+            this.root.style.setProperty('--space-swirl-play-state', 'paused');
+        } else {
+            const factor = (strength - 47) / (100 - 47);
+            this.root.style.setProperty('--space-swirl-opacity-factor', factor.toFixed(4));
+            this.root.style.setProperty('--space-swirl-display', 'block');
+            this.root.style.setProperty('--space-swirl-play-state', 'running');
+        }
+    }
+
+    setupBistroLights() {
+        if (!this._onBistroResize) {
+            this._onBistroResize = () => {
+                this.buildBistroBulbs();
+            };
+            window.addEventListener('resize', this._onBistroResize);
+        }
+        this.buildBistroBulbs();
+    }
+
+    buildBistroBulbs() {
+        const wrapper = document.querySelector('.content-wrapper');
+        if (!wrapper) return;
+
+        let container = document.getElementById('bistro-lights-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'bistro-lights-container';
+            container.className = 'bistro-lights-container';
+            wrapper.appendChild(container);
+        } else {
+            container.innerHTML = '';
+        }
+
+        const wire = document.createElement('div');
+        wire.className = 'bistro-wire';
+        container.appendChild(wire);
+
+        const width = window.innerWidth + 160;
+        const bulbSpacing = 120;
+        const count = Math.ceil(width / bulbSpacing) + 1;
+
+        for (let i = 0; i < count; i++) {
+            const peak = document.createElement('div');
+            peak.className = 'sway-layer bistro-bulb-peak';
+            peak.style.left = `${(i * bulbSpacing) - 80}px`;
+            container.appendChild(peak);
+
+            const loop = document.createElement('div');
+            loop.className = 'sway-layer bistro-bulb-loop';
+            loop.style.left = `${(i * bulbSpacing + 60) - 80}px`;
+            container.appendChild(loop);
+        }
+
+        this.poster.cacheSwayLayers();
+    }
+
+    cleanupBistroLights() {
+        const container = document.getElementById('bistro-lights-container');
+        if (container) {
+            container.remove();
+        }
+        if (this._onBistroResize) {
+            window.removeEventListener('resize', this._onBistroResize);
+            this._onBistroResize = null;
+        }
     }
 };

@@ -1,0 +1,710 @@
+/**
+ * FESTIVE HOLIDAY THEME STYLES
+ * Colors: Pine Green (#0B3B24) · Santa Red (#C41E3A) · Brilliant Gold (#D4AF37)
+ */
+
+/* ============================================================
+   1. Background – Pine Green Forest, Cozy Gradient, & Snowy Texture
+   ============================================================ */
+body.theme-festive-holiday {
+    position: relative;
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.12) 0%, transparent 68%),
+        radial-gradient(circle at center, transparent 40%, rgba(4, 15, 9, 0.9) 100%),
+        linear-gradient(180deg,
+            #03180e 0%,
+            var(--color-primary) 50%,
+            #020a06 100%) !important;
+
+    /* Glow utility tokens */
+    --gold-festive-glow: 0 0 15px rgba(212, 175, 55, 0.45);
+    --red-festive-glow: 0 0 15px rgba(196, 30, 58, 0.4);
+}
+
+/* Starry/Snowy texture layer */
+body.theme-festive-holiday .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='90' cy='30' r='1'/%3E%3Ccircle cx='30' cy='90' r='1'/%3E%3Ccircle cx='90' cy='90' r='1.5'/%3E%3Ccircle cx='60' cy='60' r='2'/%3E%3Cpath d='M60 52 L60 68 M52 60 L68 60 M54 54 L66 66 M54 66 L66 54' stroke='%23ffffff' stroke-width='0.5' stroke-opacity='0.03'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: calc(0.45 + 0.55 * var(--frame-intensity));
+    animation: festive-texture-drift 100s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background-position;
+}
+
+@keyframes festive-texture-drift {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 120px 240px;
+    }
+}
+
+/* ============================================================
+   2. Theme Frame – Gold-Double Border & Red Berries/Holly Corners
+   ============================================================ */
+body.theme-festive-holiday .theme-frame {
+    opacity: 1;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
+    border: 3px double var(--color-secondary) !important;
+    border-radius: 6px !important;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 35px rgba(0, 0, 0, 0.95),
+        0 0 calc(15px * var(--frame-intensity)) rgba(var(--color-secondary-rgb), 0.25),
+        inset 0 0 calc(20px * var(--frame-intensity)) rgba(var(--color-secondary-rgb), 0.12) !important;
+}
+
+body.theme-festive-holiday .theme-frame-inner {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border: 1.5px solid rgba(var(--color-accent-rgb), 0.38) !important;
+    border-radius: 4px !important;
+    pointer-events: none;
+    z-index: 51;
+}
+
+/* Hide unused default rail elements */
+body.theme-festive-holiday .frame-rail,
+body.theme-festive-holiday .floral-bg {
+    display: none !important;
+}
+
+/* Holly corner bracket ornaments */
+body.theme-festive-holiday .theme-frame::before,
+body.theme-festive-holiday .theme-frame::after,
+body.theme-festive-holiday .theme-frame-inner::before,
+body.theme-festive-holiday .theme-frame-inner::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 55;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 0 L40 0 M0 0 L0 40'/%3E%3Cpath d='M10 10 C25 15, 15 25, 30 30' stroke='%23C41E3A' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='25' r='3.5' fill='%23C41E3A' stroke='none'/%3E%3Ccircle cx='25' cy='10' r='3.5' fill='%23C41E3A' stroke='none'/%3E%3Ccircle cx='18' cy='18' r='3' fill='%23D4AF37' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: calc(0.7 + 0.3 * var(--frame-intensity));
+}
+
+body.theme-festive-holiday .theme-frame::before {
+    top: -3px;
+    left: -3px;
+}
+
+body.theme-festive-holiday .theme-frame::after {
+    top: -3px;
+    right: -3px;
+    transform: scaleX(-1);
+}
+
+body.theme-festive-holiday .theme-frame-inner::before {
+    bottom: -3px;
+    left: -3px;
+    transform: scaleY(-1);
+}
+
+body.theme-festive-holiday .theme-frame-inner::after {
+    bottom: -3px;
+    right: -3px;
+    transform: scale(-1);
+}
+
+/* ============================================================
+   3. Sway Layers – Draping Pine Garland with Blinking Christmas Lights & Baubles
+   ============================================================ */
+body.theme-festive-holiday .sway-layer {
+    display: block !important;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+body.theme-festive-holiday:not(.is-loading) .sway-layer {
+    opacity: 0.9;
+}
+
+/* Draping Garland */
+body.theme-festive-holiday .sway-top-1 {
+    display: block !important;
+    position: absolute;
+    top: 14px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    height: 65px;
+    z-index: 55;
+    background-repeat: repeat-x;
+    background-size: 180px 65px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 65' width='180' height='65'><style>@keyframes blink-r %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23C41E3A); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ff2a54); %7D %7D @keyframes blink-g %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %236bff84); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %234CAF50); %7D %7D @keyframes blink-b %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %2300B4D8); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %2339dfff); %7D %7D @keyframes blink-y %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ffeb3b); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23D4AF37); %7D %7D .light-red %7B animation: blink-r 1.2s infinite ease-in-out; %7D .light-green %7B animation: blink-g 1.5s infinite ease-in-out; %7D .light-blue %7B animation: blink-b 1.8s infinite ease-in-out; %7D .light-gold %7B animation: blink-y 1.4s infinite ease-in-out; %7D</style><path d='M0,8 Q45,28 90,28 T180,8' fill='none' stroke='%23062314' stroke-width='6.5' stroke-linecap='round'/><path d='M0,8 Q45,28 90,28 T180,8' fill='none' stroke='%230B3B24' stroke-width='4.5' stroke-linecap='round'/><path d='M0,8 Q45,28 90,28 T180,8' fill='none' stroke='%23126039' stroke-width='2.5' stroke-linecap='round'/><g stroke='%230B3B24' stroke-width='1.5' stroke-linecap='round'><line x1='15' y1='10' x2='8' y2='22'/><line x1='15' y1='10' x2='22' y2='22'/><line x1='45' y1='18' x2='35' y2='30'/><line x1='45' y1='18' x2='55' y2='30'/><line x1='75' y1='22' x2='68' y2='36'/><line x1='75' y1='22' x2='82' y2='36'/><line x1='105' y1='22' x2='98' y2='36'/><line x1='105' y1='22' x2='106' y2='36'/><line x1='135' y1='18' x2='125' y2='30'/><line x1='135' y1='18' x2='145' y2='30'/><line x1='165' y1='10' x2='158' y2='22'/><line x1='165' y1='10' x2='172' y2='22'/></g><g stroke='%23126039' stroke-width='1.2' stroke-linecap='round'><line x1='28' y1='14' x2='22' y2='26'/><line x1='28' y1='14' x2='34' y2='26'/><line x1='60' y1='21' x2='52' y2='35'/><line x1='60' y1='21' x2='68' y2='35'/><line x1='120' y1='21' x2='112' y2='35'/><line x1='120' y1='21' x2='128' y2='35'/><line x1='152' y1='14' x2='146' y2='26'/><line x1='152' y1='14' x2='158' y2='26'/></g><circle cx='20' cy='22' r='4.5' fill='%23C41E3A' class='light-red'/><circle cx='50' cy='30' r='4.5' fill='%23D4AF37' class='light-gold'/><circle cx='80' cy='35' r='4.5' fill='%2300B4D8' class='light-blue'/><circle cx='110' cy='35' r='4.5' fill='%234CAF50' class='light-green'/><circle cx='140' cy='30' r='4.5' fill='%23C41E3A' class='light-red'/><circle cx='170' cy='22' r='4.5' fill='%23D4AF37' class='light-gold'/></svg>") !important;
+    transform-origin: center top;
+    animation: festive-garland-sway calc(10s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes festive-garland-sway {
+    0% {
+        transform: skewX(-1.5deg) scaleY(0.97);
+    }
+    100% {
+        transform: skewX(1.5deg) scaleY(1.03);
+    }
+}
+
+/* Hanging Red Bauble (Top Left) */
+body.theme-festive-holiday .sway-top-left {
+    display: block !important;
+    top: 14px;
+    left: 45px;
+    width: 100px;
+    height: 220px;
+    z-index: 60;
+    background-position: top center;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 100 220' xmlns='http://www.w3.org/2000/svg'><line x1='50' y1='0' x2='50' y2='100' stroke='%23D4AF37' stroke-width='1.5' stroke-dasharray='3,3'/><path d='M50,102 L50,110' stroke='%23D4AF37' stroke-width='3'/><rect x='44' y='108' width='12' height='6' fill='%23D4AF37' rx='1'/><circle cx='50' cy='130' r='28' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='50' cy='130' r='28' fill='url(%23g-sh)'/><defs><radialGradient id='g-sh' cx='35%25' cy='35%25' r='65%25'><stop offset='0%25' stop-color='rgba(255,255,255,0.45)'/><stop offset='50%25' stop-color='rgba(255,255,255,0)'/><stop offset='100%25' stop-color='rgba(0,0,0,0.45)'/></defs></svg>") !important;
+    transform-origin: center top;
+    animation: festive-ornament-sway-left calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Hanging Golden Star (Top Right) */
+body.theme-festive-holiday .sway-top-right {
+    display: block !important;
+    top: 14px;
+    right: 45px;
+    width: 100px;
+    height: 220px;
+    z-index: 60;
+    background-position: top center;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 100 220' xmlns='http://www.w3.org/2000/svg'><line x1='50' y1='0' x2='50' y2='100' stroke='%23D4AF37' stroke-width='1.5' stroke-dasharray='3,3'/><path d='M50,102 L50,110' stroke='%23D4AF37' stroke-width='3'/><rect x='44' y='108' width='12' height='6' fill='%23D4AF37' rx='1'/><path d='M50,108 L55,122 L69,122 L58,131 L62,145 L50,136 L38,145 L42,131 L31,122 L45,122 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='1'/><path d='M50,115 L52,122 L58,122 L53,126 L55,133 L50,129 L45,133 L47,126 L42,122 L48,122 Z' fill='%23ffffff' opacity='0.7'/></svg>") !important;
+    transform-origin: center top;
+    animation: festive-ornament-sway-right calc(7.2s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+    animation-delay: -1.5s;
+}
+
+@keyframes festive-ornament-sway-left {
+    0% {
+        transform: rotate(-2.5deg);
+    }
+    100% {
+        transform: rotate(2.5deg);
+    }
+}
+
+@keyframes festive-ornament-sway-right {
+    0% {
+        transform: rotate(-2deg);
+    }
+    100% {
+        transform: rotate(2deg);
+    }
+}
+
+/* Pine and Holly Branches side framing */
+body.theme-festive-holiday .sway-left-side {
+    display: block !important;
+    top: auto !important;
+    bottom: 20px !important;
+    left: 45px !important;
+    right: auto !important;
+    width: 270px;
+    height: 80%;
+    z-index: 45;
+    background-position: left bottom;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 180 400' xmlns='http://www.w3.org/2000/svg'><style>@keyframes blink-r %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23C41E3A); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ff2a54); %7D %7D @keyframes blink-g %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %236bff84); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %234CAF50); %7D %7D @keyframes blink-b %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %2300B4D8); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %2339dfff); %7D %7D @keyframes blink-y %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ffeb3b); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23D4AF37); %7D %7D .light-red %7B animation: blink-r 1.2s infinite ease-in-out; %7D .light-green %7B animation: blink-g 1.5s infinite ease-in-out; %7D .light-blue %7B animation: blink-b 1.8s infinite ease-in-out; %7D .light-gold %7B animation: blink-y 1.4s infinite ease-in-out; %7D</style><g stroke-linecap='round'><path d='M0,400 Q45,320 20,200 T60,20' fill='none' stroke='%233a1e05' stroke-width='6'/><path d='M15,280 Q55,270 85,290' fill='none' stroke='%233a1e05' stroke-width='4'/><path d='M12,200 Q65,185 95,210' fill='none' stroke='%233a1e05' stroke-width='4'/><path d='M22,120 Q62,105 82,120' fill='none' stroke='%233a1e05' stroke-width='3'/><g stroke='%230B3B24' stroke-width='2.2'><line x1='35' y1='275' x2='30' y2='290'/><line x1='35' y1='275' x2='42' y2='290'/><line x1='55' y1='280' x2='48' y2='298'/><line x1='55' y1='280' x2='62' y2='298'/><line x1='75' y1='285' x2='68' y2='305'/><line x1='75' y1='285' x2='82' y2='305'/><line x1='35' y1='195' x2='28' y2='212'/><line x1='35' y1='195' x2='42' y2='212'/><line x1='60' y1='198' x2='52' y2='218'/><line x1='60' y1='198' x2='68' y2='218'/><line x1='80' y1='205' x2='72' y2='225'/><line x1='80' y1='205' x2='88' y2='225'/><line x1='40' y1='115' x2='34' y2='130'/><line x1='40' y1='115' x2='48' y2='130'/><line x1='60' y1='112' x2='52' y2='128'/><line x1='60' y1='112' x2='68' y2='128'/><line x1='75' y1='118' x2='68' y2='136'/><line x1='75' y1='118' x2='82' y2='136'/></g><g stroke='%23126039' stroke-width='1.5'><line x1='28' y1='274' x2='22' y2='288'/><line x1='28' y1='274' x2='34' y2='288'/><line x1='48' y1='278' x2='40' y2='295'/><line x1='48' y1='278' x2='55' y2='295'/><line x1='68' y1='282' x2='60' y2='301'/><line x1='68' y1='282' x2='75' y2='301'/><line x1='28' y1='193' x2='22' y2='208'/><line x1='28' y1='193' x2='34' y2='208'/><line x1='50' y1='196' x2='42' y2='214'/><line x1='50' y1='196' x2='58' y2='214'/><line x1='70' y1='201' x2='62' y2='220'/><line x1='70' y1='201' x2='78' y2='220'/><line x1='32' y1='114' x2='26' y2='127'/><line x1='32' y1='114' x2='38' y2='127'/><line x1='50' y1='111' x2='42' y2='125'/><line x1='50' y1='111' x2='57' y2='125'/><line x1='68' y1='115' x2='61' y2='131'/><line x1='68' y1='115' x2='74' y2='131'/></g><line x1='35' y1='400' x2='35' y2='375' stroke='%233a1e05' stroke-width='5'/><polygon points='35,340 5,385 65,385' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><polygon points='35,310 10,350 60,350' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><polygon points='35,280 15,315 55,315' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><path d='M35,268 L37.5,274 L44,274 L39,278 L41,284 L35,280 L29,284 L31,278 L26,274 L32.5,274 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='25' cy='365' r='3.5' fill='%23C41E3A'/><circle cx='45' cy='365' r='3.5' fill='%23D4AF37'/><circle cx='20' cy='335' r='3' fill='%23D4AF37'/><circle cx='50' cy='335' r='3' fill='%23C41E3A'/><circle cx='35' cy='300' r='2.5' fill='%23C41E3A'/><circle cx='35' cy='355' r='2.5' fill='%23C41E3A' class='light-red'/><circle cx='22' cy='370' r='2.5' fill='%234CAF50' class='light-green'/><circle cx='48' cy='370' r='2.5' fill='%2300B4D8' class='light-blue'/><circle cx='35' cy='325' r='2.5' fill='%23D4AF37' class='light-gold'/><circle cx='30' cy='330' r='2.5' fill='%23C41E3A' class='light-red'/><circle cx='40' cy='330' r='2.5' fill='%2300B4D8' class='light-blue'/><line x1='75' y1='400' x2='75' y2='380' stroke='%233a1e05' stroke-width='4'/><polygon points='75,355 50,390 100,390' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><polygon points='75,330 55,362 95,362' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><polygon points='75,310 60,335 90,335' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><path d='M75,300 L77,305 L82,305 L78,308 L80,313 L75,310 L70,313 L72,308 L68,305 L73,305 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='65' cy='378' r='2.5' fill='%23C41E3A'/><circle cx='85' cy='378' r='2.5' fill='%23D4AF37'/><circle cx='75' cy='348' r='2' fill='%23C41E3A'/><circle cx='70' cy='375' r='2' fill='%2300B4D8' class='light-blue'/><circle cx='80' cy='375' r='2' fill='%23D4AF37' class='light-gold'/><circle cx='75' cy='325' r='2' fill='%23C41E3A' class='light-red'/><circle cx='15' cy='330' r='3.5' fill='%23D4AF37' class='light-gold'/><circle cx='25' cy='290' r='3.5' fill='%23C41E3A' class='light-red'/><circle cx='28' cy='250' r='3.5' fill='%234CAF50' class='light-green'/><circle cx='22' cy='210' r='3.5' fill='%2300B4D8' class='light-blue'/><circle cx='30' cy='170' r='3.5' fill='%23D4AF37' class='light-gold'/><circle cx='40' cy='130' r='3.5' fill='%23C41E3A' class='light-red'/><circle cx='50' cy='90' r='3.5' fill='%2300B4D8' class='light-blue'/><circle cx='58' cy='50' r='3.5' fill='%234CAF50' class='light-green'/><circle cx='35' cy='275' r='3' fill='%23C41E3A' class='light-red'/><circle cx='55' cy='275' r='3' fill='%2300B4D8' class='light-blue'/><circle cx='75' cy='282' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='32' cy='195' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='52' cy='192' r='3' fill='%234CAF50' class='light-green'/><circle cx='72' cy='198' r='3' fill='%23C41E3A' class='light-red'/><circle cx='90' cy='206' r='3' fill='%2300B4D8' class='light-blue'/><circle cx='42' cy='112' r='3' fill='%23C41E3A' class='light-red'/><circle cx='62' cy='110' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='78' cy='116' r='3' fill='%2300B4D8' class='light-blue'/><line x1='70' y1='282' x2='70' y2='295' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='70' cy='295' r='5' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5'/><circle cx='68.5' cy='293.5' r='1.5' fill='white' opacity='0.5'/><line x1='85' y1='202' x2='85' y2='215' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='85' cy='215' r='5' fill='%23C41E3A' stroke='%239e1227' stroke-width='0.5'/><circle cx='83.5' cy='213.5' r='1.5' fill='white' opacity='0.5'/><line x1='65' y1='112' x2='65' y2='125' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='65' cy='125' r='4' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5'/><circle cx='63.8' cy='123.8' r='1.2' fill='white' opacity='0.5'/><path d='M60,10 L62,15 L67,15 L63,18 L65,23 L60,20 L55,23 L57,18 L53,15 L58,15 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='45' cy='265' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='54' cy='272' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='42' cy='182' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='51' cy='189' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/></g></svg>") !important;
+    transform-origin: left bottom;
+    animation: festive-branch-sway calc(11s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+body.theme-festive-holiday .sway-right-side {
+    display: block !important;
+    top: auto !important;
+    bottom: 20px !important;
+    right: 45px !important;
+    left: auto !important;
+    width: 270px;
+    height: 80%;
+    z-index: 45;
+    background-position: right bottom;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 180 400' xmlns='http://www.w3.org/2000/svg'><style>@keyframes blink-r %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23C41E3A); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ff2a54); %7D %7D @keyframes blink-g %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %236bff84); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %234CAF50); %7D %7D @keyframes blink-b %7B 0%25, 100%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %2300B4D8); %7D 50%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %2339dfff); %7D %7D @keyframes blink-y %7B 0%25, 100%25 %7B opacity: 1; filter: drop-shadow(0 0 8px %23ffeb3b); %7D 50%25 %7B opacity: 0.3; filter: drop-shadow(0 0 1px %23D4AF37); %7D %7D .light-red %7B animation: blink-r 1.2s infinite ease-in-out; %7D .light-green %7B animation: blink-g 1.5s infinite ease-in-out; %7D .light-blue %7B animation: blink-b 1.8s infinite ease-in-out; %7D .light-gold %7B animation: blink-y 1.4s infinite ease-in-out; %7D</style><g transform='translate(180, 0) scale(-1, 1)'><g stroke-linecap='round'><path d='M0,400 Q45,320 20,200 T60,20' fill='none' stroke='%233a1e05' stroke-width='6'/><path d='M15,280 Q55,270 85,290' fill='none' stroke='%233a1e05' stroke-width='4'/><path d='M12,200 Q65,185 95,210' fill='none' stroke='%233a1e05' stroke-width='4'/><path d='M22,120 Q62,105 82,120' fill='none' stroke='%233a1e05' stroke-width='3'/><g stroke='%230B3B24' stroke-width='2.2'><line x1='35' y1='275' x2='30' y2='290'/><line x1='35' y1='275' x2='42' y2='290'/><line x1='55' y1='280' x2='48' y2='298'/><line x1='55' y1='280' x2='62' y2='298'/><line x1='75' y1='285' x2='68' y2='305'/><line x1='75' y1='285' x2='82' y2='305'/><line x1='35' y1='195' x2='28' y2='212'/><line x1='35' y1='195' x2='42' y2='212'/><line x1='60' y1='198' x2='52' y2='218'/><line x1='60' y1='198' x2='68' y2='218'/><line x1='80' y1='205' x2='72' y2='225'/><line x1='80' y1='205' x2='88' y2='225'/><line x1='40' y1='115' x2='34' y2='130'/><line x1='40' y1='115' x2='48' y2='130'/><line x1='60' y1='112' x2='52' y2='128'/><line x1='60' y1='112' x2='68' y2='128'/><line x1='75' y1='118' x2='68' y2='136'/><line x1='75' y1='118' x2='82' y2='136'/></g><g stroke='%23126039' stroke-width='1.5'><line x1='28' y1='274' x2='22' y2='288'/><line x1='28' y1='274' x2='34' y2='288'/><line x1='48' y1='278' x2='40' y2='295'/><line x1='48' y1='278' x2='55' y2='295'/><line x1='68' y1='282' x2='60' y2='301'/><line x1='68' y1='282' x2='75' y2='301'/><line x1='28' y1='193' x2='22' y2='208'/><line x1='28' y1='193' x2='34' y2='208'/><line x1='50' y1='196' x2='42' y2='214'/><line x1='50' y1='196' x2='58' y2='214'/><line x1='70' y1='201' x2='62' y2='220'/><line x1='70' y1='201' x2='78' y2='220'/><line x1='32' y1='114' x2='26' y2='127'/><line x1='32' y1='114' x2='38' y2='127'/><line x1='50' y1='111' x2='42' y2='125'/><line x1='50' y1='111' x2='57' y2='125'/><line x1='68' y1='115' x2='61' y2='131'/><line x1='68' y1='115' x2='74' y2='131'/></g><line x1='35' y1='400' x2='35' y2='375' stroke='%233a1e05' stroke-width='5'/><polygon points='35,340 5,385 65,385' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><polygon points='35,310 10,350 60,350' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><polygon points='35,280 15,315 55,315' fill='%230B3B24' stroke='%23126039' stroke-width='1.5'/><path d='M35,268 L37.5,274 L44,274 L39,278 L41,284 L35,280 L29,284 L31,278 L26,274 L32.5,274 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='25' cy='365' r='3.5' fill='%23C41E3A'/><circle cx='45' cy='365' r='3.5' fill='%23D4AF37'/><circle cx='20' cy='335' r='3' fill='%23D4AF37'/><circle cx='50' cy='335' r='3' fill='%23C41E3A'/><circle cx='35' cy='300' r='2.5' fill='%23C41E3A'/><circle cx='35' cy='355' r='2.5' fill='%23C41E3A' class='light-red'/><circle cx='22' cy='370' r='2.5' fill='%234CAF50' class='light-green'/><circle cx='48' cy='370' r='2.5' fill='%2300B4D8' class='light-blue'/><circle cx='35' cy='325' r='2.5' fill='%23D4AF37' class='light-gold'/><circle cx='30' cy='330' r='2.5' fill='%23C41E3A' class='light-red'/><circle cx='40' cy='330' r='2.5' fill='%2300B4D8' class='light-blue'/><line x1='75' y1='400' x2='75' y2='380' stroke='%233a1e05' stroke-width='4'/><polygon points='75,355 50,390 100,390' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><polygon points='75,330 55,362 95,362' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><polygon points='75,310 60,335 90,335' fill='%23062314' stroke='%230B3B24' stroke-width='1.5'/><path d='M75,300 L77,305 L82,305 L78,308 L80,313 L75,310 L70,313 L72,308 L68,305 L73,305 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='65' cy='378' r='2.5' fill='%23C41E3A'/><circle cx='85' cy='378' r='2.5' fill='%23D4AF37'/><circle cx='75' cy='348' r='2' fill='%23C41E3A'/><circle cx='70' cy='375' r='2' fill='%2300B4D8' class='light-blue'/><circle cx='80' cy='375' r='2' fill='%23D4AF37' class='light-gold'/><circle cx='75' cy='325' r='2' fill='%23C41E3A' class='light-red'/><circle cx='15' cy='330' r='3.5' fill='%23D4AF37' class='light-gold'/><circle cx='25' cy='290' r='3.5' fill='%23C41E3A' class='light-red'/><circle cx='28' cy='250' r='3.5' fill='%234CAF50' class='light-green'/><circle cx='22' cy='210' r='3.5' fill='%2300B4D8' class='light-blue'/><circle cx='30' cy='170' r='3.5' fill='%23D4AF37' class='light-gold'/><circle cx='40' cy='130' r='3.5' fill='%23C41E3A' class='light-red'/><circle cx='50' cy='90' r='3.5' fill='%2300B4D8' class='light-blue'/><circle cx='58' cy='50' r='3.5' fill='%234CAF50' class='light-green'/><circle cx='35' cy='275' r='3' fill='%23C41E3A' class='light-red'/><circle cx='55' cy='275' r='3' fill='%2300B4D8' class='light-blue'/><circle cx='75' cy='282' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='32' cy='195' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='52' cy='192' r='3' fill='%234CAF50' class='light-green'/><circle cx='72' cy='198' r='3' fill='%23C41E3A' class='light-red'/><circle cx='90' cy='206' r='3' fill='%2300B4D8' class='light-blue'/><circle cx='42' cy='112' r='3' fill='%23C41E3A' class='light-red'/><circle cx='62' cy='110' r='3' fill='%23D4AF37' class='light-gold'/><circle cx='78' cy='116' r='3' fill='%2300B4D8' class='light-blue'/><line x1='70' y1='282' x2='70' y2='295' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='70' cy='295' r='5' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5'/><circle cx='68.5' cy='293.5' r='1.5' fill='white' opacity='0.5'/><line x1='85' y1='202' x2='85' y2='215' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='85' cy='215' r='5' fill='%23C41E3A' stroke='%239e1227' stroke-width='0.5'/><circle cx='83.5' cy='213.5' r='1.5' fill='white' opacity='0.5'/><line x1='65' y1='112' x2='65' y2='125' stroke='%23D4AF37' stroke-width='1' stroke-dasharray='1,1'/><circle cx='65' cy='125' r='4' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5'/><circle cx='63.8' cy='123.8' r='1.2' fill='white' opacity='0.5'/><path d='M60,10 L62,15 L67,15 L63,18 L65,23 L60,20 L55,23 L57,18 L53,15 L58,15 Z' fill='%23D4AF37' stroke='%23b8860b' stroke-width='0.5' class='light-gold'/><circle cx='45' cy='265' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='54' cy='272' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='42' cy='182' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/><circle cx='51' cy='189' r='6' fill='%23C41E3A' stroke='%239e1227' stroke-width='1'/></g></g></svg>") !important;
+    transform-origin: right bottom;
+    animation: festive-branch-sway calc(12.5s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+    animation-delay: -0.7s;
+}
+
+@keyframes festive-branch-sway {
+    0% {
+        transform: rotate(-1deg) skewY(-0.5deg);
+    }
+    100% {
+        transform: rotate(1deg) skewY(0.5deg);
+    }
+}
+
+/* Disable/hide other themes' unrelated corner elements */
+body.theme-festive-holiday .sway-top-2,
+body.theme-festive-holiday .sway-top-3,
+body.theme-festive-holiday .sway-top-4,
+body.theme-festive-holiday .sway-bottom-3,
+body.theme-festive-holiday .sway-bottom-4,
+body.theme-festive-holiday .sway-bottom-5,
+body.theme-festive-holiday .sway-bottom-6,
+body.theme-festive-holiday .sway-bottom-7,
+body.theme-festive-holiday .sway-bottom-8,
+body.theme-festive-holiday .sway-bottom-9,
+body.theme-festive-holiday .sway-bottom-10,
+body.theme-festive-holiday .sway-bottom-11,
+body.theme-festive-holiday .sway-bottom-12,
+body.theme-festive-holiday .sway-bottom-13,
+body.theme-festive-holiday .sway-bottom-14,
+body.theme-festive-holiday .sway-bottom-left,
+body.theme-festive-holiday .sway-bottom-right {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Logo Banner – Swallowtail Ribbon Design
+   ============================================================ */
+body.theme-festive-holiday .logo-banner {
+    position: relative !important;
+    margin-top: 60px !important;
+    margin-bottom: -12px !important;
+    padding: 16px 44px !important;
+    border-radius: 6px !important;
+    max-width: 520px !important;
+    z-index: 60;
+    transform: rotate(-0.5deg) !important;
+}
+
+body.theme-festive-holiday:not(.is-light-bg) .logo-banner {
+    background: rgba(4, 15, 9, var(--backdrop-opacity, 0.75)) !important;
+    border: 1.5px solid rgba(var(--color-secondary-rgb), calc(0.95 * var(--backdrop-opacity, 0.75))) !important;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.85),
+        0 0 20px rgba(var(--color-secondary-rgb), 0.2),
+        inset 0 0 0 2px rgba(4, 15, 9, 0.95),
+        inset 0 0 0 3.5px rgba(var(--color-accent-rgb), 0.45),
+        inset 0 0 15px rgba(var(--color-secondary-rgb), 0.1) !important;
+}
+
+/* Swallowtail Ribbon Wings */
+body.theme-festive-holiday .logo-banner::before,
+body.theme-festive-holiday .logo-banner::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    width: 25px;
+    height: calc(100% - 12px);
+    background: rgba(4, 15, 9, 0.9);
+    border: 1.5px solid var(--color-secondary);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.theme-festive-holiday .logo-banner::before {
+    left: -20px;
+    transform: skewY(-5deg);
+    border-right: none;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+body.theme-festive-holiday .logo-banner::after {
+    right: -20px;
+    transform: skewY(5deg);
+    border-left: none;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+body.theme-festive-holiday .logo-text-custom {
+    font-family: var(--font-display);
+    color: #ffffff !important;
+    font-size: 1.8rem !important;
+    text-shadow:
+        0 0 6px rgba(var(--color-secondary-rgb), 0.6),
+        2px 2px 4px rgba(0, 0, 0, 0.95) !important;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: normal;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+}
+
+body.theme-festive-holiday #logo-img {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   5. Hosts Container – Double Red/Gold Plaque & Contrast Shadow
+   ============================================================ */
+body.theme-festive-holiday .hosts-container {
+    position: relative;
+    padding: 22px 34px !important;
+    margin: 2vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 200px) !important;
+    border-radius: 6px !important;
+    z-index: 100;
+}
+
+body.theme-festive-holiday:not(.is-light-bg) .hosts-container {
+    background: rgba(4, 15, 9, var(--backdrop-opacity, 0.85)) !important;
+    border: 1.5px solid rgba(var(--color-accent-rgb), calc(0.7 * var(--backdrop-opacity, 0.85))) !important;
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(var(--color-secondary-rgb), calc(0.12 * var(--backdrop-opacity, 0.85))),
+        inset 0 0 0 2px rgba(4, 15, 9, 0.95),
+        inset 0 0 0 3px rgba(var(--color-secondary-rgb), calc(0.4 * var(--backdrop-opacity, 0.85))) !important;
+}
+
+/* Cozy dark vignette behind names for readability */
+body.theme-festive-holiday .hosts-container::after {
+    content: '';
+    position: absolute;
+    inset: -15px -45px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.82) 0%, transparent 80%);
+    opacity: var(--backdrop-opacity, 1);
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(8px);
+}
+
+/* ============================================================
+   6. Typography, Glowing Title, & Dividers
+   ============================================================ */
+body.theme-festive-holiday .event-title {
+    font-family: var(--font-display) !important; /* Playfair Display */
+    color: var(--color-secondary) !important; /* gold */
+    font-weight: 700;
+    font-size: 5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 15px rgba(var(--color-secondary-rgb), 0.4),
+        3px 3px 5px rgba(0, 0, 0, 0.9) !important;
+    animation: festive-title-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes festive-title-glow {
+    0%, 100% {
+        text-shadow: 0 0 15px rgba(var(--color-secondary-rgb), 0.4), 3px 3px 5px rgba(0, 0, 0, 0.9);
+    }
+    50% {
+        text-shadow: 0 0 25px rgba(var(--color-secondary-rgb), 0.7), 0 0 35px rgba(var(--color-accent-rgb), 0.5), 3px 3px 5px rgba(0, 0, 0, 0.9);
+    }
+}
+
+body.theme-festive-holiday .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 1.7rem;
+    color: #ffffff !important;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+}
+
+body.theme-festive-holiday .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 1.9rem;
+    color: var(--color-accent) !important; /* Santa Red */
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    margin-top: 8px;
+}
+
+body.theme-festive-holiday .event-date {
+    font-family: var(--font-primary) !important;
+    font-size: 1.2rem;
+    color: #ffffff !important;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+    margin-top: 4px;
+}
+
+/* Wreath/holly divider below Hosts Title */
+body.theme-festive-holiday .hosts-title::after {
+    content: '';
+    display: block;
+    width: 220px;
+    height: 20px;
+    margin: 15px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='20' viewBox='0 0 220 20'%3E%3Cg stroke='%23D4AF37' stroke-width='1.5' fill='none' stroke-linecap='round'%3E%3Ccircle cx='110' cy='10' r='3.5' fill='%23C41E3A' stroke='none'/%3E%3Ccircle cx='104' cy='10' r='2.5' fill='%23C41E3A' stroke='none'/%3E%3Ccircle cx='116' cy='10' r='2.5' fill='%23C41E3A' stroke='none'/%3E%3Cpath d='M95,10 Q65,6 40,10 M125,10 Q155,6 180,10'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.9;
+}
+
+/* Star divider below Event Subtitle */
+body.theme-festive-holiday .event-subtitle::after {
+    content: '';
+    display: block;
+    width: 260px;
+    height: 10px;
+    margin: 12px auto 0 auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='10' viewBox='0 0 260 10'%3E%3Cg stroke='%23D4AF37' stroke-width='1.2' fill='none'%3E%3Cpolygon points='130,2 132,5 135,5 133,7 134,10 130,8 126,10 127,7 125,5 128,5' fill='%23D4AF37' stroke='none'/%3E%3Cline x1='115' y1='5' x2='20' y2='5' stroke='%23D4AF37' opacity='0.5'/%3E%3Cline x1='145' y1='5' x2='240' y2='5' stroke='%23D4AF37' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.85;
+}
+
+body.theme-festive-holiday .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-secondary) !important;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-festive-holiday .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+body.theme-festive-holiday .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   7. Particles – Snow circles & Twinkling Gold Stars
+   ============================================================ */
+
+/* Soft Snowflakes */
+body.theme-festive-holiday .petal--star.is-white {
+    border-radius: 50% !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    filter: blur(0.3px);
+}
+
+/* Twinkling 4-Point Gold Stars */
+body.theme-festive-holiday .petal--star:not(.is-white) {
+    clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: festive-star-twinkle 1.8s ease-in-out infinite alternate;
+    animation-delay: var(--star-delay, 0s);
+}
+
+@keyframes festive-star-twinkle {
+    0% {
+        opacity: 0.25;
+        filter: brightness(0.7) drop-shadow(0 0 2px rgba(255, 255, 255, 0.4));
+    }
+    100% {
+        opacity: 1.0;
+        filter: brightness(1.3) drop-shadow(0 0 8px rgba(var(--color-secondary-rgb), 0.9));
+    }
+}
+
+/* ============================================================
+   8. Border-hidden Override
+   ============================================================ */
+body.border-hidden.theme-festive-holiday .theme-frame,
+body.border-hidden.theme-festive-holiday .theme-texture,
+body.border-hidden.theme-festive-holiday .theme-frame-inner,
+body.border-hidden.theme-festive-holiday .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+body.border-hidden.theme-festive-holiday .hosts-container,
+body.border-hidden.theme-festive-holiday .logo-banner {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body.border-hidden.theme-festive-holiday .logo-banner::before,
+body.border-hidden.theme-festive-holiday .logo-banner::after,
+body.border-hidden.theme-festive-holiday .hosts-container::after {
+    display: none !important;
+}
+
+/* ============================================================
+   9. Play/Pause Animation State Bindings
+   ============================================================ */
+body.theme-festive-holiday .theme-texture,
+body.theme-festive-holiday .sway-top-1,
+body.theme-festive-holiday .sway-top-left,
+body.theme-festive-holiday .sway-top-right,
+body.theme-festive-holiday .sway-left-side,
+body.theme-festive-holiday .sway-right-side,
+body.theme-festive-holiday .event-title {
+    animation-play-state: var(--grid-play-state, running) !important;
+}
+
+/* ============================================================
+   10. Layout / Responsive Scaling Rules (14-inch MacBook fit)
+   ============================================================ */
+body.theme-festive-holiday .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+body.theme-festive-holiday:not(.date-hidden):not(.title-hidden):not(.logo-hidden):not(.host-hidden) .logo-banner,
+body.theme-festive-holiday:not(.date-hidden):not(.title-hidden):not(.logo-hidden):not(.host-hidden) .hosts-container {
+    transform: none !important;
+}
+
+@media (max-width: 1800px) {
+    body.theme-festive-holiday .hosts-list span {
+        font-size: calc(1.4em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-festive-holiday .hosts-container {
+        margin: 1.5vh auto 0 auto !important;
+        padding: 16px 20px !important;
+        max-width: calc(var(--host-max-width) - 100px) !important;
+    }
+
+    body.theme-festive-holiday .event-footer {
+        margin-bottom: 0.5vh;
+    }
+}
+
+/* MacBook Pro 14" (1512x945) & standard screens */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-festive-holiday .logo-banner {
+        margin-top: 28px !important;
+        margin-bottom: -6px !important;
+        padding: 8px 20px !important;
+    }
+
+    body.theme-festive-holiday .hosts-container {
+        margin: 3vh auto 0 auto !important;
+        padding: 12px 20px !important;
+        max-width: 78vw !important;
+    }
+
+    body.theme-festive-holiday .hosts-title::after {
+        margin: 8px auto 0 auto;
+        height: 16px;
+    }
+
+    body.theme-festive-holiday .event-top-label {
+        font-size: 1.35rem;
+    }
+
+    body.theme-festive-holiday .event-title {
+        font-size: 4.2rem;
+    }
+
+    body.theme-festive-holiday .event-subtitle {
+        font-size: 1.5rem;
+        margin-top: 4px;
+    }
+
+    body.theme-festive-holiday .event-date {
+        font-size: 1.1rem;
+        margin-top: 2px;
+    }
+
+    body.theme-festive-holiday .event-footer {
+        margin-bottom: 2px;
+    }
+
+    /* Scale side framing branches slightly on smaller screens */
+    body.theme-festive-holiday .sway-left-side,
+    body.theme-festive-holiday .sway-right-side {
+        width: 210px;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-festive-holiday .logo-banner {
+        scale: 1.15;
+        margin-top: 1.5vh !important;
+    }
+
+    body.theme-festive-holiday .hosts-list span {
+        font-size: calc(1.62em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-festive-holiday .hosts-container {
+        margin: 6.5vh auto 0 auto !important;
+    }
+
+    body.theme-festive-holiday .event-footer {
+        scale: 1.15;
+        margin-bottom: 1.5vh;
+    }
+}
+
+/* ============================================================
+   11. Light Background Adaptations (White/Silver Swatches)
+   ============================================================ */
+body.theme-festive-holiday.is-light-bg {
+    background:
+        radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.15) 0%, transparent 65%),
+        radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.08) 100%),
+        linear-gradient(180deg,
+            var(--color-primary) 0%,
+            var(--color-primary) 100%) !important;
+}
+
+body.theme-festive-holiday.is-light-bg .event-title {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-festive-holiday.is-light-bg .hosts-title,
+body.theme-festive-holiday.is-light-bg .hosts-list span,
+body.theme-festive-holiday.is-light-bg .event-subtitle,
+body.theme-festive-holiday.is-light-bg .event-top-label,
+body.theme-festive-holiday.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-festive-holiday.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, var(--backdrop-opacity, 0.75)) !important;
+    border-color: var(--color-dark-text) !important;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.95),
+        inset 0 0 0 3px var(--color-dark-text) !important;
+}
+
+body.theme-festive-holiday.is-light-bg .logo-banner::before,
+body.theme-festive-holiday.is-light-bg .logo-banner::after {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--color-dark-text);
+}
+
+body.theme-festive-holiday.is-light-bg .hosts-container {
+    background: rgba(255, 255, 255, var(--backdrop-opacity, 0.75)) !important;
+    border-color: var(--color-dark-text) !important;
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.95),
+        inset 0 0 0 3px var(--color-dark-text) !important;
+}
+
+body.theme-festive-holiday.is-light-bg .hosts-container::after {
+    display: none !important;
+}
+
+body.theme-festive-holiday.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}

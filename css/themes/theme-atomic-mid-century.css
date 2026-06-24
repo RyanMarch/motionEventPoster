@@ -1,0 +1,554 @@
+/**
+ * ATOMIC MID-CENTURY THEME STYLES
+ * Color palette: Vanilla Cream (#F3E5AB) · Retro Coral (#FF7E67) · Atomic Teal (#00A896)
+ */
+
+/* ============================================================
+   1. Background & repeating atomic print
+   ============================================================ */
+body.theme-atomic-mid-century {
+    position: relative;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(255, 126, 103, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 15% 85%, rgba(0, 168, 150, 0.12) 0%, transparent 60%),
+        linear-gradient(180deg,
+            var(--color-primary) 0%,
+            rgba(var(--color-primary-rgb), 0.98) 50%,
+            var(--color-primary) 100%) !important;
+}
+
+body.theme-atomic-mid-century .theme-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* URL-encoded custom 1950s atomic-age geometric print */
+    background-image: var(--atomic-texture-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g><line x1='15' y1='15' x2='105' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><g stroke='%23FF7E67' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='%2300A896' stroke='none'/><circle cx='35' cy='55' r='2' fill='%2300A896' stroke='none'/><circle cx='25' cy='45' r='2' fill='%2300A896' stroke='none'/><circle cx='45' cy='45' r='2' fill='%2300A896' stroke='none'/></g><path d='M 65 52 Q 80 20, 82 20 Q 85 20, 100 52 Q 82 37, 65 52 Z' fill='%2300A896' fill-opacity='0.1' stroke='%2300A896' stroke-width='0.8' opacity='0.3'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='%23FF7E67' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='%23FF7E67' fill-opacity='0.15' stroke='none'/></g><g transform='translate(120,0)'><line x1='15' y1='15' x2='105' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><g stroke='%23FF7E67' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='%2300A896' stroke='none'/><circle cx='35' cy='55' r='2' fill='%2300A896' stroke='none'/><circle cx='25' cy='45' r='2' fill='%2300A896' stroke='none'/><circle cx='45' cy='45' r='2' fill='%2300A896' stroke='none'/></g><path d='M 82.5 17.5 Q 82.5 35, 100 35 Q 82.5 35, 82.5 52.5 Q 82.5 35, 65 35 Q 82.5 35, 82.5 17.5 Z' fill='%2300A896' fill-opacity='0.1' stroke='%2300A896' stroke-width='0.8' opacity='0.35'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='%23FF7E67' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='%23FF7E67' fill-opacity='0.15' stroke='none'/></g><g transform='translate(0,120)'><line x1='15' y1='15' x2='105' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><g stroke='%23FF7E67' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='%2300A896' stroke='none'/><circle cx='35' cy='55' r='2' fill='%2300A896' stroke='none'/><circle cx='25' cy='45' r='2' fill='%2300A896' stroke='none'/><circle cx='45' cy='45' r='2' fill='%2300A896' stroke='none'/></g><path d='M 82.5 17.5 Q 82.5 35, 100 35 Q 82.5 35, 82.5 52.5 Q 82.5 35, 65 35 Q 82.5 35, 82.5 17.5 Z' fill='%2300A896' fill-opacity='0.1' stroke='%2300A896' stroke-width='0.8' opacity='0.35'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='%23FF7E67' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='%23FF7E67' fill-opacity='0.15' stroke='none'/></g><g transform='translate(120,120)'><line x1='15' y1='15' x2='105' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><line x1='105' y1='15' x2='15' y2='105' stroke='%23FF7E67' stroke-width='0.4' opacity='0.12'/><g stroke='%23FF7E67' stroke-width='0.8' opacity='0.22'><line x1='35' y1='35' x2='35' y2='55'/><line x1='25' y1='45' x2='45' y2='45'/><line x1='28' y1='38' x2='42' y2='52'/><line x1='42' y1='38' x2='28' y2='52'/><circle cx='35' cy='35' r='2' fill='%2300A896' stroke='none'/><circle cx='35' cy='55' r='2' fill='%2300A896' stroke='none'/><circle cx='25' cy='45' r='2' fill='%2300A896' stroke='none'/><circle cx='45' cy='45' r='2' fill='%2300A896' stroke='none'/></g><path d='M 65 52 Q 80 20, 82 20 Q 85 20, 100 52 Q 82 37, 65 52 Z' fill='%2300A896' fill-opacity='0.1' stroke='%2300A896' stroke-width='0.8' opacity='0.3'/><path d='M 80 80 L 90 80 M 85 75 L 85 85' stroke='%23FF7E67' stroke-width='0.6' opacity='0.22'/><circle cx='25' cy='85' r='3.5' fill='%23FF7E67' fill-opacity='0.15' stroke='none'/></g></svg>")) !important;
+    background-repeat: repeat;
+    background-size: 400px 400px;
+    opacity: calc(0.5 + 0.5 * var(--frame-intensity));
+    animation: atomic-pattern-drift calc(160s / var(--gust-speed, 1)) linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background-position;
+}
+
+@keyframes atomic-pattern-drift {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 200px 200px;
+    }
+}
+
+/* ============================================================
+   2. Sleek Asymmetrical Geometric Frame
+   ============================================================ */
+body.theme-atomic-mid-century .theme-frame {
+    opacity: 1;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    border: 2px solid var(--color-accent) !important;
+    border-radius: 40px 12px 40px 12px !important;
+    /* Asymmetrical rounded frame */
+    z-index: 50;
+    pointer-events: none;
+    box-shadow:
+        0 0 0 6px var(--color-primary),
+        0 0 0 9px var(--color-secondary),
+        0 12px 36px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-atomic-mid-century .frame-rail {
+    display: none !important;
+    /* Hide other theme frame rails */
+}
+
+/* Hide theme overlays when border-hidden is active */
+body.border-hidden.theme-atomic-mid-century .theme-frame,
+body.border-hidden.theme-atomic-mid-century .theme-texture,
+body.border-hidden.theme-atomic-mid-century .sway-layer {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* ============================================================
+   3. George Nelson Starburst Corner Fixtures & Boomerang Sway Layers
+   ============================================================ */
+body.theme-atomic-mid-century .sway-layer {
+    position: absolute;
+    z-index: 29;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.theme-atomic-mid-century:not(.is-loading) .sway-layer {
+    opacity: 0.95;
+}
+
+/* Starburst Fixture (Top Left) */
+body.theme-atomic-mid-century .sway-top-left {
+    display: block !important;
+    top: 4rem;
+    left: 30px;
+    width: 14vw;
+    height: 14vh;
+    min-width: 130px;
+    min-height: 130px;
+    background-image: var(--atomic-starburst-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='8' fill='%23FF7E67'/><g stroke='%232A1B14' stroke-width='1.5'><line x1='50' y1='50' x2='50' y2='10'/><line x1='50' y1='50' x2='50' y2='90'/><line x1='50' y1='50' x2='10' y2='50'/><line x1='50' y1='50' x2='90' y2='50'/><line x1='50' y1='50' x2='22' y2='22'/><line x1='50' y1='50' x2='78' y2='78'/><line x1='50' y1='50' x2='22' y2='78'/><line x1='50' y1='50' x2='78' y2='22'/></g><circle cx='50' cy='10' r='5' fill='%2300A896'/><circle cx='50' cy='90' r='5' fill='%2300A896'/><circle cx='10' cy='50' r='5' fill='%2300A896'/><circle cx='90' cy='50' r='5' fill='%2300A896'/><circle cx='22' cy='22' r='5' fill='%23FF7E67'/><circle cx='78' cy='78' r='5' fill='%23FF7E67'/><circle cx='22' cy='78' r='5' fill='%23FF7E67'/><circle cx='78' cy='22' r='5' fill='%23FF7E67'/><polygon points='50,40 52,47 59,50 52,53 50,60 48,53 41,50 48,47' fill='%23F3E5AB'/></svg>")) !important;
+    transform-origin: left top;
+    animation: atomic-fixture-sway calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Starburst Fixture (Bottom Right - moved from Top Right) */
+body.theme-atomic-mid-century .sway-bottom-right {
+    display: block !important;
+    bottom: 4rem;
+    right: 1rem;
+    width: 14vw;
+    height: 14vh;
+    min-width: 130px;
+    min-height: 130px;
+    background-image: var(--atomic-starburst-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='8' fill='%23FF7E67'/><g stroke='%232A1B14' stroke-width='1.5'><line x1='50' y1='50' x2='50' y2='10'/><line x1='50' y1='50' x2='50' y2='90'/><line x1='50' y1='50' x2='10' y2='50'/><line x1='50' y1='50' x2='90' y2='50'/><line x1='50' y1='50' x2='22' y2='22'/><line x1='50' y1='50' x2='78' y2='78'/><line x1='50' y1='50' x2='22' y2='78'/><line x1='50' y1='50' x2='78' y2='22'/></g><circle cx='50' cy='10' r='5' fill='%2300A896'/><circle cx='50' cy='90' r='5' fill='%2300A896'/><circle cx='10' cy='50' r='5' fill='%2300A896'/><circle cx='90' cy='50' r='5' fill='%2300A896'/><circle cx='22' cy='22' r='5' fill='%23FF7E67'/><circle cx='78' cy='78' r='5' fill='%23FF7E67'/><circle cx='22' cy='78' r='5' fill='%23FF7E67'/><circle cx='78' cy='22' r='5' fill='%23FF7E67'/><polygon points='50,40 52,47 59,50 52,53 50,60 48,53 41,50 48,47' fill='%23F3E5AB'/></svg>")) !important;
+    transform-origin: right bottom;
+    scale: 1.3;
+    animation: atomic-fixture-sway calc(10s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes atomic-fixture-sway {
+    0% {
+        transform: rotate(-5deg) scale(0.97);
+    }
+
+    100% {
+        transform: rotate(5deg) scale(1.03);
+    }
+}
+
+/* Mid-Century Star Shape (Top Right - Alternate Corner) */
+body.theme-atomic-mid-century .sway-top-right {
+    display: block !important;
+    top: 4rem;
+    right: 30px;
+    width: 12vw;
+    height: 12vh;
+    min-width: 110px;
+    min-height: 110px;
+    background-image: var(--atomic-star-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 54,44 95,50 54,56 50,95 46,56 5,50 46,44' fill='%2300A896'/><polygon points='50,20 52,46 78,32 53,49 80,50 53,51 78,68 52,54 50,80 48,54 22,68 47,51 20,50 47,49 22,32 48,46' fill='%23FF7E67' opacity='0.75'/><circle cx='50' cy='50' r='4' fill='%23F3E5AB'/></svg>")) !important;
+    transform-origin: right top;
+    animation: atomic-star-sway calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+/* Mid-Century Star Shape (Bottom Left - Alternate Corner) */
+body.theme-atomic-mid-century .sway-bottom-left {
+    display: block !important;
+    bottom: 4rem;
+    left: 0.3rem;
+    width: 12vw;
+    height: 12vh;
+    min-width: 110px;
+    min-height: 110px;
+    background-image: var(--atomic-star-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 54,44 95,50 54,56 50,95 46,56 5,50 46,44' fill='%2300A896'/><polygon points='50,20 52,46 78,32 53,49 80,50 53,51 78,68 52,54 50,80 48,54 22,68 47,51 20,50 47,49 22,32 48,46' fill='%23FF7E67' opacity='0.75'/><circle cx='50' cy='50' r='4' fill='%23F3E5AB'/></svg>")) !important;
+    transform-origin: left bottom;
+    scale: 1.5;
+    animation: atomic-star-sway calc(9s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes atomic-star-sway {
+    0% {
+        transform: rotate(-6deg) scale(0.95);
+    }
+
+    100% {
+        transform: rotate(6deg) scale(1.05);
+    }
+}
+
+/* Fade bottom corner decorations when QR codes are visible to prevent layout overlapping */
+body.theme-atomic-mid-century:has(#qr-soiree:not(.qr-hidden)) .sway-bottom-left,
+body.theme-atomic-mid-century:has(#qr-membership:not(.qr-hidden)) .sway-bottom-right {
+    opacity: 0.05 !important;
+    pointer-events: none;
+}
+
+/* Disable unused layers */
+body.theme-atomic-mid-century .floral-bg {
+    display: none !important;
+}
+
+body.theme-atomic-mid-century .sway-left-side,
+body.theme-atomic-mid-century .sway-right-side,
+body.theme-atomic-mid-century .sway-top-1,
+body.theme-atomic-mid-century .sway-top-2,
+body.theme-atomic-mid-century .sway-top-3,
+body.theme-atomic-mid-century .sway-bottom-3,
+body.theme-atomic-mid-century .sway-bottom-4,
+body.theme-atomic-mid-century .sway-bottom-5,
+body.theme-atomic-mid-century .sway-bottom-6,
+body.theme-atomic-mid-century .sway-bottom-7,
+body.theme-atomic-mid-century .sway-bottom-8,
+body.theme-atomic-mid-century .sway-bottom-9,
+body.theme-atomic-mid-century .sway-bottom-10 {
+    display: none !important;
+}
+
+/* ============================================================
+   4. Logo Banner – Retro Shield
+   ============================================================ */
+body.theme-atomic-mid-century .logo-banner {
+    position: relative !important;
+    background: var(--color-secondary) !important;
+    border: 2px solid var(--atomic-logo-border-color, var(--color-primary)) !important;
+    border-radius: 40px 10px 40px 10px !important;
+    transform: rotate(-1.5deg) !important;
+    margin: 2.5rem 0 -1.5rem 0 !important;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.12),
+        inset 0 0 10px rgba(255, 255, 255, 0.15) !important;
+    padding: 12px 50px;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    animation: atomic-banner-rock calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes atomic-banner-rock {
+    0% {
+        transform: rotate(-2.5deg);
+    }
+
+    100% {
+        transform: rotate(-0.5deg);
+    }
+}
+
+body.theme-atomic-mid-century .logo-text-custom {
+    font-family: var(--font-primary) !important;
+    /* Jost */
+    color: var(--atomic-logo-text-color, var(--color-primary)) !important;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 1.15rem;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ============================================================
+   5. Hosts Container Card
+   ============================================================ */
+body.theme-atomic-mid-century .hosts-container {
+    position: relative;
+    padding: 24px 30px !important;
+    margin: 2vh auto 0 auto !important;
+    max-width: calc(var(--host-max-width) - 200px) !important;
+    border-radius: 20px 8px 20px 8px !important;
+    z-index: 100;
+    border: 2px solid var(--color-accent) !important;
+    /* background: rgba(var(--color-primary-rgb), calc(var(--backdrop-opacity, 80) / 100)) !important; */
+    background-color: rgba(var(--color-primary-rgb), var(--backdrop-opacity));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08),
+        inset 0 0 12px rgba(var(--color-accent-rgb), 0.04) !important;
+}
+
+body.theme-atomic-mid-century .hosts-title {
+    font-family: var(--font-heading) !important;
+    /* Lobster Two */
+    color: var(--color-accent) !important;
+    font-size: calc(2.4rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 2px;
+    text-transform: none;
+    /* Cursive script titles look best as mixed case */
+    font-weight: normal;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+body.theme-atomic-mid-century .hosts-title::after {
+    content: '';
+    display: block;
+    width: 140px;
+    height: 12px;
+    margin: 10px auto 0 auto;
+    background-image: var(--atomic-separator-image, url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'><path d='M 10 5 Q 30 2, 50 5 T 90 5' fill='none' stroke='%23FF7E67' stroke-width='1.5'/><circle cx='50' cy='5' r='2' fill='%2300A896'/></svg>"));
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+body.theme-atomic-mid-century .hosts-list span {
+    font-family: var(--font-primary) !important;
+    /* Jost */
+    color: var(--color-text) !important;
+    /* Matches colors.text dark brown */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: none !important;
+}
+
+body.theme-atomic-mid-century .hosts-list {
+    padding: 0;
+}
+
+/* ============================================================
+   6. Event Details Typography
+   ============================================================ */
+body.theme-atomic-mid-century .event-title {
+    font-family: var(--font-display) !important;
+    /* Lobster Two */
+    color: var(--color-accent) !important;
+    /* Retro Coral */
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 var(--color-secondary),
+        /* Turquoise offset shadow */
+        4px 4px 0 rgba(42, 27, 20, 0.1) !important;
+    text-transform: none;
+}
+
+body.theme-atomic-mid-century .event-top-label {
+    font-family: var(--font-primary) !important;
+    /* Jost */
+    font-size: 1.5rem;
+    color: var(--color-text) !important;
+    text-shadow: none !important;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+body.theme-atomic-mid-century .event-subtitle {
+    font-family: var(--font-primary) !important;
+    /* Jost */
+    font-size: 1.6rem;
+    color: var(--color-text) !important;
+    /* High contrast body text */
+    text-shadow: none !important;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+body.theme-atomic-mid-century .event-date {
+    font-family: var(--font-primary) !important;
+    /* Jost */
+    font-size: 1.2rem;
+    color: var(--color-text) !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    text-shadow: none !important;
+    font-weight: 600;
+}
+
+/* ============================================================
+   7. Custom Particles (Starbursts & Boomerangs)
+   ============================================================ */
+
+/* 4-Point Starburst */
+body.theme-atomic-mid-century .petal--atomic-starburst-4 {
+    clip-path: polygon(50% 0%, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0% 50%, 42% 42%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: atomic-star-shimmer 2.2s ease-in-out infinite alternate;
+}
+
+/* 8-Point Starburst */
+body.theme-atomic-mid-century .petal--atomic-starburst-8 {
+    clip-path: polygon(50% 0%, 56% 36%, 85% 15%, 64% 44%, 100% 50%, 64% 56%, 85% 85%, 56% 64%, 50% 100%, 44% 64%, 15% 85%, 36% 56%, 0% 50%, 36% 44%, 15% 15%, 44% 36%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: atomic-star-shimmer 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes atomic-star-shimmer {
+    0% {
+        opacity: 0.3;
+        filter: brightness(0.9);
+    }
+
+    100% {
+        opacity: 0.95;
+        filter: brightness(1.25);
+    }
+}
+
+/* Boomerang Crescent Shape */
+body.theme-atomic-mid-century .petal--atomic-boomerang {
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 15 80 Q 45 15, 50 15 Q 55 15, 85 80 Q 50 50, 15 80 Z' fill='black'/></svg>") !important;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 15 80 Q 45 15, 50 15 Q 55 15, 85 80 Q 50 50, 15 80 Z' fill='black'/></svg>") !important;
+    -webkit-mask-size: contain !important;
+    mask-size: contain !important;
+    -webkit-mask-repeat: no-repeat !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-position: center !important;
+    mask-position: center !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    animation: atomic-boomerang-wobble 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes atomic-boomerang-wobble {
+    0% {
+        opacity: 0.4;
+        filter: brightness(0.85);
+    }
+
+    100% {
+        opacity: 0.9;
+        filter: brightness(1.15);
+    }
+}
+
+/* ============================================================
+   8. Countdown Overlay Override
+   ============================================================ */
+body.theme-atomic-mid-century .fullscreen-countdown .countdown-content {
+    background: var(--color-primary) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1),
+        inset 0 0 10px rgba(var(--color-accent-rgb), 0.15) !important;
+    border-radius: 12px !important;
+}
+
+body.theme-atomic-mid-century .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: var(--color-text) !important;
+}
+
+body.theme-atomic-mid-century .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.4) !important;
+}
+
+/* ============================================================
+   9. Responsive Layout & Scaling Rules
+   ============================================================ */
+body.theme-atomic-mid-century .main-content {
+    max-width: 1700px;
+    z-index: 60;
+}
+
+/* MacBook Pro 14" (1512 × 945) & Smaller laptops */
+@media (max-width: 1600px) and (max-height: 1000px) {
+    body.theme-atomic-mid-century .logo-banner {
+        margin-top: 25px !important;
+        margin-bottom: -10px !important;
+        padding: 8px 30px !important;
+    }
+
+    body.theme-atomic-mid-century .hosts-container {
+        margin: 2vh auto 0 auto !important;
+        padding: 16px 20px !important;
+        max-width: 78vw !important;
+    }
+
+    body.theme-atomic-mid-century .hosts-title::after {
+        margin: 6px auto 0 auto;
+    }
+
+    body.theme-atomic-mid-century .event-title {
+        font-size: 4.2rem;
+    }
+
+    body.theme-atomic-mid-century .event-subtitle {
+        font-size: 1.4rem;
+        margin-top: 5px;
+    }
+
+    body.theme-atomic-mid-century .event-date {
+        font-size: 1.05rem;
+    }
+
+    body.theme-atomic-mid-century .event-footer {
+        margin-bottom: 5px;
+    }
+}
+
+/* Small monitors or windowed viewports */
+@media (max-width: 1800px) {
+    body.theme-atomic-mid-century .hosts-list span {
+        font-size: calc(1.4em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-atomic-mid-century .hosts-container {
+        margin: 1.5vh auto 0 auto !important;
+        max-width: calc(var(--host-max-width) - 100px) !important;
+    }
+}
+
+/* Large Presentation Screens (1080p, 4K) */
+@media (min-width: 1801px) {
+    body.theme-atomic-mid-century .logo-banner {
+        scale: 1.15;
+        margin-top: 2vh !important;
+    }
+
+    body.theme-atomic-mid-century .hosts-list span {
+        font-size: calc(1.65em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-atomic-mid-century .hosts-container {
+        margin: 6vh auto 0 auto !important;
+    }
+
+    body.theme-atomic-mid-century .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Bind play-state controls */
+body.theme-atomic-mid-century .theme-texture,
+body.theme-atomic-mid-century .sway-top-left,
+body.theme-atomic-mid-century .sway-top-right,
+body.theme-atomic-mid-century .sway-bottom-left,
+body.theme-atomic-mid-century .sway-bottom-right,
+body.theme-atomic-mid-century .logo-banner {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+/* ============================================================
+   10. Swatch Color Adaptation Options
+   ============================================================ */
+
+/* Dark Color Swatches Adaptation (e.g. Atomic Teal primary background) */
+body.theme-atomic-mid-century:not(.is-light-bg) .event-top-label,
+body.theme-atomic-mid-century:not(.is-light-bg) .event-date,
+body.theme-atomic-mid-century:not(.is-light-bg) .event-subtitle,
+body.theme-atomic-mid-century:not(.is-light-bg) .hosts-list span {
+    color: var(--color-dark-text) !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.theme-atomic-mid-century:not(.is-light-bg) .event-title {
+    text-shadow: 2px 2px 0 var(--color-primary),
+        4px 4px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+body.theme-atomic-mid-century:not(.is-light-bg) .logo-banner {
+    background: var(--color-primary) !important;
+    border-color: var(--atomic-logo-border-color, var(--color-accent)) !important;
+}
+
+body.theme-atomic-mid-century:not(.is-light-bg) .logo-text-custom {
+    color: var(--atomic-logo-text-color, var(--color-dark-text)) !important;
+    text-shadow: none !important;
+}
+
+/* Reverse banner / logo coloring when in light mode */
+body.theme-atomic-mid-century.is-light-bg .logo-text-custom {
+    color: var(--atomic-logo-text-color, var(--color-dark-text)) !important;
+}

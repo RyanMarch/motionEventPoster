@@ -19,11 +19,7 @@ $RECYCLE.BIN/
 # Editor / IDE
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
 docs/
-.agents/
 
 # Logs
 *.log
@@ -39,3 +35,8 @@ npm-debug.log*
 .dev.vars*
 !.dev.vars.example
 !.env.example
+
+# Node / testing
+node_modules/
+package-lock.json
+coverage/

@@ -195,8 +195,10 @@ window.UIController = class UIController {
 
     isTextInput(target) {
         if (!target) return false;
-        return (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search')) || 
-               target.tagName === 'TEXTAREA' || target.isContentEditable;
+        return Boolean(
+            (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search')) ||
+            target.tagName === 'TEXTAREA' || target.isContentEditable
+        );
     }
 
     bindSliders() {
@@ -336,6 +338,7 @@ window.UIController = class UIController {
         bindToggle(this.controls.hideTitle, 'hideTitle', (v) => { this.body.classList.toggle('title-hidden', v); setTimeout(() => this.poster.optimizeLayouts(), 50); });
         bindToggle(this.controls.hideHost, 'hideHost', (v) => { this.body.classList.toggle('host-hidden', v); setTimeout(() => this.poster.optimizeLayouts(), 50); });
         bindToggle(this.controls.hideBorder, 'hideBorder', (v) => this.body.classList.toggle('border-hidden', v));
+        bindToggle(this.controls.hideValentinesHearts, 'hideValentinesHearts', (v) => this.body.classList.toggle('hide-valentines-hearts', v));
         bindToggle(this.controls.qrSoiree, 'qrSoiree', (v) => this.elements.qrSoiree.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.qrMembership, 'qrMembership', (v) => this.elements.qrMembership.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.disableAutoFullscreen, 'disableAutoFullscreen');
@@ -369,7 +372,7 @@ window.UIController = class UIController {
                 // If they are picking a custom background, we keep the current primary color
             } else {
                 this.state.bgColor = color;
-                this.state.accentColor = this.poster.deriveAccentColor(color);
+                this.state.accentColor = window.PosterUtils.deriveAccentColor(color);
             }
             
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.poster.themeManager?.resolveColorLabel();
@@ -529,6 +532,14 @@ window.UIController = class UIController {
             const isFS = !!document.fullscreenElement;
             this.body.classList.toggle('is-fullscreen', isFS);
             
+            // Force repaint on all sway layers to prevent them from freezing during fullscreen transitions
+            document.querySelectorAll('.sway-layer').forEach(el => {
+                const prev = el.style.transform;
+                el.style.transform = 'translateZ(0)';
+                el.offsetHeight; // trigger reflow
+                el.style.transform = prev;
+            });
+
             // Ensure screen size stats update immediately after layout stabilizes
             requestAnimationFrame(() => {
                 if (this.poster.isControlsPanelVisible()) {
@@ -871,15 +882,16 @@ window.UIController = class UIController {
 
         // Only set inactivity timers if auto-hide is enabled
         if (this.state.autoHideMenu) {
-            this.poster.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
-            this.poster.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
+            this.inactivityTimer = setTimeout(() => panel.classList.add('is-dimmed'), 30000);
+            this.dismissTimer = setTimeout(() => panel.classList.add('is-dismissed'), 60000);
         }
     }
 
     clearInactivityTimers() {
-        if (this.poster.inactivityTimer) clearTimeout(this.poster.inactivityTimer);
-        if (this.poster.dismissTimer) clearTimeout(this.poster.dismissTimer);
-        this.poster.inactivityTimer = null; this.poster.dismissTimer = null;
+        if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+        if (this.dismissTimer) clearTimeout(this.dismissTimer);
+        this.inactivityTimer = null;
+        this.dismissTimer = null;
     }
 
     resetGlobalInactivityTimer() {

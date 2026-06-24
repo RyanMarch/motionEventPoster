@@ -11,9 +11,8 @@
     <link rel="shortcut icon" href="assets/favicons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
 
-    <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Alfa+Slab+One&family=Archivo+Black&family=Archivo+Narrow:wght@400..700&family=Audiowide&family=Bebas+Neue&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Bungee+Inline&family=Bungee+Outline&family=Bungee+Shade&family=Cabin&family=Chewy&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fredoka:wght@300..700&family=Inter:wght@100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Jost:wght@100..900&family=Lilita+One&family=Limelight&family=Nunito:ital,wght@0,300..900;1,300..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=PT+Sans&family=Pacifico&family=Quicksand:wght@300..700&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&family=Syne:wght@400..800&family=Yellowtail&family=Yesteryear&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+Sans:ital,wght@0,100..900;1,100..900&family=Alfa+Slab+One&family=Archivo+Black&family=Archivo+Narrow:wght@400..700&family=Audiowide&family=Baloo+2:wght@400..800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Bungee&family=Bungee+Inline&family=Bungee+Outline&family=Bungee+Shade&family=Cabin&family=Chewy&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fredoka:wght@300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Jost:wght@100..900&family=Limelight&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300..900;1,300..900&family=Nunito:ital,wght@0,300..900;1,300..900&family=Orbitron:wght@400..900&family=PT+Sans&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&family=Righteous&family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&family=Rokkitt:wght@300..900&family=Crete+Round:ital@0;1&family=Space+Grotesk:wght@300..700&family=Syne:wght@400..800&family=Yellowtail&family=Yesteryear&family=Varela+Round&family=Rye&family=IM+Fell+English:ital@0;1&family=Sancreek&family=Creepster&family=Underdog&display=swap"
         rel="stylesheet">
 
     <!-- Local fonts -->
@@ -36,6 +35,21 @@
     <link rel="stylesheet" href="css/themes/theme-mardi-gras.css">
     <link rel="stylesheet" href="css/themes/theme-art-deco-gala.css?v=1.6.0">
     <link rel="stylesheet" href="css/themes/theme-minimal-elegance.css">
+    <link rel="stylesheet" href="css/themes/theme-game-console.css">
+    <link rel="stylesheet" href="css/themes/theme-casino-night.css">
+    <link rel="stylesheet" href="css/themes/theme-atomic-mid-century.css">
+    <link rel="stylesheet" href="css/themes/theme-memphis-pop.css">
+    <link rel="stylesheet" href="css/themes/theme-00-glass.css">
+    <link rel="stylesheet" href="css/themes/theme-space-odyssey.css">
+    <link rel="stylesheet" href="css/themes/theme-deep-blue.css">
+    <link rel="stylesheet" href="css/themes/theme-bistro-lounge.css">
+    <link rel="stylesheet" href="css/themes/theme-steampunk-gears.css">
+    <link rel="stylesheet" href="css/themes/theme-halloween.css">
+    <link rel="stylesheet" href="css/themes/theme-autumn-harvest.css">
+    <link rel="stylesheet" href="css/themes/theme-valentines-romance.css">
+    <link rel="stylesheet" href="css/themes/theme-festive-holiday.css">
+    <link rel="stylesheet" href="css/themes/theme-new-years-eve.css">
+    <link rel="stylesheet" href="css/themes/theme-karaoke-night.css">
     <style>
         .is-loading #controls-panel,
         .is-loading .keyboard-hint {
@@ -52,13 +66,18 @@
     <div id="mobile-blocker" class="mobile-blocker">
         <div class="blocker-content">
             <h1>Larger Display Recommended</h1>
-            <p>The motion poster is designed for large-scale displays and presentations.</p>
-            <p>View on a larger screen for the full experience.</p>
-            <p id="mobile-screen-size-info" class="status-note"></p>
-            <p>Or start the remote pairing to customize the poster.</p>
+            <p class="blocker-lead">Motion Poster is designed for large displays.</p>
+            <p>Start remote pairing to control an active poster from this device, or proceed anyway.</p>
+
             <a href="/remote/" class="btn-blocker-remote">Begin Remote Pairing</a>
+
             <div class="blocker-divider"><span>or</span></div>
+
             <button id="btn-bypass-blocker" class="btn-bypass-blocker">Proceed with current display</button>
+
+            <div class="status-container">
+                <p id="mobile-screen-size-info" class="status-note"></p>
+            </div>
         </div>
     </div>
 
@@ -329,6 +348,12 @@
                                 <span class="toggle-switch"><input type="checkbox" id="check-hide-host"><span
                                         class="slider"></span></span>
                                 <span class="toggle-label">Hide names</span>
+                            </label>
+                            <label class="toggle-control toggle-control--simple control"
+                                id="label-hide-valentines-hearts" style="display: none;">
+                                <span class="toggle-switch"><input type="checkbox"
+                                        id="check-hide-valentines-hearts"><span class="slider"></span></span>
+                                <span class="toggle-label">Hide hearts in names</span>
                             </label>
                         </div>
                     </div>

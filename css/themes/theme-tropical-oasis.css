@@ -1,0 +1,684 @@
+/**
+ * TROPICAL OASIS (POOL PARTY) THEME STYLES
+ */
+
+/* Main Background Sky/Water Gradient */
+body.theme-tropical-oasis {
+    background: linear-gradient(135deg, var(--color-primary) 0%, rgba(var(--color-primary-rgb), 0.85) 60%, var(--color-secondary) 100%) !important;
+}
+
+/* Clear solid headers */
+body.theme-tropical-oasis::before {
+    content: none !important;
+}
+
+/* Occasional full-screen swaying bottom waves */
+body.theme-tropical-oasis .content-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * var(--inset-v, 60px)) !important;
+    left: calc(-1 * var(--inset-h, 70px)) !important;
+    width: 200vw !important;
+    height: 200px;
+    background-repeat: repeat-x;
+    background-size: 50vw 200px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPjxwYXRoIGQ9Ik0gMCAxMCBRIDI1IDUgNTAgMTAgVCAxMDAgMTAgTCAxMDAgMjAgTCAwIDIwIFoiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yOCkiLz48cGF0aCBkPSJNIDAgMTMgUSAyNSA5IDUwIDEzIFQgMTAwIDEzIEwgMTAwIDEzIEwgMCAyMCBaIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTgpIi8+PC9zdmc+") !important;
+    z-index: 2; /* behind content but in front of vignette overlay */
+    pointer-events: none;
+    animation: pool-water-scroll calc(18s / var(--gust-speed, 1)) infinite linear;
+    mix-blend-mode: overlay;
+    opacity: calc(0.55 + 0.35 * var(--frame-intensity));
+    display: block !important;
+    will-change: transform;
+}
+
+@keyframes pool-water-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Repeating slow wave swells shifting light across the pool */
+body.theme-tropical-oasis .theme-texture::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0) 70%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+    animation: pool-wave-light calc(22s / var(--gust-speed, 1)) infinite linear;
+    mix-blend-mode: overlay;
+    will-change: transform;
+    transform: translate3d(-25%, -25%, 0);
+}
+
+@keyframes pool-wave-light {
+    0% { transform: translate3d(-25%, -25%, 0); }
+    100% { transform: translate3d(25%, 25%, 0); }
+}
+
+/* Pool Caustics Shimmer overlay */
+body.theme-tropical-oasis .theme-texture {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    right: -10%;
+    bottom: -10%;
+    background-image:
+        /* Water caustics shimmer */
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 40%),
+        radial-gradient(circle at 75% 80%, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0) 45%),
+        radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 35%),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 40%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    opacity: calc(0.75 + 0.25 * var(--frame-intensity));
+    animation: pool-water-caustics calc(16s / var(--gust-speed, 1)) infinite ease-in-out alternate;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    will-change: transform;
+    transform: translate3d(0, 0, 0) scale(1.02);
+}
+
+@keyframes pool-water-caustics {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg);
+    }
+    33% {
+        transform: translate3d(1.5%, -1%, 0) scale(1.04) rotate(0.5deg);
+    }
+    66% {
+        transform: translate3d(-1%, 1.5%, 0) scale(1.01) rotate(-0.5deg);
+    }
+    100% {
+        transform: translate3d(1%, 1%, 0) scale(1.03) rotate(0.8deg);
+    }
+}
+
+/* Glassy Water-Tube Frame Styling (Cleared to keep pool borderless) */
+body.theme-tropical-oasis .theme-frame {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    opacity: 1;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+body.theme-tropical-oasis .theme-frame-inner {
+    display: none !important;
+}
+
+body.theme-tropical-oasis .frame-rail {
+    display: none !important;
+}
+
+/* Hide Motif Toggle Logic */
+body.border-hidden.theme-tropical-oasis .sway-layer,
+body.border-hidden.theme-tropical-oasis .theme-frame,
+body.border-hidden.theme-tropical-oasis .theme-texture {
+    opacity: 0 !important;
+    pointer-events: none;
+    animation-play-state: paused !important;
+}
+
+/* Sway Layers - Corner and Side Decorations */
+body.theme-tropical-oasis .sway-layer {
+    position: absolute;
+    z-index: 60;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+    filter: drop-shadow(0 14px 28px rgba(1, 42, 54, 0.45));
+}
+
+body.theme-tropical-oasis:not(.is-loading) .sway-layer {
+    opacity: 0.95;
+}
+
+/* Fade bottom floats when QR codes are visible to prevent overlapping */
+body.theme-tropical-oasis:has(#qr-soiree:not(.qr-hidden)) .sway-bottom-left,
+body.theme-tropical-oasis:has(#qr-membership:not(.qr-hidden)) .sway-bottom-right {
+    opacity: 0.05 !important;
+    pointer-events: none;
+}
+
+/* Corner Monstera Leaves */
+body.theme-tropical-oasis .sway-top-left {
+    display: block !important;
+    top: -2%;
+    left: -2%;
+    width: 18vw;
+    height: 18vh;
+    min-width: 140px;
+    min-height: 140px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='leafGradMain' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231b4332'/><stop offset='100%25' stop-color='%23081c15'/></linearGradient><linearGradient id='leafGradAccent' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2340916c'/><stop offset='100%25' stop-color='%231b4332'/></linearGradient></defs><path d='M50,90 C50,90 40,65 40,50 C40,40 45,30 50,15 C55,30 60,40 60,50 C60,65 50,90 50,90 Z' fill='url(%23leafGradAccent)'/><path d='M50,15 C65,22 80,35 85,55 C82,56 70,50 63,48 C75,58 78,70 70,80 C68,75 58,68 53,62 C60,75 55,85 50,90 C45,85 40,75 47,62 C42,68 32,75 30,80 C22,70 25,58 37,48 C30,50 18,56 15,55 C20,35 35,22 50,15 Z' fill='url(%23leafGradMain)'/><path d='M50,90 Q48,50 50,15' stroke='%2352b788' stroke-width='1.8' fill='none' opacity='0.8'/></svg>") !important;
+    transform-origin: left top;
+    animation: pool-leaf-sway calc(10s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+body.theme-tropical-oasis .sway-bottom-right {
+    display: block !important;
+    bottom: -2%;
+    right: -2%;
+    width: 20vw;
+    height: 20vh;
+    min-width: 150px;
+    min-height: 150px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='leafGradMain' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231b4332'/><stop offset='100%25' stop-color='%23081c15'/></linearGradient><linearGradient id='leafGradAccent' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2340916c'/><stop offset='100%25' stop-color='%231b4332'/></linearGradient></defs><path d='M50,90 C50,90 40,65 40,50 C40,40 45,30 50,15 C55,30 60,40 60,50 C60,65 50,90 50,90 Z' fill='url(%23leafGradAccent)'/><path d='M50,15 C65,22 80,35 85,55 C82,56 70,50 63,48 C75,58 78,70 70,80 C68,75 58,68 53,62 C60,75 55,85 50,90 C45,85 40,75 47,62 C42,68 32,75 30,80 C22,70 25,58 37,48 C30,50 18,56 15,55 C20,35 35,22 50,15 Z' fill='url(%23leafGradMain)'/><path d='M50,90 Q48,50 50,15' stroke='%2352b788' stroke-width='1.8' fill='none' opacity='0.8'/></svg>") !important;
+    transform: rotate(180deg);
+    transform-origin: right bottom;
+    animation: pool-leaf-sway calc(12s / var(--gust-speed, 1)) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pool-leaf-sway {
+    0% {
+        transform: rotate(-3deg) scale(0.98);
+    }
+    100% {
+        transform: rotate(3deg) scale(1.02);
+    }
+}
+
+/* Inflatable Flamingo Floaty */
+body.theme-tropical-oasis .sway-bottom-left {
+    display: block !important;
+    bottom: 2%;
+    left: 2%;
+    width: 140px;
+    height: 140px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='bodyGrad' cx='35%25' cy='35%25' r='65%25'><stop offset='0%25' stop-color='%23ff8da1'/><stop offset='70%25' stop-color='%23ff4081'/><stop offset='100%25' stop-color='%23d81b60'/></radialGradient><linearGradient id='neckGrad' x1='0%25' y1='100%25' x2='0%25' y2='0%25'><stop offset='0%25' stop-color='%23ff4081'/><stop offset='100%25' stop-color='%23ff8da1'/></linearGradient><radialGradient id='wingGrad' cx='40%25' cy='40%25' r='60%25'><stop offset='0%25' stop-color='%23ff8da1'/><stop offset='100%25' stop-color='%23ff1744'/></radialGradient></defs><ellipse cx='50' cy='65' rx='33' ry='18' fill='url(%23bodyGrad)'/><ellipse cx='50' cy='65' rx='13' ry='7' fill='%23028090' opacity='0.35'/><path d='M22,60 C26,52 40,49 55,49 C70,49 78,54 78,60 C78,51 68,48 50,48 C30,48 22,51 22,60 Z' fill='%23ffffff' opacity='0.3'/><path d='M70,60 C76,46 80,31 75,21 C71,13 63,16 61,21 C59,25 61,29 65,28 C69,27 70,30 69,34 C67,40 62,47 57,56' fill='none' stroke='url(%23neckGrad)' stroke-width='7.5' stroke-linecap='round'/><path d='M62,21 C60,21 53,23 54,26 L58,28 Z' fill='%23111111'/><circle cx='68' cy='19' r='1.2' fill='%23111111'/><circle cx='68.5' cy='18.5' r='0.4' fill='%23ffffff'/><path d='M34,62 C28,57 24,65 31,70 C36,73 42,70 42,66 Z' fill='url(%23wingGrad)' opacity='0.9'/><path d='M32,60 C28,57 26,62 31,66' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.4'/></svg>") !important;
+    transform-origin: center bottom;
+    animation: pool-flamingo-drift calc(18s / var(--gust-speed, 1)) ease-in-out infinite;
+}
+
+/* Inflatable Swim Ring */
+body.theme-tropical-oasis .sway-top-right {
+    display: block !important;
+    top: 2%;
+    right: 2%;
+    width: 120px;
+    height: 120px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='ringGrad' cx='35%25' cy='35%25' r='65%25'><stop offset='0%25' stop-color='%23ff9f43'/><stop offset='60%25' stop-color='%23ff5252'/><stop offset='100%25' stop-color='%23c0392b'/></radialGradient><linearGradient id='highlightGrad' x1='0' y1='0' x2='0' y2='1'><stop offset='0%25' stop-color='%23ffffff' stop-opacity='0.6'/><stop offset='100%25' stop-color='%23ffffff' stop-opacity='0'/></linearGradient></defs><circle cx='50' cy='50' r='38' fill='none' stroke='url(%23ringGrad)' stroke-width='18'/><circle cx='50' cy='50' r='38' fill='none' stroke='%23ffffff' stroke-width='18.5' stroke-dasharray='12 18' opacity='0.25'/><circle cx='50' cy='50' r='29' fill='none' stroke='%23000000' stroke-width='1.5' opacity='0.15'/><circle cx='50' cy='50' r='47' fill='none' stroke='url(%23highlightGrad)' stroke-width='1.5' opacity='0.5'/><path d='M16,35 A 38 38 0 0 1 84,35' fill='none' stroke='%23ffffff' stroke-width='4' opacity='0.35' stroke-linecap='round'/><path d='M22,30 A 38 38 0 0 1 78,30' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.5' stroke-linecap='round'/></svg>") !important;
+    transform-origin: center top;
+    animation: pool-ring-drift calc(22s / var(--gust-speed, 1)) ease-in-out infinite;
+}
+
+@keyframes pool-flamingo-drift {
+    0% {
+        transform: translate(0px, 0px) rotate(-6deg) scale(0.97);
+    }
+    25% {
+        transform: translate(24px, -14px) rotate(2deg) scale(1.0);
+    }
+    50% {
+        transform: translate(8px, -28px) rotate(-3deg) scale(1.03);
+    }
+    75% {
+        transform: translate(-12px, -8px) rotate(4deg) scale(0.99);
+    }
+    100% {
+        transform: translate(0px, 0px) rotate(-6deg) scale(0.97);
+    }
+}
+
+@keyframes pool-ring-drift {
+    0% {
+        transform: translate(0px, 0px) rotate(6deg) scale(1.03);
+    }
+    30% {
+        transform: translate(-18px, 22px) rotate(-2deg) scale(0.99);
+    }
+    60% {
+        transform: translate(-28px, 8px) rotate(3deg) scale(1.01);
+    }
+    80% {
+        transform: translate(-8px, -12px) rotate(-4deg) scale(0.97);
+    }
+    100% {
+        transform: translate(0px, 0px) rotate(6deg) scale(1.03);
+    }
+}
+
+/* Retro Sunglasses */
+body.theme-tropical-oasis .sway-top-2 {
+    display: block !important;
+    top: 1.5%;
+    left: 50%;
+    width: 110px;
+    height: 66px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><defs><linearGradient id='goldGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ffe259'/><stop offset='100%25' stop-color='%23ffa751'/></linearGradient><linearGradient id='lensGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'><stop offset='0%25' stop-color='%232c3e50'/><stop offset='100%25' stop-color='%2334495e'/></linearGradient></defs><circle cx='30' cy='30' r='18' fill='url(%23goldGrad)'/><circle cx='30' cy='30' r='15.5' fill='url(%23lensGrad)'/><path d='M18,22 L26,38' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' opacity='0.45'/><path d='M22,20 L24,24' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' opacity='0.6'/><circle cx='70' cy='30' r='18' fill='url(%23goldGrad)'/><circle cx='70' cy='30' r='15.5' fill='url(%23lensGrad)'/><path d='M58,22 L66,38' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' opacity='0.45'/><path d='M62,20 L64,24' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' opacity='0.6'/><path d='M48,27 Q50,23 52,27' fill='none' stroke='url(%23goldGrad)' stroke-width='3' stroke-linecap='round'/><path d='M12,26 Q15,16 20,20' fill='none' stroke='url(%23goldGrad)' stroke-width='2' stroke-linecap='round'/><path d='M88,26 Q85,16 80,20' fill='none' stroke='url(%23goldGrad)' stroke-width='2' stroke-linecap='round'/></svg>") !important;
+    transform-origin: center top;
+    animation: pool-sunglasses-drift calc(16s / var(--gust-speed, 1)) ease-in-out infinite;
+}
+
+@keyframes pool-sunglasses-drift {
+    0% {
+        transform: translateX(-50%) translate(0px, 0px) rotate(-8deg) scale(0.95);
+    }
+    25% {
+        transform: translateX(-50%) translate(12px, 8px) rotate(1deg) scale(1.0);
+    }
+    50% {
+        transform: translateX(-50%) translate(-4px, -12px) rotate(-5deg) scale(1.05);
+    }
+    75% {
+        transform: translateX(-50%) translate(8px, -4px) rotate(4deg) scale(0.98);
+    }
+    100% {
+        transform: translateX(-50%) translate(0px, 0px) rotate(-8deg) scale(0.95);
+    }
+}
+
+/* Hide unused sway layers */
+body.theme-tropical-oasis .sway-left-side,
+body.theme-tropical-oasis .sway-right-side,
+body.theme-tropical-oasis .sway-top-1,
+body.theme-tropical-oasis .sway-top-3,
+body.theme-tropical-oasis .sway-bottom-3,
+body.theme-tropical-oasis .sway-bottom-4,
+body.theme-tropical-oasis .sway-bottom-5,
+body.theme-tropical-oasis .sway-bottom-6 {
+    display: none !important;
+}
+
+/* Surfboard Logo Banner styling */
+body.theme-tropical-oasis .logo-banner {
+    position: relative !important;
+    background: 
+        /* Subtle 3D gradient contour */
+        linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.15) 100%),
+        /* Vertical competition stripe */
+        linear-gradient(to right, var(--color-secondary) 0%, var(--color-secondary) 48.5%, #ffffff 48.5%, #ffffff 51.5%, var(--color-secondary) 51.5%, var(--color-secondary) 100%) !important;
+    border: 3px solid #ffffff;
+    /* Symmetric pointed surfboard shape (both nose and tail tapered equally) */
+    border-radius: 180px / 50% !important;
+
+    /* Use individual transform properties to allow smooth transition on translation/scale while animating rotation */
+    transform: none !important;
+    translate: 0 0;
+    scale: 1;
+    rotate: -1.5deg;
+
+    margin: 2.5rem 0 -1.5rem 0 !important;
+    box-shadow:
+        0 12px 28px rgba(0, 20, 40, 0.3),
+        inset 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 14px 60px;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    transition: translate 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                scale 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                rotate 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pool-surfboard-rock calc(8s / var(--gust-speed, 1)) ease-in-out infinite alternate;
+}
+
+@keyframes pool-surfboard-rock {
+    0% {
+        rotate: -3deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+
+body.theme-tropical-oasis .logo-banner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    right: 4%;
+    height: 3px;
+    background: #8c5a3c; /* Wooden stringer color */
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.85;
+}
+
+body.theme-tropical-oasis .logo-text-custom {
+    font-family: 'Outfit', var(--font-primary);
+    color: #ffffff !important;
+    text-shadow: 
+        -1.5px -1.5px 0 #012a36,  
+         1.5px -1.5px 0 #012a36,
+        -1.5px  1.5px 0 #012a36,
+         1.5px  1.5px 0 #012a36,
+         0px 3px 6px rgba(1, 42, 54, 0.5) !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.3rem;
+}
+
+/* Main Content Spacing & Stacking */
+body.theme-tropical-oasis .main-content {
+    max-width: 1700px;
+    padding-top: 0 !important;
+    z-index: 70 !important;
+}
+
+body.theme-tropical-oasis .event-footer {
+    z-index: 70 !important;
+}
+
+body.theme-tropical-oasis .logo-banner {
+    z-index: 80 !important;
+}
+
+body.theme-tropical-oasis .qr-code-container {
+    z-index: 75 !important;
+}
+
+body.theme-tropical-oasis .hosts-container {
+    margin-top: 0 !important;
+}
+
+/* Typography & Text Shadows (sunlight reflections style) */
+body.theme-tropical-oasis .event-title {
+    font-family: var(--font-display) !important;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 5rem;
+    letter-spacing: 1.5px;
+    text-shadow:
+        0 4px 12px rgba(0, 42, 54, 0.35),
+        0 1px 2px rgba(0, 42, 54, 0.45),
+        2px 2px 0px var(--color-secondary),
+        4px 4px 12px rgba(0, 42, 54, 0.25);
+    text-transform: uppercase;
+}
+
+body.theme-tropical-oasis .event-title::after {
+    display: none !important;
+}
+
+body.theme-tropical-oasis .event-top-label {
+    font-family: var(--font-heading) !important;
+    font-size: 2.2rem;
+    color: var(--color-accent);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 42, 54, 0.3);
+    letter-spacing: 3px;
+    margin-bottom: -10px;
+    text-transform: uppercase;
+}
+
+body.theme-tropical-oasis .event-subtitle {
+    font-family: var(--font-heading) !important;
+    font-size: 2.4rem;
+    color: var(--color-accent);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 42, 54, 0.3);
+    letter-spacing: 2.5px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+body.theme-tropical-oasis .event-date {
+    font-family: var(--font-primary);
+    font-size: 1.25rem;
+    color: #ffffff;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.95;
+    text-shadow: 0 2px 8px rgba(1, 42, 54, 0.75), 0 1px 3px rgba(1, 42, 54, 0.9) !important;
+}
+
+body.theme-tropical-oasis .hosts-title {
+    font-family: var(--font-heading) !important;
+    color: var(--color-accent);
+    font-size: calc(2.8rem * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25), 0 3px 8px rgba(1, 42, 54, 0.8) !important;
+}
+
+body.theme-tropical-oasis .hosts-list span {
+    font-family: var(--font-primary) !important;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 6px rgba(1, 42, 54, 0.7), 0 1px 2px rgba(1, 42, 54, 0.85) !important;
+}
+
+body.theme-tropical-oasis .hosts-list {
+    padding: 0;
+}
+
+/* Custom Particle Designs */
+
+/* Upward Bubbles */
+body.theme-tropical-oasis .petal--tropical-oasis-bubble,
+body.theme-tropical-oasis .petal--tropical-oasis-bubble-large {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.theme-tropical-oasis .petal--tropical-oasis-bubble::before,
+body.theme-tropical-oasis .petal--tropical-oasis-bubble-large::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0.4) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 4px rgba(255, 255, 255, 0.4),
+        inset -2px -2px 6px rgba(0, 0, 0, 0.1);
+    filter: blur(0.2px);
+    animation: bubble-wobble 3s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes bubble-wobble {
+    0% { transform: scale(0.95, 1.05) rotate(0deg); }
+    50% { transform: scale(1.05, 0.95) rotate(180deg); }
+    100% { transform: scale(0.95, 1.05) rotate(360deg); }
+}
+
+/* Colorful Beach Ball */
+body.theme-tropical-oasis .petal--tropical-oasis-beachball {
+    background: 
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%),
+        conic-gradient(
+            #ff4081 0deg 60deg, 
+            #ffffff 60deg 120deg, 
+            #00b0ff 120deg 180deg, 
+            #ffffff 180deg 240deg, 
+            #ffeb3b 240deg 300deg, 
+            #ffffff 300deg 360deg
+        ) !important;
+    border-radius: 50% !important;
+    box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.2),
+        inset 0 0 8px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Fresh Fruit Slices */
+body.theme-tropical-oasis .petal--tropical-oasis-fruit-lemon {
+    background: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23FFD54F'/><circle cx='50' cy='50' r='43' fill='%23FFFFFF'/><circle cx='50' cy='50' r='39' fill='%23FFCA28'/><line x1='50' y1='11' x2='50' y2='89' stroke='%23FFFFFF' stroke-width='3'/><line x1='11' y1='50' x2='89' y2='50' stroke='%23FFFFFF' stroke-width='3'/><line x1='22.5' y1='22.5' x2='77.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><line x1='77.5' y1='22.5' x2='22.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><circle cx='50' cy='50' r='6' fill='%23FFFFFF'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    border-radius: 50% !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-tropical-oasis .petal--tropical-oasis-fruit-orange {
+    background: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23FF7043'/><circle cx='50' cy='50' r='43' fill='%23FFFFFF'/><circle cx='50' cy='50' r='39' fill='%23F4511E'/><line x1='50' y1='11' x2='50' y2='89' stroke='%23FFFFFF' stroke-width='3'/><line x1='11' y1='50' x2='89' y2='50' stroke='%23FFFFFF' stroke-width='3'/><line x1='22.5' y1='22.5' x2='77.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><line x1='77.5' y1='22.5' x2='22.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><circle cx='50' cy='50' r='6' fill='%23FFFFFF'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    border-radius: 50% !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-tropical-oasis .petal--tropical-oasis-fruit-lime {
+    background: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2366BB6A'/><circle cx='50' cy='50' r='43' fill='%23FFFFFF'/><circle cx='50' cy='50' r='39' fill='%2343A047'/><line x1='50' y1='11' x2='50' y2='89' stroke='%23FFFFFF' stroke-width='3'/><line x1='11' y1='50' x2='89' y2='50' stroke='%23FFFFFF' stroke-width='3'/><line x1='22.5' y1='22.5' x2='77.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><line x1='77.5' y1='22.5' x2='22.5' y2='77.5' stroke='%23FFFFFF' stroke-width='3'/><circle cx='50' cy='50' r='6' fill='%23FFFFFF'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    border-radius: 50% !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Water Splash Ripple Particles */
+body.theme-tropical-oasis .petal--tropical-oasis-splash {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important; /* Force base opacity to 1 so the child animation isn't hidden */
+    overflow: visible !important;
+}
+
+body.theme-tropical-oasis .petal--tropical-oasis-splash::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130px;
+    height: 65px; /* perspective ellipse */
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    box-shadow: 
+        inset 0 0 8px rgba(255, 255, 255, 0.35),
+        0 0 8px rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) scale(0.08);
+    opacity: 0;
+    animation: pool-splash-ripple 5s ease-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes pool-splash-ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0.08);
+        opacity: 0;
+    }
+    12% {
+        transform: translate(-50%, -50%) scale(0.25);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Fullscreen Countdown Overlay override */
+body.theme-tropical-oasis .fullscreen-countdown .countdown-content {
+    background: rgba(1, 42, 54, 0.95) !important;
+    border: 2px solid var(--color-accent) !important;
+    box-shadow:
+        0 0 25px rgba(var(--color-accent-rgb), 0.4),
+        inset 0 0 15px rgba(var(--color-accent-rgb), 0.2) !important;
+    border-radius: 12px !important;
+}
+
+body.theme-tropical-oasis .fullscreen-countdown .countdown-text {
+    font-family: var(--font-primary) !important;
+    color: #ffffff !important;
+}
+
+body.theme-tropical-oasis .fullscreen-countdown #countdown-number {
+    color: var(--color-accent) !important;
+    text-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.8) !important;
+}
+
+/* Responsive & Layout Scaling Adjustments */
+@media (max-width: 1800px) {
+    body.theme-tropical-oasis .hosts-list span {
+        font-size: calc(1.45em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-tropical-oasis .hosts-container {
+        margin: 1vh 0 -3.5vh 0;
+    }
+
+    body.theme-tropical-oasis .event-footer {
+        margin-bottom: 2.5vh;
+    }
+}
+
+@media (min-width: 1801px) {
+    body.theme-tropical-oasis .hosts-list span {
+        font-size: calc(1.85em * var(--host-text-size) * var(--host-scale-base) * var(--dynamic-scale));
+    }
+
+    body.theme-tropical-oasis .hosts-container {
+        margin-top: 2.5vh;
+        margin-bottom: -2vh;
+    }
+
+    body.theme-tropical-oasis .event-footer {
+        scale: 1.15;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Connect CSS Animations to Play-State Toggles */
+body.theme-tropical-oasis .sway-top-left,
+body.theme-tropical-oasis .sway-bottom-right,
+body.theme-tropical-oasis .sway-bottom-left,
+body.theme-tropical-oasis .sway-top-right,
+body.theme-tropical-oasis .sway-top-2,
+body.theme-tropical-oasis .theme-texture,
+body.theme-tropical-oasis .logo-banner {
+    animation-play-state: var(--grid-play-state, running);
+}
+
+/* Light Background Swatch Adaptations */
+body.theme-tropical-oasis.is-light-bg .event-title {
+    color: var(--color-secondary) !important;
+    text-shadow:
+        2px 2px 0px var(--color-accent),
+        3px 3px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-tropical-oasis.is-light-bg .hosts-title,
+body.theme-tropical-oasis.is-light-bg .hosts-list span,
+body.theme-tropical-oasis.is-light-bg .event-subtitle,
+body.theme-tropical-oasis.is-light-bg .event-top-label,
+body.theme-tropical-oasis.is-light-bg .event-date {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-tropical-oasis.is-light-bg .logo-banner {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-tropical-oasis.is-light-bg .logo-text-custom {
+    color: var(--color-dark-text) !important;
+    text-shadow: none !important;
+}
+
+body.theme-tropical-oasis.host-hidden .logo-banner {
+    transform: none !important;
+    translate: 0 10vh;
+    scale: 1.5;
+}
