@@ -1397,31 +1397,6 @@
             uiLabels: { particlesPlural: 'Stars', particlesSingular: 'Star', borderToggle: 'Hide HUD', gustStrength: 'Warp Speed', fallSpeed: 'Shooting Star Speed', frameName: 'Sci-Fi HUD' }
         }),
 
-        // 'zen-garden': defineTheme({
-        //     id: 'zen-garden',
-        //     name: 'Zen Garden*',
-        //     pack: 'specialty',
-        //     icon: '🪴',
-        //     primary: '#EBE5D9',
-        //     accent: '#7A916F',
-        //     secondary: '#D4A373',
-        //     swatchName: 'Sand & Sage',
-        //     colors: { text: '#2F3E2C', darkText: '#EBE5D9' },
-        //     swatches: [
-        //         { hex: '#F4F1DE', name: 'Pale Bamboo', accent: '#81B29A', secondary: '#E07A5F' },
-        //         { hex: '#CCD5AE', name: 'Matcha', accent: '#FAEDCD', secondary: '#D4A373' }
-        //     ],
-        //     fonts: { primary: "'Lora', serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
-        //     assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
-        //     particles: [
-        //         { color: '#F2D7D5', gradient: '#E6B0AA', type: 'petal', weight: 100, speedMultiplier: 0.3, sizeMultiplier: 0.8, massMultiplier: 0.5 }
-        //     ],
-        //     frameClass: 'theme-frame--zen',
-        //     overrides: { insetV: 60, insetH: 80, hostTextSize: 1.1, gustStrength: 15, fallSpeed: 0.25, maxPetals: 15, windiness: 5, hostMaxWidth: 120, backdropOpacity: 40 },
-        //     defaults: { hostsTitle: "Guides", eventTitle: "Wellness Retreat", eventSubtitle: "Mindfulness Session", eventTopLabel: "Peaceful" },
-        //     uiLabels: { particlesPlural: 'Petals', particlesSingular: 'Petal', borderToggle: 'Hide bamboo frame', gustStrength: 'Gentle Breeze', frameName: 'Bamboo' }
-        // }),
-
         'bistro-lounge': defineTheme({
             id: 'bistro-lounge',
             name: 'Bistro Lounge',

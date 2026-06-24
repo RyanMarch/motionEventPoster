@@ -19,11 +19,7 @@ $RECYCLE.BIN/
 # Editor / IDE
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
 docs/
-.agents/
 
 # Logs
 *.log
