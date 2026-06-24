@@ -338,6 +338,7 @@ window.UIController = class UIController {
         bindToggle(this.controls.hideTitle, 'hideTitle', (v) => { this.body.classList.toggle('title-hidden', v); setTimeout(() => this.poster.optimizeLayouts(), 50); });
         bindToggle(this.controls.hideHost, 'hideHost', (v) => { this.body.classList.toggle('host-hidden', v); setTimeout(() => this.poster.optimizeLayouts(), 50); });
         bindToggle(this.controls.hideBorder, 'hideBorder', (v) => this.body.classList.toggle('border-hidden', v));
+        bindToggle(this.controls.hideValentinesHearts, 'hideValentinesHearts', (v) => this.body.classList.toggle('hide-valentines-hearts', v));
         bindToggle(this.controls.qrSoiree, 'qrSoiree', (v) => this.elements.qrSoiree.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.qrMembership, 'qrMembership', (v) => this.elements.qrMembership.classList.toggle('qr-hidden', !v));
         bindToggle(this.controls.disableAutoFullscreen, 'disableAutoFullscreen');

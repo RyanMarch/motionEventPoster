@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Motion Poster</h1>
-  <p><i>A professional, browser-based display for gala fundraisers and high-end venues.</i></p>
+  <p><i>A professional, browser-based display for gala fundraisers, parties, and event venues.</i></p>
 
   [<img src="https://img.shields.io/badge/Open_Motion_Poster-87A96B?style=for-the-badge&logoColor=white" style="scale:1.5;" alt="Live Demo" height="45" />][demo]
 
@@ -123,6 +123,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 *   **[Halloween Soiree][demo-halloween-soiree]:** Spooky pumpkins, drifting ghosts, and deep shadows with eerie glowing particles, perfect for haunted events.
 *   **[Autumn Harvest][demo-autumn-harvest]:** A cozy fall celebration with falling leaves, evoking the changing of the season and the many colors of leaves.
 *   **[New Year's Eve][demo-new-years-eve]:** A glamorous New Year's Eve celebration with gold accents, confetti, and a festive atmosphere.
+*   **[Valentines Romance][demo-valentines-romance]:** A romantic Valentine's Day celebration with red hearts, pink accents, and a festive atmosphere.
 
 ## Theme Screenshots
 
@@ -158,7 +159,7 @@ Choose from multiple themes, each with its own unique particle engine, decorativ
 | | |
 | :---: | :---: |
 | **Halloween Soiree** – *Spooky & Atmospheric* <br> [![Halloween Soiree](.github/assets/poster-halloween-soiree.avif)][demo-halloween-soiree] | **Autumn Harvest** – *Cozy Autumn Vibes* <br> [![Autumn Harvest](.github/assets/poster-autumn-harvest.avif)][demo-autumn-harvest] |
-| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | 
+| **New Year's Eve** – *Festive New Year's Eve* <br> [![New Year's Eve](.github/assets/poster-new-years-eve.avif)][demo-new-years-eve] | **Valentines Romance** – *Romantic & Festive* <br> [![Valentines Romance](.github/assets/poster-valentines-romance.avif)][demo-valentines-romance] |
 
 ## Getting Started
 1.  **Launch:** Open **[Motion Poster](https://motionposter.ryanmarch.me/)** in a large-screen web browser.
@@ -377,3 +378,4 @@ The remote control feature is designed to be completely zero-config and infrastr
 [demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
 [demo-autumn-harvest]: https://motionposter.ryanmarch.me/?theme=autumn-harvest
 [demo-new-years-eve]: https://motionposter.ryanmarch.me/?theme=new-years-eve
+[demo-valentines-romance]: https://motionposter.ryanmarch.me/?theme=valentines-romance

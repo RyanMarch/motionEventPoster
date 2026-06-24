@@ -26,6 +26,7 @@ window.DEFAULTS = {
     hideTitle: false,
     hideHost: false,
     hideBorder: false,
+    hideValentinesHearts: false,
     qrSoiree: false,
     qrMembership: false,
     isPetalsPaused: false,

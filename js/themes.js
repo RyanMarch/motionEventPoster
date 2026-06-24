@@ -1637,24 +1637,29 @@
 
         'valentines-romance': defineTheme({
             id: 'valentines-romance',
-            name: 'Valentine\'s Romance*',
+            name: 'Valentine\'s Romance',
             pack: 'holiday',
             icon: '💝',
             primary: '#4A001F',
             accent: '#FF4D6D',
             secondary: '#FF8FA3',
-            swatchName: 'Deep Rose',
+            swatchName: 'Velvet Romance',
             colors: { text: '#FFF0F3', darkText: '#2D0013' },
             swatches: [
+                { hex: '#1C0A1A', name: 'Midnight Cupid', accent: '#FF2A85', secondary: '#FFB8DE' },
+                { hex: '#4F1A3B', name: 'Wild Orchid', accent: '#EC407A', secondary: '#F8BBD0' },
+                { hex: '#2B171A', name: 'Chocolate Truffle', accent: '#C2185B', secondary: '#F8BBD0' },
+                { hex: '#241130', name: 'Amethyst Dreams', accent: '#9C27B0', secondary: '#F8BBD0' },
                 { hex: '#FFF0F3', name: 'Sweetheart Pink', accent: '#C9184A', secondary: '#FF4D6D' }
             ],
             fonts: { primary: "'Nunito', sans-serif", display: "'Playfair Display', serif", heading: "'Playfair Display', serif" },
             assets: { border: "none", sway1: "none", sway2: "none", sway3: "none", sway4: "none", swaySide: "none" },
             particles: [
-                { color: '#FF4D6D', gradient: '#C9184A', type: 'heart', weight: 70, speedMultiplier: -0.2, sizeMultiplier: 1.5, massMultiplier: 0.6 },
-                { color: '#FF8FA3', gradient: '#FF4D6D', type: 'heart', weight: 30, speedMultiplier: -0.25, sizeMultiplier: 1.0, massMultiplier: 0.5 }
+                { useThemeAccent: true, type: 'heart', weight: 70, speedMultiplier: -0.2, sizeMultiplier: 1.5, massMultiplier: 0.6 },
+                { useThemeSecondary: true, type: 'heart', weight: 30, speedMultiplier: -0.25, sizeMultiplier: 1.0, massMultiplier: 0.5 }
             ],
             frameClass: 'theme-frame--valentine',
+            flags: { syncParticleColors: true },
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.05, gustStrength: 15, fallSpeed: 0.2, maxPetals: 20, windiness: 5, hostMaxWidth: 125, backdropOpacity: 50 },
             defaults: { hostsTitle: "Couples", eventTitle: "Sweetheart Dance", eventSubtitle: "Valentine's Gala", eventTopLabel: "Romantic" },
             uiLabels: { particlesPlural: 'Hearts', particlesSingular: 'Heart', borderToggle: 'Hide lace frame', gustStrength: 'Swoon Speed', frameName: 'Lace Border' }
@@ -1736,6 +1741,7 @@
                 { color: '#FFFFFF', gradient: '#FFD700', type: 'star', weight: 20, speedMultiplier: 0.2, sizeMultiplier: 1.5, massMultiplier: 0.5, isWhite: true }
             ],
             frameClass: 'theme-frame--nye',
+            flags: { showSecondaryAsSwatch: true },
             overrides: { insetV: 60, insetH: 70, hostTextSize: 1.1, gustStrength: 35, fallSpeed: 0.5, maxPetals: 50, windiness: 15, hostMaxWidth: 130, backdropOpacity: 85 },
             defaults: { hostsTitle: "VIP Guests", eventTitle: "NYE Countdown", eventSubtitle: "Black Tie Gala", eventTopLabel: "Cheers" },
             uiLabels: { particlesPlural: 'Confetti', particlesSingular: 'Piece', borderToggle: 'Hide fireworks', gustStrength: 'Excitement', frameName: 'Firework Glow' }

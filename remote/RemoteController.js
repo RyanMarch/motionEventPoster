@@ -330,6 +330,11 @@ class RemoteController {
         if (backdropControl) {
             backdropControl.style.display = themeId === 'memphis-pop' ? 'none' : '';
         }
+
+        const valentinesHeartsControl = document.getElementById('label-hide-valentines-hearts');
+        if (valentinesHeartsControl) {
+            valentinesHeartsControl.style.display = themeId === 'valentines-romance' ? '' : 'none';
+        }
     }
 
     // ─── Connect Screen ─────────────────────────────────────────────────────
@@ -560,6 +565,7 @@ class RemoteController {
                 hideUi: 'check-hide-ui', hideLogo: 'check-hide-logo', hideDate: 'check-hide-date',
                 hideTitle: 'check-hide-title', hideHost: 'check-hide-host', hideBorder: 'check-hide-border',
                 qrSoiree: 'check-qr-soiree', qrMembership: 'check-qr-membership',
+                hideValentinesHearts: 'check-hide-valentines-hearts'
             };
             Object.entries(toggleMap).forEach(([key, id]) => {
                 if (state[key] === undefined) return;
@@ -667,6 +673,7 @@ class RemoteController {
             ['check-hide-border', 'hideBorder'],
             ['check-qr-soiree', 'qrSoiree'],
             ['check-qr-membership', 'qrMembership'],
+            ['check-hide-valentines-hearts', 'hideValentinesHearts'],
         ].forEach(([id]) => {
             const el = document.getElementById(id);
             el?.addEventListener('change', (e) => {
