@@ -40,14 +40,14 @@ window.PosterUtils = {
         if (s === 0) { r = g = b = l; } else {
             const hue2rgb = (p, q, t) => {
                 if (t < 0) t += 1; if (t > 1) t -= 1;
-                if (t < 1/6) return p + (q - p) * 6 * t;
-                if (t < 1/2) return q;
-                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                if (t < 1 / 6) return p + (q - p) * 6 * t;
+                if (t < 1 / 2) return q;
+                if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
                 return p;
             };
             const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
             const p = 2 * l - q;
-            r = hue2rgb(p, q, h + 1/3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1/3);
+            r = hue2rgb(p, q, h + 1 / 3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1 / 3);
         }
         const toHex = x => {
             const hex = Math.round(x * 255).toString(16);
@@ -65,9 +65,16 @@ window.PosterUtils = {
     deriveAccentColor(hex) {
         const rgb = this.hexToRgb(hex);
         let { h, s, l } = this.rgbToHsl(rgb.r, rgb.g, rgb.b);
-        s = Math.max(s, 0.85);
-        l = Math.max(l, 0.75);
-        if (s < 0.1) { h = 180; s = 0.8; l = 0.8; }
+
+        if (s === 0) {
+            h = 180;
+            s = 0.85;
+            l = 0.8;
+        } else {
+            s = Math.max(s, 0.85);
+            l = Math.max(l, 0.75);
+        }
+
         return this.hslToHex(h, s, l);
     },
 

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Theme Performance Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            background: #121214;
+            color: #e1e1e6;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .meta {
+            color: #8d8d99;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+
+        label {
+            font-size: 14px;
+            color: #c4c4cc;
+        }
+
+        select {
+            background: #202024;
+            color: #fff;
+            border: 1px solid #323238;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #202024;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #323238;
+        }
+
+        th {
+            background: #29292e;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th.sortable:hover {
+            background: #35353a;
+        }
+
+        tr:hover {
+            background: #29292e;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge.pass {
+            background: #015f43;
+            color: #00b37e;
+        }
+
+        .badge.fail {
+            background: #aa2f34;
+            color: #f75a68;
+        }
+
+        .fps-value {
+            font-family: monospace;
+            font-size: 15px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Theme Performance Matrix</h1>
+    <div class="meta" id="generated-time">Loading metrics...</div>
+
+    <div class="controls">
+        <div>
+            <label for="status-filter">Status: </label>
+            <select id="status-filter" onchange="renderMatrix()">
+                <option value="all">All Profiles</option>
+                <option value="passed">Passed</option>
+                <option value="failed">Failed</option>
+            </select>
+        </div>
+        <div>
+            <label for="fps-filter">Performance Limit: </label>
+            <select id="fps-filter" onchange="renderMatrix()">
+                <option value="999">All Refresh Rates</option>
+                <option value="30">&le; 30 FPS</option>
+                <option value="60">&le; 60 FPS</option>
+                <option value="90">&le; 90 FPS</option>
+            </select>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Theme Configuration</th>
+                <th id="fps-header" class="sortable" onclick="toggleSort()">Measured Frame Rate &darr;</th>
+                <th>Validation State</th>
+            </tr>
+        </thead>
+        <tbody id="matrix-rows"></tbody>
+    </table>
+
+    <script>
+        let rawData = [];
+        let sortDirection = 'desc';
+
+        async function bootDashboard() {
+            try {
+                const response = await fetch('./perf-matrix.json');
+                const playwrightData = await response.json();
+
+                rawData = [];
+                let timestamp = new Date().toISOString();
+
+                if (playwrightData.stats?.startTime) {
+                    timestamp = playwrightData.stats.startTime;
+                }
+
+                function lookForAttachments(suite) {
+                    if (suite.specs) {
+                        suite.specs.forEach(spec => {
+                            if (spec.tests && spec.tests[0] && spec.tests[0].results) {
+                                spec.tests[0].results.forEach(result => {
+                                    if (result.attachments) {
+                                        const coreData = result.attachments.find(a => a.name === 'perf-matrix-dataset');
+                                        if (coreData && coreData.body) {
+                                            const decodedBody = atob(coreData.body); // Decodes base64 back to a clean JSON string
+                                            rawData = JSON.parse(decodedBody);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    if (suite.suites) {
+                        suite.suites.forEach(lookForAttachments);
+                    }
+                }
+
+                if (playwrightData.suites) {
+                    playwrightData.suites.forEach(lookForAttachments);
+                }
+
+                if (rawData.length > 0) {
+                    rawData.forEach(item => item.timestamp = timestamp);
+                    document.getElementById('generated-time').innerText = `Data set baseline gathered: ${new Date(timestamp).toLocaleString()}`;
+                } else {
+                    document.getElementById('generated-time').innerText = "No performance profiles discovered in JSON.";
+                }
+
+                renderMatrix();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('matrix-rows').innerHTML = `<tr><td colspan="3" style="color:#f75a68;">Error parsing data map. Make sure you ran the test to generate perf-matrix.json!</td></tr>`;
+            }
+        }
+
+        function toggleSort() {
+            sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+            const header = document.getElementById('fps-header');
+            header.innerText = `Measured Frame Rate ${sortDirection === 'desc' ? '↓' : '↑'}`;
+            renderMatrix();
+        }
+
+        function renderMatrix() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const fpsFilter = parseFloat(document.getElementById('fps-filter').value);
+            const container = document.getElementById('matrix-rows');
+
+            let html = '';
+
+            let filteredData = rawData.filter(item => {
+                const matchesStatus = statusFilter === 'all' ||
+                    (statusFilter === 'passed' && item.passed) ||
+                    (statusFilter === 'failed' && !item.passed);
+
+                const matchesFps = item.fps <= fpsFilter;
+                return matchesStatus && matchesFps;
+            });
+
+            filteredData.sort((a, b) => {
+                return sortDirection === 'desc' ? b.fps - a.fps : a.fps - b.fps;
+            });
+
+            if (filteredData.length === 0) {
+                container.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#8d8d99;">No themes match the selected filter conditions.</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(item => {
+                html += `
+                    <tr>
+                        <td style="font-weight:500;">${item.theme.toUpperCase()}</td>
+                        <td class="fps-value">${item.fps > 0 ? item.fps + ' FPS' : 'No metric captures'}</td>
+                        <td>
+                            <span class="badge ${item.passed ? 'pass' : 'fail'}">
+                                ${item.passed ? 'Pass' : 'Fail'}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            bootDashboard();
+        });
+    </script>
+</body>
+
+</html>

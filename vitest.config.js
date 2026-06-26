@@ -6,5 +6,13 @@ export default defineConfig({
         setupFiles: ['./tests/setup.js'],
         include: ['tests/**/*.test.js'],
         globals: true,
+        coverage: {
+            provider: 'v8',
+            include: ['js/**'],
+            exclude: [
+                'js/vendor/**',
+                'tests/**'
+            ]
+        },
     },
 });

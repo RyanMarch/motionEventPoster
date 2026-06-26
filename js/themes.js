@@ -1772,4 +1772,5 @@
         })
 
     };
+    window.defineTheme = defineTheme;
 })();

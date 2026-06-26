@@ -125,3 +125,24 @@ describe.each(Object.entries(window.THEMES))('Theme: %s', (themeKey, theme) => {
         }
     });
 });
+
+// ---------------------------------------------------------------------------
+// Fallbacks
+// ---------------------------------------------------------------------------
+
+describe('Theme configuration fallbacks', () => {
+    it('successfully applies default fallback values when properties are omitted', () => {
+        const minimalConfig = {
+            primary: '#000000',
+            accent: '#ffffff',
+            secondary: '#cccccc'
+        };
+
+        const result = window.defineTheme(minimalConfig);
+
+        expect(result.pack).toBe('standard');
+        expect(result.colors.darkText).toBe('#1a1c1e');
+        expect(result.swatches[0].name).toBe('Original');
+        expect(result.swatches).toHaveLength(1);
+    });
+});
