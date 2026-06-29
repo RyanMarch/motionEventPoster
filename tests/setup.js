@@ -27,3 +27,4 @@ await import('../js/modules/ParticleEngine.js');
 await import('../js/modules/ThemeManager.js');
 await import('../js/modules/UIController.js');
 await import('../js/modules/RemoteManager.js');
+await import('../js/EventPoster.js');

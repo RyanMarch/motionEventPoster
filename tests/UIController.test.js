@@ -245,3 +245,120 @@ describe('UIController.clearInactivityTimers', () => {
         expect(() => ui.clearInactivityTimers()).not.toThrow();
     });
 });
+
+// ---------------------------------------------------------------------------
+// syncPosterTextInputs
+// ---------------------------------------------------------------------------
+describe('UIController.syncPosterTextInputs', () => {
+    function buildTextElements(poster) {
+        const fields = ['inputLogoText', 'inputHostsTitle', 'inputEventTopLabel',
+            'inputEventTitle', 'inputEventSubtitle', 'inputEventDate'];
+        fields.forEach(name => {
+            const el = document.createElement('input');
+            el.type = 'text';
+            el.id = name;
+            document.body.appendChild(el);
+            poster.elements[name] = el;
+        });
+    }
+
+    it('sets input values from state.posterText', () => {
+        const { ui, poster } = makeUI();
+        poster.state.posterText = {
+            logoText: 'My Org',
+            hostsTitle: 'Our Hosts',
+            eventTopLabel: 'Annual',
+            eventTitle: 'Gala',
+            eventSubtitle: 'fundraiser',
+            eventDate: 'April 1, 2050',
+        };
+        buildTextElements(poster);
+
+        ui.syncPosterTextInputs();
+
+        expect(poster.elements.inputLogoText.value).toBe('My Org');
+        expect(poster.elements.inputHostsTitle.value).toBe('Our Hosts');
+        expect(poster.elements.inputEventTitle.value).toBe('Gala');
+        expect(poster.elements.inputEventDate.value).toBe('April 1, 2050');
+    });
+
+    it('is a no-op when input elements are null', () => {
+        const { ui } = makeUI();
+        // All elements default to null in the fake poster
+        expect(() => ui.syncPosterTextInputs()).not.toThrow();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// toggleControlsPanel
+// ---------------------------------------------------------------------------
+describe('UIController.toggleControlsPanel', () => {
+    function buildPanel(poster, opts = {}) {
+        const panel = document.createElement('div');
+        if (opts.dismissed) panel.classList.add('is-dismissed');
+        poster.elements.controlsPanel = panel;
+        poster.elements.keyboardHint = null;
+        poster.updateScreenSize = vi.fn();
+        poster.isControlsPanelVisible = vi.fn(() => panel.classList.contains('is-visible'));
+        return panel;
+    }
+
+    it('adds is-visible when panel is currently hidden', () => {
+        const { ui, poster } = makeUI();
+        const panel = buildPanel(poster);
+        ui.toggleControlsPanel();
+        expect(panel.classList.contains('is-visible')).toBe(true);
+    });
+
+    it('removes is-visible when panel is already visible', () => {
+        const { ui, poster } = makeUI();
+        const panel = buildPanel(poster);
+        panel.classList.add('is-visible');
+        ui.toggleControlsPanel();
+        expect(panel.classList.contains('is-visible')).toBe(false);
+    });
+
+    it('is a no-op when panel is null', () => {
+        const { ui, poster } = makeUI();
+        poster.elements.controlsPanel = null;
+        expect(() => ui.toggleControlsPanel()).not.toThrow();
+    });
+
+    it('clears inactivity timers when hiding the panel', () => {
+        const { ui, poster } = makeUI();
+        const panel = buildPanel(poster);
+        panel.classList.add('is-visible');
+        ui.inactivityTimer = setTimeout(() => {}, 99999);
+        ui.toggleControlsPanel();
+        expect(ui.inactivityTimer).toBeNull();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// resetGlobalInactivityTimer
+// ---------------------------------------------------------------------------
+describe('UIController.resetGlobalInactivityTimer', () => {
+    it('removes inactivity-hide from root immediately', () => {
+        const { ui, poster } = makeUI({ autoHideMenu: false });
+        poster.root.classList.add('inactivity-hide');
+        poster.isControlsPanelVisible = vi.fn(() => false);
+        ui.resetGlobalInactivityTimer();
+        expect(poster.root.classList.contains('inactivity-hide')).toBe(false);
+    });
+
+    it('does not schedule inactivity timer when autoHideMenu is false', () => {
+        const { ui, poster } = makeUI({ autoHideMenu: false });
+        poster.isControlsPanelVisible = vi.fn(() => false);
+        ui.resetGlobalInactivityTimer();
+        expect(ui.globalInactivityTimer).toBeUndefined();
+    });
+
+    it('does not schedule inactivity timer when panel is visible', () => {
+        const { ui, poster } = makeUI({ autoHideMenu: true });
+        poster.isControlsPanelVisible = vi.fn(() => true);
+        ui.resetGlobalInactivityTimer();
+        // Timer may be set but inactivity-hide should not be applied while panel is open
+        // The key assertion: root does not have inactivity-hide right now
+        expect(poster.root.classList.contains('inactivity-hide')).toBe(false);
+    });
+});

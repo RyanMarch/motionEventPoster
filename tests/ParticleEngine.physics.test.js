@@ -230,3 +230,60 @@ describe('ParticleEngine.updatePhysics', () => {
         expect(petal.element.style.display).toBe('none');
     });
 });
+
+// ---------------------------------------------------------------------------
+// adjustAmbientPetals — petal removal path
+// ---------------------------------------------------------------------------
+describe('ParticleEngine.adjustAmbientPetals — removal', () => {
+    it('removes excess petal DOM elements from the layer when shrinking', () => {
+        const poster = makeFakePoster({ maxPetals: 4 });
+        const engine = new window.ParticleEngine(poster);
+        engine.adjustAmbientPetals(); // creates 4
+
+        // Capture all existing elements before shrink
+        const allEls = poster.state.petals.map(p => p.element);
+        const removedEl = allEls[allEls.length - 1]; // pop() removes last
+        const parent = removedEl.parentNode;
+
+        poster.state.maxPetals = 3;
+        engine.adjustAmbientPetals();
+
+        expect(poster.state.petals).toHaveLength(3);
+        // The popped element should no longer be in the DOM
+        expect(parent?.contains(removedEl)).toBe(false);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// updateParticleColors
+// ---------------------------------------------------------------------------
+describe('ParticleEngine.updateParticleColors', () => {
+    it('updates background style on particles that use the theme primary color', () => {
+        // Find a theme whose particles use useThemePrimary
+        const posterForTheme = makeFakePoster({ bgColor: '#ff0000' });
+        // Override petalTypes so at least one particle uses useThemePrimary
+        const customType = { type: 'petal', color: '#aabbcc', gradient: '#112233',
+            weight: 10, sizeMultiplier: 1, shape: '50%', useThemePrimary: true };
+        posterForTheme.petalTypes = [customType];
+        posterForTheme.theme.particles = [customType];
+
+        const engine = new window.ParticleEngine(posterForTheme);
+        engine.adjustAmbientPetals();
+
+        const before = posterForTheme.state.petals[0].element.style.background;
+        posterForTheme.state.bgColor = '#00ff00';
+        engine.updateParticleColors();
+
+        const after = posterForTheme.state.petals[0].element.style.background;
+        // Background should now reference the new color
+        expect(after).not.toBe('');
+        // Green should appear in the new background, not the original red
+        expect(after.toLowerCase()).not.toBe(before.toLowerCase());
+    });
+
+    it('does not throw when state.petals is empty', () => {
+        const poster = makeFakePoster({ maxPetals: 0, petals: [] });
+        const engine = new window.ParticleEngine(poster);
+        expect(() => engine.updateParticleColors()).not.toThrow();
+    });
+});

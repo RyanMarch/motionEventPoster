@@ -416,3 +416,231 @@ describe('RemoteManager._showModalStep', () => {
         expect(msgEl?.textContent).toBe('Something went wrong');
     });
 });
+
+// ---------------------------------------------------------------------------
+// _applyToggle
+// ---------------------------------------------------------------------------
+describe('RemoteManager._applyToggle', () => {
+    afterEach(() => {
+        document.getElementById('test-toggle')?.remove();
+    });
+
+    it('dispatches a change event on the target checkbox', () => {
+        const { rm } = makeRM();
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'test-toggle';
+        checkbox.checked = false;
+        document.body.appendChild(checkbox);
+
+        let fired = false;
+        checkbox.addEventListener('change', () => { fired = true; });
+
+        rm._applyToggle({ id: 'test-toggle', checked: true });
+        expect(checkbox.checked).toBe(true);
+        expect(fired).toBe(true);
+    });
+
+    it('is a no-op when the element does not exist', () => {
+        const { rm } = makeRM();
+        expect(() => rm._applyToggle({ id: 'nonexistent-toggle', checked: true })).not.toThrow();
+    });
+
+    it('is a no-op when checked state already matches', () => {
+        const { rm } = makeRM();
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'test-toggle';
+        checkbox.checked = true;
+        document.body.appendChild(checkbox);
+
+        let fired = false;
+        checkbox.addEventListener('change', () => { fired = true; });
+
+        rm._applyToggle({ id: 'test-toggle', checked: true });
+        expect(fired).toBe(false);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _applyRadio
+// ---------------------------------------------------------------------------
+describe('RemoteManager._applyRadio', () => {
+    afterEach(() => {
+        document.querySelectorAll('input[name="test-radio"]').forEach(el => el.remove());
+    });
+
+    it('checks the matching radio and dispatches change', () => {
+        const { rm } = makeRM();
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'test-radio';
+        radio.value = 'optionA';
+        radio.checked = false;
+        document.body.appendChild(radio);
+
+        let fired = false;
+        radio.addEventListener('change', () => { fired = true; });
+
+        rm._applyRadio({ name: 'test-radio', value: 'optionA' });
+        expect(radio.checked).toBe(true);
+        expect(fired).toBe(true);
+    });
+
+    it('is a no-op when radio is already checked', () => {
+        const { rm } = makeRM();
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'test-radio';
+        radio.value = 'optionB';
+        radio.checked = true;
+        document.body.appendChild(radio);
+
+        let fired = false;
+        radio.addEventListener('change', () => { fired = true; });
+
+        rm._applyRadio({ name: 'test-radio', value: 'optionB' });
+        expect(fired).toBe(false);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _applyColor
+// ---------------------------------------------------------------------------
+describe('RemoteManager._applyColor', () => {
+    afterEach(() => {
+        document.getElementById('picker-bg-color')?.remove();
+    });
+
+    it('sets picker value and dispatches input + change events', () => {
+        const { rm } = makeRM();
+        const picker = document.createElement('input');
+        picker.type = 'color';
+        picker.id = 'picker-bg-color';
+        document.body.appendChild(picker);
+
+        let inputFired = false;
+        let changeFired = false;
+        picker.addEventListener('input', () => { inputFired = true; });
+        picker.addEventListener('change', () => { changeFired = true; });
+
+        rm._applyColor({ value: '#ff0000' });
+        expect(picker.value).toBe('#ff0000');
+        expect(inputFired).toBe(true);
+        expect(changeFired).toBe(true);
+    });
+
+    it('is a no-op when picker is absent', () => {
+        const { rm } = makeRM();
+        expect(() => rm._applyColor({ value: '#ff0000' })).not.toThrow();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _applyText
+// ---------------------------------------------------------------------------
+describe('RemoteManager._applyText', () => {
+    afterEach(() => {
+        ['input-event-title', 'input-hosts-title'].forEach(id => {
+            document.getElementById(id)?.remove();
+        });
+    });
+
+    it('sets value and fires input event on the mapped element', () => {
+        const { rm } = makeRM();
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'input-event-title';
+        document.body.appendChild(input);
+
+        let fired = false;
+        input.addEventListener('input', () => { fired = true; });
+
+        rm._applyText({ key: 'eventTitle', value: 'Spring Gala' });
+        expect(input.value).toBe('Spring Gala');
+        expect(fired).toBe(true);
+    });
+
+    it('is a no-op for an unknown key', () => {
+        const { rm } = makeRM();
+        expect(() => rm._applyText({ key: 'unknownField', value: 'test' })).not.toThrow();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _applyButton
+// ---------------------------------------------------------------------------
+describe('RemoteManager._applyButton', () => {
+    afterEach(() => {
+        document.getElementById('btn-test-action')?.remove();
+    });
+
+    it('clicks the element with the given id', () => {
+        const { rm } = makeRM();
+        const btn = document.createElement('button');
+        btn.id = 'btn-test-action';
+        document.body.appendChild(btn);
+
+        let clicked = false;
+        btn.addEventListener('click', () => { clicked = true; });
+
+        rm._applyButton({ id: 'btn-test-action' });
+        expect(clicked).toBe(true);
+    });
+
+    it('is a no-op when element is absent', () => {
+        const { rm } = makeRM();
+        expect(() => rm._applyButton({ id: 'nonexistent-btn' })).not.toThrow();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _updateBadge
+// ---------------------------------------------------------------------------
+describe('RemoteManager._updateBadge', () => {
+    it('sets connected class and text for "connected" state', () => {
+        const { rm } = makeRM();
+        const badge = document.createElement('span');
+        rm._statusBadgeEl = badge;
+
+        rm._updateBadge('connected');
+        expect(badge.className).toContain('remote-status-badge--connected');
+        expect(badge.textContent).toContain('Connected');
+        expect(badge.style.display).toBe('');
+    });
+
+    it('sets disconnected class and text for "disconnected" state', () => {
+        const { rm } = makeRM();
+        const badge = document.createElement('span');
+        rm._statusBadgeEl = badge;
+
+        rm._updateBadge('disconnected');
+        expect(badge.className).toContain('remote-status-badge--disconnected');
+        expect(badge.textContent).toContain('Not Connected');
+    });
+
+    it('is a no-op when _statusBadgeEl is null', () => {
+        const { rm } = makeRM();
+        rm._statusBadgeEl = null;
+        expect(() => rm._updateBadge('connected')).not.toThrow();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// _closeModal
+// ---------------------------------------------------------------------------
+describe('RemoteManager._closeModal', () => {
+    it('removes is-open from _modalEl', () => {
+        const { rm } = makeRM();
+        rm._modalEl.classList.add('is-open');
+        rm._closeModal();
+        expect(rm._modalEl.classList.contains('is-open')).toBe(false);
+    });
+
+    it('clears the auto-dismiss timer', () => {
+        const { rm } = makeRM();
+        rm._autoDismissTimer = setTimeout(() => {}, 99999);
+        rm._closeModal();
+        expect(rm._autoDismissTimer).toBeNull();
+    });
+});
