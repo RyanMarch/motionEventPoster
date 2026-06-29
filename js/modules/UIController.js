@@ -57,7 +57,7 @@ window.UIController = class UIController {
                         this.poster.updateMobileScreenSizeInfo();
                     }
                 });
-            }, 200); 
+            }, 200);
         });
 
         document.addEventListener('visibilitychange', async () => {
@@ -110,7 +110,7 @@ window.UIController = class UIController {
         document.addEventListener('keydown', (event) => {
             const key = event.key;
             const lowerKey = key.toLowerCase();
-            
+
             // Handle Factory Reset specifically (hold behavior)
             if (key === '\\' && !this.isTextInput(event.target)) {
                 this.poster.handleFactoryResetKeyDown(event);
@@ -137,9 +137,9 @@ window.UIController = class UIController {
             if (this.isTextInput(event.target)) return;
 
             // Special Case: Alt+S for reload (Developer shortcut, not in config)
-            if (event.code === 'KeyS' && event.altKey) { 
-                event.preventDefault(); 
-                this.poster.reloadStyles(); 
+            if (event.code === 'KeyS' && event.altKey) {
+                event.preventDefault();
+                this.poster.reloadStyles();
                 return;
             }
 
@@ -168,25 +168,25 @@ window.UIController = class UIController {
     initShortcutsUI() {
         const container = document.getElementById('shortcut-list');
         if (!container) return;
-        
+
         container.innerHTML = '';
         // Use a Set to avoid duplicate entries for same action (like ? and /)
         const seenActions = new Set();
-        
+
         window.SHORTCUT_CONFIGS.forEach(config => {
             if (seenActions.has(config.action) || config.action === 'closeAll' || config.action === 'factoryReset') return;
             seenActions.add(config.action);
 
             const item = document.createElement('div');
             item.className = 'shortcut-item';
-            
+
             const kbd = document.createElement('kbd');
             kbd.textContent = config.label;
-            
+
             const desc = document.createElement('span');
             desc.className = 'shortcut-desc';
             desc.textContent = config.desc;
-            
+
             item.appendChild(kbd);
             item.appendChild(desc);
             container.appendChild(item);
@@ -195,15 +195,16 @@ window.UIController = class UIController {
 
     isTextInput(target) {
         if (!target) return false;
+        const TEXT_TYPES = new Set(['text', 'search', 'url', 'email', 'tel', 'number', 'password']);
         return Boolean(
-            (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search')) ||
+            (target.tagName === 'INPUT' && TEXT_TYPES.has(target.type)) ||
             target.tagName === 'TEXTAREA' || target.isContentEditable
         );
     }
 
     bindSliders() {
         const sliderConfigs = window.SLIDER_CONFIGS || [];
-        
+
         sliderConfigs.forEach(config => {
             const slider = document.getElementById(`slider-${config.id}`);
             const display = document.getElementById(`val-${config.id}`);
@@ -211,31 +212,31 @@ window.UIController = class UIController {
 
             let rafId = null;
             const startSlide = () => this.body.classList.add('is-sliding');
-            const endSlide = () => { 
-                if (rafId) { cancelAnimationFrame(rafId); rafId = null; } 
-                this.body.classList.remove('is-sliding'); 
-                this.poster.saveSettings(); 
+            const endSlide = () => {
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                this.body.classList.remove('is-sliding');
+                this.poster.saveSettings();
             };
 
             slider.addEventListener('pointerdown', startSlide);
             slider.addEventListener('input', (e) => {
                 const v = e.target.value;
                 const numVal = config.step >= 1 ? parseInt(v, 10) : parseFloat(v);
-                
+
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
                     // Update state
                     this.state[config.stateKey] = numVal;
-                    
+
                     // Update display label
                     if (display) display.textContent = `${v}${config.suffix || ''}`;
-                    
+
                     // Execute specific side effects
                     if (config.id === 'max-petals') this.poster.particleEngine?.adjustAmbientPetals();
                     if (config.id === 'gust-strength') this.poster.themeManager?.syncWind();
                     if (['host-text-size', 'host-max-width', 'inset-v', 'inset-h'].includes(config.id)) this.poster.syncLayout();
                     if (config.id === 'backdrop-opacity') this.poster.themeManager?.syncBackdrop();
-                    
+
                     // Remote sync
                     if (!window.remoteManager?._applying) {
                         window.remoteManager?.send({ type: 'slider', id: config.id, value: numVal });
@@ -252,7 +253,7 @@ window.UIController = class UIController {
 
     initSlidersUI() {
         const sliderConfigs = window.SLIDER_CONFIGS || [];
-        
+
         sliderConfigs.forEach(config => {
             const section = document.getElementById(config.sectionId);
             if (!section) return;
@@ -272,30 +273,30 @@ window.UIController = class UIController {
 
             const control = document.createElement('div');
             control.className = 'control';
-            
+
             // Special case for extra-ribbons control position (if needed)
             if (config.id === 'backdrop-opacity') control.style.marginBottom = '12px';
 
             const label = document.createElement('label');
             label.htmlFor = `slider-${config.id}`;
             label.textContent = `${config.label} `;
-            
+
             const span = document.createElement('span');
             span.id = `val-${config.id}`;
             span.textContent = '—';
-            
+
             label.appendChild(span);
-            
+
             const input = document.createElement('input');
             input.type = 'range';
             input.id = `slider-${config.id}`;
             input.min = config.min;
             input.max = config.max;
             input.step = config.step || 1;
-            
+
             control.appendChild(label);
             control.appendChild(input);
-            
+
             // Prepend backdrop-opacity to be on the left of extra-ribbons
             if (config.id === 'backdrop-opacity') {
                 container.prepend(control);
@@ -309,16 +310,16 @@ window.UIController = class UIController {
         this.controls.hostLayoutRadios?.forEach(radio => {
             radio.addEventListener('change', (e) => { if (e.target.checked) { this.state.hostLayout = e.target.value; this.poster.applyHostLayout(this.state.hostLayout); this.poster.saveSettings(); } });
         });
-        
+
         this.controls.fpsCapRadios?.forEach(radio => {
-            radio.addEventListener('change', (e) => { 
-                if (e.target.checked) { 
-                    this.state.fpsCap = Number(e.target.value); 
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    this.state.fpsCap = Number(e.target.value);
                     // Reset timing to prevent sudden jumps or logic drifts
                     this.state.lastFrameExecutionTime = 0;
                     this.state.lastPhysicsTime = 0;
-                    this.poster.saveSettings(); 
-                } 
+                    this.poster.saveSettings();
+                }
             });
         });
         const bindToggle = (ctrl, key, callback) => {
@@ -366,7 +367,7 @@ window.UIController = class UIController {
         this.elements.bgColorPicker?.addEventListener('input', (e) => {
             const color = e.target.value;
             const isAccentBg = this.poster.theme.flags?.useAccentAsBackground;
-            
+
             if (isAccentBg) {
                 this.state.accentColor = color;
                 // If they are picking a custom background, we keep the current primary color
@@ -374,7 +375,7 @@ window.UIController = class UIController {
                 this.state.bgColor = color;
                 this.state.accentColor = window.PosterUtils.deriveAccentColor(color);
             }
-            
+
             if (this.elements.bgColorVal) this.elements.bgColorVal.textContent = this.poster.themeManager?.resolveColorLabel();
             this.poster.themeManager?.syncBackdrop();
             this.poster.themeManager?.updateSwatchActiveState();
@@ -487,7 +488,7 @@ window.UIController = class UIController {
         };
         bindQR(this.elements.btnUploadQrLeft, this.elements.inputQrLeftFile, 'qrLeftData', 'qrSoiree', this.controls.qrSoiree, this.elements.qrSoiree);
         bindQR(this.elements.btnUploadQrRight, this.elements.inputQrRightFile, 'qrRightData', 'qrMembership', this.controls.qrMembership, this.elements.qrMembership);
-        
+
         this.elements.btnClearQrLeft?.addEventListener('click', () => {
             this.state.posterText.qrLeftData = null; this.state.qrSoiree = false; this.controls.qrSoiree.checked = false; this.elements.qrSoiree.classList.add('qr-hidden');
             this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
@@ -496,6 +497,62 @@ window.UIController = class UIController {
             this.state.posterText.qrRightData = null; this.state.qrMembership = false; this.controls.qrMembership.checked = false; this.elements.qrMembership.classList.add('qr-hidden');
             this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
         });
+
+        this.bindQRApi(
+            this.elements.inputQrLeftUrl,
+            this.elements.btnGenQrLeft,
+            this.elements.qrLeftApiStatus,
+            'qrLeftData', 'qrSoiree', this.controls.qrSoiree, this.elements.qrSoiree
+        );
+        this.bindQRApi(
+            this.elements.inputQrRightUrl,
+            this.elements.btnGenQrRight,
+            this.elements.qrRightApiStatus,
+            'qrRightData', 'qrMembership', this.controls.qrMembership, this.elements.qrMembership
+        );
+    }
+
+    async bindQRApi(input, btn, statusEl, dataKey, stateKey, ctrl, posterEl) {
+        if (!input || !btn) return;
+
+        const QR_API = 'https://qrmaker.ryanmarch.me/api/qr';
+
+        const generate = async () => {
+            const url = input.value.trim();
+            if (!url) return;
+
+            statusEl?.classList.remove('is-hidden', 'qr-api-status--error');
+            statusEl && (statusEl.textContent = 'Generating…');
+            btn.disabled = true;
+
+            try {
+                const apiUrl = `${QR_API}?${new URLSearchParams({ content: url, format: 'base64', size: '512', ecl: 'Q', margin: '0' })}`;
+                const res = await fetch(apiUrl);
+                if (!res.ok) throw new Error(`API error ${res.status}`);
+                const json = await res.json();
+                const dataUrl = json.data;
+                if (!dataUrl) throw new Error('No data in response');
+
+                this.state.posterText[dataKey] = dataUrl;
+                this.state[stateKey] = true;
+                if (ctrl) ctrl.checked = true;
+                posterEl?.classList.remove('qr-hidden');
+                this.poster.savePosterText();
+                this.poster.saveSettings();
+                this.poster.applyPosterText();
+
+                statusEl && (statusEl.textContent = '✓ QR code applied');
+                setTimeout(() => statusEl?.classList.add('is-hidden'), 2500);
+            } catch (err) {
+                statusEl?.classList.add('qr-api-status--error');
+                statusEl && (statusEl.textContent = 'Failed — check the URL and try again.');
+            } finally {
+                btn.disabled = false;
+            }
+        };
+
+        btn.addEventListener('click', generate);
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); generate(); } });
     }
 
     syncPosterTextInputs() {
@@ -506,7 +563,7 @@ window.UIController = class UIController {
         if (this.elements.inputEventTitle) this.elements.inputEventTitle.value = pt.eventTitle;
         if (this.elements.inputEventSubtitle) this.elements.inputEventSubtitle.value = pt.eventSubtitle;
         if (this.elements.inputEventDate) this.elements.inputEventDate.value = pt.eventDate;
-        
+
         // Handle auto-grow for textareas
         [this.elements.inputLogoText].forEach(el => {
             if (el && el.tagName === 'TEXTAREA') this.poster.autoGrowTextarea(el);
@@ -531,7 +588,7 @@ window.UIController = class UIController {
         document.addEventListener('fullscreenchange', () => {
             const isFS = !!document.fullscreenElement;
             this.body.classList.toggle('is-fullscreen', isFS);
-            
+
             // Force repaint on all sway layers to prevent them from freezing during fullscreen transitions
             document.querySelectorAll('.sway-layer').forEach(el => {
                 const prev = el.style.transform;
@@ -547,21 +604,21 @@ window.UIController = class UIController {
                 }
             });
 
-            if (isFS) { 
-                this.state.fullscreenStartTime = Date.now(); 
-                this.state.totalFullscreenSeconds = 0; 
-                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = 'Fullscreen'; 
-                this.poster.cancelFullscreenCountdown(false, false); 
-            } else { 
-                if (this.state.fullscreenStartTime) { 
-                    this.state.totalFullscreenSeconds = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000); 
-                    this.state.fullscreenStartTime = null; 
+            if (isFS) {
+                this.state.fullscreenStartTime = Date.now();
+                this.state.totalFullscreenSeconds = 0;
+                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = 'Fullscreen';
+                this.poster.cancelFullscreenCountdown(false, false);
+            } else {
+                if (this.state.fullscreenStartTime) {
+                    this.state.totalFullscreenSeconds = Math.floor((Date.now() - this.state.fullscreenStartTime) / 1000);
+                    this.state.fullscreenStartTime = null;
                     this.poster.updateTimerDisplay();
                 }
-                this.elements.fullscreenToggle.checked = false; 
-                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = '[F]ullscreen'; 
-                this.poster.releaseWakeLock(); 
-                
+                this.elements.fullscreenToggle.checked = false;
+                if (this.elements.fullscreenLabel) this.elements.fullscreenLabel.textContent = '[F]ullscreen';
+                this.poster.releaseWakeLock();
+
                 // Only clear the intent if the page is still active/visible.
                 // If it's hidden or unloading, we assume it's a refresh/re-layout 
                 // and preserve the intent for auto-recovery.
@@ -688,19 +745,19 @@ window.UIController = class UIController {
     bindOutsideClickDismiss() {
         document.addEventListener('pointerdown', (e) => {
             if (!this.poster.isControlsPanelVisible()) return;
-            
+
             // If auto-hide is OFF, we do NOT dismiss by clicking outside
             if (!this.state.autoHideMenu || this.state.autoHideMenu === 'false') return;
 
             const panel = this.elements.controlsPanel;
             if (panel.contains(e.target)) return;
-            
+
             // Clicking the close button is handled by its own listener
             if (e.target.closest('#btn-close-panel')) return;
 
-            if (panel.classList.contains('is-dismissed')) { 
-                panel.classList.remove('is-visible', 'is-dimmed', 'is-dismissed'); 
-                this.clearInactivityTimers(); 
+            if (panel.classList.contains('is-dismissed')) {
+                panel.classList.remove('is-visible', 'is-dimmed', 'is-dismissed');
+                this.clearInactivityTimers();
             } else {
                 this.toggleControlsPanel();
             }
@@ -839,7 +896,7 @@ window.UIController = class UIController {
     initKeyboardNavigation() {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') { this.state.isKeyboardUser = true; this.body.classList.remove('no-focus-outline'); }
-            
+
             // Factory Reset Confirmation Modal handling
             if (this.poster.isFactoryResetModalVisible()) {
                 if (e.key === 'Enter') {
@@ -897,13 +954,13 @@ window.UIController = class UIController {
     resetGlobalInactivityTimer() {
         if (this.globalInactivityTimer) clearTimeout(this.globalInactivityTimer);
         this.poster.root.classList.remove('inactivity-hide');
-        
+
         // Only hide if feature is enabled AND panel is NOT currently visible
         const isAutoHideEnabled = this.state.autoHideMenu === true || this.state.autoHideMenu === 'true';
         if (isAutoHideEnabled && !this.poster.isControlsPanelVisible()) {
             this.globalInactivityTimer = setTimeout(() => {
                 this.poster.root.classList.add('inactivity-hide');
-            }, 6000); 
+            }, 6000);
         }
     }
 

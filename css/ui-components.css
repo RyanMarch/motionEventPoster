@@ -1755,6 +1755,39 @@ kbd {
     margin-bottom: 4px;
 }
 
+/* QR API URL row */
+.qr-url-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.qr-url-input {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.72rem !important;
+}
+
+.button--gen-qr {
+    flex-shrink: 0;
+    padding: 4px 10px !important;
+    font-size: 0.7rem !important;
+    white-space: nowrap;
+}
+
+.qr-api-status {
+    margin-top: 5px;
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    min-height: 1em;
+}
+
+.qr-api-status--error {
+    color: #f87171;
+}
+
 .edit-field-group {
     display: flex;
     flex-direction: column;

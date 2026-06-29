@@ -548,6 +548,14 @@
                         <div id="qr-left-preview" class="img-preview-wrap is-hidden">
                             <img id="qr-left-thumb" alt="Left QR preview">
                         </div>
+                        <div class="qr-url-row">
+                            <input type="url" id="input-qr-left-url" class="text-input qr-url-input"
+                                placeholder="Or paste a URL to generate…"
+                                autocomplete="off" spellcheck="false">
+                            <button id="btn-gen-qr-left" class="button button--primary button--gen-qr"
+                                title="Generate QR code from URL">Go</button>
+                        </div>
+                        <div id="qr-left-api-status" class="qr-api-status is-hidden"></div>
                     </div>
 
                     <div class="qr-edit-group">
@@ -562,6 +570,14 @@
                         <div id="qr-right-preview" class="img-preview-wrap is-hidden">
                             <img id="qr-right-thumb" alt="Right QR preview">
                         </div>
+                        <div class="qr-url-row">
+                            <input type="url" id="input-qr-right-url" class="text-input qr-url-input"
+                                placeholder="Or paste a URL to generate…"
+                                autocomplete="off" spellcheck="false">
+                            <button id="btn-gen-qr-right" class="button button--primary button--gen-qr"
+                                title="Generate QR code from URL">Go</button>
+                        </div>
+                        <div id="qr-right-api-status" class="qr-api-status is-hidden"></div>
                     </div>
                 </div>
             </details>
