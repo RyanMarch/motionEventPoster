@@ -515,7 +515,7 @@ window.UIController = class UIController {
     async bindQRApi(input, btn, statusEl, dataKey, stateKey, ctrl, posterEl) {
         if (!input || !btn) return;
 
-        const QR_API = 'https://qrmaker.ryanmarch.me/api/qr';
+        const QR_API = '/api/qr';
 
         const generate = async () => {
             const url = input.value.trim();
