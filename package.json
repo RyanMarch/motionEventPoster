@@ -3,12 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "wrangler pages dev .",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^2.0.0",
     "jsdom": "^25.0.0",
-    "vitest": "^2.0.0"
+    "vitest": "^2.0.0",
+    "wrangler": "^3"
   }
 }
