@@ -25,6 +25,21 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
   <meta name="theme-color" content="#01142c">
 
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Motion Poster",
+      "url": "https://motionposter.ryanmarch.me/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any modern web browser",
+      "description": "A free, browser-based animated display for galas, fundraisers, parties, and venue screens, with 30 themes, live host lists, QR codes, and a wireless remote.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Ryan March", "url": "https://ryanmarch.me" }
+    }
+  </script>
+
+
   <!-- Old poster links (e.g. /?theme=spring) pointed at the app, which now lives at /app/. In-page anchors like /#themes stay here. -->
   <script>
     (function () {
@@ -84,7 +99,8 @@
       <div class="hero-stage">
         <div class="tv">
           <div class="tv-screen">
-            <video class="tv-video" autoplay muted loop playsinline preload="metadata"
+            <video class="tv-video" width="1280" height="720" autoplay muted loop playsinline preload="metadata"
+              disablepictureinpicture
               poster="assets/screenshots/eventPoster.avif" aria-label="Spring Blossom theme with falling petals">
               <source src="assets/screenshots/eventPoster.mp4" type="video/mp4">
             </video>

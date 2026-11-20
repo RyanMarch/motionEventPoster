@@ -92,6 +92,13 @@
   const canvas = document.getElementById('hero-particles');
   const video = document.querySelector('.tv-video');
   if (video && reduceMotion) { video.removeAttribute('autoplay'); video.pause(); }
+  // Pause the hero video when it scrolls out of view (saves battery and CPU).
+  if (video && !reduceMotion && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.1 }).observe(video);
+  }
   if (canvas && !reduceMotion) {
     const ctx = canvas.getContext('2d');
     let w = 0, h = 0, parts = [], running = true, raf = 0;

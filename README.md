@@ -21,7 +21,9 @@
 
 Designed with a "set it and forget it" philosophy, this tool allows event managers to customize every detail in real-time. You can adjust everything from the physics of falling petals to the names of host committee members to ensure your presentation is always perfect.
 
-**Quick start:** Open **[Motion Poster](https://motionposter.ryanmarch.me)**, make your customizations, and you're ready to go!
+**Quick start:** Open **[Motion Poster](https://motionposter.ryanmarch.me/app/)**, make your customizations, and you're ready to go!
+
+**Learn more:** [Website](https://motionposter.ryanmarch.me/) · [Help Center](https://motionposter.ryanmarch.me/docs/) · [Remote controller](https://motionposter.ryanmarch.me/remote/)
 
 ## Contents
   - [Key Benefits](#key-benefits)

@@ -1065,3 +1065,20 @@ p {
 .remote-links a:hover {
   border-bottom-color: var(--accent);
 }
+/* Touch targets: give text-only links at least a 24px (ideally 44px on touch) hit area */
+.nav-link,
+.footer-inner nav a,
+.docs-more a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 6px;
+}
+
+.footer-inner nav {
+  gap: 8px;
+}
+
+.docs-more {
+  margin-top: 16px;
+}

@@ -963,3 +963,14 @@ body:not(.is-fullscreen) .event-footer {}
     white-space: pre-line;
     text-wrap: balance;
 }
+/* Help panel links to the Help Center */
+.help-link {
+    color: var(--color-ui-accent, #f9d783);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.help-link:hover,
+.help-link:focus-visible {
+    text-decoration-thickness: 2px;
+}

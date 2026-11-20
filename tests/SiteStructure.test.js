@@ -53,6 +53,26 @@ describe('Site layout (landing at /, app at /app/, remote at /remote/)', () => {
         expect(html).toContain("if (q) location.replace('/app/' + q + h)");
     });
 
+    test('sitemap lists only pages that exist, and robots.txt points at it', () => {
+        const xml = read('sitemap.xml');
+        const locs = [...xml.matchAll(/<loc>https:\/\/motionposter\.ryanmarch\.me(\/[^<]*)<\/loc>/g)].map((m) => m[1]);
+        expect(locs).toContain('/');
+        expect(locs).toContain('/app/');
+        expect(locs.length).toBeGreaterThanOrEqual(12);
+        for (const loc of locs) {
+            expect({ loc, exists: existsSync(resolve(root, loc.slice(1), 'index.html')) }).toEqual({ loc, exists: true });
+        }
+        expect(read('robots.txt')).toContain('Sitemap: https://motionposter.ryanmarch.me/sitemap.xml');
+    });
+
+    test('product naming is consistent', () => {
+        expect(read('app/index.html')).toContain('<title>Motion Poster</title>');
+        expect(read('404.html')).toContain('Motion Poster');
+        const manifest = JSON.parse(read('assets/favicons/site.webmanifest'));
+        expect(manifest.name).toBe('Motion Poster');
+        expect(manifest.start_url).toBe('/app/');
+    });
+
     test('every docs article is in the search index', () => {
         const index = JSON.parse(read('docs/search-index.json'));
         expect(index.length).toBeGreaterThanOrEqual(9);
