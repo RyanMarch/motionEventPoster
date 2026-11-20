@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "wrangler pages dev .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "docs:init": "node scripts/init-docs.cjs",
+    "docs:new": "node scripts/add-new-doc.cjs",
+    "docs:build": "node scripts/generate-docs-index.cjs"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^2.0.0",

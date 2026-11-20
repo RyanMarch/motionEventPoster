@@ -70,12 +70,12 @@
                 heading: "'Cinzel', Georgia, serif"
             },
             assets: {
-                border: "url('assets/images/flower_border_transparent.svg')",
-                sway1: "url('assets/images/pink-blooms-1.png')",
-                sway2: "url('assets/images/pink-blooms-with-stem.png')",
-                sway3: "url('assets/images/leafy-stem.png')",
-                sway4: "url('assets/images/pink-blooms.png')",
-                swaySide: "url('assets/images/pink-blooms-2.png')"
+                border: "url('/assets/images/flower_border_transparent.svg')",
+                sway1: "url('/assets/images/pink-blooms-1.png')",
+                sway2: "url('/assets/images/pink-blooms-with-stem.png')",
+                sway3: "url('/assets/images/leafy-stem.png')",
+                sway4: "url('/assets/images/pink-blooms.png')",
+                swaySide: "url('/assets/images/pink-blooms-2.png')"
             },
             particles: [
                 { color: '#d28282', gradient: '#b56363', type: 'petal', weight: 30, shape: '50% 10% 50% 10%' },

@@ -1,0 +1,145 @@
+[
+  {
+    "id": "getting-started",
+    "title": "Getting Started",
+    "path": "getting-started/",
+    "category": "Basics",
+    "headings": [
+      "Overview",
+      "Launch the Poster",
+      "Five-Minute Setup",
+      "Connect to a Display",
+      "What to Read Next"
+    ],
+    "excerpt": "Put a living poster on your screen in five minutes: launch, go fullscreen, pick a theme, and add your hosts.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "customizing-appearance",
+    "title": "Customizing Appearance",
+    "path": "customizing-appearance/",
+    "category": "Customizing",
+    "headings": [
+      "Overview",
+      "Open the Section",
+      "Particle Dynamics",
+      "Host List Layout",
+      "Colors and Legibility",
+      "Show and Hide Elements",
+      "Performance Settings",
+      "Reset to Defaults"
+    ],
+    "excerpt": "Tune particle physics, host list layout, colors, backdrop strength, and performance to fit your venue.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "editing-poster-content",
+    "title": "Editing Poster Content",
+    "path": "editing-poster-content/",
+    "category": "Customizing",
+    "headings": [
+      "Overview",
+      "Edit Poster Text",
+      "Upload a Logo",
+      "Add QR Codes",
+      "Option 1: Generate from a URL",
+      "Option 2: Upload an image",
+      "Customize the style",
+      "Everything Is Saved"
+    ],
+    "excerpt": "Set your event text, upload a logo, and add QR codes for registration or donations.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "keyboard-shortcuts",
+    "title": "Keyboard Shortcuts",
+    "path": "keyboard-shortcuts/",
+    "category": "Reference",
+    "headings": [
+      "Overview",
+      "Shortcuts",
+      "Touch Triggers"
+    ],
+    "excerpt": "Every hotkey and touch trigger for running Motion Poster.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "managing-hosts",
+    "title": "Managing Hosts",
+    "path": "managing-hosts/",
+    "category": "Customizing",
+    "headings": [
+      "Overview",
+      "Add Names",
+      "Remove Names",
+      "Restore a Removed Name",
+      "Layout and Sizing",
+      "Manage from Your Phone"
+    ],
+    "excerpt": "Add, remove, and restore names on the host committee list, from the display or from your phone.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "remote-control",
+    "title": "Remote Control",
+    "path": "remote-control/",
+    "category": "Remote",
+    "headings": [
+      "Overview",
+      "How It Works",
+      "Pair a Device",
+      "What You Can Control",
+      "Tips and Troubleshooting"
+    ],
+    "excerpt": "Pair a phone or tablet to change themes, text, names, and layout without touching the display computer.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "running-your-event",
+    "title": "Running Your Event",
+    "path": "running-your-event/",
+    "category": "Events",
+    "headings": [
+      "Overview",
+      "Before Doors Open",
+      "Built-In Reliability",
+      "Do I Need the Internet?",
+      "During the Event"
+    ],
+    "excerpt": "A pre-event checklist and the reliability features that keep the poster up all night.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "themes",
+    "title": "Themes",
+    "path": "themes/",
+    "category": "Customizing",
+    "headings": [
+      "Overview",
+      "What a Theme Includes",
+      "Theme Packs",
+      "Link Directly to a Theme",
+      "Theme-Specific Controls"
+    ],
+    "excerpt": "Browse the 30 built-in themes, each with its own frame, particle effects, and color palettes, and link straight to any of them.",
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "id": "troubleshooting",
+    "title": "Troubleshooting & FAQ",
+    "path": "troubleshooting/",
+    "category": "Reference",
+    "headings": [
+      "Overview",
+      "My Changes Disappeared",
+      "Where Is My Data Stored?",
+      "The Poster Left Fullscreen",
+      "My QR Code Will Not Scan",
+      "The Remote Will Not Connect",
+      "Animation Is Choppy",
+      "Start Over (Factory Reset)"
+    ],
+    "excerpt": "Fixes for common issues, plus how your data is stored and how to start over.",
+    "lastUpdated": "2026-11-20"
+  }
+]

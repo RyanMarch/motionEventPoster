@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Remote Control — Motion Poster Docs</title>
+    <meta name="description" content="Pair a phone or tablet to change themes, text, names, and layout without touching the display computer.">
+    <meta name="category" content="Remote">
+    <meta name="doc-id" content="remote-control">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/remote-control/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Remote Control Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Remote Control</h1>
+                            <p class="lead">
+                                Pair a phone or tablet to change themes, text, names, and layout without touching the display computer.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="overview-remote" class="doc-section">
+                            <h2>How It Works</h2>
+                            <p>The remote controller is a web page, so there is no app to download. Pair it with the poster and you can change themes, colors, layout, text, and host names from any device, in real time.</p>
+<p><strong>Requirement:</strong> the poster and the remote must be on the same network. That can be venue Wi-Fi, ethernet, or a phone's cellular hotspot.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="pair-a-device" class="doc-section">
+                            <h2>Pair a Device</h2>
+                            <ol>
+<li>On the poster computer, press <code>W</code> or click <strong>Wireless Remote</strong> in Quick Controls.</li>
+<li>On your phone or tablet, connect using any one of these:
+<ul>
+<li>Scan the on-screen <strong>QR code</strong>.</li>
+<li>Open the displayed web address and enter the <strong>pairing code</strong>.</li>
+<li>Copy and share the <strong>direct link</strong>.</li>
+</ul></li>
+<li>When the status turns to connected, the pairing window closes by itself.</li>
+</ol>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/motion-poster-one-step-pairing.avif" alt="The one-step remote pairing dialog" loading="lazy">
+    <figcaption>One-step pairing: scan the code or enter it by hand.</figcaption>
+</figure>
+<p>The pairing code is remembered, so a page refresh on the poster does not require a new pairing.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="what-you-can-do" class="doc-section">
+                            <h2>What You Can Control</h2>
+                            <ul>
+<li>Choose themes and colors, and adjust sliders and layout.</li>
+<li>Edit poster text and labels.</li>
+<li>Add and remove host names.</li>
+</ul>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/motion-poster-remote-ipad.avif" alt="Remote control on an iPad showing theme controls" loading="lazy">
+    <figcaption>Theme controls on an iPad.</figcaption>
+</figure>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/motion-poster-remote-add-names.avif" alt="Remote control adding host names" loading="lazy">
+    <figcaption>Add names from your seat.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="tips" class="doc-section">
+                            <h2>Tips and Troubleshooting</h2>
+                            <ul>
+<li>Both devices must be on the <em>same</em> network. Guest Wi-Fi networks sometimes isolate devices; if pairing fails, switch both to a phone hotspot.</li>
+<li>Keep the poster page open on the display computer. The remote talks to that page.</li>
+<li>If the connection drops, reopen the remote link, or press <code>W</code> on the poster for a fresh code.</li>
+</ul>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

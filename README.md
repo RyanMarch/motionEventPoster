@@ -288,7 +288,10 @@ All text and appearance settings on the poster are controlled via an intuitive m
 This project is built as a lightweight web application. It is designed for maximum performance and easy deployment.
 
 ### File Structure
-*   `index.html`: The core structure and entry point.
+*   `index.html`: The marketing landing page.
+*   `app/index.html`: The poster app and entry point.
+*   `remote/`: The mobile remote controller.
+*   `docs/`: The help center.
 *   `js/main.js`: Initializes the application and handles loading states.
 *   `js/themes.js`: Centralized configuration for all themes.
 *   `js/EventPoster.js`: The central orchestrator managing state, persistence, and layout.
@@ -353,34 +356,34 @@ The remote control feature is designed to be completely zero-config and infrastr
 
 ---
 
-[demo]: https://motionposter.ryanmarch.me/
-[demo-spring]: https://motionposter.ryanmarch.me/?theme=spring
-[demo-digital-grid]: https://motionposter.ryanmarch.me/?theme=digital-grid
-[demo-alpine-winter]: https://motionposter.ryanmarch.me/?theme=alpine-winter
-[demo-vintage-radio]: https://motionposter.ryanmarch.me/?theme=vintage-radio
-[demo-corporate]: https://motionposter.ryanmarch.me/?theme=corporate
-[demo-minimal-elegance]: https://motionposter.ryanmarch.me/?theme=minimal-elegance
-[demo-electric-pulse]: https://motionposter.ryanmarch.me/?theme=electric-pulse
-[demo-celebration]: https://motionposter.ryanmarch.me/?theme=celebration
-[demo-summer-cookout]: https://motionposter.ryanmarch.me/?theme=summer-cookout
-[demo-tropical-oasis]: https://motionposter.ryanmarch.me/?theme=tropical-oasis
-[demo-casino-night]: https://motionposter.ryanmarch.me/?theme=casino-night
-[demo-game-console]: https://motionposter.ryanmarch.me/?theme=game-console
-[demo-disco-fever]: https://motionposter.ryanmarch.me/?theme=disco-fever
-[demo-mardi-gras]: https://motionposter.ryanmarch.me/?theme=mardi-gras
-[demo-retro-wave]: https://motionposter.ryanmarch.me/?theme=retro-wave
-[demo-art-deco-gala]: https://motionposter.ryanmarch.me/?theme=art-deco-gala
-[demo-cinema]: https://motionposter.ryanmarch.me/?theme=cinema
-[demo-halloween]: https://motionposter.ryanmarch.me/?theme=halloween
-[demo-space-odyssey]: https://motionposter.ryanmarch.me/?theme=space-odyssey
-[demo-atomic-mid-century]: https://motionposter.ryanmarch.me/?theme=atomic-mid-century
-[demo-memphis-pop]: https://motionposter.ryanmarch.me/?theme=memphis-pop
-[demo-00-glass]: https://motionposter.ryanmarch.me/?theme=00-glass
-[demo-bistro-lounge]: https://motionposter.ryanmarch.me/?theme=bistro-lounge
-[demo-deep-blue]: https://motionposter.ryanmarch.me/?theme=deep-blue
-[demo-steampunk-gears]: https://motionposter.ryanmarch.me/?theme=steampunk-gears
-[demo-autumn-harvest]: https://motionposter.ryanmarch.me/?theme=autumn-harvest
-[demo-new-years-eve]: https://motionposter.ryanmarch.me/?theme=new-years-eve
-[demo-valentines-romance]: https://motionposter.ryanmarch.me/?theme=valentines-romance
-[demo-festive-holiday]: https://motionposter.ryanmarch.me/?theme=festive-holiday
-[demo-karaoke-night]: https://motionposter.ryanmarch.me/?theme=karaoke-night
+[demo]: https://motionposter.ryanmarch.me/app/
+[demo-spring]: https://motionposter.ryanmarch.me/app/?theme=spring
+[demo-digital-grid]: https://motionposter.ryanmarch.me/app/?theme=digital-grid
+[demo-alpine-winter]: https://motionposter.ryanmarch.me/app/?theme=alpine-winter
+[demo-vintage-radio]: https://motionposter.ryanmarch.me/app/?theme=vintage-radio
+[demo-corporate]: https://motionposter.ryanmarch.me/app/?theme=corporate
+[demo-minimal-elegance]: https://motionposter.ryanmarch.me/app/?theme=minimal-elegance
+[demo-electric-pulse]: https://motionposter.ryanmarch.me/app/?theme=electric-pulse
+[demo-celebration]: https://motionposter.ryanmarch.me/app/?theme=celebration
+[demo-summer-cookout]: https://motionposter.ryanmarch.me/app/?theme=summer-cookout
+[demo-tropical-oasis]: https://motionposter.ryanmarch.me/app/?theme=tropical-oasis
+[demo-casino-night]: https://motionposter.ryanmarch.me/app/?theme=casino-night
+[demo-game-console]: https://motionposter.ryanmarch.me/app/?theme=game-console
+[demo-disco-fever]: https://motionposter.ryanmarch.me/app/?theme=disco-fever
+[demo-mardi-gras]: https://motionposter.ryanmarch.me/app/?theme=mardi-gras
+[demo-retro-wave]: https://motionposter.ryanmarch.me/app/?theme=retro-wave
+[demo-art-deco-gala]: https://motionposter.ryanmarch.me/app/?theme=art-deco-gala
+[demo-cinema]: https://motionposter.ryanmarch.me/app/?theme=cinema
+[demo-halloween]: https://motionposter.ryanmarch.me/app/?theme=halloween
+[demo-space-odyssey]: https://motionposter.ryanmarch.me/app/?theme=space-odyssey
+[demo-atomic-mid-century]: https://motionposter.ryanmarch.me/app/?theme=atomic-mid-century
+[demo-memphis-pop]: https://motionposter.ryanmarch.me/app/?theme=memphis-pop
+[demo-00-glass]: https://motionposter.ryanmarch.me/app/?theme=00-glass
+[demo-bistro-lounge]: https://motionposter.ryanmarch.me/app/?theme=bistro-lounge
+[demo-deep-blue]: https://motionposter.ryanmarch.me/app/?theme=deep-blue
+[demo-steampunk-gears]: https://motionposter.ryanmarch.me/app/?theme=steampunk-gears
+[demo-autumn-harvest]: https://motionposter.ryanmarch.me/app/?theme=autumn-harvest
+[demo-new-years-eve]: https://motionposter.ryanmarch.me/app/?theme=new-years-eve
+[demo-valentines-romance]: https://motionposter.ryanmarch.me/app/?theme=valentines-romance
+[demo-festive-holiday]: https://motionposter.ryanmarch.me/app/?theme=festive-holiday
+[demo-karaoke-night]: https://motionposter.ryanmarch.me/app/?theme=karaoke-night

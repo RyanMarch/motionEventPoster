@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Getting Started — Motion Poster Docs</title>
+    <meta name="description" content="Put a living poster on your screen in five minutes: launch, go fullscreen, pick a theme, and add your hosts.">
+    <meta name="category" content="Basics">
+    <meta name="doc-id" content="getting-started">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/getting-started/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Getting Started Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Getting Started</h1>
+                            <p class="lead">
+                                Put a living poster on your screen in five minutes: launch, go fullscreen, pick a theme, and add your hosts.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="launch-the-poster" class="doc-section">
+                            <h2>Launch the Poster</h2>
+                            <p>Open <a href="/app/">motionposter.ryanmarch.me/app</a> in a current version of Chrome, Edge, Safari, or Firefox on the computer that is connected to your display. There is nothing to install and no account to create.</p>
+<p>The poster starts with a sample theme and placeholder names so you can see what it looks like right away. Everything you change is saved in the browser automatically.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="five-minute-setup" class="doc-section">
+                            <h2>Five-Minute Setup</h2>
+                            <ol>
+<li><strong>Open the controls.</strong> Press <code>Q</code> to open Quick Controls. No keyboard? Tap and hold the top-right corner of the screen.</li>
+<li><strong>Pick a theme.</strong> Open <em>Customize Appearance</em> (<code>C</code>) and choose a theme. See <a href="../themes/">Themes</a>.</li>
+<li><strong>Add your text and logo.</strong> Open <em>Edit Poster Text</em> (<code>E</code>) to set your organization, event title, subtitle, and date. See <a href="../editing-poster-content/">Editing Poster Content</a>.</li>
+<li><strong>Add your hosts.</strong> Open <em>Add/Remove Names</em> (<code>A</code>). See <a href="../managing-hosts/">Managing Hosts</a>.</li>
+<li><strong>Go fullscreen.</strong> Press <code>F</code>. This also keeps the screen awake.</li>
+</ol>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/mgmt-main.avif" alt="The Quick Controls panel showing status and toggles" loading="lazy">
+    <figcaption>Quick Controls: fullscreen, live stats, and toggles in one place.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="display-setup" class="doc-section">
+                            <h2>Connect to a Display</h2>
+                            <p>Plug your computer into the TV or projector, set it to extend or mirror your screen, and drag the browser window to that display before pressing <code>F</code>. Motion Poster is tuned for 1080p (FHD) and 1440p (QHD) displays and scales to larger screens.</p>
+<p>Want to run it from a chair instead of the display computer? Use the <a href="../remote-control/">wireless remote</a>.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="what-to-read-next" class="doc-section">
+                            <h2>What to Read Next</h2>
+                            <ul>
+<li><a href="../themes/">Themes</a>: the 30 built-in looks and how to share a direct link to one.</li>
+<li><a href="../customizing-appearance/">Customizing Appearance</a>: particles, layout, and colors.</li>
+<li><a href="../running-your-event/">Running Your Event</a>: reliability tips for the big night.</li>
+</ul>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

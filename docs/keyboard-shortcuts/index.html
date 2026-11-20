@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Keyboard Shortcuts — Motion Poster Docs</title>
+    <meta name="description" content="Every hotkey and touch trigger for running Motion Poster.">
+    <meta name="category" content="Reference">
+    <meta name="doc-id" content="keyboard-shortcuts">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/keyboard-shortcuts/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Keyboard Shortcuts Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Keyboard Shortcuts</h1>
+                            <p class="lead">
+                                Every hotkey and touch trigger for running Motion Poster.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="shortcuts" class="doc-section">
+                            <h2>Shortcuts</h2>
+                            <table>
+<thead><tr><th>Key</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td><code>F</code></td><td>Enter or exit fullscreen</td></tr>
+<tr><td><code>Q</code></td><td>Toggle Quick Controls</td></tr>
+<tr><td><code>C</code></td><td>Toggle Customize Appearance</td></tr>
+<tr><td><code>E</code></td><td>Toggle Edit Poster Text</td></tr>
+<tr><td><code>A</code></td><td>Toggle Add/Remove Names</td></tr>
+<tr><td><code>R</code></td><td>Reset appearance to defaults (while Customize is open)</td></tr>
+<tr><td><code>W</code></td><td>Start the wireless remote</td></tr>
+<tr><td><code>?</code> or <code>/</code></td><td>Show the help menu</td></tr>
+<tr><td><code>Esc</code></td><td>Close the open panel, or exit fullscreen</td></tr>
+<tr><td>Hold <code>\</code></td><td>Factory reset: wipe all local data</td></tr>
+</tbody></table>
+<p>Shortcuts are ignored while you are typing in a text field.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="touch" class="doc-section">
+                            <h2>Touch Triggers</h2>
+                            <ul>
+<li><strong>Open the menu:</strong> tap and hold the top-right corner of the screen.</li>
+<li><strong>Remove a host:</strong> tap and hold a name on the poster.</li>
+</ul>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

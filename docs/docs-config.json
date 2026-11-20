@@ -1,0 +1,23 @@
+{
+  "projectName": "Motion Poster",
+  "componentPrefix": "docs",
+  "baseUrl": "https://motionposter.ryanmarch.me",
+  "faviconDir": "../assets/favicons",
+  "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
+  "sidebarCta": {
+    "title": "Open Motion Poster",
+    "description": "Pick a theme, add your hosts, and put a living poster on the big screen in minutes.",
+    "buttonText": "Launch Motion Poster",
+    "buttonUrl": "/app/"
+  },
+  "navLinks": [
+    { "title": "Home", "href": "/", "id": "home" },
+    { "title": "Launch App", "href": "/app/", "id": "app" },
+    { "title": "Guides", "href": "./", "id": "guides" }
+  ],
+  "footerLinks": [
+    { "title": "Motion Poster", "href": "/app/", "id": "app" },
+    { "title": "Remote Control", "href": "/remote/", "id": "remote" },
+    { "title": "GitHub", "href": "https://github.com/RyanMarch/motionEventPoster", "id": "github" }
+  ]
+}
