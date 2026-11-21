@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Customizing Appearance — Motion Poster Docs</title>
+    <meta name="description" content="Tune particle physics, host list layout, colors, backdrop strength, and performance to fit your venue.">
+    <meta name="category" content="Customizing">
+    <meta name="doc-id" content="customizing-appearance">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/customizing-appearance/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Customizing Appearance Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Customizing Appearance</h1>
+                            <p class="lead">
+                                Tune particle physics, host list layout, colors, backdrop strength, and performance to fit your venue.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="open-the-section" class="doc-section">
+                            <h2>Open the Section</h2>
+                            <p>Press <code>C</code> (or open Quick Controls with <code>Q</code> and expand <em>Customize Appearance</em>). Changes apply live, so you can adjust while the poster is on screen.</p>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/mgmt-appearance.avif" alt="The Customize Appearance panel with sliders" loading="lazy">
+    <figcaption>Physics and layout sliders update the poster in real time.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="particles" class="doc-section">
+                            <h2>Particle Dynamics</h2>
+                            <table>
+<thead><tr><th>Slider</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Count</td><td>How many particles are on screen (0 to 500).</td></tr>
+<tr><td>Windiness</td><td>How often gusts of wind occur.</td></tr>
+<tr><td>Fall Speed</td><td>Overall drift speed of particles.</td></tr>
+<tr><td>Tumble Speed</td><td>How quickly particles rotate as they fall.</td></tr>
+<tr><td>Intensity</td><td>How strongly gusts move particles and swaying frame elements.</td></tr>
+</tbody></table>
+<p>Set Count to 0 for a calm, static poster. Lower values are also kinder to older computers.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="host-layout" class="doc-section">
+                            <h2>Host List Layout</h2>
+                            <ul>
+<li><strong>Layout mode:</strong> Justified, Centered, or Columns.</li>
+<li><strong>Size:</strong> Scale the text from 0.5x to 2x. The list also auto-fits so 5 names and 50 names both look right.</li>
+<li><strong>Max Width:</strong> Constrain how wide the list can grow.</li>
+<li><strong>Vertical and Horizontal Spacing:</strong> Adjust margins from the frame.</li>
+</ul>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="colors" class="doc-section">
+                            <h2>Colors and Legibility</h2>
+                            <ul>
+<li><strong>Swatches:</strong> Each theme offers curated palettes. Pick one with a click.</li>
+<li><strong>Custom colors:</strong> Use the color picker to match your brand's background and accent colors.</li>
+<li><strong>Text Backdrop Strength:</strong> Adds separation behind names so they stay readable over busy backgrounds.</li>
+</ul>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="show-hide" class="doc-section">
+                            <h2>Show and Hide Elements</h2>
+                            <p>Independently toggle the logo, event title, date, host list, QR code areas, and the theme frame or background animations. Hide what you do not need for a cleaner look.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="performance" class="doc-section">
+                            <h2>Performance Settings</h2>
+                            <ul>
+<li><strong>Frame rate limiter:</strong> Cap animation at 30, 60, 90, or 120 FPS to save battery or match a high-refresh display.</li>
+<li><strong>Smooth transitions:</strong> Turn UI animations on or off.</li>
+<li><strong>Auto-fullscreen recovery:</strong> Disable this if you do not want the poster to re-enter fullscreen after a refresh.</li>
+</ul>
+<p>The Status area shows a live FPS counter, screen resolution, fullscreen session timer, and wake lock status so you can verify everything is healthy.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="reset" class="doc-section">
+                            <h2>Reset to Defaults</h2>
+                            <p>While the Customize section is open, press <code>R</code> to reset appearance settings to the theme defaults. Your names and text are not affected.</p>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

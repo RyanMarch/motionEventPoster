@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Managing Hosts — Motion Poster Docs</title>
+    <meta name="description" content="Add, remove, and restore names on the host committee list, from the display or from your phone.">
+    <meta name="category" content="Customizing">
+    <meta name="doc-id" content="managing-hosts">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/managing-hosts/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Managing Hosts Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Managing Hosts</h1>
+                            <p class="lead">
+                                Add, remove, and restore names on the host committee list, from the display or from your phone.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="add-names" class="doc-section">
+                            <h2>Add Names</h2>
+                            <p>Press <code>A</code> to open <em>Add/Remove Names</em>, type a name, and press Enter. Duplicates are detected for you. The first time you add a name, the sample names are replaced by your own list.</p>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/mgmt-hosts.avif" alt="The Add/Remove Names panel" loading="lazy">
+    <figcaption>Add names one at a time; the poster updates immediately.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="remove-names" class="doc-section">
+                            <h2>Remove Names</h2>
+                            <ul>
+<li><strong>From the list:</strong> Choose a name in the panel and remove it.</li>
+<li><strong>From the display:</strong> Tap and hold any name on the poster to remove it. No keyboard needed.</li>
+</ul>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="restore" class="doc-section">
+                            <h2>Restore a Removed Name</h2>
+                            <p>Removed a name by mistake? Recently removed names appear in a <em>Recently Removed</em> list in the same panel. Click one to put it back.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="layout" class="doc-section">
+                            <h2>Layout and Sizing</h2>
+                            <p>Names automatically scale to fit your screen. To change how they are arranged (Justified, Centered, or Columns), see <a href="../customizing-appearance/#host-layout">Customizing Appearance</a>.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="from-your-phone" class="doc-section">
+                            <h2>Manage from Your Phone</h2>
+                            <p>With the <a href="../remote-control/">wireless remote</a> connected you can add and remove names from another device while the poster stays on the big screen.</p>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

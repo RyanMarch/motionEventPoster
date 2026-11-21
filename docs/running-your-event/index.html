@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Running Your Event — Motion Poster Docs</title>
+    <meta name="description" content="A pre-event checklist and the reliability features that keep the poster up all night.">
+    <meta name="category" content="Events">
+    <meta name="doc-id" content="running-your-event">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/running-your-event/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Running Your Event Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Running Your Event</h1>
+                            <p class="lead">
+                                A pre-event checklist and the reliability features that keep the poster up all night.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="before-doors-open" class="doc-section">
+                            <h2>Before Doors Open</h2>
+                            <ol>
+<li>Load the poster on the display computer and set your theme, text, logo, QR codes, and names.</li>
+<li>Press <code>F</code> to enter fullscreen on the correct display.</li>
+<li>Scan your QR codes with a phone from where guests will stand.</li>
+<li>Pair your phone or tablet as a <a href="../remote-control/">remote</a> and make one test edit.</li>
+<li>Plug the computer into power and turn off any system sleep or screensaver you can.</li>
+</ol>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="built-in-reliability" class="doc-section">
+                            <h2>Built-In Reliability</h2>
+                            <ul>
+<li><strong>Wake lock:</strong> Fullscreen mode asks the computer to stay awake so the screen does not dim or sleep. Older browsers fall back to a silent video to achieve the same effect.</li>
+<li><strong>Auto-fullscreen recovery:</strong> If the page reloads or the power blinks, the poster remembers it was fullscreen and makes it easy to return.</li>
+<li><strong>Everything is saved:</strong> Settings, names, logos, and QR codes live in your browser's storage and survive restarts.</li>
+</ul>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="connectivity" class="doc-section">
+                            <h2>Do I Need the Internet?</h2>
+                            <p>Once the poster page has loaded, it keeps running on its own. Internet is only needed to load the page the first time, and to generate a new QR code from a URL. The wireless remote only needs both devices on the same local network. For the most predictable result, load everything at home or the office before you travel.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="during-the-event" class="doc-section">
+                            <h2>During the Event</h2>
+                            <ul>
+<li>Use the remote to add late-arriving hosts or fix a typo without leaving your seat.</li>
+<li>If the screen is busy, lower the particle Count or raise Text Backdrop Strength.</li>
+<li>Watch the FPS counter in Quick Controls. If it dips, lower the frame rate cap or reduce particles.</li>
+</ul>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

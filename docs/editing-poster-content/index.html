@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Editing Poster Content — Motion Poster Docs</title>
+    <meta name="description" content="Set your event text, upload a logo, and add QR codes for registration or donations.">
+    <meta name="category" content="Customizing">
+    <meta name="doc-id" content="editing-poster-content">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/editing-poster-content/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Editing Poster Content Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Editing Poster Content</h1>
+                            <p class="lead">
+                                Set your event text, upload a logo, and add QR codes for registration or donations.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="edit-text" class="doc-section">
+                            <h2>Edit Poster Text</h2>
+                            <p>Press <code>E</code> to open <em>Edit Poster Text</em>. You can change the organization name, top label, event title, subtitle, date, and the heading above the host list.</p>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/mgmt-content.avif" alt="The Edit Poster Text panel" loading="lazy">
+    <figcaption>Text fields, logo upload, and QR codes in one panel.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="logos" class="doc-section">
+                            <h2>Upload a Logo</h2>
+                            <p>Upload a logo from the content editor. PNG or SVG with a transparent background looks best, and horizontal logos fit the banner most naturally. Keep images under 2 MB for smooth performance and reliable saving.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="qr-codes" class="doc-section">
+                            <h2>Add QR Codes</h2>
+                            <p>The poster has two QR code areas, left and right, which you can use independently (for example, tickets on the left and donations on the right). There are two ways to fill them:</p>
+<h3>Option 1: Generate from a URL</h3>
+<ol>
+<li>Paste your link into the QR field for that side.</li>
+<li>Click <strong>Generate</strong>. The code is created for you and applied to the poster.</li>
+</ol>
+<p>Generated codes are made by <a href="https://qrmaker.ryanmarch.me">QR Maker</a>, so this option needs an internet connection at the moment you generate. Once applied, the image is stored in your browser and works offline.</p>
+<h3>Option 2: Upload an image</h3>
+<p>Upload any standard QR image (PNG, JPG, and so on). Use a square, high-contrast, high-resolution image so it scans reliably from across the room.</p>
+<h3>Customize the style</h3>
+<p>For generated codes, open <strong>Customize QR Code Style</strong> to change the corner style (square, rounded, circle, leaf, beveled), foreground and background colors, a transparent background, and an overlay icon such as a link, Wi-Fi, map pin, or social network logo.</p>
+<p>Always test-scan your code with a phone before the event.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="saved" class="doc-section">
+                            <h2>Everything Is Saved</h2>
+                            <p>Text, logos, and QR codes persist in your browser across refreshes and restarts. See <a href="../troubleshooting/">Troubleshooting</a> for how storage works and how to clear it.</p>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

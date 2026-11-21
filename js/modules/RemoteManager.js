@@ -274,11 +274,10 @@ window.RemoteManager = class RemoteManager {
     }
 
     _showConnectionInfo(roomCode) {
-        // Build the URL for the /remote/ page, stripping any filename (e.g. index.html)
-        // so it works whether the address bar shows "/" or "/index.html".
-        const pageUrl = location.href.replace(/[?#].*$/, '');
-        const base = pageUrl.endsWith('/') ? pageUrl : pageUrl.substring(0, pageUrl.lastIndexOf('/') + 1);
-        const remoteUrl = `${base}remote/?code=${roomCode}`;
+        // The poster lives at /app/ and the remote controller at /remote/ (a sibling folder).
+        // Resolve relative to the current page so it works whether the address bar shows
+        // "/app/", "/app" or "/app/index.html", and under any dev-server subfolder.
+        const remoteUrl = `${new URL('../remote/', location.href.replace(/[?#].*$/, '')).href}?code=${roomCode}`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(remoteUrl)}`;
 
         const codeEl = document.getElementById('remote-room-code');

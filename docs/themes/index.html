@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Themes — Motion Poster Docs</title>
+    <meta name="description" content="Browse the 30 built-in themes, each with its own frame, particle effects, and color palettes, and link straight to any of them.">
+    <meta name="category" content="Customizing">
+    <meta name="doc-id" content="themes">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/themes/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Themes Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Themes</h1>
+                            <p class="lead">
+                                Browse the 30 built-in themes, each with its own frame, particle effects, and color palettes, and link straight to any of them.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="what-is-a-theme" class="doc-section">
+                            <h2>What a Theme Includes</h2>
+                            <p>A theme is a complete look: a decorative frame, an atmospheric particle effect (petals, snow, confetti, steam, and more), and a set of color palettes. Motion Poster ships with 30 themes and 276 built-in color schemes.</p>
+<p>Switch themes any time from <em>Customize Appearance</em> (<code>C</code>). Your host names and text stay put; only the look changes.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="theme-packs" class="doc-section">
+                            <h2>Theme Packs</h2>
+                            <table>
+<thead><tr><th>Pack</th><th>Themes</th></tr></thead>
+<tbody>
+<tr><td><strong>Standard</strong></td><td>Spring Blossom, Digital Grid, Alpine Winter, Vintage Radio, Corporate Pro, Minimal Elegance</td></tr>
+<tr><td><strong>Party</strong></td><td>Electric Pulse, Celebration, Summer Cookout, Tropical Oasis, Casino Night, Karaoke Night</td></tr>
+<tr><td><strong>Decades</strong></td><td>Retro Wave, Disco Fever, Art Deco Gala, Atomic Mid-Century, Memphis Pop, 2000s Glass</td></tr>
+<tr><td><strong>Specialty</strong></td><td>Cinema Premiere, Game Console, Space Odyssey, Bistro Lounge, Steampunk Gears, Deep Blue Sea</td></tr>
+<tr><td><strong>Holiday</strong></td><td>Halloween Soiree, Autumn Harvest, Valentines Romance, Mardi Gras, Festive Holiday, New Year's Eve</td></tr>
+</tbody></table>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/poster-art-deco.avif" alt="Art Deco Gala theme" loading="lazy">
+    <figcaption>Art Deco Gala: a repeating gold pattern, swaying chandelier, and rising champagne bubbles.</figcaption>
+</figure>
+<figure class="doc-screenshot-figure">
+    <img src="../../assets/screenshots/poster-winter.avif" alt="Alpine Winter theme" loading="lazy">
+    <figcaption>Alpine Winter: frosted glass in a rustic wood frame with gentle snowfall.</figcaption>
+</figure>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="link-to-a-theme" class="doc-section">
+                            <h2>Link Directly to a Theme</h2>
+                            <p>Add <code>?theme=</code> and a theme ID to the poster address to open it on a specific theme, handy for previewing or sharing:</p>
+<pre><code>https://motionposter.ryanmarch.me/app/?theme=art-deco-gala</code></pre>
+<p>Theme IDs match the names above in lowercase with hyphens, for example <code>spring</code>, <code>digital-grid</code>, <code>alpine-winter</code>, <code>retro-wave</code>, and <code>new-years-eve</code>.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="theme-specific-labels" class="doc-section">
+                            <h2>Theme-Specific Controls</h2>
+                            <p>Control labels adapt to the theme you choose. For example, the particle slider reads <em>Petal Count</em> on Spring Blossom and <em>Snowflake Count</em> on Alpine Winter. Some themes also add their own controls, such as wind or glow effects.</p>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>
