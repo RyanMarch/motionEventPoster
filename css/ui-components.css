@@ -1911,3 +1911,234 @@ body.theme-celebration #backdrop-ribbon-row,
 body.theme-disco-fever #backdrop-ribbon-row {
     display: none !important;
 }
+
+/* QR Code Customize Dialog Styles */
+dialog.qr-customize-dialog {
+    border: 1px solid var(--color-ui-accent);
+    border-radius: 12px;
+    background: var(--color-ui-bg-panel);
+    color: var(--color-ui-text);
+    padding: 20px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    font-family: var(--font-ui);
+}
+
+dialog.qr-customize-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+}
+
+.qr-customize-dialog .dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.qr-customize-dialog .dialog-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: var(--color-ui-accent);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+}
+
+.qr-customize-dialog .customizer-side-indicator {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-ui-text-dim);
+    margin-bottom: 8px;
+}
+
+.qr-customize-dialog .dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.qr-customize-dialog .dialog-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.qr-customize-dialog .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-ui-text-dim);
+}
+
+/* Color Row */
+.qr-customize-dialog .color-row {
+    display: flex;
+    gap: 16px;
+}
+
+.qr-customize-dialog .color-picker-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.qr-customize-dialog .color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 4px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.qr-customize-dialog .color-picker-wrapper.active {
+    border-color: var(--color-ui-accent);
+    box-shadow: 0 0 0 1px var(--color-ui-accent);
+}
+
+.qr-customize-dialog .color-preview-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.qr-customize-dialog .hex-input {
+    flex: 1;
+    min-width: 0;
+    border: none !important;
+    background: transparent !important;
+    font-size: 0.8rem !important;
+    padding: 2px 4px !important;
+    text-transform: uppercase;
+    color: var(--color-ui-text);
+}
+
+/* Icon Grid */
+.qr-customize-dialog .icon-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    max-height: 150px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.qr-customize-dialog .icon-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    color: var(--color-ui-text-dim);
+    padding: 6px 4px;
+    font-size: 0.68rem;
+    cursor: pointer;
+    text-align: center;
+    text-transform: capitalize;
+    transition: all 0.15s ease;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.qr-customize-dialog .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-ui-text);
+}
+
+.qr-customize-dialog .icon-btn.active {
+    background: var(--color-ui-accent);
+    color: var(--color-dark-text);
+    font-weight: 700;
+    border-color: var(--color-ui-accent);
+}
+
+/* Segmented Control */
+.qr-customize-dialog .segmented-control {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.qr-customize-dialog .seg-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--color-ui-text-dim);
+    padding: 6px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.qr-customize-dialog .seg-btn:hover {
+    color: var(--color-ui-text);
+}
+
+.qr-customize-dialog .seg-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-ui-text);
+    font-weight: 600;
+}
+
+/* Footer */
+.qr-customize-dialog .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+}
+
+.qr-customize-dialog button,
+.qr-customize-dialog .button {
+    background: #222;
+    color: var(--color-ui-text);
+    border: 2px solid #555;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    padding: 8px 16px;
+    outline: none;
+}
+
+.qr-customize-dialog button:hover,
+.qr-customize-dialog .button:hover {
+    background: #333;
+}
+
+.qr-customize-dialog .button--secondary {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: var(--color-ui-text) !important;
+}
+
+.qr-customize-dialog .button--solid-gold {
+    background: var(--color-ui-accent) !important;
+    color: var(--color-ui-brand) !important;
+    border-color: var(--color-ui-accent) !important;
+}
+
+.qr-customize-dialog .button--solid-gold:hover {
+    background: #fada8c !important;
+}

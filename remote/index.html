@@ -161,6 +161,15 @@
             transform: translateY(0) scale(0.96);
         }
 
+        /* ── QR customization (remote) ── */
+        .qr-remote-group { margin-top: 12px; }
+        .qr-remote-style { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin: 8px 0; font-size: 0.8rem; }
+        .qr-remote-style label { display: flex; align-items: center; gap: 6px; }
+        #qr-remote-left input[type="color"], #qr-remote-right input[type="color"] {
+            position: static; opacity: 1; pointer-events: auto; z-index: auto; width: 36px; height: 30px; padding: 2px; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: transparent; }
+        .qr-remote-style select.text-input { width: auto; padding: 4px 6px; }
+
         /* ── QR Scanner Modal Styles ── */
         .rcs-scanner-modal {
             position: fixed;
@@ -917,6 +926,53 @@
                                     <button id="btn-clear-event-date" class="button button--warning btn-inline-clear"
                                         title="Clear">✕</button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-sub-section">
+                            <div class="panel-sub-section-title">QR Codes</div>
+                            <div class="control qr-remote-group" id="qr-remote-left">
+                                <label class="form-label" for="qr-left-url">Left QR Code Link</label>
+                                <div class="input-clear-row">
+                                    <input type="url" id="qr-left-url" class="text-input"
+                                        placeholder="https://example.com" autocomplete="off" autocorrect="off"
+                                        autocapitalize="off" spellcheck="false">
+                                    <button id="btn-clear-qr-left" class="button button--warning btn-inline-clear"
+                                        title="Remove QR code">✕</button>
+                                </div>
+                                <div class="qr-remote-style">
+                                    <label>Color <input type="color" id="qr-left-fg" value="#000000"></label>
+                                    <label>Background <input type="color" id="qr-left-bg" value="#ffffff"></label>
+                                    <label class="qr-remote-check"><input type="checkbox" id="qr-left-transparent"> Transparent</label>
+                                </div>
+                                <div class="qr-remote-style">
+                                    <label>Corners <select id="qr-left-corner" class="text-input"><option value="square">Square</option><option value="rounded">Rounded</option><option value="circle">Circle</option><option value="leaf">Leaf</option><option value="beveled">Beveled</option></select></label>
+                                    <label>Icon <select id="qr-left-icon" class="text-input"><option value="none">None</option><option value="link">Link</option><option value="globe">Globe</option><option value="text">Text</option><option value="wifi">Wifi</option><option value="contact">Contact</option><option value="email">Email</option><option value="phone">Phone</option><option value="map-pin">Map Pin</option><option value="sms">Sms</option><option value="event">Event</option><option value="github">Github</option><option value="linkedin">Linkedin</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="whatsapp">Whatsapp</option></select></label>
+                                </div>
+                                <button id="btn-gen-qr-left" class="button button--primary button--full" disabled>Generate Left QR</button>
+                                <div id="qr-left-status" class="qr-api-status is-hidden" role="status" aria-live="polite"></div>
+                            </div>
+
+                            <div class="control qr-remote-group" id="qr-remote-right">
+                                <label class="form-label" for="qr-right-url">Right QR Code Link</label>
+                                <div class="input-clear-row">
+                                    <input type="url" id="qr-right-url" class="text-input"
+                                        placeholder="https://example.com" autocomplete="off" autocorrect="off"
+                                        autocapitalize="off" spellcheck="false">
+                                    <button id="btn-clear-qr-right" class="button button--warning btn-inline-clear"
+                                        title="Remove QR code">✕</button>
+                                </div>
+                                <div class="qr-remote-style">
+                                    <label>Color <input type="color" id="qr-right-fg" value="#000000"></label>
+                                    <label>Background <input type="color" id="qr-right-bg" value="#ffffff"></label>
+                                    <label class="qr-remote-check"><input type="checkbox" id="qr-right-transparent"> Transparent</label>
+                                </div>
+                                <div class="qr-remote-style">
+                                    <label>Corners <select id="qr-right-corner" class="text-input"><option value="square">Square</option><option value="rounded">Rounded</option><option value="circle">Circle</option><option value="leaf">Leaf</option><option value="beveled">Beveled</option></select></label>
+                                    <label>Icon <select id="qr-right-icon" class="text-input"><option value="none">None</option><option value="link">Link</option><option value="globe">Globe</option><option value="text">Text</option><option value="wifi">Wifi</option><option value="contact">Contact</option><option value="email">Email</option><option value="phone">Phone</option><option value="map-pin">Map Pin</option><option value="sms">Sms</option><option value="event">Event</option><option value="github">Github</option><option value="linkedin">Linkedin</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="whatsapp">Whatsapp</option></select></label>
+                                </div>
+                                <button id="btn-gen-qr-right" class="button button--primary button--full" disabled>Generate Right QR</button>
+                                <div id="qr-right-status" class="qr-api-status is-hidden" role="status" aria-live="polite"></div>
                             </div>
                         </div>
                     </details>

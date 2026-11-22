@@ -531,54 +531,50 @@
                                 title="Clear">✕</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- QR Codes -->
+                   <!-- QR Codes -->
                 <div class="panel-sub-section">
                     <div class="panel-sub-section-title">QR Codes</div>
 
                     <div class="qr-edit-group" style="margin-bottom: 10px;">
                         <div class="qr-edit-label">Left QR Code</div>
-                        <div class="upload-row">
-                            <button id="btn-upload-qr-left" class="button button--primary button--upload">Upload
-                                Image</button>
-                            <button id="btn-clear-qr-left"
-                                class="button button--warning button--clear-sm">Clear</button>
-                        </div>
-                        <input type="file" id="input-qr-left-file" accept="image/*" class="is-hidden">
-                        <div id="qr-left-preview" class="img-preview-wrap is-hidden">
-                            <img id="qr-left-thumb" alt="Left QR preview">
-                        </div>
                         <div class="qr-url-row">
                             <input type="url" id="input-qr-left-url" class="text-input qr-url-input"
-                                placeholder="Or paste a URL to generate…"
+                                placeholder="https://..."
                                 autocomplete="off" spellcheck="false">
                             <button id="btn-gen-qr-left" class="button button--primary button--gen-qr"
-                                title="Generate QR code from URL">Go</button>
+                                title="Generate QR code from URL" disabled>Generate</button>
                         </div>
                         <div id="qr-left-api-status" class="qr-api-status is-hidden"></div>
+                        <div class="qr-action-row" style="margin-top: 8px; display: flex; gap: 6px;">
+                            <button id="btn-cust-qr-left" class="button button--secondary" style="flex: 1.5; font-size: 0.72rem; padding: 5px 8px;">Customize Style</button>
+                            <button id="btn-upload-qr-left" class="button button--secondary" style="flex: 1; font-size: 0.72rem; padding: 5px 8px;">Upload</button>
+                            <button id="btn-clear-qr-left" class="button button--warning is-hidden" style="font-size: 0.72rem; padding: 5px 8px;">Clear</button>
+                        </div>
+                        <input type="file" id="input-qr-left-file" accept="image/*" class="is-hidden">
+                        <div id="qr-left-preview" class="img-preview-wrap is-hidden" style="margin-top: 6px;">
+                            <img id="qr-left-thumb" alt="Left QR preview" style="max-height: 40px; border-radius: 4px;">
+                        </div>
                     </div>
 
                     <div class="qr-edit-group">
                         <div class="qr-edit-label">Right QR Code</div>
-                        <div class="upload-row">
-                            <button id="btn-upload-qr-right" class="button button--primary button--upload">Upload
-                                Image</button>
-                            <button id="btn-clear-qr-right"
-                                class="button button--warning button--clear-sm">Clear</button>
-                        </div>
-                        <input type="file" id="input-qr-right-file" accept="image/*" class="is-hidden">
-                        <div id="qr-right-preview" class="img-preview-wrap is-hidden">
-                            <img id="qr-right-thumb" alt="Right QR preview">
-                        </div>
                         <div class="qr-url-row">
                             <input type="url" id="input-qr-right-url" class="text-input qr-url-input"
-                                placeholder="Or paste a URL to generate…"
+                                placeholder="https://..."
                                 autocomplete="off" spellcheck="false">
                             <button id="btn-gen-qr-right" class="button button--primary button--gen-qr"
-                                title="Generate QR code from URL">Go</button>
+                                title="Generate QR code from URL" disabled>Generate</button>
                         </div>
                         <div id="qr-right-api-status" class="qr-api-status is-hidden"></div>
+                        <div class="qr-action-row" style="margin-top: 8px; display: flex; gap: 6px;">
+                            <button id="btn-cust-qr-right" class="button button--secondary" style="flex: 1.5; font-size: 0.72rem; padding: 5px 8px;">Customize Style</button>
+                            <button id="btn-upload-qr-right" class="button button--secondary" style="flex: 1; font-size: 0.72rem; padding: 5px 8px;">Upload</button>
+                            <button id="btn-clear-qr-right" class="button button--warning is-hidden" style="font-size: 0.72rem; padding: 5px 8px;">Clear</button>
+                        </div>
+                        <input type="file" id="input-qr-right-file" accept="image/*" class="is-hidden">
+                        <div id="qr-right-preview" class="img-preview-wrap is-hidden" style="margin-top: 6px;">
+                            <img id="qr-right-thumb" alt="Right QR preview" style="max-height: 40px; border-radius: 4px;">
+                        </div>
                     </div>
                 </div>
             </details>
@@ -594,30 +590,25 @@
                         <label class="form-label" for="input-host-title">New Name</label>
                         <input type="text" id="input-host-title" class="text-input" placeholder="e.g. Kermit T. Frog"
                             autocomplete="off" autocorrect="off" spellcheck="false">
-                        <div id="add-host-error" class="form-error is-hidden" role="alert" aria-live="polite"></div>
-                        <div class="btn-group">
+                        <div class="form-actions">
                             <button id="btn-cancel-add-host" class="button button--secondary">Cancel</button>
-                            <button id="btn-confirm-add-host" class="button button--solid-gold" disabled>Add
-                                Name</button>
+                            <button id="btn-submit-host" class="button button--primary">Add Name</button>
                         </div>
                     </div>
 
-                    <div id="added-hosts-list" class="added-hosts-list is-hidden">
-                        <div class="added-hosts-title">Added Names:</div>
-                        <div id="added-hosts-items"></div>
-                    </div>
-
-                    <div id="removed-hosts-list" class="added-hosts-list is-hidden">
-                        <div class="added-hosts-title">Recently Removed:</div>
-                        <div id="removed-hosts-items"></div>
+                    <div class="host-management-list-wrap">
+                        <ul id="hosts-list" class="hosts-list" role="list">
+                            <!-- Populated dynamically -->
+                        </ul>
                     </div>
                 </div>
             </details>
 
-            <!-- Help & Shortcuts Section -->
-            <details class="advanced-controls" id="help-details">
-                <summary>[?] Help & Shortcuts</summary>
+            <!-- Help / Keyboard Shortcuts Section -->
+            <details class="advanced-controls" id="help-shortcuts-details">
+                <summary>[H]elp & Shortcuts</summary>
                 <div class="panel-sub-section">
+                    <div class="help-section-title">Keyboard Shortcuts</div>
                     <div class="shortcut-list" id="shortcut-list">
                         <!-- Dynamically populated from window.SHORTCUT_CONFIGS -->
                     </div>
@@ -645,6 +636,95 @@
 
         </div> <!-- End scroll wrapper -->
     </div>
+
+    <!-- Customize QR Code Style Dialog -->
+    <dialog id="qr-customize-dialog" closedby="any" class="qr-customize-dialog" aria-labelledby="dialog-qr-title">
+        <div class="dialog-content">
+            <h2 id="dialog-qr-title" class="dialog-title">Customize QR Code Style</h2>
+            
+            <div class="dialog-body">
+                <!-- Side Display (read-only for info) -->
+                <div class="customizer-side-indicator">Configuring: <span id="customizer-side-label">Left QR Code</span></div>
+                
+                <!-- Corner Style Section -->
+                <div class="dialog-section">
+                    <label class="section-label">Corner Style</label>
+                    <div class="segmented-control" id="qr-corner-style-control">
+                        <button type="button" class="seg-btn active" data-value="square">Square</button>
+                        <button type="button" class="seg-btn" data-value="rounded">Rounded</button>
+                        <button type="button" class="seg-btn" data-value="circle">Circle</button>
+                        <button type="button" class="seg-btn" data-value="leaf">Leaf</button>
+                        <button type="button" class="seg-btn" data-value="beveled">Beveled</button>
+                    </div>
+                </div>
+
+                <!-- Colors Section -->
+                <div class="dialog-section">
+                    <div class="color-row">
+                        <div class="color-picker-group">
+                            <label class="section-label">Foreground Color</label>
+                            <div class="color-picker-wrapper" id="qr-fg-wrapper">
+                                <button type="button" id="qr-fg-color-btn" class="color-preview-btn" style="background-color: #000000;"></button>
+                                <input type="text" id="qr-fg-color-hex" class="text-input hex-input" value="#000000" maxlength="7" autocomplete="off">
+                                <input type="color" id="qr-fg-color-picker" style="display: none">
+                            </div>
+                        </div>
+
+                        <div class="color-picker-group" id="qr-bg-color-group">
+                            <label class="section-label">Background Color</label>
+                            <div class="color-picker-wrapper" id="qr-bg-wrapper">
+                                <button type="button" id="qr-bg-color-btn" class="color-preview-btn" style="background-color: #ffffff;"></button>
+                                <input type="text" id="qr-bg-color-hex" class="text-input hex-input" value="#ffffff" maxlength="7" autocomplete="off">
+                                <input type="color" id="qr-bg-color-picker" style="display: none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spectrum Canvas Color Picker -->
+                    <div id="qr-spectrum-container" class="spectrum-container" style="display: none; margin-top: 10px; position: relative;">
+                        <canvas id="qr-spectrum-canvas" width="300" height="120" style="width: 100%; height: 120px; border-radius: 4px; cursor: crosshair;"></canvas>
+                        <div id="qr-spectrum-cursor" class="spectrum-cursor" style="position: absolute; width: 12px; height: 12px; border: 2px solid #ffffff; border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); box-shadow: 0 1px 4px rgba(0,0,0,0.5);"></div>
+                    </div>
+
+                    <label class="toggle-control toggle-control--simple control" style="margin-top: 10px; width: fit-content;">
+                        <span class="toggle-switch">
+                            <input type="checkbox" id="qr-transparent-check">
+                            <span class="toggle-track"></span>
+                        </span>
+                        <span class="toggle-label">Transparent Background</span>
+                    </label>
+                </div>
+
+                <!-- Icon Section -->
+                <div class="dialog-section">
+                    <label class="section-label">Overlay Icon</label>
+                    <div class="icon-selector-grid" id="qr-icon-selector-grid">
+                        <button type="button" class="icon-btn active" data-value="none" title="None">None</button>
+                        <button type="button" class="icon-btn" data-value="link" title="Link">Link</button>
+                        <button type="button" class="icon-btn" data-value="globe" title="Globe">Globe</button>
+                        <button type="button" class="icon-btn" data-value="text" title="Text">Text</button>
+                        <button type="button" class="icon-btn" data-value="wifi" title="WiFi">WiFi</button>
+                        <button type="button" class="icon-btn" data-value="contact" title="Contact">Contact</button>
+                        <button type="button" class="icon-btn" data-value="email" title="Email">Email</button>
+                        <button type="button" class="icon-btn" data-value="phone" title="Phone">Phone</button>
+                        <button type="button" class="icon-btn" data-value="map-pin" title="Map Pin">Map Pin</button>
+                        <button type="button" class="icon-btn" data-value="sms" title="SMS">SMS</button>
+                        <button type="button" class="icon-btn" data-value="event" title="Event">Event</button>
+                        <button type="button" class="icon-btn" data-value="github" title="GitHub">GitHub</button>
+                        <button type="button" class="icon-btn" data-value="linkedin" title="LinkedIn">LinkedIn</button>
+                        <button type="button" class="icon-btn" data-value="instagram" title="Instagram">Instagram</button>
+                        <button type="button" class="icon-btn" data-value="facebook" title="Facebook">Facebook</button>
+                        <button type="button" class="icon-btn" data-value="whatsapp" title="WhatsApp">WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-footer">
+                <button type="button" id="btn-qr-cust-cancel" class="button button--secondary">Cancel</button>
+                <button type="button" id="btn-qr-cust-apply" class="button button--solid-gold">Apply Styles <span class="return-key">↵</span></button>
+            </div>
+        </div>
+    </dialog>
 
     <!-- Wake Lock Fallback Video -->
     <video id="wake-lock-video" class="wake-lock-video" loop muted playsinline preload="none" tabindex="-1"
