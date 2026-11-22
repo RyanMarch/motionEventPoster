@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/favicons/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicons/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="Motion Poster" />
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <script src="../docs-theme-loader.js"></script>
+
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Troubleshooting & FAQ — Motion Poster Docs</title>
+    <meta name="description" content="Fixes for common issues, plus how your data is stored and how to start over.">
+    <meta name="category" content="Reference">
+    <meta name="doc-id" content="troubleshooting">
+    <link rel="canonical" href="https://motionposter.ryanmarch.me/docs/troubleshooting/">
+
+    <!-- Docs Style Sheet -->
+    <link rel="stylesheet" href="../style.css">
+    <script src="../docs-components.js" type="module"></script>
+</head>
+
+<body class="user-docs-page">
+    <div class="app-container">
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
+        <main class="page-container-sidebar user-docs">
+            <docs-sidebar></docs-sidebar>
+
+            <div class="page-content-wrapper">
+                <docs-header></docs-header>
+
+                <docs-anchor-helper>
+                    <section class="page-content" aria-label="Troubleshooting & FAQ Content">
+
+                        <article id="overview" class="doc-section">
+                            <h1>Troubleshooting & FAQ</h1>
+                            <p class="lead">
+                                Fixes for common issues, plus how your data is stored and how to start over.
+                            </p>
+                        </article>
+
+                        <docs-table-of-contents></docs-table-of-contents>
+
+                        <hr class="section-divider">
+
+                        <article id="my-changes-disappeared" class="doc-section">
+                            <h2>My Changes Disappeared</h2>
+                            <p>Settings are stored in your browser for this site. They will not carry over to a different browser, a different computer, a private or incognito window, or after you clear site data. Set up the poster on the same browser and computer you will use at the event.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="where-is-my-data" class="doc-section">
+                            <h2>Where Is My Data Stored?</h2>
+                            <p>All customizations, including logos and QR images, are stored locally in your browser. Motion Poster has no accounts, and nothing you type is uploaded to a database. The only network calls are loading the page and fonts, optional QR code generation, and the local wireless remote connection.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="fullscreen-exit" class="doc-section">
+                            <h2>The Poster Left Fullscreen</h2>
+                            <p>Browsers require a user action to enter fullscreen, so after a reload press <code>F</code> (or click when prompted) to go back. Press <code>Esc</code> only when you want to leave.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="qr-wont-scan" class="doc-section">
+                            <h2>My QR Code Will Not Scan</h2>
+                            <ul>
+<li>Use a high-contrast pair of colors, with the dark color as the code itself.</li>
+<li>Avoid very small sizes, low-resolution uploads, or busy overlay icons.</li>
+<li>Check that the URL is complete and begins with <code>https://</code>.</li>
+</ul>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="remote-wont-connect" class="doc-section">
+                            <h2>The Remote Will Not Connect</h2>
+                            <p>Confirm both devices are on the same network, keep the poster page open, and try a phone hotspot if venue Wi-Fi blocks device-to-device traffic. See <a href="../remote-control/#tips">Remote Control tips</a>.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="choppy-animation" class="doc-section">
+                            <h2>Animation Is Choppy</h2>
+                            <p>Reduce the particle Count, lower the frame rate cap, or pick a lighter theme. Close other tabs and apps on the display computer.</p>
+                        </article>
+
+                        <hr class="section-divider">
+
+                        <article id="factory-reset" class="doc-section">
+                            <h2>Start Over (Factory Reset)</h2>
+                            <p>Press and hold <code>\</code> to wipe all local data and restore defaults. This removes your names, text, logos, and QR codes, so only do it when you mean to.</p>
+                        </article>
+
+                    </section>
+                </docs-anchor-helper>
+            </div>
+        </main>
+
+        <docs-footer></docs-footer>
+
+        <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Viewer">
+            <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
+            <img class="lightbox-content" id="lightbox-img" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+</body>
+
+</html>

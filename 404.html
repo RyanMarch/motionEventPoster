@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | Event Poster</title>
+    <title>Page not found | Motion Poster</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
 
     <!-- Google Fonts -->
     <link
@@ -179,6 +183,7 @@
         .actions {
             display: flex;
             flex-direction: column;
+            flex-wrap: wrap;
             gap: 14px;
         }
 
@@ -232,6 +237,10 @@
         .button:active {
             transform: translateY(0);
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .error-code { animation: none; }
+        }
     </style>
 </head>
 
@@ -244,16 +253,18 @@
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
 
-        <div class="error-code">Motion Poster</div>
+        <div class="error-code" aria-hidden="true">404</div>
+        <h1 class="title">Page not found</h1>
         <p class="description">
-            The requested page does not exist. Use the options below to find your way back.
+            That page does not exist, or it has moved. Here is where to go next.
         </p>
-        <h1 class="title">Choose View</h1>
 
-        <div class="actions">
-            <a href="/remote/" class="button button-secondary">Remote Controller</a>
-            <a href="/" class="button button-primary">Poster Display</a>
-        </div>
+        <nav class="actions" aria-label="Helpful links">
+            <a href="/" class="button button-primary">Home</a>
+            <a href="/app/" class="button button-secondary">Launch App</a>
+            <a href="/docs/" class="button button-secondary">Guides</a>
+            <a href="/remote/" class="button button-secondary">Remote</a>
+        </nav>
     </div>
 </body>
 

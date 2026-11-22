@@ -1,0 +1,30 @@
+# Motion Poster
+
+A free, browser-based animated display for galas, fundraisers, parties, and venue screens. It replaces a static slide or paper poster with a living poster: a themed frame, drifting particles (petals, snow, confetti, steam), the event title, a host or sponsor list, and QR codes. Nothing to install and no account needed; everything runs in the browser and is saved locally.
+
+Site: https://motionposter.ryanmarch.me/
+App: https://motionposter.ryanmarch.me/app/
+Help Center: https://motionposter.ryanmarch.me/docs/
+Remote controller: https://motionposter.ryanmarch.me/remote/
+
+## What it does
+- 30 animated themes in five packs (Standard, Party, Decades, Specialty, Holiday) with 276 built-in color schemes. Link to a theme directly with `/app/?theme=<id>`, for example `/app/?theme=art-deco-gala`.
+- Editable event text, logo upload, and two QR code areas (upload an image, or generate a styled code from a URL).
+- A host list that auto-scales to fit the screen, with add, remove, and restore.
+- Wireless remote: press W on the poster, scan the QR code or enter the pairing code on a phone or tablet on the same network, and edit everything live.
+- Built for events: screen wake lock, automatic recovery after a refresh or power blip, adjustable particle physics and frame rate.
+- Private by design: no accounts, no tracking database. Settings, names, logos, and QR images are stored in the browser's local storage.
+
+## Guides
+- https://motionposter.ryanmarch.me/docs/getting-started/ : Launch, go fullscreen, and set up in five minutes
+- https://motionposter.ryanmarch.me/docs/themes/ : All themes, packs, and direct links
+- https://motionposter.ryanmarch.me/docs/customizing-appearance/ : Particles, layout, colors, and performance
+- https://motionposter.ryanmarch.me/docs/editing-poster-content/ : Text, logos, and QR codes
+- https://motionposter.ryanmarch.me/docs/managing-hosts/ : Add, remove, and restore names
+- https://motionposter.ryanmarch.me/docs/remote-control/ : Pair a phone or tablet
+- https://motionposter.ryanmarch.me/docs/keyboard-shortcuts/ : Every hotkey and touch trigger
+- https://motionposter.ryanmarch.me/docs/running-your-event/ : Pre-event checklist and reliability features
+- https://motionposter.ryanmarch.me/docs/troubleshooting/ : Fixes and FAQ
+
+## Key shortcuts
+F fullscreen, Q controls, C customize appearance, E edit text, A add or remove names, W wireless remote, ? help, Esc close.

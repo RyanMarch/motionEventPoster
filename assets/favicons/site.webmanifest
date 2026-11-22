@@ -1,6 +1,6 @@
 {
-  "name": "Spring Event Poster",
-  "short_name": "EventPoster",
+  "name": "Motion Poster",
+  "short_name": "Motion Poster",
   "icons": [
     {
       "src": "web-app-manifest-192x192.png",
@@ -17,5 +17,6 @@
   ],
   "theme_color": "#032858",
   "background_color": "#032858",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/app/"
 }

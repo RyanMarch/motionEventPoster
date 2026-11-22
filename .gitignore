@@ -19,7 +19,7 @@ $RECYCLE.BIN/
 # Editor / IDE
 .vscode/
 .idea/
-docs/
+docs/theme_ideas.md
 
 # Logs
 *.log

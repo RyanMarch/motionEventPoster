@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /remote/
+Disallow: /api/
+
+Sitemap: https://motionposter.ryanmarch.me/sitemap.xml

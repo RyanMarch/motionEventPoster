@@ -27,6 +27,7 @@ class RemoteController {
         this._initThemeSelector();
         this._wireConnectScreen();
         this._wireAddHost();
+        this._wireQr();
 
         const input = document.getElementById('rcs-code-input');
         if (input && !this.prefilledRoom) {
@@ -541,6 +542,8 @@ class RemoteController {
         if (!msg?.type) return;
         if (msg.type === 'state-sync') {
             this._applyStateSync(msg.state);
+        } else if (msg.type === 'qr-status') {
+            this._showQrStatus(msg.side, msg.ok);
         }
         // Host could send individual updates too — handle them
         // (same structure as what we send to host)
@@ -623,6 +626,9 @@ class RemoteController {
                     if (el) el.value = val;
                 });
             }
+
+            // QR link + style fields (skip a side the user is currently editing)
+            if (state.posterText) this._syncQrFields(state.posterText);
 
             // Added/removed hosts lists
             if (state.addedHosts !== undefined || state.removedHosts !== undefined) {
@@ -748,6 +754,72 @@ class RemoteController {
     _autoGrow(textarea) {
         textarea.style.height = 'auto';
         textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+
+    // ─── QR Codes ────────────────────────────────────────────────────────────
+
+    _qrEls(side) {
+        const g = (k) => document.getElementById(`qr-${side}-${k}`);
+        return {
+            group: document.getElementById(`qr-remote-${side}`),
+            url: g('url'), fg: g('fg'), bg: g('bg'), transparent: g('transparent'),
+            corner: g('corner'), icon: g('icon'), status: g('status'),
+            gen: document.getElementById(`btn-gen-qr-${side}`),
+            clear: document.getElementById(`btn-clear-qr-${side}`),
+        };
+    }
+
+    _wireQr() {
+        ['left', 'right'].forEach((side) => {
+            const el = this._qrEls(side);
+            if (!el.url || !el.gen) return;
+            el.url.addEventListener('input', () => { el.gen.disabled = !el.url.value.trim(); });
+            const generate = () => {
+                const url = el.url.value.trim();
+                if (!url) return;
+                this._send({
+                    type: 'qr', side, action: 'generate', url,
+                    fg: el.fg.value, bg: el.bg.value, transparent: el.transparent.checked,
+                    corner: el.corner.value, icon: el.icon.value,
+                });
+                el.status.classList.remove('is-hidden', 'qr-api-status--error');
+                el.status.textContent = 'Generating…';
+                el.gen.disabled = true;
+            };
+            el.gen.addEventListener('click', generate);
+            el.url.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); generate(); } });
+            el.clear?.addEventListener('click', () => {
+                el.url.value = '';
+                el.gen.disabled = true;
+                el.status.classList.add('is-hidden');
+                this._send({ type: 'qr', side, action: 'clear' });
+            });
+        });
+    }
+
+    _syncQrFields(pt) {
+        ['left', 'right'].forEach((side) => {
+            const el = this._qrEls(side);
+            if (!el.url || el.group?.contains(document.activeElement)) return;
+            const p = side === 'left' ? 'qrLeft' : 'qrRight';
+            if (pt[p + 'Url'] !== undefined) el.url.value = pt[p + 'Url'] || '';
+            if (/^#[0-9a-f]{6}$/i.test(pt[p + 'FgColor'] || '')) el.fg.value = pt[p + 'FgColor'].toLowerCase();
+            if (/^#[0-9a-f]{6}$/i.test(pt[p + 'BgColor'] || '')) el.bg.value = pt[p + 'BgColor'].toLowerCase();
+            if (pt[p + 'Transparent'] !== undefined) el.transparent.checked = !!pt[p + 'Transparent'];
+            if (pt[p + 'CornerStyle']) el.corner.value = pt[p + 'CornerStyle'];
+            if (pt[p + 'Icon']) el.icon.value = pt[p + 'Icon'];
+            el.gen.disabled = !el.url.value.trim();
+        });
+    }
+
+    _showQrStatus(side, ok) {
+        const el = this._qrEls(side);
+        if (!el.status) return;
+        el.status.classList.remove('is-hidden');
+        el.status.classList.toggle('qr-api-status--error', !ok);
+        el.status.textContent = ok ? '✓ QR code applied' : 'Failed — check the link and try again.';
+        el.gen.disabled = !el.url.value.trim();
+        if (ok) setTimeout(() => el.status.classList.add('is-hidden'), 2500);
     }
 
     // ─── Add Host Form ───────────────────────────────────────────────────────
