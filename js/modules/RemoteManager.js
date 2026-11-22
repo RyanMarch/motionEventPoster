@@ -323,6 +323,16 @@ window.RemoteManager = class RemoteManager {
 
     // ─── State Sync ──────────────────────────────────────────────────────────
 
+    /**
+     * Push the current host state to a connected remote after a host-side change
+     * (e.g. QR generated/cleared/restyled). No-op when unpaired or when the change
+     * originated from the remote itself.
+     */
+    pushState() {
+        if (this._applying || !this.conn?.open) return;
+        this._sendStateSync(this.conn);
+    }
+
     _sendStateSync(conn) {
         if (!conn?.open) return;
         const s = this.poster.state;
@@ -367,6 +377,7 @@ window.RemoteManager = class RemoteManager {
                 case 'swatch': this._applySwatch(msg); break;
                 case 'theme': this._applyTheme(msg); break;
                 case 'text': this._applyText(msg); break;
+                case 'qr': this._applyQr(msg); break;
                 case 'button': this._applyButton(msg); break;
                 case 'host-add': this._applyHostAdd(msg); break;
                 case 'host-remove': this._applyHostRemove(msg); break;
@@ -452,6 +463,47 @@ window.RemoteManager = class RemoteManager {
         if (!el) return;
         el.value = value;
         el.dispatchEvent(new Event('input', { bubbles: false }));
+    }
+
+    /** Tell the remote whether the last QR generation for a side succeeded. */
+    sendQrStatus(side, ok) {
+        if (this.conn?.open) this.conn.send({ type: 'qr-status', side, ok: !!ok });
+    }
+
+    /**
+     * Remote-driven QR actions. Input is validated because it comes over the wire.
+     *   { side, action: 'generate', url, fg, bg, transparent, corner, icon }
+     *   { side, action: 'clear' }
+     */
+    _applyQr(msg) {
+        const { side, action } = msg;
+        if (side !== 'left' && side !== 'right') return;
+        const prefix = side === 'left' ? 'qrLeft' : 'qrRight';
+
+        if (action === 'clear') {
+            document.getElementById(`btn-clear-qr-${side}`)?.click();
+            // The clear handler's own push is suppressed while _applying; echo after it resets.
+            setTimeout(() => this.pushState(), 0);
+            return;
+        }
+        if (action !== 'generate') return;
+
+        const url = typeof msg.url === 'string' ? msg.url.trim().slice(0, 2048) : '';
+        if (!url) return;
+        const hex = /^#[0-9a-fA-F]{6}$/;
+        const pt = this.poster.state.posterText;
+        if (hex.test(msg.fg)) pt[`${prefix}FgColor`] = msg.fg.toUpperCase();
+        if (hex.test(msg.bg)) pt[`${prefix}BgColor`] = msg.bg.toUpperCase();
+        pt[`${prefix}Transparent`] = msg.transparent === true;
+        if ((window.QR_CORNER_STYLES || []).includes(msg.corner)) pt[`${prefix}CornerStyle`] = msg.corner;
+        if ((window.QR_ICONS || []).includes(msg.icon)) pt[`${prefix}Icon`] = msg.icon;
+
+        const input = document.getElementById(`input-qr-${side}-url`);
+        const btn = document.getElementById(`btn-gen-qr-${side}`);
+        if (!input || !btn) return;
+        input.value = url;
+        input.dispatchEvent(new Event('input', { bubbles: false }));
+        btn.click();
     }
 
     _applyButton({ id }) {

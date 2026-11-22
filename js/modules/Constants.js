@@ -53,7 +53,23 @@ window.POSTER_TEXT_DEFAULTS = {
     eventDate: 'Wednesday, April 1, 2050',
     qrLeftData: null,
     qrRightData: null,
+    qrLeftUrl: '',
+    qrRightUrl: '',
+    qrLeftFgColor: '#000000',
+    qrRightFgColor: '#000000',
+    qrLeftBgColor: '#FFFFFF',
+    qrRightBgColor: '#FFFFFF',
+    qrLeftTransparent: false,
+    qrRightTransparent: false,
+    qrLeftCornerStyle: 'square',
+    qrRightCornerStyle: 'square',
+    qrLeftIcon: 'none',
+    qrRightIcon: 'none',
 };
+
+// Allowed QR style values (shared by the host dialog, the remote, and message validation)
+window.QR_CORNER_STYLES = ['square', 'rounded', 'circle', 'leaf', 'beveled'];
+window.QR_ICONS = ['none', 'link', 'globe', 'text', 'wifi', 'contact', 'email', 'phone', 'map-pin', 'sms', 'event', 'github', 'linkedin', 'instagram', 'facebook', 'whatsapp'];
 
 window.TITLE_FILTER_WORDS = new Set(['the', 'honorable', 'dr.', 'mr.', 'mrs.', 'ms.']);
 

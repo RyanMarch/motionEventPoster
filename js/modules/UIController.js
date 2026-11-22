@@ -29,6 +29,7 @@ window.UIController = class UIController {
         this.bindOutsideClickDismiss();
         this.bindHoldHotspot();
         this.bindHostListClicks();
+        this.bindQrCustomizer();
 
         let resizeTimer;
         window.addEventListener('resize', () => {
@@ -475,27 +476,54 @@ window.UIController = class UIController {
         });
         this.elements.btnClearLogoImg?.addEventListener('click', () => { this.state.posterText.logoImageData = null; this.state.posterText.logoMode = 'text'; this.poster.savePosterText(); this.poster.applyPosterText(); });
 
-        const bindQR = (btn, input, dataKey, stateKey, ctrl, el) => {
+        const bindQR = (btn, input, dataKey, stateKey, ctrl, el, inputUrl) => {
             btn?.addEventListener('click', () => input?.click());
             input?.addEventListener('change', (e) => {
                 const file = e.target.files?.[0]; if (!file) return;
                 window.PosterUtils.readFileAsDataURL(file, (data) => {
-                    this.state.posterText[dataKey] = data; this.state[stateKey] = true; if (ctrl) ctrl.checked = true;
-                    el?.classList.remove('qr-hidden'); this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
+                    this.state.posterText[dataKey] = data;
+                    this.state.posterText[dataKey.replace('Data', 'Url')] = '';
+                    if (inputUrl) inputUrl.value = '';
+                    this.state[stateKey] = true; if (ctrl) ctrl.checked = true;
+                    el?.classList.remove('qr-hidden');
+                    this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
+                    this.syncPosterTextInputs();
+                    this.notifyRemote();
                 });
                 e.target.value = '';
             });
         };
-        bindQR(this.elements.btnUploadQrLeft, this.elements.inputQrLeftFile, 'qrLeftData', 'qrSoiree', this.controls.qrSoiree, this.elements.qrSoiree);
-        bindQR(this.elements.btnUploadQrRight, this.elements.inputQrRightFile, 'qrRightData', 'qrMembership', this.controls.qrMembership, this.elements.qrMembership);
+        bindQR(this.elements.btnUploadQrLeft, this.elements.inputQrLeftFile, 'qrLeftData', 'qrSoiree', this.controls.qrSoiree, this.elements.qrSoiree, this.elements.inputQrLeftUrl);
+        bindQR(this.elements.btnUploadQrRight, this.elements.inputQrRightFile, 'qrRightData', 'qrMembership', this.controls.qrMembership, this.elements.qrMembership, this.elements.inputQrRightUrl);
 
         this.elements.btnClearQrLeft?.addEventListener('click', () => {
-            this.state.posterText.qrLeftData = null; this.state.qrSoiree = false; this.controls.qrSoiree.checked = false; this.elements.qrSoiree.classList.add('qr-hidden');
+            this.state.posterText.qrLeftData = null;
+            this.state.posterText.qrLeftUrl = '';
+            if (this.elements.inputQrLeftUrl) this.elements.inputQrLeftUrl.value = '';
+            this.state.qrSoiree = false; this.controls.qrSoiree.checked = false; this.elements.qrSoiree.classList.add('qr-hidden');
             this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
+            this.syncPosterTextInputs();
+            this.notifyRemote();
         });
         this.elements.btnClearQrRight?.addEventListener('click', () => {
-            this.state.posterText.qrRightData = null; this.state.qrMembership = false; this.controls.qrMembership.checked = false; this.elements.qrMembership.classList.add('qr-hidden');
+            this.state.posterText.qrRightData = null;
+            this.state.posterText.qrRightUrl = '';
+            if (this.elements.inputQrRightUrl) this.elements.inputQrRightUrl.value = '';
+            this.state.qrMembership = false; this.controls.qrMembership.checked = false; this.elements.qrMembership.classList.add('qr-hidden');
             this.poster.savePosterText(); this.poster.saveSettings(); this.poster.applyPosterText();
+            this.syncPosterTextInputs();
+            this.notifyRemote();
+        });
+
+        this.elements.inputQrLeftUrl?.addEventListener('input', () => {
+            if (this.elements.btnGenQrLeft) {
+                this.elements.btnGenQrLeft.disabled = !this.elements.inputQrLeftUrl.value.trim();
+            }
+        });
+        this.elements.inputQrRightUrl?.addEventListener('input', () => {
+            if (this.elements.btnGenQrRight) {
+                this.elements.btnGenQrRight.disabled = !this.elements.inputQrRightUrl.value.trim();
+            }
         });
 
         this.bindQRApi(
@@ -512,6 +540,11 @@ window.UIController = class UIController {
         );
     }
 
+    notifyRemote() { window.remoteManager?.pushState?.(); }
+    notifyRemoteQrStatus(dataKey, ok) {
+        window.remoteManager?.sendQrStatus?.(dataKey === 'qrLeftData' ? 'left' : 'right', ok);
+    }
+
     async bindQRApi(input, btn, statusEl, dataKey, stateKey, ctrl, posterEl) {
         if (!input || !btn) return;
 
@@ -526,7 +559,35 @@ window.UIController = class UIController {
             btn.disabled = true;
 
             try {
-                const apiUrl = `${QR_API}?${new URLSearchParams({ content: url, format: 'base64', size: '512', ecl: 'Q', margin: '0' })}`;
+                const prefix = dataKey === 'qrLeftData' ? 'qrLeft' : 'qrRight';
+                const pt = this.state.posterText;
+                
+                // Save URL in state
+                pt[prefix + 'Url'] = url;
+
+                const fgColor = pt[prefix + 'FgColor'] || '#000000';
+                const bgColor = pt[prefix + 'BgColor'] || '#ffffff';
+                const transparent = pt[prefix + 'Transparent'] || false;
+                const cornerStyle = pt[prefix + 'CornerStyle'] || 'square';
+                const icon = pt[prefix + 'Icon'] || 'none';
+
+                const params = new URLSearchParams({
+                    content: url,
+                    format: 'base64',
+                    size: '512',
+                    ecl: 'Q',
+                    margin: '0',
+                    fgColor: fgColor.replace('#', ''),
+                    bgColor: bgColor.replace('#', ''),
+                    transparent: transparent ? 'true' : 'false',
+                    cornerStyle: cornerStyle,
+                    icon: icon,
+                    iconSize: '20',
+                    iconColor: fgColor.replace('#', ''),
+                    iconBg: 'rounded'
+                });
+
+                const apiUrl = `${QR_API}?${params.toString()}`;
                 const res = await fetch(apiUrl);
                 if (!res.ok) throw new Error(`API error ${res.status}`);
                 const json = await res.json();
@@ -540,12 +601,16 @@ window.UIController = class UIController {
                 this.poster.savePosterText();
                 this.poster.saveSettings();
                 this.poster.applyPosterText();
+                this.notifyRemote();
+                this.notifyRemoteQrStatus(dataKey, true);
 
                 statusEl && (statusEl.textContent = '✓ QR code applied');
+                this.syncPosterTextInputs();
                 setTimeout(() => statusEl?.classList.add('is-hidden'), 2500);
             } catch (err) {
                 statusEl?.classList.add('qr-api-status--error');
                 statusEl && (statusEl.textContent = 'Failed — check the URL and try again.');
+                this.notifyRemoteQrStatus(dataKey, false);
             } finally {
                 btn.disabled = false;
             }
@@ -563,6 +628,35 @@ window.UIController = class UIController {
         if (this.elements.inputEventTitle) this.elements.inputEventTitle.value = pt.eventTitle;
         if (this.elements.inputEventSubtitle) this.elements.inputEventSubtitle.value = pt.eventSubtitle;
         if (this.elements.inputEventDate) this.elements.inputEventDate.value = pt.eventDate;
+
+        if (this.elements.inputQrLeftUrl) this.elements.inputQrLeftUrl.value = pt.qrLeftUrl || '';
+        if (this.elements.inputQrRightUrl) this.elements.inputQrRightUrl.value = pt.qrRightUrl || '';
+
+        // Update Generate buttons disabled state
+        if (this.elements.btnGenQrLeft && this.elements.inputQrLeftUrl) {
+            this.elements.btnGenQrLeft.disabled = !this.elements.inputQrLeftUrl.value.trim();
+        }
+        if (this.elements.btnGenQrRight && this.elements.inputQrRightUrl) {
+            this.elements.btnGenQrRight.disabled = !this.elements.inputQrRightUrl.value.trim();
+        }
+
+        // Toggle Clear buttons visibility
+        if (this.elements.btnClearQrLeft) {
+            this.elements.btnClearQrLeft.classList.toggle('is-hidden', !pt.qrLeftData);
+        }
+        if (this.elements.btnClearQrRight) {
+            this.elements.btnClearQrRight.classList.toggle('is-hidden', !pt.qrRightData);
+        }
+
+        // Previews synchronization
+        if (this.elements.qrLeftPreview) {
+            this.elements.qrLeftPreview.classList.toggle('is-hidden', !pt.qrLeftData);
+            if (pt.qrLeftData && this.elements.qrLeftThumb) this.elements.qrLeftThumb.src = pt.qrLeftData;
+        }
+        if (this.elements.qrRightPreview) {
+            this.elements.qrRightPreview.classList.toggle('is-hidden', !pt.qrRightData);
+            if (pt.qrRightData && this.elements.qrRightThumb) this.elements.qrRightThumb.src = pt.qrRightData;
+        }
 
         // Handle auto-grow for textareas
         [this.elements.inputLogoText].forEach(el => {
@@ -962,6 +1056,289 @@ window.UIController = class UIController {
                 this.poster.root.classList.add('inactivity-hide');
             }, 6000);
         }
+    }
+
+    bindQrCustomizer() {
+        const dialog = this.elements.qrCustomizeDialog;
+        if (!dialog) return;
+
+        let activeSide = 'left';
+        let activeColorTarget = 'fg';
+
+        const rgbToHex = (r, g, b) => {
+            const toHex = x => {
+                const hex = Math.round(x).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        };
+
+        const hexToHsl = (hex) => {
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            const r = parseInt(hex.substring(0, 2), 16) / 255;
+            const g = parseInt(hex.substring(2, 4), 16) / 255;
+            const b = parseInt(hex.substring(4, 6), 16) / 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h = 0, s = 0, l = (max + min) / 2;
+            if (max !== min) {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+                else if (max === g) h = (b - r) / d + 2;
+                else if (max === b) h = (r - g) / d + 4;
+                h /= 6;
+            }
+            return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+        };
+
+        const canvas = this.elements.qrSpectrumCanvas;
+        const drawSpectrum = () => {
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const hueGrad = ctx.createLinearGradient(0, 0, w, 0);
+            hueGrad.addColorStop(0, '#ff0000');
+            hueGrad.addColorStop(0.17, '#ffff00');
+            hueGrad.addColorStop(0.33, '#00ff00');
+            hueGrad.addColorStop(0.5, '#00ffff');
+            hueGrad.addColorStop(0.67, '#0000ff');
+            hueGrad.addColorStop(0.83, '#ff00ff');
+            hueGrad.addColorStop(1, '#ff0000');
+
+            ctx.fillStyle = hueGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            const vGrad = ctx.createLinearGradient(0, 0, 0, h);
+            vGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            vGrad.addColorStop(0.15, 'rgba(255, 255, 255, 0)');
+            vGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0)');
+            vGrad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+
+            ctx.fillStyle = vGrad;
+            ctx.fillRect(0, 0, w, h);
+        };
+
+        const positionCursor = (hex) => {
+            const cursor = this.elements.qrSpectrumCursor;
+            if (!canvas || !cursor) return;
+            const rect = canvas.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+
+            const { h, s, l } = hexToHsl(hex);
+            const x = (h / 360) * rect.width;
+            const y = ((100 - l) / 100) * rect.height;
+
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+        };
+
+        const handleColorAt = (clientX, clientY) => {
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.max(0, Math.min(rect.width - 1, clientX - rect.left));
+            const y = Math.max(0, Math.min(rect.height - 1, clientY - rect.top));
+
+            let hex;
+            if (y <= 3) {
+                hex = '#ffffff';
+            } else if (y >= rect.height - 3) {
+                hex = '#000000';
+            } else {
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const ctx = canvas.getContext('2d');
+                const imgData = ctx.getImageData(x * scaleX, y * scaleY, 1, 1).data;
+                hex = rgbToHex(imgData[0], imgData[1], imgData[2]);
+            }
+
+            if (activeColorTarget === 'fg') {
+                updateColorUI(this.elements.qrFgColorBtn, this.elements.qrFgColorHex, this.elements.qrFgColorPicker, hex);
+            } else {
+                updateColorUI(this.elements.qrBgColorBtn, this.elements.qrBgColorHex, this.elements.qrBgColorPicker, hex);
+            }
+            positionCursor(hex);
+        };
+
+        let isDragging = false;
+        if (canvas) {
+            const onStart = (e) => {
+                isDragging = true;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                handleColorAt(clientX, clientY);
+            };
+            const onMove = (e) => {
+                if (!isDragging) return;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                handleColorAt(clientX, clientY);
+            };
+            const onEnd = () => { isDragging = false; };
+
+            canvas.addEventListener('mousedown', onStart);
+            canvas.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onEnd);
+
+            canvas.addEventListener('touchstart', onStart, { passive: true });
+            canvas.addEventListener('touchmove', onMove, { passive: true });
+            window.addEventListener('touchend', onEnd);
+        }
+
+        const updateColorUI = (btn, hexInput, picker, value) => {
+            if (btn) btn.style.backgroundColor = value;
+            if (hexInput && document.activeElement !== hexInput) hexInput.value = value.toUpperCase();
+            if (picker) picker.value = value;
+        };
+
+        const setActiveColorTarget = (target) => {
+            activeColorTarget = target;
+            this.elements.qrFgWrapper?.classList.toggle('active', target === 'fg');
+            this.elements.qrBgWrapper?.classList.toggle('active', target === 'bg');
+
+            if (this.elements.qrSpectrumContainer) {
+                if (target === 'bg' && this.elements.qrTransparentCheck?.checked) {
+                    this.elements.qrSpectrumContainer.style.display = 'none';
+                } else {
+                    this.elements.qrSpectrumContainer.style.display = 'block';
+                    drawSpectrum();
+                    const currentHex = target === 'fg' ? this.elements.qrFgColorHex.value : this.elements.qrBgColorHex.value;
+                    setTimeout(() => positionCursor(currentHex), 20);
+                }
+            }
+        };
+
+        const setupColorTrigger = (btn, hexInput, picker, targetName) => {
+            const onActivate = () => setActiveColorTarget(targetName);
+            btn?.addEventListener('click', onActivate);
+            hexInput?.addEventListener('focus', onActivate);
+
+            picker?.addEventListener('input', (e) => {
+                updateColorUI(btn, hexInput, picker, e.target.value);
+                if (activeColorTarget === targetName) positionCursor(e.target.value);
+            });
+            hexInput?.addEventListener('input', (e) => {
+                let val = e.target.value;
+                if (!val.startsWith('#')) val = '#' + val;
+                if (/^#[0-9A-F]{6}$/i.test(val)) {
+                    updateColorUI(btn, hexInput, picker, val);
+                    if (activeColorTarget === targetName) positionCursor(val);
+                }
+            });
+        };
+
+        setupColorTrigger(this.elements.qrFgColorBtn, this.elements.qrFgColorHex, this.elements.qrFgColorPicker, 'fg');
+        setupColorTrigger(this.elements.qrBgColorBtn, this.elements.qrBgColorHex, this.elements.qrBgColorPicker, 'bg');
+
+        if (!('closedBy' in HTMLDialogElement.prototype)) {
+            dialog.addEventListener('click', (event) => {
+                if (event.target !== dialog) return;
+                const rect = dialog.getBoundingClientRect();
+                const isDialogContent = (
+                    rect.top <= event.clientY &&
+                    event.clientY <= rect.top + rect.height &&
+                    rect.left <= event.clientX &&
+                    event.clientX <= rect.left + rect.width
+                );
+                if (!isDialogContent) dialog.close();
+            });
+        }
+
+        this.elements.qrTransparentCheck?.addEventListener('change', (e) => {
+            const isTransparent = e.target.checked;
+            if (this.elements.qrBgColorGroup) {
+                this.elements.qrBgColorGroup.style.display = isTransparent ? 'none' : 'flex';
+            }
+            if (isTransparent && activeColorTarget === 'bg') {
+                setActiveColorTarget('fg');
+            } else {
+                setActiveColorTarget(activeColorTarget);
+            }
+        });
+
+        const cornerButtons = this.elements.qrCornerStyleControl?.querySelectorAll('.seg-btn');
+        let selectedCornerStyle = 'square';
+        cornerButtons?.forEach(btn => {
+            btn.addEventListener('click', () => {
+                cornerButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedCornerStyle = btn.dataset.value;
+            });
+        });
+
+        const iconButtons = this.elements.qrIconSelectorGrid?.querySelectorAll('.icon-btn');
+        let selectedIcon = 'none';
+        iconButtons?.forEach(btn => {
+            btn.addEventListener('click', () => {
+                iconButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedIcon = btn.dataset.value;
+            });
+        });
+
+        const openCustomizer = (side) => {
+            activeSide = side;
+            const prefix = side === 'left' ? 'qrLeft' : 'qrRight';
+            const pt = this.state.posterText;
+
+            if (this.elements.customizerSideLabel) {
+                this.elements.customizerSideLabel.textContent = side === 'left' ? 'Left QR Code' : 'Right QR Code';
+            }
+
+            const fgColor = pt[prefix + 'FgColor'] || '#000000';
+            const bgColor = pt[prefix + 'BgColor'] || '#ffffff';
+            const transparent = pt[prefix + 'Transparent'] || false;
+            selectedCornerStyle = pt[prefix + 'CornerStyle'] || 'square';
+            selectedIcon = pt[prefix + 'Icon'] || 'none';
+
+            updateColorUI(this.elements.qrFgColorBtn, this.elements.qrFgColorHex, this.elements.qrFgColorPicker, fgColor);
+            updateColorUI(this.elements.qrBgColorBtn, this.elements.qrBgColorHex, this.elements.qrBgColorPicker, bgColor);
+
+            if (this.elements.qrTransparentCheck) {
+                this.elements.qrTransparentCheck.checked = transparent;
+                if (this.elements.qrBgColorGroup) {
+                    this.elements.qrBgColorGroup.style.display = transparent ? 'none' : 'flex';
+                }
+            }
+
+            cornerButtons?.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === selectedCornerStyle);
+            });
+
+            iconButtons?.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === selectedIcon);
+            });
+
+            dialog.showModal();
+            setActiveColorTarget('fg');
+        };
+
+        this.elements.btnCustQrLeft?.addEventListener('click', () => openCustomizer('left'));
+        this.elements.btnCustQrRight?.addEventListener('click', () => openCustomizer('right'));
+
+        this.elements.btnQrCustCancel?.addEventListener('click', () => dialog.close());
+
+        this.elements.btnQrCustApply?.addEventListener('click', async () => {
+            const prefix = activeSide === 'left' ? 'qrLeft' : 'qrRight';
+            const pt = this.state.posterText;
+
+            pt[prefix + 'FgColor'] = this.elements.qrFgColorHex.value;
+            pt[prefix + 'BgColor'] = this.elements.qrBgColorHex.value;
+            pt[prefix + 'Transparent'] = this.elements.qrTransparentCheck?.checked || false;
+            pt[prefix + 'CornerStyle'] = selectedCornerStyle;
+            pt[prefix + 'Icon'] = selectedIcon;
+            this.poster.savePosterText();
+
+            dialog.close();
+
+            const urlInput = activeSide === 'left' ? this.elements.inputQrLeftUrl : this.elements.inputQrRightUrl;
+            if (urlInput && urlInput.value.trim()) {
+                const btnGen = activeSide === 'left' ? this.elements.btnGenQrLeft : this.elements.btnGenQrRight;
+                if (btnGen) btnGen.click();
+            }
+        });
     }
 
     updateFocusableElements() {
